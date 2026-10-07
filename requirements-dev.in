@@ -1,0 +1,8 @@
+-r apps/api/requirements.txt
+pytest==8.3.5
+httpx==0.28.1
+playwright==1.52.0
+PyMuPDF==1.28.2
+python-pptx==1.0.2
+python-docx==1.2.0
+black==25.1.0

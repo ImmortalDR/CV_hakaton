@@ -1,0 +1,316 @@
+{
+  "PROMPT_ASTRA.md": {
+    "pass1_status": "read",
+    "pass1_note": "Прочитано целиком в текущей сессии; содержание и назначение разобраны. См. PASS_1.md."
+  },
+  "AGENTS.md": {
+    "pass1_status": "read",
+    "pass1_note": "Прочитано целиком в текущей сессии; содержание и назначение разобраны. См. PASS_1.md."
+  },
+  "WORKSPACE_MAP.md": {
+    "pass1_status": "read",
+    "pass1_note": "Прочитано целиком в текущей сессии; содержание и назначение разобраны. См. PASS_1.md."
+  },
+  "README_START.md": {
+    "pass1_status": "read",
+    "pass1_note": "Прочитано целиком в текущей сессии; содержание и назначение разобраны. См. PASS_1.md."
+  },
+  ".gitignore": {
+    "pass1_status": "read",
+    "pass1_note": "Прочитано целиком в текущей сессии; содержание и назначение разобраны. См. PASS_1.md."
+  },
+  "docs/REVIEW_PROTOCOL.md": {
+    "pass1_status": "read",
+    "pass1_note": "Прочитано целиком в текущей сессии; содержание и назначение разобраны. См. PASS_1.md."
+  },
+  "docs/REQUIREMENTS_MATRIX.md": {
+    "pass1_status": "read",
+    "pass1_note": "Прочитано целиком в текущей сессии; содержание и назначение разобраны. См. PASS_1.md."
+  },
+  "docs/IMPLEMENTATION_BRIEF.md": {
+    "pass1_status": "read",
+    "pass1_note": "Прочитано целиком в текущей сессии; содержание и назначение разобраны. См. PASS_1.md."
+  },
+  "docs/AUDIT_FINDINGS.md": {
+    "pass1_status": "read",
+    "pass1_note": "Прочитано целиком в текущей сессии; содержание и назначение разобраны. См. PASS_1.md."
+  },
+  "docs/ACCEPTANCE.md": {
+    "pass1_status": "read",
+    "pass1_note": "Прочитано целиком в текущей сессии; содержание и назначение разобраны. См. PASS_1.md."
+  },
+  "docs/GIT_WORKFLOW.md": {
+    "pass1_status": "read",
+    "pass1_note": "Прочитано целиком в текущей сессии; содержание и назначение разобраны. См. PASS_1.md."
+  },
+  "docs/REUSE_AND_LICENSES.md": {
+    "pass1_status": "read",
+    "pass1_note": "Прочитано целиком в текущей сессии; содержание и назначение разобраны. См. PASS_1.md."
+  },
+  "docs/requirements.extracted.txt": {
+    "pass1_status": "read",
+    "pass1_note": "Прочитано целиком в текущей сессии; содержание и назначение разобраны. См. PASS_1.md."
+  },
+  "scripts/verify_workspace.py": {
+    "pass1_status": "read",
+    "pass1_note": "Прочитано целиком в текущей сессии; содержание и назначение разобраны. См. PASS_1.md."
+  },
+  "scripts/scan_sources.py": {
+    "pass1_status": "read",
+    "pass1_note": "Прочитано целиком в текущей сессии; содержание и назначение разобраны. См. PASS_1.md."
+  },
+  "scripts/reproduce_findings.py": {
+    "pass1_status": "read",
+    "pass1_note": "Прочитано целиком в текущей сессии; содержание и назначение разобраны. См. PASS_1.md."
+  },
+  "transcription/ФСП_встреча_читаемый.md": {
+    "pass1_status": "read",
+    "pass1_note": "Прочитано целиком в текущей сессии; содержание и назначение разобраны. См. PASS_1.md."
+  },
+  "transcription/Транскрипт_2026-10-07.md": {
+    "pass1_status": "read",
+    "pass1_note": "Прочитано целиком в текущей сессии; содержание и назначение разобраны. См. PASS_1.md."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/README.md": {
+    "pass1_status": "read",
+    "pass1_note": "Прочитано целиком в текущей сессии; содержание и назначение разобраны. См. PASS_1.md."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/LICENSE": {
+    "pass1_status": "read",
+    "pass1_note": "MIT: сохранять copyright и условия при переносе UI."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/_SOURCE_COMMIT.txt": {
+    "pass1_status": "read",
+    "pass1_note": "Снимок 15a04a0, донор UI; это не наше приложение."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/client/src/components/ui.tsx": {
+    "pass1_status": "read",
+    "pass1_note": "Spinner/ErrorState/EmptyState/Tag/StatCard/Pager: чистые компоненты, локализовать; статусы откликов заменить статусами приглашений.",
+    "pass2_status": "read",
+    "pass2_note": "Чистый UI: адаптация EmptyState/ErrorState/StatCard не зависит от Mongo. StatusBadge связан с ApplicationStatus, заменить контракт.",
+    "pass3_status": "read",
+    "pass3_note": "M27/UX: error role=alert есть, spinner status есть; локализовать весь текст. Перенос только с MIT notice."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/client/src/pages/CandidateDashboard.tsx": {
+    "pass1_status": "read",
+    "pass1_note": "TanStack запрос stats/candidate; pipeline откликов, ссылки jobs; использовать только композицию кабинета.",
+    "pass2_status": "read",
+    "pass2_note": "Pipeline и recent принадлежат откликам; в новом кабинете заменить на тесты/приглашения/согласия, сохранить композицию states."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/client/src/pages/RecruiterDashboard.tsx": {
+    "pass1_status": "read",
+    "pass1_note": "Работодатель управляет jobs/applicants; нет обратного поиска/ContactGrant, графики не относятся к новому ядру.",
+    "pass2_status": "read",
+    "pass2_note": "Stats jobs/applicants требуют несоответствующий API; нужен поиск по категориям и приглашения. UI donor, не runtime service."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/client/src/components/ProtectedRoute.tsx": {
+    "pass1_status": "read",
+    "pass1_note": "UX guard ждёт refresh; права явно делегированы API, сохранить принцип."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/client/src/context/AuthContext.tsx": {
+    "pass1_status": "read",
+    "pass1_note": "Memory access + refresh cookie; начальная проверка с cancellation; register сразу авторизует без подтверждения email.",
+    "pass2_status": "read",
+    "pass2_note": "Связь с api.ts single-flight refresh и ProtectedRoute loading; собственная cookie session позволит не переносить JWT refresh-протокол."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/client/src/lib/api.ts": {
+    "pass1_status": "read",
+    "pass1_note": "Single-flight refresh, JSON error mapping, query params; комментарий memory token не означает защиту от действующего XSS."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/client/src/types.ts": {
+    "pass1_status": "read",
+    "pass1_note": "Application/job с applicant User(email); собственные типы должны разделять публичную/приватную проекции."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/client/src/lib/format.ts": {
+    "pass1_status": "read",
+    "pass1_note": "Индийские INR lakh, нулевая зарплата скрыта; для RUB необходимо переписать."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/client/src/index.css": {
+    "pass1_status": "read",
+    "pass1_note": "Tailwind компоненты button/card/chip; применять доступные состояния и собственные стили."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/server/src/models/User.ts": {
+    "pass1_status": "read",
+    "pass1_note": "Mongoose user+candidate+company в одной сущности; email уникален; пароль bcrypt12; неизвестный стаж заменён 0.",
+    "pass2_status": "read",
+    "pass2_note": "User объединяет account/profile/company. Новый CompanyMember отделяет владение организацией; unknown стаж должен быть nullable."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/server/src/models/Application.ts": {
+    "pass1_status": "read",
+    "pass1_note": "Статусы отклика управляются recruiter; уникальность job/applicant; история без обратных переходов.",
+    "pass2_status": "read",
+    "pass2_note": "Уникальный job/applicant защищает duplicate create; сервер принимает решение recruiter. Для invitation решение принимает кандидат и нужен grant transaction."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/server/src/controllers/application.controller.ts": {
+    "pass1_status": "read",
+    "pass1_note": "Владение вакансией проверяется; resume доступен участникам отклика; модель не годится для непринятого приглашения. Переход статуса read-modify-save без CAS.",
+    "pass2_status": "read",
+    "pass2_note": "Application/job ownership→populate email→download basename. Контакты допустимы после прямого отклика; на банк такой projection переносить нельзя. CAS при статусах отсутствует.",
+    "pass3_status": "read",
+    "pass3_note": "M09/M20/M21: исходные права относятся к отклику, не дают готовой защиты приглашений. План проверки двух работодателей, повторных/параллельных переходов, PDF."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/server/src/controllers/auth.controller.ts": {
+    "pass1_status": "read",
+    "pass1_note": "Регистрация, login/refresh; нет email verification; logout очищает cookie без отзыва серверного refresh.",
+    "pass2_status": "read",
+    "pass2_note": "Поток routes→Zod→controller→User: updateProfile получает ограниченную схему, mass-assignment не доказан; register без email verification, logout без server revoke.",
+    "pass3_status": "read",
+    "pass3_note": "M01/M26: required verification отсутствует; нужны одноразовость/TTL и revoke sessions. Возможная mass-assignment снята после чтения схемы."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/server/src/middleware/auth.ts": {
+    "pass1_status": "read",
+    "pass1_note": "JWT role claims; endpoint роли на сервере; deleted account проверяется при refresh, не каждом запросе."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/server/src/utils/tokens.ts": {
+    "pass1_status": "read",
+    "pass1_note": "JWT TTL и cookie; нет хранения отозванных сессий, token type различается секретами."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/server/src/middleware/upload.ts": {
+    "pass1_status": "read",
+    "pass1_note": "Random basename, MIME allowlist и лимит; доверяет MIME заголовку, не проверяет байты содержимого."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/server/src/app.ts": {
+    "pass1_status": "read",
+    "pass1_note": "Express CORS/rate-limit/helmet; uploads не опубликован static; trust proxy=1 требует правильной топологии."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/ai-resume-screener-ats-platform/backend/resume_screener/application/scoring.py": {
+    "pass1_status": "read",
+    "pass1_note": "Все функции прочитаны: unknown стаж теряется при matched skill; max(minimums)=0; ASCII TOKEN_PATTERN; confidence эвристика.",
+    "pass2_status": "read",
+    "pass2_note": "Критерии строятся из extracted skill_slugs, а spans необязательны; met без span и реального теста. Новый источник истины SkillEvidence из attempt.",
+    "pass3_status": "read",
+    "pass3_note": "M15/M23: реальные пробы подтвердили met без evidence, ZeroDivisionError и [] для кириллицы; scoring не переносить. RRF и cosine не заменяют независимую валидацию."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/ai-resume-screener-ats-platform/_SOURCE_COMMIT.txt": {
+    "pass1_status": "read",
+    "pass1_note": "Снимок 54db75f, только референс структуры доказательств."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/ai-resume-screener-ats-platform/_COMMENT_RU.md": {
+    "pass1_status": "read",
+    "pass1_note": "Историческое описание; утверждение нет candidate self-service чрезмерно по AUDIT_FINDINGS; не требования MVP."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/PrairieLearn/_SOURCE_COMMIT.txt": {
+    "pass1_status": "read",
+    "pass1_note": "Снимок 076bf1b, принцип генератора, без включения всего приложения."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/PrairieLearn/_COMMENT_RU.md": {
+    "pass1_status": "read",
+    "pass1_note": "Описание монорепо, AGPL/MIT/удалённая EE; запуск из комментария не выполнялся."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/PrairieLearn/packages/question-conversion/src/emitters/fixtures/calculated/server.py": {
+    "pass1_status": "read",
+    "pass1_note": "generate фиксирует параметры a,b и correct_answers отдельно; одинаковый шаблон не доказывает эквивалентность сложности.",
+    "pass2_status": "read",
+    "pass2_note": "params и correct_answers разделены с question.html; randomized a,b с tolerance .01. Свой blueprint должен связывать семейство с компетенцией/грейдом.",
+    "pass3_status": "read",
+    "pass3_note": "M06: алгоритм арифметики корректен при округлении параметров; вариации не доказывают равенство сложности. Не считать пример готовым bank Python/SQL."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/PrairieLearn/packages/question-conversion/src/emitters/fixtures/calculated/question.html": {
+    "pass1_status": "read",
+    "pass1_note": "Mustache выдаёт только params; серверный ответ обрабатывает pl-number-input с допуском .01.",
+    "pass2_status": "read",
+    "pass2_note": "UI использует params, правильное значение серверное. Скрытие correct_answers требует безопасной сериализации всего API, не только шаблона.",
+    "pass3_status": "read",
+    "pass3_note": "M06: эталон не напечатан в HTML; новую API DTO надо отдельно проверить на отсутствие answer/seed до завершения."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/PrairieLearn/testCourse/questions/additionalNames/server.py": {
+    "pass1_status": "read",
+    "pass1_note": "Рандомизация размерностей и данных матрицы; серверный эталон A@b и JSON ndarray."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/PrairieLearn/apps/prairielearn/python/prairielearn/internal/question_phases.py": {
+    "pass1_status": "read",
+    "pass1_note": "Динамическая загрузка доверенных контроллеров, фазы render/file/grade, deepcopy/check_data; код курса нельзя принимать от кандидата."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/open-resume/src/app/lib/parse-resume-from-pdf/index.ts": {
+    "pass1_status": "read",
+    "pass1_note": "Четыре этапа: PDF items → lines → sections → resume; явное ограничение на английский и одну колонку."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/server/src/routes/auth.routes.ts": {
+    "pass1_status": "read",
+    "pass1_note": "Регистрация/login ограничены rate limit; refresh без limiter; updateProfile идёт через Zod до контроллера."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/server/src/validators/auth.schema.ts": {
+    "pass1_status": "read",
+    "pass1_note": "Register исключает admin, нормализует email; updateProfile не разрешает роль/пароль; nullable стаж не поддержан."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/server/tests/auth.test.ts": {
+    "pass1_status": "read",
+    "pass1_note": "Полностью прочитаны сценарии register/hash/cookie/duplicate/role/login/me/refresh/profile; тестов email verification и revoke нет; не запускались."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/server/tests/applications.test.ts": {
+    "pass1_status": "read",
+    "pass1_note": "Полностью прочитаны права, состояния, счётчики, uploads и каскад; fake PDF, последовательные тесты; нет проверки конкурентных переходов; не запускались."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/client/src/pages/Profile.tsx": {
+    "pass1_status": "read",
+    "pass1_note": "Self profile PATCH, навыки из comma-separated строки, experienceYears Number; пропуск превращается в 0; заявленные поля не доказательство."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/hiredesk-mern/client/src/pages/Register.tsx": {
+    "pass1_status": "read",
+    "pass1_note": "Две роли aria-pressed, формы ошибок, после register сразу dashboard; нет шага email verification и согласий."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/PrairieLearn/AGENTS.md": {
+    "pass1_status": "read",
+    "pass1_note": "Правила монорепо и целевых проверок; upstream не изменяем; новые приложения не обязаны наследовать его модели курсов и tRPC."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/docling/AGENTS.md": {
+    "pass1_status": "read",
+    "pass1_note": "SDK/CLI конвертации, отдельные skills для разработки; исходники не изменяем, validate не выдаём за исполненный."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/catsim/AGENTS.md": {
+    "pass1_status": "read",
+    "pass1_note": "Архитектура CatEngine/CatSessionState/SimulationRunner/SimulationResult; устаревшая simulator-centric модель неактуальна."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/PrairieLearn/apps/prairielearn/src/migrations/20250927021936_instance_questions__ai_instance_question_group_id__manual_instance_question_group_id__add.sql": {
+    "pass1_status": "read",
+    "pass1_note": "Добавляет ai/manual group IDs и составные FK с assessment_question_id; найден в оригинале, SHA256 соответствует manifest; во вложенной копии отсутствует."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/kaggle/darysha__automated-resume-job-matching-model.ipynb": {
+    "pass1_status": "read",
+    "pass1_note": "Прочитаны все 5 ячеек: зависимости, код, markdown claims; outputs пусты. Утечки fit до split, удалённый idCv, test для выбора модели/порогов.",
+    "pass2_status": "read",
+    "pass2_note": "Полная цепочка fit/target encoding/drop id/split/early stop/threshold разобрана; качество нельзя использовать для выбора наших весов.",
+    "pass3_status": "read",
+    "pass3_note": "M23: независимость нарушена по коду; отдельный пример row grouping дал пересечение 66/67. Не метрика на отсутствующем реальном датасете."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/kaggle/siddigantm__task-resume-matching-with-job-descriptions.ipynb": {
+    "pass1_status": "read",
+    "pass1_note": "Прочитаны все 5 ячеек: setup, зависимости, код, пустая ячейка; outputs пусты. Неверная область device/model, индексы i+j, уничтожение кириллицы.",
+    "pass2_status": "read",
+    "pass2_note": "main создаёт локальные model/device, get_embeddings глобальна; pipeline падает до ranking, коллизии индекса независимая проблема.",
+    "pass3_status": "read",
+    "pass3_note": "M23: AST-изолированный get_embeddings дал NameError device; 75 пар i+j оставляют19keys в отдельном примере; обучение не выполнялось."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/docling/_COMMENT_RU.md": {
+    "pass1_status": "read",
+    "pass1_note": "Структурная конвертация документов не подтверждает навыки; для формы не требуется."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/sentence-transformers/_COMMENT_RU.md": {
+    "pass1_status": "read",
+    "pass1_note": "Семантическая близость не подтверждение компетенции; веса не приложены."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/catsim/_COMMENT_RU.md": {
+    "pass1_status": "read",
+    "pass1_note": "Параметры синтетического банка не калибровка нашего банка; исключить runtime."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/judge0/_COMMENT_RU.md": {
+    "pass1_status": "read",
+    "pass1_note": "Sandbox execution требует отдельной инфраструктуры и не обязателен."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/reqcore/_COMMENT_RU.md": {
+    "pass1_status": "read",
+    "pass1_note": "Исторический комментарий слишком категоричен об отсутствии AI; модель кандидата внутри организации не подходит."
+  },
+  "Архив исходников для MVP обратного найма ФСП/fsp_mvp_bundle/github/open-resume/_COMMENT_RU.md": {
+    "pass1_status": "read",
+    "pass1_note": "Браузерный Next13 PDF tool; английский parser и отдельные правила шрифтов, не основной MVP."
+  },
+  "ФСП спец. трек ТЗ-1.pdf": {
+    "pass1_status": "inspected_binary",
+    "pass1_note": "Полный текст извлечён; визуально проверены физические страницы 4 и 8; 9 страниц включая обложку. Требования сверены с docs/requirements.extracted.txt."
+  },
+  "ЛЦТ_2026_Шаблон презентации ФСП(1).pptx": {
+    "pass1_status": "inspected_binary",
+    "pass1_note": "Прочитаны тексты и заметки всех 37 слайдов; LibreOffice render, визуальный осмотр всех 37 на 4 монтажах; блоки 3–4, шаблоны 7–11 и ресурсы 30–37."
+  }
+}

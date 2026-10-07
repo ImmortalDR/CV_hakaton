@@ -1,0 +1,39 @@
+# Original inputs and full reference corpus (local workspace only)
+/ФСП спец. трек ТЗ-1.pdf
+/ЛЦТ_2026_Шаблон презентации ФСП(1).pptx
+/transcription/
+/Архив исходников для MVP обратного найма ФСП/
+/fsp_mvp_bundle/
+/audit/
+/WORKSPACE_INVENTORY.csv
+/MANIFEST.sha256
+/hakaton_astra_workspace.zip
+
+# Runtime, generated files, secrets
+.env
+.env.*
+!.env.example
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+coverage/
+dist/
+build/
+*.log
+*.tsbuildinfo
+*.db
+*.sqlite*
+/uploads/
+/models/
+/local-backups/
+/tmp/
+/playwright-report/
+/test-results/
+
+/hakaton_astra_workspace/

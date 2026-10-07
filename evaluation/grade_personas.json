@@ -1,0 +1,134 @@
+[
+  {
+    "id": "python-novice",
+    "specialization": "python",
+    "known_families": [],
+    "expected_grade": "unconfirmed",
+    "slip_probability": 0
+  },
+  {
+    "id": "python-junior",
+    "specialization": "python",
+    "known_families": [
+      "py_filter",
+      "py_boundary"
+    ],
+    "expected_grade": "Junior",
+    "slip_probability": 0
+  },
+  {
+    "id": "python-middle",
+    "specialization": "python",
+    "known_families": [
+      "py_filter",
+      "py_boundary",
+      "py_alias",
+      "http_keys"
+    ],
+    "expected_grade": "Middle",
+    "slip_probability": 0
+  },
+  {
+    "id": "python-senior",
+    "specialization": "python",
+    "known_families": [
+      "py_filter",
+      "py_boundary",
+      "py_alias",
+      "http_keys",
+      "py_dag",
+      "http_backoff"
+    ],
+    "expected_grade": "Senior",
+    "slip_probability": 0
+  },
+  {
+    "id": "python-narrow",
+    "specialization": "python",
+    "known_families": [
+      "py_filter",
+      "py_alias",
+      "py_dag"
+    ],
+    "expected_grade": "unconfirmed",
+    "slip_probability": 0
+  },
+  {
+    "id": "python-noisy-middle",
+    "specialization": "python",
+    "known_families": [
+      "py_filter",
+      "py_boundary",
+      "py_alias",
+      "http_keys"
+    ],
+    "expected_grade": "Middle",
+    "slip_probability": 0.2
+  },
+  {
+    "id": "data-novice",
+    "specialization": "data",
+    "known_families": [],
+    "expected_grade": "unconfirmed",
+    "slip_probability": 0
+  },
+  {
+    "id": "data-junior",
+    "specialization": "data",
+    "known_families": [
+      "sql_where",
+      "stats_median"
+    ],
+    "expected_grade": "Junior",
+    "slip_probability": 0
+  },
+  {
+    "id": "data-middle",
+    "specialization": "data",
+    "known_families": [
+      "sql_where",
+      "stats_median",
+      "sql_join",
+      "stats_weighted"
+    ],
+    "expected_grade": "Middle",
+    "slip_probability": 0
+  },
+  {
+    "id": "data-senior",
+    "specialization": "data",
+    "known_families": [
+      "sql_where",
+      "stats_median",
+      "sql_join",
+      "stats_weighted",
+      "sql_rank",
+      "tx_snapshot"
+    ],
+    "expected_grade": "Senior",
+    "slip_probability": 0
+  },
+  {
+    "id": "data-narrow",
+    "specialization": "data",
+    "known_families": [
+      "sql_where",
+      "sql_join",
+      "sql_rank"
+    ],
+    "expected_grade": "unconfirmed",
+    "slip_probability": 0
+  },
+  {
+    "id": "data-noisy-middle",
+    "specialization": "data",
+    "known_families": [
+      "sql_where",
+      "stats_median",
+      "sql_join",
+      "stats_weighted"
+    ],
+    "expected_grade": "Middle",
+    "slip_probability": 0.2
+  }
+]

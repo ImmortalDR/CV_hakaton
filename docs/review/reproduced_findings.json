@@ -1,0 +1,54 @@
+{
+  "unknown_experience_counted_as_met": {
+    "must_have_met": 1,
+    "must_have_total": 1,
+    "facts": [
+      {
+        "criterion_id": "98f6bbed-a3b2-4156-a924-bbecca765205",
+        "label": "Python experience",
+        "kind": "must_have",
+        "state": "met",
+        "evidence_id": null
+      }
+    ],
+    "normalized_skills": [
+      "python"
+    ],
+    "automatic_decision": null,
+    "retrieval_rank": 1
+  },
+  "zero_year_requirement": "ZeroDivisionError: division by zero",
+  "cyrillic_tokens": [],
+  "notebook_embedding_scope": "NameError: name 'device' is not defined",
+  "notebook_result_key_collision_example": {
+    "expected_rows": 75,
+    "retained_keys": 19
+  },
+  "notebook_grouping_probe": {
+    "overlapping_candidates": 66,
+    "test_candidates": 67
+  },
+  "kaggle_dataset": {
+    "rows": 815,
+    "columns": [
+      "Name",
+      "Email",
+      "Phone",
+      "University",
+      "Graduation_Year",
+      "Years_Experience",
+      "Job_Role",
+      "Skills",
+      "Resume_Text"
+    ],
+    "roles": {
+      "Data Scientist": 124,
+      "HR Executive": 130,
+      "Marketing Manager": 112,
+      "Software Engineer": 342,
+      "Financial Analyst": 107
+    },
+    "duplicate_rows": 32,
+    "unique_resume_texts": 767
+  }
+}

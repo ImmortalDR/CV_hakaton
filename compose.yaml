@@ -1,0 +1,50 @@
+name: fsp-mvp
+services:
+  db:
+    image: postgres:16-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea
+    environment:
+      POSTGRES_USER: fsp
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run scripts/configure.py first}
+      POSTGRES_DB: fsp
+    volumes:
+      - fsp_db:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:5547:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fsp -d fsp"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+  api:
+    build: ./apps/api
+    environment:
+      DATABASE_URL: postgresql+psycopg://fsp:${POSTGRES_PASSWORD}@db:5432/fsp
+      DEMO_MODE: ${DEMO_MODE:-true}
+      PUBLIC_URL: ${PUBLIC_URL:-http://localhost:3080}
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_TLS: ${SMTP_TLS:-true}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_FROM: ${SMTP_FROM:-noreply@example.org}
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=3)"]
+      interval: 5s
+      timeout: 4s
+      retries: 20
+    restart: unless-stopped
+  web:
+    build: ./apps/web
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:3080:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+volumes:
+  fsp_db:

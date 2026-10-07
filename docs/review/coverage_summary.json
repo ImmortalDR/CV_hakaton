@@ -1,0 +1,37 @@
+{
+  "files": 16326,
+  "unique_sha256": 7826,
+  "passes": {
+    "1": {
+      "read": 66,
+      "not_read": 16190,
+      "duplicate_of": 68,
+      "inspected_binary": 2
+    },
+    "2": {
+      "not_read": 16300,
+      "duplicate_of": 13,
+      "read": 13
+    },
+    "3": {
+      "not_read": 16310,
+      "duplicate_of": 8,
+      "read": 8
+    }
+  },
+  "excluded_parts": [
+    ".cache",
+    ".git",
+    ".pytest_cache",
+    ".venv",
+    "__pycache__",
+    "node_modules",
+    "tmp",
+    "venv"
+  ],
+  "excluded_generated_outputs": [
+    "audit/current/",
+    "docs/review/"
+  ],
+  "warning": "Опись и хеши не являются содержательным чтением."
+}
