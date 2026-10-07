@@ -1,0 +1,9 @@
+{
+  "root": "/root/hakaton",
+  "checked_files": 8141,
+  "skipped_mutable_project_files": 22,
+  "remapped_archive_paths": 8131,
+  "failures": [],
+  "ok": true,
+  "scope": "packet integrity only; not application tests"
+}

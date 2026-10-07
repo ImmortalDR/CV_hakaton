@@ -1442,3 +1442,37 @@ nav svg {
 .sidebar nav button svg:last-child:not(:first-child) {
   flex-shrink: 0;
 }
+.account > div:last-child {
+  min-width: 0;
+}
+.account strong {
+  display: block;
+  max-width: 230px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 850px) {
+  .account {
+    min-width: 0;
+    max-width: 56%;
+  }
+  .account strong,
+  .account small {
+    max-width: 145px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .topbar {
+    min-height: 65px;
+    height: auto;
+  }
+  .salary {
+    font-size: 23px;
+    letter-spacing: -0.8px;
+  }
+  .sidebar nav button {
+    flex-shrink: 0;
+  }
+}

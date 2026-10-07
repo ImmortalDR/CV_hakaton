@@ -1,0 +1,26 @@
+{
+  "npm": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "dependencies": {
+      "prod": 5,
+      "dev": 116,
+      "optional": 53,
+      "peer": 0,
+      "peerOptional": 0,
+      "total": 120
+    }
+  },
+  "pip": {
+    "packages": 30,
+    "vulnerabilities": 0
+  },
+  "date_utc": "2026-10-07",
+  "scope": "Known advisories in runtime locks; not proof of absence of vulnerabilities"
+}

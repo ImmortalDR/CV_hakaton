@@ -124,6 +124,9 @@ export function App() {
   }, []);
   const refresh = () => setVersion((v) => v + 1);
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [tab]);
+  useEffect(() => {
     Promise.all([
       api<Catalog>("/catalog").then(setCatalog),
       api<User>("/auth/me")
@@ -342,6 +345,7 @@ export function App() {
                 saved={() => {
                   refresh();
                   setNotice("Профиль сохранён");
+                  window.scrollTo(0, 0);
                 }}
               />
             ) : (
@@ -365,6 +369,7 @@ export function App() {
                 saved={() => {
                   refresh();
                   setNotice("Компания сохранена");
+                  window.scrollTo(0, 0);
                 }}
               />
             ) : (
@@ -1121,7 +1126,11 @@ function Assessments({
                       inputMode="decimal"
                     />
                   </Field>
-                ) : <p className="muted">Время истекло. Ответы больше не принимаются.</p>}
+                ) : (
+                  <p className="muted">
+                    Время истекло. Ответы больше не принимаются.
+                  </p>
+                )}
               </div>
             ))}
             {current.status === "active" && (
@@ -1331,6 +1340,7 @@ function SearchPage({ catalog, act, busy }: Actions) {
     void act(async () => {
       const s = await api<Snapshot>("/searches", criteria);
       setSnapshot(s);
+      window.scrollTo(0, 0);
       setItems(s.items);
       setBank(false);
       await loadHistory();
