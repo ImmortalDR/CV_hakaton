@@ -46,5 +46,29 @@ services:
       api:
         condition: service_healthy
     restart: unless-stopped
+  edge:
+    image: caddy:2.11.7-alpine@sha256:d8542f48d34a9cf4e4c11a478865229840e87e4c96ea3f439101f31a5d35f75f
+    profiles: [https]
+    # Linux host networking reaches the loopback web port without exposing it.
+    network_mode: host
+    environment:
+      HTTPS_HOST: ${HTTPS_HOST:-localhost}
+      ACME_DIRECTORY: ${ACME_DIRECTORY:-https://acme-v02.api.letsencrypt.org/directory}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - fsp_tls_data:/data
+      - fsp_tls_config:/config
+    depends_on:
+      web:
+        condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider https://$${HTTPS_HOST}/api/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 3
+    restart: unless-stopped
 volumes:
   fsp_db:
+  fsp_tls_data:
+  fsp_tls_config:
