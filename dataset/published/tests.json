@@ -1,0 +1,167 @@
+{
+  "cases": [
+    {
+      "name": "test_validation_is_read_only",
+      "status": "passed"
+    },
+    {
+      "name": "test_deterministic_build_and_archive",
+      "status": "passed"
+    },
+    {
+      "name": "test_candidate_corruption_rejected[duplicate]",
+      "status": "passed"
+    },
+    {
+      "name": "test_candidate_corruption_rejected[broken_ref]",
+      "status": "passed"
+    },
+    {
+      "name": "test_candidate_corruption_rejected[split_leak]",
+      "status": "passed"
+    },
+    {
+      "name": "test_candidate_corruption_rejected[fake_grade]",
+      "status": "passed"
+    },
+    {
+      "name": "test_candidate_corruption_rejected[placeholder]",
+      "status": "passed"
+    },
+    {
+      "name": "test_label_corruption_rejected[human]",
+      "status": "passed"
+    },
+    {
+      "name": "test_label_corruption_rejected[decision]",
+      "status": "passed"
+    },
+    {
+      "name": "test_label_corruption_rejected[incomplete]",
+      "status": "passed"
+    },
+    {
+      "name": "test_label_corruption_rejected[extra]",
+      "status": "passed"
+    },
+    {
+      "name": "test_label_corruption_rejected[source_gold]",
+      "status": "passed"
+    },
+    {
+      "name": "test_unknown_evidence_is_not_negative_even_with_large_fsp_bonus",
+      "status": "passed"
+    },
+    {
+      "name": "test_invented_certification_rejected",
+      "status": "passed"
+    },
+    {
+      "name": "test_private_file_blocks_release",
+      "status": "passed"
+    },
+    {
+      "name": "test_local_bundle_cannot_be_exported_as_public",
+      "status": "passed"
+    },
+    {
+      "name": "test_path_traversal_rejected[../data]",
+      "status": "passed"
+    },
+    {
+      "name": "test_path_traversal_rejected[/etc/passwd]",
+      "status": "passed"
+    },
+    {
+      "name": "test_path_traversal_rejected[data/../../secret]",
+      "status": "passed"
+    },
+    {
+      "name": "test_symlink_rejected",
+      "status": "passed"
+    },
+    {
+      "name": "test_application_database_dsns_rejected[postgresql://localhost/fsp]",
+      "status": "passed"
+    },
+    {
+      "name": "test_application_database_dsns_rejected[postgresql://localhost/fsp_test]",
+      "status": "passed"
+    },
+    {
+      "name": "test_application_database_dsns_rejected[postgresql://localhost/intellect]",
+      "status": "passed"
+    },
+    {
+      "name": "test_application_database_dsns_rejected[postgresql://localhost/fsp_dataset_eval?dbname=fsp]",
+      "status": "passed"
+    },
+    {
+      "name": "test_application_database_dsns_rejected[postgresql://localhost/fsp_dataset_eval#override]",
+      "status": "passed"
+    },
+    {
+      "name": "test_application_database_dsns_rejected[dbname=fsp_dataset_eval]",
+      "status": "passed"
+    },
+    {
+      "name": "test_dry_run_never_connects",
+      "status": "passed"
+    },
+    {
+      "name": "test_real_csv_dialect_and_multiline_header",
+      "status": "passed"
+    },
+    {
+      "name": "test_same_size_raw_source_mutation_rejected",
+      "status": "passed"
+    },
+    {
+      "name": "test_malformed_record_rejected[invalid0]",
+      "status": "passed"
+    },
+    {
+      "name": "test_malformed_record_rejected[None]",
+      "status": "passed"
+    },
+    {
+      "name": "test_malformed_record_rejected[not a record]",
+      "status": "passed"
+    },
+    {
+      "name": "test_malformed_record_rejected[invalid3]",
+      "status": "passed"
+    },
+    {
+      "name": "test_unallowlisted_file_rejected_even_if_rehashed",
+      "status": "passed"
+    },
+    {
+      "name": "test_actual_database_import_is_transactional_and_idempotent",
+      "status": "passed"
+    },
+    {
+      "name": "test_assessment_schema_detects_missing_results",
+      "status": "passed"
+    },
+    {
+      "name": "test_ranker_does_not_read_reference_labels",
+      "status": "passed"
+    },
+    {
+      "name": "test_duplicate_careercorpus_source_ids_preserve_both_rows",
+      "status": "passed"
+    }
+  ],
+  "database_integration": "Disposable PostgreSQL 16; import, idempotence, rollback; public schema empty",
+  "junit_sha256": "03600079105e6e19431db63d00384ffbd80140a92d30e0baf10b0149c8d662e3",
+  "network": "No LLM or external data APIs in dataset pipeline; dependency installation used PyPI",
+  "prior_failures": [
+    "UnboundLocalError in initial evaluator fixed",
+    "Reproducibility check raced with code formatting; repeated after source freeze and passed",
+    "CareerCorpus duplicate source ID rejected; row-based record ID implemented and tested"
+  ],
+  "status": "passed",
+  "test_source_sha256": "27533943b0b22a4ccd74391dc42816e2fa133b4155a10f7d03181c4732053213",
+  "tests": 38
+}

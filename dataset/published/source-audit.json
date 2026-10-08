@@ -1,0 +1,147 @@
+{
+  "auxiliary": {
+    "CareerCorpus": {
+      "duplicate_id_extra_rows": 1,
+      "identity_policy": "Source ID is not unique; keep original ID and use sheet row for record identity",
+      "our_human_reviewed_pairs": 0,
+      "pair_matching_eligible": false,
+      "records": 302,
+      "source_expert_labels_preserved": true,
+      "unique_original_ids": 301
+    },
+    "TaskA": {
+      "selection": "validation only; Task A English; samples/train not added as independent data",
+      "test_files": 0,
+      "validation_qrels": 2420
+    },
+    "TaskB": {
+      "selection": "validation only; Task A English; samples/train not added as independent data",
+      "test_files": 0,
+      "validation_qrels": 25888
+    }
+  },
+  "local_structural_validation": {
+    "counts": {
+      "assessment/attempts.jsonl": 480,
+      "data/auxiliary/careercorpus.jsonl": 302,
+      "data/auxiliary/talentclef.jsonl": 28308,
+      "data/synthetic/candidates.jsonl": 480,
+      "data/synthetic/needs.jsonl": 48,
+      "data/synthetic/pools.jsonl": 48,
+      "data/synthetic/simulations.jsonl": 432,
+      "data/tianchi/candidates.jsonl": 4500,
+      "data/tianchi/legacy_pairs.jsonl": 22724,
+      "data/tianchi/legacy_pools.jsonl": 300,
+      "data/tianchi/needs.jsonl": 20415,
+      "data/tianchi/outcomes.jsonl": 134841,
+      "data/trudvsem/candidates.jsonl": 55,
+      "data/trudvsem/events_unresolved.jsonl": 2000,
+      "data/trudvsem/needs.jsonl": 27,
+      "labels/matching.jsonl": 480,
+      "scenarios/workflow.jsonl": 5
+    },
+    "errors": [],
+    "limitations": [
+      "Не полный семантический аудит реальных документов.",
+      "Наличие хеша не подтверждает достоверность или права на исходный документ."
+    ],
+    "records": 215445,
+    "scope": "Schemas, provenance links, IDs, references, matching splits/pools/rubric, public gate and optional manifest hashes",
+    "status": "passed"
+  },
+  "tianchi": {
+    "all_source_jobs": 269534,
+    "application_evaluation": "not_run: these documents have no verified MVP grade",
+    "checks": {
+      "classification_label_conflicts": 0,
+      "classification_missing_documents": 0,
+      "ranking_incomplete_pools": 0,
+      "ranking_negative_one_with_positive_event": 2,
+      "ranking_pairs_without_event": 29536
+    },
+    "counts": {
+      "exported_events": 134841,
+      "missing_job_events": 52765,
+      "missing_unique_job_ids": 15966,
+      "source_events": 700938
+    },
+    "event_flags": {
+      "(0, 0, 0)": 550006,
+      "(0, 1, 0)": 2,
+      "(1, 0, 0)": 84647,
+      "(1, 1, 0)": 34394,
+      "(1, 1, 1)": 31889
+    },
+    "legacy_split_overlap": {
+      "train__test": {
+        "exact_job_texts": 26,
+        "jobs": 0,
+        "pairs": 0,
+        "users": 0
+      },
+      "train__valid": {
+        "exact_job_texts": 23,
+        "jobs": 0,
+        "pairs": 0,
+        "users": 0
+      },
+      "valid__test": {
+        "exact_job_texts": 1,
+        "jobs": 0,
+        "pairs": 0,
+        "users": 0
+      }
+    },
+    "missing_job_flags": {
+      "(0, 0, 0)": 41634,
+      "(0, 1, 0)": 1,
+      "(1, 0, 0)": 6143,
+      "(1, 1, 0)": 1693,
+      "(1, 1, 1)": 3294
+    },
+    "salary_policy": "Original salary scale/currency not established; normalized RUB salary remains null",
+    "selected_exact_text_duplicate_extra_rows": 1171,
+    "selected_jobs": 20415,
+    "selection": "all ConFit classification jobs and rank_resume queries",
+    "split_policy": "legacy splits retained; no claim of near-duplicate-free holdout",
+    "status": "built_local_only",
+    "users": 4500
+  },
+  "trudvsem": {
+    "limitations": [
+      "Не случайная репрезентативная выборка рынка, ограниченный последовательный просмотр.",
+      "Маппинг Python/Data — эвристика, не экспертная метка. Нет подтверждённых грейдов.",
+      "Смысл/направление событий не установлен; события не связаны с выбранными документами как подтверждённые исходы.",
+      "workexp/edu не присоединены: выбранные документы ограничены полями основной таблицы.",
+      "Не установлена версия документа на момент события; temporal_leakage_risk=true."
+    ],
+    "status": "built_bounded_sample_local_only",
+    "tables": {
+      "curricula_vitae.csv": {
+        "full_scan": false,
+        "scanned_records": 100000,
+        "selected": 55,
+        "selection": "first unique documents with literal Python or SQL+analyst; mapping unreviewed; first encountered version"
+      },
+      "invitations.csv": {
+        "response_type": {
+          "Отклик соискателя": 1000
+        },
+        "sample_records": 1000
+      },
+      "responses.csv": {
+        "response_type": {
+          "Отказ": 858,
+          "Приглашение": 142
+        },
+        "sample_records": 1000
+      },
+      "vacancies.csv": {
+        "full_scan": false,
+        "scanned_records": 100000,
+        "selected": 27,
+        "selection": "first unique documents with literal Python or SQL+analyst; mapping unreviewed; first encountered version"
+      }
+    }
+  }
+}

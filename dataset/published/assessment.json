@@ -1,0 +1,350 @@
+{
+  "attempts": 480,
+  "bank_version": "1.1.0",
+  "expected_pass_confusion": [
+    {
+      "actual": false,
+      "count": 240,
+      "expected": false
+    },
+    {
+      "actual": true,
+      "count": 120,
+      "expected": true
+    }
+  ],
+  "item_discrimination": [
+    {
+      "corrected_item_total_correlation": 0.5495141685767088,
+      "family": "http_backoff",
+      "observations": 160,
+      "strong_correct_fraction": 1,
+      "strong_minus_weak": 1,
+      "weak_correct_fraction": 0
+    },
+    {
+      "corrected_item_total_correlation": 0.6197431140949864,
+      "family": "http_keys",
+      "observations": 160,
+      "strong_correct_fraction": 1,
+      "strong_minus_weak": 1,
+      "weak_correct_fraction": 0
+    },
+    {
+      "corrected_item_total_correlation": 0.605645820588421,
+      "family": "py_alias",
+      "observations": 160,
+      "strong_correct_fraction": 1,
+      "strong_minus_weak": 1,
+      "weak_correct_fraction": 0
+    },
+    {
+      "corrected_item_total_correlation": 0.593713043305473,
+      "family": "py_boundary",
+      "observations": 160,
+      "strong_correct_fraction": 1,
+      "strong_minus_weak": 1,
+      "weak_correct_fraction": 0
+    },
+    {
+      "corrected_item_total_correlation": 0.5914287191953992,
+      "family": "py_dag",
+      "observations": 160,
+      "strong_correct_fraction": 1,
+      "strong_minus_weak": 1,
+      "weak_correct_fraction": 0
+    },
+    {
+      "corrected_item_total_correlation": 0.6319233396304463,
+      "family": "py_filter",
+      "observations": 160,
+      "strong_correct_fraction": 1,
+      "strong_minus_weak": 1,
+      "weak_correct_fraction": 0
+    },
+    {
+      "corrected_item_total_correlation": 0.6174355405091251,
+      "family": "sql_join",
+      "observations": 160,
+      "strong_correct_fraction": 1,
+      "strong_minus_weak": 1,
+      "weak_correct_fraction": 0
+    },
+    {
+      "corrected_item_total_correlation": 0.5697449567222896,
+      "family": "sql_rank",
+      "observations": 160,
+      "strong_correct_fraction": 1,
+      "strong_minus_weak": 1,
+      "weak_correct_fraction": 0
+    },
+    {
+      "corrected_item_total_correlation": 0.5943608606016892,
+      "family": "sql_where",
+      "observations": 160,
+      "strong_correct_fraction": 1,
+      "strong_minus_weak": 1,
+      "weak_correct_fraction": 0
+    },
+    {
+      "corrected_item_total_correlation": 0.5058003806588267,
+      "family": "stats_median",
+      "observations": 160,
+      "strong_correct_fraction": 1,
+      "strong_minus_weak": 1,
+      "weak_correct_fraction": 0
+    },
+    {
+      "corrected_item_total_correlation": 0.609449400220044,
+      "family": "stats_weighted",
+      "observations": 160,
+      "strong_correct_fraction": 1,
+      "strong_minus_weak": 1,
+      "weak_correct_fraction": 0
+    },
+    {
+      "corrected_item_total_correlation": 0.632303012211309,
+      "family": "tx_snapshot",
+      "observations": 160,
+      "strong_correct_fraction": 1,
+      "strong_minus_weak": 1,
+      "weak_correct_fraction": 0
+    }
+  ],
+  "limitations": [
+    "Выбранный грейд фиксирован; не выбираем максимальный из трёх тестов.",
+    "Один и тот же синтетический профиль повторяет тест; пары повторов зависимы.",
+    "Компетентность симулятора задана через способность решать семейства. Высокое разделение ожидаемо по конструкции.",
+    "dev/test здесь разделяют варианты, не испытуемых; это тест генератора, не независимая выборка людей.",
+    "Трудность и профессиональная валидность на людях не установлены."
+  ],
+  "oracle_checks": 1920,
+  "oracle_errors": [],
+  "real_human_attempts": 0,
+  "status": "measured_simulation",
+  "test_retest": [
+    {
+      "agreeing_pairs": 94,
+      "attempts": 20,
+      "grade_counts": {
+        "Junior": 12,
+        "unconfirmed": 8
+      },
+      "pairs": 190,
+      "persona": "persona:data:Junior:noisy"
+    },
+    {
+      "agreeing_pairs": 190,
+      "attempts": 20,
+      "grade_counts": {
+        "unconfirmed": 20
+      },
+      "pairs": 190,
+      "persona": "persona:data:Junior:partial"
+    },
+    {
+      "agreeing_pairs": 190,
+      "attempts": 20,
+      "grade_counts": {
+        "Junior": 20
+      },
+      "pairs": 190,
+      "persona": "persona:data:Junior:strong"
+    },
+    {
+      "agreeing_pairs": 190,
+      "attempts": 20,
+      "grade_counts": {
+        "unconfirmed": 20
+      },
+      "pairs": 190,
+      "persona": "persona:data:Junior:weak"
+    },
+    {
+      "agreeing_pairs": 126,
+      "attempts": 20,
+      "grade_counts": {
+        "Middle": 16,
+        "unconfirmed": 4
+      },
+      "pairs": 190,
+      "persona": "persona:data:Middle:noisy"
+    },
+    {
+      "agreeing_pairs": 190,
+      "attempts": 20,
+      "grade_counts": {
+        "unconfirmed": 20
+      },
+      "pairs": 190,
+      "persona": "persona:data:Middle:partial"
+    },
+    {
+      "agreeing_pairs": 190,
+      "attempts": 20,
+      "grade_counts": {
+        "Middle": 20
+      },
+      "pairs": 190,
+      "persona": "persona:data:Middle:strong"
+    },
+    {
+      "agreeing_pairs": 190,
+      "attempts": 20,
+      "grade_counts": {
+        "unconfirmed": 20
+      },
+      "pairs": 190,
+      "persona": "persona:data:Middle:weak"
+    },
+    {
+      "agreeing_pairs": 126,
+      "attempts": 20,
+      "grade_counts": {
+        "Senior": 16,
+        "unconfirmed": 4
+      },
+      "pairs": 190,
+      "persona": "persona:data:Senior:noisy"
+    },
+    {
+      "agreeing_pairs": 190,
+      "attempts": 20,
+      "grade_counts": {
+        "unconfirmed": 20
+      },
+      "pairs": 190,
+      "persona": "persona:data:Senior:partial"
+    },
+    {
+      "agreeing_pairs": 190,
+      "attempts": 20,
+      "grade_counts": {
+        "Senior": 20
+      },
+      "pairs": 190,
+      "persona": "persona:data:Senior:strong"
+    },
+    {
+      "agreeing_pairs": 190,
+      "attempts": 20,
+      "grade_counts": {
+        "unconfirmed": 20
+      },
+      "pairs": 190,
+      "persona": "persona:data:Senior:weak"
+    },
+    {
+      "agreeing_pairs": 154,
+      "attempts": 20,
+      "grade_counts": {
+        "Junior": 18,
+        "unconfirmed": 2
+      },
+      "pairs": 190,
+      "persona": "persona:python:Junior:noisy"
+    },
+    {
+      "agreeing_pairs": 190,
+      "attempts": 20,
+      "grade_counts": {
+        "unconfirmed": 20
+      },
+      "pairs": 190,
+      "persona": "persona:python:Junior:partial"
+    },
+    {
+      "agreeing_pairs": 190,
+      "attempts": 20,
+      "grade_counts": {
+        "Junior": 20
+      },
+      "pairs": 190,
+      "persona": "persona:python:Junior:strong"
+    },
+    {
+      "agreeing_pairs": 190,
+      "attempts": 20,
+      "grade_counts": {
+        "unconfirmed": 20
+      },
+      "pairs": 190,
+      "persona": "persona:python:Junior:weak"
+    },
+    {
+      "agreeing_pairs": 154,
+      "attempts": 20,
+      "grade_counts": {
+        "Middle": 18,
+        "unconfirmed": 2
+      },
+      "pairs": 190,
+      "persona": "persona:python:Middle:noisy"
+    },
+    {
+      "agreeing_pairs": 190,
+      "attempts": 20,
+      "grade_counts": {
+        "unconfirmed": 20
+      },
+      "pairs": 190,
+      "persona": "persona:python:Middle:partial"
+    },
+    {
+      "agreeing_pairs": 190,
+      "attempts": 20,
+      "grade_counts": {
+        "Middle": 20
+      },
+      "pairs": 190,
+      "persona": "persona:python:Middle:strong"
+    },
+    {
+      "agreeing_pairs": 190,
+      "attempts": 20,
+      "grade_counts": {
+        "unconfirmed": 20
+      },
+      "pairs": 190,
+      "persona": "persona:python:Middle:weak"
+    },
+    {
+      "agreeing_pairs": 115,
+      "attempts": 20,
+      "grade_counts": {
+        "Senior": 15,
+        "unconfirmed": 5
+      },
+      "pairs": 190,
+      "persona": "persona:python:Senior:noisy"
+    },
+    {
+      "agreeing_pairs": 190,
+      "attempts": 20,
+      "grade_counts": {
+        "unconfirmed": 20
+      },
+      "pairs": 190,
+      "persona": "persona:python:Senior:partial"
+    },
+    {
+      "agreeing_pairs": 190,
+      "attempts": 20,
+      "grade_counts": {
+        "Senior": 20
+      },
+      "pairs": 190,
+      "persona": "persona:python:Senior:strong"
+    },
+    {
+      "agreeing_pairs": 190,
+      "attempts": 20,
+      "grade_counts": {
+        "unconfirmed": 20
+      },
+      "pairs": 190,
+      "persona": "persona:python:Senior:weak"
+    }
+  ],
+  "test_retest_pairwise_agreement": 0.918640350877193
+}

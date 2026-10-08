@@ -41,3 +41,16 @@ build/
 /demo/walkthrough-compact.webm
 
 /hakaton_astra_workspace/
+
+# Dataset inputs, private research artifacts and credentials are never published.
+/dataset/raw_sources/
+/dataset/*.zip
+/dataset/README_UPLOAD.md
+/dataset/INPUT_MANIFEST.json
+/dataset/checksums.sha256
+/dataset/fsp-server-dataset-prompt.md
+/dataset/builds/
+/dataset/releases/
+/dataset/logs/
+/dataset/.venv/
+/Ответы на вопросы трек ФСП ЛЦТ__.xlsx

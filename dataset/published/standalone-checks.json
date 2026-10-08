@@ -1,0 +1,36 @@
+{
+  "archive_crc": "passed",
+  "assessment_attempt_records_identical": true,
+  "checks": [
+    {
+      "command": "validate",
+      "exit_code": 0,
+      "network_disabled": true,
+      "records": 1973,
+      "status": "passed"
+    },
+    {
+      "command": "evaluate",
+      "exit_code": 0,
+      "network_disabled": true,
+      "records": null,
+      "status": "measured"
+    },
+    {
+      "command": "evaluate-assessment",
+      "exit_code": 0,
+      "network_disabled": true,
+      "records": null,
+      "status": "passed"
+    },
+    {
+      "command": "import-db",
+      "exit_code": 0,
+      "network_disabled": true,
+      "records": 1973,
+      "status": null
+    }
+  ],
+  "matching_report_identical": true,
+  "status": "passed"
+}

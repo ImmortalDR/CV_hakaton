@@ -1,0 +1,190 @@
+{
+  "files": [
+    {
+      "bytes": 124525,
+      "path": "raw_sources/careercorpus/CareerCorpus.xlsx",
+      "sha256": "97b1fa6cca1232912dd3f7bc312d71a2478249787168fd41dfbf6c1da90479d3"
+    },
+    {
+      "bytes": 7818949,
+      "path": "raw_sources/confit/ConFit-master.zip",
+      "sha256": "5d536f01531bd47cc68afb4facdeb63be03663b9e608633c0d1bf28b1ba970f4"
+    },
+    {
+      "bytes": 1059184,
+      "path": "raw_sources/talentclef/TaskA.zip",
+      "sha256": "9040f4e09cae3450f4d93f8ec7bc2656cd8d394855c667e1c03b2e185eb285a2"
+    },
+    {
+      "bytes": 4384306,
+      "path": "raw_sources/talentclef/TaskB.zip",
+      "sha256": "6b2a015a7ebcd211173339ce6b0ea0308b4b0097f6e39d677cf962a7aceb02c0"
+    },
+    {
+      "bytes": 4029,
+      "path": "raw_sources/talentclef/sampleset_TaskA.zip",
+      "sha256": "4ce003a2b7181d92e4029fabb7d494240283d826ad4c5bd3ac8d9617a177e970"
+    },
+    {
+      "bytes": 870,
+      "path": "raw_sources/talentclef/sampleset_TaskB.zip",
+      "sha256": "13a7ac1604946a7fec09c2806a9d9d7283ca01000755da71922329a8b9edece6"
+    },
+    {
+      "bytes": 2603886,
+      "path": "raw_sources/tianchi/table1_user.csv",
+      "sha256": "a0ec104ff95de8f3e5c13ce3e0f4c6c79a9b76505b523f6231ec5c0026aae8f8"
+    },
+    {
+      "bytes": 287885373,
+      "path": "raw_sources/tianchi/table2_jd.csv",
+      "sha256": "24ef1d129cec885ce3946866761a0ae3cebd26341fa1b887123592c85633ed1a"
+    },
+    {
+      "bytes": 50467578,
+      "path": "raw_sources/tianchi/table3_action.csv",
+      "sha256": "bfabe4a0ca8fdd9386e44cf481bff5716cbc86f686656de2ab10d57c8eb71dc7"
+    },
+    {
+      "bytes": 294715136,
+      "path": "raw_sources/trudvsem/addedu.csv",
+      "sha256": "843220165e112498df0f40031a660628bd7005d4c8f8fe9d905953638be7ed51"
+    },
+    {
+      "bytes": 8839652588,
+      "path": "raw_sources/trudvsem/curricula_vitae.csv",
+      "sha256": "c4038857dfa785e4a2357e787f1fbbad37a654fb1566eda0803fdf154f5aa705"
+    },
+    {
+      "bytes": 921286277,
+      "path": "raw_sources/trudvsem/edu.csv",
+      "sha256": "b8e5c77abefddfe4b456f345cbc0683835176edee85af0f3a026abecfd5b76dd"
+    },
+    {
+      "bytes": 3646,
+      "path": "raw_sources/trudvsem/industries.csv",
+      "sha256": "67a21e0c98d35728dd753b2adcbe236e5ececdfef44783689e0c5d17e528733d"
+    },
+    {
+      "bytes": 1785986571,
+      "path": "raw_sources/trudvsem/invitations.csv",
+      "sha256": "5c584451bce85d8f54ac6b20bb6beb33e9bb42a45fcca0b4179fc63e8e833fdb"
+    },
+    {
+      "bytes": 3282,
+      "path": "raw_sources/trudvsem/meta.csv",
+      "sha256": "d7c26d935a451d6772aa0ea4c3f0c7974d59bf78ff5fd4f189a6115b3b7c75e4"
+    },
+    {
+      "bytes": 494530925,
+      "path": "raw_sources/trudvsem/organizations.csv",
+      "sha256": "2c5d24b0cb0fc6644e106d065aa6cbee69a3f3f6eea90df4044463de60e7dad1"
+    },
+    {
+      "bytes": 861500,
+      "path": "raw_sources/trudvsem/professions.csv",
+      "sha256": "f0a1868d04a91ef4bc6c4bab7fcc91f192a4ebe6e3d6c27b73f66355a7d3715f"
+    },
+    {
+      "bytes": 7819,
+      "path": "raw_sources/trudvsem/regions.csv",
+      "sha256": "8c28c24362130ccc5df6d3a684629b716cfade21a8874aa2a81e65df4647c9b1"
+    },
+    {
+      "bytes": 442284629,
+      "path": "raw_sources/trudvsem/responses.csv",
+      "sha256": "db7eaf366a367f40e8c44422437be9ce7e25ee6defdcdbee6d43384f0d5e65f3"
+    },
+    {
+      "bytes": 6241,
+      "path": "raw_sources/trudvsem/stat_citizens.csv",
+      "sha256": "4f5b25358b41c0ecb7a8555c5267a0b3e6356e390ace077559632ea9d17385bc"
+    },
+    {
+      "bytes": 6774,
+      "path": "raw_sources/trudvsem/stat_companies.csv",
+      "sha256": "c165e505ba67216d953439f109de4d6d71cdbbdbdf2677a5ad90c5075a9f56cb"
+    },
+    {
+      "bytes": 849,
+      "path": "raw_sources/trudvsem/structure_add_edu.csv",
+      "sha256": "550f9d7fee87092e0bc7cb12aa9f753f1250215b292503805774a25951d239d6"
+    },
+    {
+      "bytes": 907,
+      "path": "raw_sources/trudvsem/structure_edu.csv",
+      "sha256": "0b2eb27d3e287f048a2559eb31f12f0529c77774d7688d644fdab321115e0a2d"
+    },
+    {
+      "bytes": 831,
+      "path": "raw_sources/trudvsem/structure_industries.csv",
+      "sha256": "8a5f6cbd03b8e4a0f6839ff3aaaa5991b649fd32e9440081735ae9f9917caaa9"
+    },
+    {
+      "bytes": 1832,
+      "path": "raw_sources/trudvsem/structure_invitations.csv",
+      "sha256": "99928470c38d508658127361779f546e5d421622bce079d82bc9943ec9bf0c91"
+    },
+    {
+      "bytes": 4433,
+      "path": "raw_sources/trudvsem/structure_organizations.csv",
+      "sha256": "e0b89fd1b1cb989056c49380a7b7f28f1a514c9f638604d366cece4e036f3e8d"
+    },
+    {
+      "bytes": 946,
+      "path": "raw_sources/trudvsem/structure_professions.csv",
+      "sha256": "5a0a08985d30120252f0a5b8c8a5919b919c4e1c9d5779312d7187e205575985"
+    },
+    {
+      "bytes": 752,
+      "path": "raw_sources/trudvsem/structure_regions.csv",
+      "sha256": "3529fbd55051cefae314c6d7a25311b98f1f16b99c506c0d4712e8411a2f3b67"
+    },
+    {
+      "bytes": 1900,
+      "path": "raw_sources/trudvsem/structure_responses.csv",
+      "sha256": "1135cbb3ed415fe49372e0850ae740f60d2ff1541ebf074c540ed10d77388df7"
+    },
+    {
+      "bytes": 469,
+      "path": "raw_sources/trudvsem/structure_stat_citizens.csv",
+      "sha256": "84f0d66b8f86b0a289ebb5d3d34ab6e16b1dbe079f9f60e9a7447ef5e774aa18"
+    },
+    {
+      "bytes": 982,
+      "path": "raw_sources/trudvsem/structure_stat_companies.csv",
+      "sha256": "5cc1725e1dbcc2d9829289fa5b6a34bb1bb92adff822cac0bbcf8f6a7d1c6ff2"
+    },
+    {
+      "bytes": 9752,
+      "path": "raw_sources/trudvsem/structure_vacancies.csv",
+      "sha256": "f6a18aa736f03ed5061e692402884d031478c346869e6cbd2667181b9823bcb0"
+    },
+    {
+      "bytes": 826,
+      "path": "raw_sources/trudvsem/structure_workexp.csv",
+      "sha256": "2f6dc605c720b4e239cdfeca2b094a1ef5243b914384e1f1d8b532c3cb4d29ab"
+    },
+    {
+      "bytes": 6665,
+      "path": "raw_sources/trudvsem/structure_сurriculum_vitae.csv",
+      "sha256": "cb2b9395bd2494dd83fcf6829acb0a8190304aa4ec5a207a58c6b2815a1c694c"
+    },
+    {
+      "bytes": 21631962386,
+      "path": "raw_sources/trudvsem/vacancies.csv",
+      "sha256": "1d1bf04ae5d88f4fc74c02b9ea5144d75d38595100499f52876fbea9942cbdf3"
+    },
+    {
+      "bytes": 8051776967,
+      "path": "raw_sources/trudvsem/workexp.csv",
+      "sha256": "c8cb0b7d4e7950114402a528e9ead8e5e1c27b8174be1802e0b367643cc48aa0"
+    },
+    {
+      "bytes": 8959943644,
+      "path": "_Rabota_v_RF_trudvsem.rf_186_02.12.21.zip",
+      "sha256": "ac5db77197b2a31bf7e59dfe9d1b2fc780744d33510deabfbca267d298c3530d"
+    }
+  ],
+  "scope": "Hashes only, not semantic or privacy approval"
+}
