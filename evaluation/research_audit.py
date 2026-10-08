@@ -11,6 +11,8 @@ from fsp import bank
 from fsp.matching import VERSION, eligible, group_sort, rank_candidate
 from evaluation.oracles import solve
 
+BANK_VERSION = "1.2.0"  # Historical audit; use bank_v2_audit for new forms.
+
 
 def records(path):
     return [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
@@ -66,7 +68,7 @@ def assessment():
     for spec, grade in bank.BLUEPRINT:
         frequent = defaultdict(Counter)
         for n in range(100):
-            for q in bank.generate(spec, grade, f'audit-dev-{n}'):
+            for q in bank.generate(spec, grade, f'audit-dev-{n}', version=BANK_VERSION):
                 frequent[q['family']][q['answer']] += 1
         guesses = {f: counts.most_common(1)[0][0] for f, counts in frequent.items()}
         outcomes = defaultdict(list)
@@ -74,8 +76,8 @@ def assessment():
         legacy = defaultdict(list)
         core = 'python' if spec == 'python' else 'sql'
         for n in range(100):
-            qs = bank.generate(spec, grade, f'audit-probe-{n}')
-            assert qs == bank.generate(spec, grade, f'audit-probe-{n}')
+            qs = bank.generate(spec, grade, f'audit-probe-{n}', version=BANK_VERSION)
+            assert qs == bank.generate(spec, grade, f'audit-probe-{n}', version=BANK_VERSION)
             rng = random.Random(f'audit-responses-{spec}-{grade}-{n}')
             answers = {kind: {} for kind in ['weak', 'core_only', 'strong', 'noisy', 'frequent_guess']}
             for q in qs:
@@ -88,7 +90,7 @@ def assessment():
                     if kind == 'noisy': knows = rng.random() >= .2
                     answers[kind][q['id']] = guesses[q['family']] if kind == 'frequent_guess' else ref if knows else 'не знаю'
             for kind, response in answers.items():
-                result = bank.grade_answers(qs, response)
+                result = bank.grade_answers(qs, response, version=BANK_VERSION)
                 outcomes[kind].append(result['passed'])
                 scores[kind].append(result['score'])
                 legacy[kind].append(bank.grade_answers(qs, response, version='1.1.0')['passed'])
@@ -113,7 +115,7 @@ def main():
              Path('evaluation/oracles.py'), Path('apps/api/fsp/bank.py'), Path('apps/api/fsp/matching.py')]
     files += [a.dataset / name for name in ['data/synthetic/candidates.jsonl','data/synthetic/needs.jsonl',
                                           'data/synthetic/pools.jsonl','labels/matching.jsonl']]
-    result = dict(kind='synthetic_regression_not_human_validation', bank_version=bank.VERSION,
+    result = dict(kind='synthetic_regression_not_human_validation', bank_version=BANK_VERSION,
                   matching_version=VERSION, hashes={str(f):hashlib.sha256(f.read_bytes()).hexdigest() for f in files},
                   matching=matching(a.dataset), assessment=assessment(), limitations=[
                       'Frozen test was examined before: regression, not blind generalization.',

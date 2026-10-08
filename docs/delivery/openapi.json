@@ -3630,7 +3630,7 @@
               "type": "string"
             },
             "type": "object",
-            "maxProperties": 4,
+            "maxProperties": 8,
             "title": "Answers"
           }
         },
@@ -3640,6 +3640,40 @@
           "answers"
         ],
         "title": "Answers"
+      },
+      "AssessmentRubric": {
+        "properties": {
+          "question_count": {
+            "type": "integer",
+            "title": "Question Count"
+          },
+          "minutes": {
+            "type": "integer",
+            "title": "Minutes"
+          },
+          "threshold": {
+            "type": "integer",
+            "title": "Threshold"
+          },
+          "core_min_correct": {
+            "type": "integer",
+            "title": "Core Min Correct"
+          },
+          "core_total": {
+            "type": "integer",
+            "title": "Core Total"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "question_count",
+          "minutes",
+          "threshold",
+          "core_min_correct",
+          "core_total"
+        ],
+        "title": "AssessmentRubric"
       },
       "Attempt": {
         "properties": {
@@ -3703,6 +3737,9 @@
             },
             "type": "array",
             "title": "Questions"
+          },
+          "rubric": {
+            "$ref": "#/components/schemas/AssessmentRubric"
           }
         },
         "additionalProperties": false,
@@ -3716,7 +3753,8 @@
           "created_at",
           "expires_at",
           "result",
-          "questions"
+          "questions",
+          "rubric"
         ],
         "title": "Attempt"
       },
@@ -3763,6 +3801,9 @@
           "demo": {
             "type": "boolean",
             "title": "Demo"
+          },
+          "rubric": {
+            "$ref": "#/components/schemas/AssessmentRubric"
           }
         },
         "additionalProperties": false,
@@ -3774,7 +3815,8 @@
           "bank_version",
           "grade_cooldown_days",
           "retake_hours",
-          "demo"
+          "demo",
+          "rubric"
         ],
         "title": "Catalog"
       },
@@ -4534,7 +4576,7 @@
             "title": "Evidence"
           },
           "test_score": {
-            "type": "integer",
+            "type": "number",
             "title": "Test Score"
           },
           "achievements": {
@@ -4937,7 +4979,7 @@
       "Result": {
         "properties": {
           "score": {
-            "type": "integer",
+            "type": "number",
             "title": "Score"
           },
           "passed": {

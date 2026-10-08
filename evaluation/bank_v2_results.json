@@ -1,0 +1,2235 @@
+{
+  "kind": "synthetic_model_comparison_not_human_validation",
+  "dev_variants_per_category": 200,
+  "probe_variants_per_category": 500,
+  "sha256": {
+    "evaluation/BANK_V2_PROTOCOL.md": "0f5ac38cb59b1ad3e47c87119201f1bb8afa62f0721c3cee9efd7135a923b33a",
+    "evaluation/bank_v2_audit.py": "b71c536a311c1165c8518c6cd1b47fe09250c0ec6ee80c733a3e41bd0c9c4061",
+    "evaluation/oracles.py": "921a67d8dd59c7554631e4f2e06d6413e4be832361ea138a09a249b353cc5aae",
+    "apps/api/fsp/bank.py": "fb428ee2da89a679940e04f0451ffc31cf4256f14bc694fff042df3f40eba8bb"
+  },
+  "rows": [
+    {
+      "version": "1.2.0",
+      "specialization": "python",
+      "grade": "Junior",
+      "strategy": "weak",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 0.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 500
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "python",
+      "grade": "Junior",
+      "strategy": "core_only",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 50.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 500
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "python",
+      "grade": "Junior",
+      "strategy": "old_families_only",
+      "n": 500,
+      "pass_count": 500,
+      "pass_rate": 1,
+      "mean_score": 100.0,
+      "pass_rate_wilson95": [
+        0.9923756595384479,
+        1
+      ],
+      "expected_pass": true,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "100.0": 500
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "python",
+      "grade": "Junior",
+      "strategy": "strong",
+      "n": 500,
+      "pass_count": 500,
+      "pass_rate": 1,
+      "mean_score": 100.0,
+      "pass_rate_wilson95": [
+        0.9923756595384479,
+        1
+      ],
+      "expected_pass": true,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "100.0": 500
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "python",
+      "grade": "Junior",
+      "strategy": "noise_10",
+      "n": 500,
+      "pass_count": 403,
+      "pass_rate": 0.806,
+      "mean_score": 90.2,
+      "pass_rate_wilson95": [
+        0.7690603702807669,
+        0.8382735333567634
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.6866452905811623,
+      "unique_forms": 500,
+      "score_histogram": {
+        "25.0": 1,
+        "50.0": 26,
+        "75.0": 141,
+        "100.0": 332
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "python",
+      "grade": "Junior",
+      "strategy": "noise_20",
+      "n": 500,
+      "pass_count": 300,
+      "pass_rate": 0.6,
+      "mean_score": 79.8,
+      "pass_rate_wilson95": [
+        0.5564541227024271,
+        0.6420210092052625
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.5190380761523046,
+      "unique_forms": 500,
+      "score_histogram": {
+        "25.0": 14,
+        "50.0": 76,
+        "75.0": 210,
+        "100.0": 200
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "python",
+      "grade": "Junior",
+      "strategy": "frequent_guess",
+      "n": 500,
+      "pass_count": 26,
+      "pass_rate": 0.052,
+      "mean_score": 32.25,
+      "pass_rate_wilson95": [
+        0.035730265115705276,
+        0.07510114393784553
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.9012104208416833,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 104,
+        "25.0": 205,
+        "50.0": 140,
+        "75.0": 44,
+        "100.0": 7
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "python",
+      "grade": "Middle",
+      "strategy": "weak",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 0.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 500
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "python",
+      "grade": "Middle",
+      "strategy": "core_only",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 50.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 500
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "python",
+      "grade": "Middle",
+      "strategy": "old_families_only",
+      "n": 500,
+      "pass_count": 500,
+      "pass_rate": 1,
+      "mean_score": 100.0,
+      "pass_rate_wilson95": [
+        0.9923756595384479,
+        1
+      ],
+      "expected_pass": true,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "100.0": 500
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "python",
+      "grade": "Middle",
+      "strategy": "strong",
+      "n": 500,
+      "pass_count": 500,
+      "pass_rate": 1,
+      "mean_score": 100.0,
+      "pass_rate_wilson95": [
+        0.9923756595384479,
+        1
+      ],
+      "expected_pass": true,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "100.0": 500
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "python",
+      "grade": "Middle",
+      "strategy": "noise_10",
+      "n": 500,
+      "pass_count": 405,
+      "pass_rate": 0.81,
+      "mean_score": 91.35,
+      "pass_rate_wilson95": [
+        0.7733002877435668,
+        0.8419726211702709
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.6915831663326654,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 22,
+        "75.0": 129,
+        "100.0": 349
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "python",
+      "grade": "Middle",
+      "strategy": "noise_20",
+      "n": 500,
+      "pass_count": 293,
+      "pass_rate": 0.586,
+      "mean_score": 80.85,
+      "pass_rate_wilson95": [
+        0.5423312223504144,
+        0.6283573910901985
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.5138196392785571,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 1,
+        "25.0": 10,
+        "50.0": 71,
+        "75.0": 207,
+        "100.0": 211
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "python",
+      "grade": "Middle",
+      "strategy": "frequent_guess",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 7.55,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 360,
+        "25.0": 130,
+        "50.0": 9,
+        "75.0": 1
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "python",
+      "grade": "Senior",
+      "strategy": "weak",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 0.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 500
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "python",
+      "grade": "Senior",
+      "strategy": "core_only",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 50.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 500
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "python",
+      "grade": "Senior",
+      "strategy": "old_families_only",
+      "n": 500,
+      "pass_count": 500,
+      "pass_rate": 1,
+      "mean_score": 100.0,
+      "pass_rate_wilson95": [
+        0.9923756595384479,
+        1
+      ],
+      "expected_pass": true,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "100.0": 500
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "python",
+      "grade": "Senior",
+      "strategy": "strong",
+      "n": 500,
+      "pass_count": 500,
+      "pass_rate": 1,
+      "mean_score": 100.0,
+      "pass_rate_wilson95": [
+        0.9923756595384479,
+        1
+      ],
+      "expected_pass": true,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "100.0": 500
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "python",
+      "grade": "Senior",
+      "strategy": "noise_10",
+      "n": 500,
+      "pass_count": 409,
+      "pass_rate": 0.818,
+      "mean_score": 91.35,
+      "pass_rate_wilson95": [
+        0.7817973646706083,
+        0.8493535547958443
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.7016513026052105,
+      "unique_forms": 500,
+      "score_histogram": {
+        "25.0": 2,
+        "50.0": 21,
+        "75.0": 125,
+        "100.0": 352
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "python",
+      "grade": "Senior",
+      "strategy": "noise_20",
+      "n": 500,
+      "pass_count": 300,
+      "pass_rate": 0.6,
+      "mean_score": 80.45,
+      "pass_rate_wilson95": [
+        0.5564541227024271,
+        0.6420210092052625
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.5190380761523046,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 2,
+        "25.0": 12,
+        "50.0": 70,
+        "75.0": 207,
+        "100.0": 209
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "python",
+      "grade": "Senior",
+      "strategy": "frequent_guess",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 5.15,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 400,
+        "25.0": 97,
+        "50.0": 3
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "data",
+      "grade": "Junior",
+      "strategy": "weak",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 0.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 500
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "data",
+      "grade": "Junior",
+      "strategy": "core_only",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 50.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 500
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "data",
+      "grade": "Junior",
+      "strategy": "old_families_only",
+      "n": 500,
+      "pass_count": 500,
+      "pass_rate": 1,
+      "mean_score": 100.0,
+      "pass_rate_wilson95": [
+        0.9923756595384479,
+        1
+      ],
+      "expected_pass": true,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "100.0": 500
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "data",
+      "grade": "Junior",
+      "strategy": "strong",
+      "n": 500,
+      "pass_count": 500,
+      "pass_rate": 1,
+      "mean_score": 100.0,
+      "pass_rate_wilson95": [
+        0.9923756595384479,
+        1
+      ],
+      "expected_pass": true,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "100.0": 500
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "data",
+      "grade": "Junior",
+      "strategy": "noise_10",
+      "n": 500,
+      "pass_count": 384,
+      "pass_rate": 0.768,
+      "mean_score": 89.05,
+      "pass_rate_wilson95": [
+        0.7290425919653227,
+        0.8028707615472854
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.6429338677354709,
+      "unique_forms": 500,
+      "score_histogram": {
+        "25.0": 2,
+        "50.0": 34,
+        "75.0": 145,
+        "100.0": 319
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "data",
+      "grade": "Junior",
+      "strategy": "noise_20",
+      "n": 500,
+      "pass_count": 305,
+      "pass_rate": 0.61,
+      "mean_score": 79.1,
+      "pass_rate_wilson95": [
+        0.566563975499563,
+        0.6517586695988955
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.5232464929859719,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 1,
+        "25.0": 15,
+        "50.0": 86,
+        "75.0": 197,
+        "100.0": 201
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "data",
+      "grade": "Junior",
+      "strategy": "frequent_guess",
+      "n": 500,
+      "pass_count": 1,
+      "pass_rate": 0.002,
+      "mean_score": 5.7,
+      "pass_rate_wilson95": [
+        0.00035313639455927456,
+        0.011240706705146758
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.996,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 395,
+        "25.0": 97,
+        "50.0": 7,
+        "75.0": 1
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "data",
+      "grade": "Middle",
+      "strategy": "weak",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 0.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 500
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "data",
+      "grade": "Middle",
+      "strategy": "core_only",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 50.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 500
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "data",
+      "grade": "Middle",
+      "strategy": "old_families_only",
+      "n": 500,
+      "pass_count": 500,
+      "pass_rate": 1,
+      "mean_score": 100.0,
+      "pass_rate_wilson95": [
+        0.9923756595384479,
+        1
+      ],
+      "expected_pass": true,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "100.0": 500
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "data",
+      "grade": "Middle",
+      "strategy": "strong",
+      "n": 500,
+      "pass_count": 500,
+      "pass_rate": 1,
+      "mean_score": 100.0,
+      "pass_rate_wilson95": [
+        0.9923756595384479,
+        1
+      ],
+      "expected_pass": true,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "100.0": 500
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "data",
+      "grade": "Middle",
+      "strategy": "noise_10",
+      "n": 500,
+      "pass_count": 398,
+      "pass_rate": 0.796,
+      "mean_score": 90.9,
+      "pass_rate_wilson95": [
+        0.758484663357909,
+        0.8290017270888521
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.6745811623246493,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 17,
+        "75.0": 148,
+        "100.0": 335
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "data",
+      "grade": "Middle",
+      "strategy": "noise_20",
+      "n": 500,
+      "pass_count": 291,
+      "pass_rate": 0.582,
+      "mean_score": 79.3,
+      "pass_rate_wilson95": [
+        0.5383026562362386,
+        0.6244469519280668
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.5124729458917836,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 1,
+        "25.0": 13,
+        "50.0": 85,
+        "75.0": 201,
+        "100.0": 200
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "data",
+      "grade": "Middle",
+      "strategy": "frequent_guess",
+      "n": 500,
+      "pass_count": 44,
+      "pass_rate": 0.088,
+      "mean_score": 33.75,
+      "pass_rate_wilson95": [
+        0.06620598447492893,
+        0.11607647206539012
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.8391663326653307,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 80,
+        "25.0": 213,
+        "50.0": 162,
+        "75.0": 42,
+        "100.0": 3
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "data",
+      "grade": "Senior",
+      "strategy": "weak",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 0.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 500
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "data",
+      "grade": "Senior",
+      "strategy": "core_only",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 50.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 500
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "data",
+      "grade": "Senior",
+      "strategy": "old_families_only",
+      "n": 500,
+      "pass_count": 500,
+      "pass_rate": 1,
+      "mean_score": 100.0,
+      "pass_rate_wilson95": [
+        0.9923756595384479,
+        1
+      ],
+      "expected_pass": true,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "100.0": 500
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "data",
+      "grade": "Senior",
+      "strategy": "strong",
+      "n": 500,
+      "pass_count": 500,
+      "pass_rate": 1,
+      "mean_score": 100.0,
+      "pass_rate_wilson95": [
+        0.9923756595384479,
+        1
+      ],
+      "expected_pass": true,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "100.0": 500
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "data",
+      "grade": "Senior",
+      "strategy": "noise_10",
+      "n": 500,
+      "pass_count": 400,
+      "pass_rate": 0.8,
+      "mean_score": 90.3,
+      "pass_rate_wilson95": [
+        0.7627108946948261,
+        0.8327145010282427
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.6793587174348698,
+      "unique_forms": 500,
+      "score_histogram": {
+        "25.0": 3,
+        "50.0": 27,
+        "75.0": 131,
+        "100.0": 339
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "data",
+      "grade": "Senior",
+      "strategy": "noise_20",
+      "n": 500,
+      "pass_count": 291,
+      "pass_rate": 0.582,
+      "mean_score": 80.2,
+      "pass_rate_wilson95": [
+        0.5383026562362386,
+        0.6244469519280668
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.5124729458917836,
+      "unique_forms": 500,
+      "score_histogram": {
+        "25.0": 14,
+        "50.0": 82,
+        "75.0": 190,
+        "100.0": 214
+      }
+    },
+    {
+      "version": "1.2.0",
+      "specialization": "data",
+      "grade": "Senior",
+      "strategy": "frequent_guess",
+      "n": 500,
+      "pass_count": 4,
+      "pass_rate": 0.008,
+      "mean_score": 14.05,
+      "pass_rate_wilson95": [
+        0.00311531518006224,
+        0.020387035834105168
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.9840961923847695,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 273,
+        "25.0": 178,
+        "50.0": 44,
+        "75.0": 5
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "python",
+      "grade": "Junior",
+      "strategy": "weak",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 0.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 500
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "python",
+      "grade": "Junior",
+      "strategy": "core_only",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 50.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 500
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "python",
+      "grade": "Junior",
+      "strategy": "old_families_only",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 50.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 500
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "python",
+      "grade": "Junior",
+      "strategy": "strong",
+      "n": 500,
+      "pass_count": 500,
+      "pass_rate": 1,
+      "mean_score": 100.0,
+      "pass_rate_wilson95": [
+        0.9923756595384479,
+        1
+      ],
+      "expected_pass": true,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "100.0": 500
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "python",
+      "grade": "Junior",
+      "strategy": "noise_10",
+      "n": 500,
+      "pass_count": 466,
+      "pass_rate": 0.932,
+      "mean_score": 90.375,
+      "pass_rate_wilson95": [
+        0.9064790772661258,
+        0.9509334925750932
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.872993987975952,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 2,
+        "62.5": 19,
+        "75.0": 64,
+        "87.5": 192,
+        "100.0": 223
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "python",
+      "grade": "Junior",
+      "strategy": "noise_20",
+      "n": 500,
+      "pass_count": 368,
+      "pass_rate": 0.736,
+      "mean_score": 79.725,
+      "pass_rate_wilson95": [
+        0.6956691427151993,
+        0.7727321685869482
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.6106132264529058,
+      "unique_forms": 500,
+      "score_histogram": {
+        "37.5": 3,
+        "50.0": 27,
+        "62.5": 76,
+        "75.0": 148,
+        "87.5": 164,
+        "100.0": 82
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "python",
+      "grade": "Junior",
+      "strategy": "frequent_guess",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 24.05,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 41,
+        "12.5": 147,
+        "25.0": 175,
+        "37.5": 90,
+        "50.0": 40,
+        "62.5": 7
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "python",
+      "grade": "Middle",
+      "strategy": "weak",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 0.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 500
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "python",
+      "grade": "Middle",
+      "strategy": "core_only",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 50.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 500
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "python",
+      "grade": "Middle",
+      "strategy": "old_families_only",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 50.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 500
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "python",
+      "grade": "Middle",
+      "strategy": "strong",
+      "n": 500,
+      "pass_count": 500,
+      "pass_rate": 1,
+      "mean_score": 100.0,
+      "pass_rate_wilson95": [
+        0.9923756595384479,
+        1
+      ],
+      "expected_pass": true,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "100.0": 500
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "python",
+      "grade": "Middle",
+      "strategy": "noise_10",
+      "n": 500,
+      "pass_count": 461,
+      "pass_rate": 0.922,
+      "mean_score": 90.225,
+      "pass_rate_wilson95": [
+        0.8951464501266115,
+        0.9424186065238385
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.855879759519038,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 2,
+        "62.5": 12,
+        "75.0": 84,
+        "87.5": 179,
+        "100.0": 223
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "python",
+      "grade": "Middle",
+      "strategy": "noise_20",
+      "n": 500,
+      "pass_count": 362,
+      "pass_rate": 0.724,
+      "mean_score": 80.1,
+      "pass_rate_wilson95": [
+        0.6832224284166226,
+        0.761361867056602
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.5995511022044088,
+      "unique_forms": 500,
+      "score_histogram": {
+        "25.0": 1,
+        "37.5": 6,
+        "50.0": 23,
+        "62.5": 63,
+        "75.0": 161,
+        "87.5": 157,
+        "100.0": 89
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "python",
+      "grade": "Middle",
+      "strategy": "frequent_guess",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 20.025,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 37,
+        "12.5": 195,
+        "25.0": 203,
+        "37.5": 60,
+        "50.0": 5
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "python",
+      "grade": "Senior",
+      "strategy": "weak",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 0.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 500
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "python",
+      "grade": "Senior",
+      "strategy": "core_only",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 50.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 500
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "python",
+      "grade": "Senior",
+      "strategy": "old_families_only",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 50.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 500
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "python",
+      "grade": "Senior",
+      "strategy": "strong",
+      "n": 500,
+      "pass_count": 500,
+      "pass_rate": 1,
+      "mean_score": 100.0,
+      "pass_rate_wilson95": [
+        0.9923756595384479,
+        1
+      ],
+      "expected_pass": true,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "100.0": 500
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "python",
+      "grade": "Senior",
+      "strategy": "noise_10",
+      "n": 500,
+      "pass_count": 462,
+      "pass_rate": 0.924,
+      "mean_score": 90.55,
+      "pass_rate_wilson95": [
+        0.8974035863260316,
+        0.9441309729625723
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.8592705410821643,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 4,
+        "62.5": 13,
+        "75.0": 74,
+        "87.5": 175,
+        "100.0": 234
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "python",
+      "grade": "Senior",
+      "strategy": "noise_20",
+      "n": 500,
+      "pass_count": 359,
+      "pass_rate": 0.718,
+      "mean_score": 80.15,
+      "pass_rate_wilson95": [
+        0.6770122207860065,
+        0.7556635667727567
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.5942364729458918,
+      "unique_forms": 500,
+      "score_histogram": {
+        "25.0": 1,
+        "37.5": 5,
+        "50.0": 26,
+        "62.5": 70,
+        "75.0": 147,
+        "87.5": 155,
+        "100.0": 96
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "python",
+      "grade": "Senior",
+      "strategy": "frequent_guess",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 5.75,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 301,
+        "12.5": 170,
+        "25.0": 27,
+        "37.5": 2
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "data",
+      "grade": "Junior",
+      "strategy": "weak",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 0.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 500
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "data",
+      "grade": "Junior",
+      "strategy": "core_only",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 50.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 500
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "data",
+      "grade": "Junior",
+      "strategy": "old_families_only",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 50.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 500
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "data",
+      "grade": "Junior",
+      "strategy": "strong",
+      "n": 500,
+      "pass_count": 500,
+      "pass_rate": 1,
+      "mean_score": 100.0,
+      "pass_rate_wilson95": [
+        0.9923756595384479,
+        1
+      ],
+      "expected_pass": true,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "100.0": 500
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "data",
+      "grade": "Junior",
+      "strategy": "noise_10",
+      "n": 500,
+      "pass_count": 467,
+      "pass_rate": 0.934,
+      "mean_score": 89.425,
+      "pass_rate_wilson95": [
+        0.9087605988391466,
+        0.9526214736402262
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.8764649298597195,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 5,
+        "62.5": 14,
+        "75.0": 84,
+        "87.5": 193,
+        "100.0": 204
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "data",
+      "grade": "Junior",
+      "strategy": "noise_20",
+      "n": 500,
+      "pass_count": 361,
+      "pass_rate": 0.722,
+      "mean_score": 79.775,
+      "pass_rate_wilson95": [
+        0.6811514003636959,
+        0.7594633924713748
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.5977635270541082,
+      "unique_forms": 500,
+      "score_histogram": {
+        "25.0": 1,
+        "37.5": 8,
+        "50.0": 20,
+        "62.5": 79,
+        "75.0": 142,
+        "87.5": 162,
+        "100.0": 88
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "data",
+      "grade": "Junior",
+      "strategy": "frequent_guess",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 4.175,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 353,
+        "12.5": 129,
+        "25.0": 16,
+        "37.5": 2
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "data",
+      "grade": "Middle",
+      "strategy": "weak",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 0.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 500
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "data",
+      "grade": "Middle",
+      "strategy": "core_only",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 50.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 500
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "data",
+      "grade": "Middle",
+      "strategy": "old_families_only",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 50.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 500
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "data",
+      "grade": "Middle",
+      "strategy": "strong",
+      "n": 500,
+      "pass_count": 500,
+      "pass_rate": 1,
+      "mean_score": 100.0,
+      "pass_rate_wilson95": [
+        0.9923756595384479,
+        1
+      ],
+      "expected_pass": true,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "100.0": 500
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "data",
+      "grade": "Middle",
+      "strategy": "noise_10",
+      "n": 500,
+      "pass_count": 465,
+      "pass_rate": 0.93,
+      "mean_score": 90.2,
+      "pass_rate_wilson95": [
+        0.9042028101480832,
+        0.949240257054982
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.8695390781563126,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 1,
+        "62.5": 18,
+        "75.0": 67,
+        "87.5": 200,
+        "100.0": 214
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "data",
+      "grade": "Middle",
+      "strategy": "noise_20",
+      "n": 500,
+      "pass_count": 339,
+      "pass_rate": 0.678,
+      "mean_score": 78.9,
+      "pass_rate_wilson95": [
+        0.6358218272211889,
+        0.7174639075744986
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.5624929859719439,
+      "unique_forms": 500,
+      "score_histogram": {
+        "37.5": 4,
+        "50.0": 26,
+        "62.5": 88,
+        "75.0": 154,
+        "87.5": 148,
+        "100.0": 80
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "data",
+      "grade": "Middle",
+      "strategy": "frequent_guess",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 17.1,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 79,
+        "12.5": 210,
+        "25.0": 162,
+        "37.5": 46,
+        "50.0": 3
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "data",
+      "grade": "Senior",
+      "strategy": "weak",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 0.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 500
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "data",
+      "grade": "Senior",
+      "strategy": "core_only",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 50.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 500
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "data",
+      "grade": "Senior",
+      "strategy": "old_families_only",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 50.0,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": false,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "50.0": 500
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "data",
+      "grade": "Senior",
+      "strategy": "strong",
+      "n": 500,
+      "pass_count": 500,
+      "pass_rate": 1,
+      "mean_score": 100.0,
+      "pass_rate_wilson95": [
+        0.9923756595384479,
+        1
+      ],
+      "expected_pass": true,
+      "agreement_with_expected": 1,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "100.0": 500
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "data",
+      "grade": "Senior",
+      "strategy": "noise_10",
+      "n": 500,
+      "pass_count": 457,
+      "pass_rate": 0.914,
+      "mean_score": 89.825,
+      "pass_rate_wilson95": [
+        0.8861601885014425,
+        0.9355268575963924
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.8424769539078156,
+      "unique_forms": 500,
+      "score_histogram": {
+        "62.5": 25,
+        "75.0": 74,
+        "87.5": 184,
+        "100.0": 217
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "data",
+      "grade": "Senior",
+      "strategy": "noise_20",
+      "n": 500,
+      "pass_count": 353,
+      "pass_rate": 0.706,
+      "mean_score": 79.425,
+      "pass_rate_wilson95": [
+        0.6646172591655972,
+        0.7442415125642432
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 0.5840400801603206,
+      "unique_forms": 500,
+      "score_histogram": {
+        "37.5": 4,
+        "50.0": 25,
+        "62.5": 87,
+        "75.0": 135,
+        "87.5": 172,
+        "100.0": 77
+      }
+    },
+    {
+      "version": "2.0.0",
+      "specialization": "data",
+      "grade": "Senior",
+      "strategy": "frequent_guess",
+      "n": 500,
+      "pass_count": 0,
+      "pass_rate": 0,
+      "mean_score": 7.6,
+      "pass_rate_wilson95": [
+        4.336808689942018e-19,
+        0.007624340461552241
+      ],
+      "expected_pass": null,
+      "agreement_with_expected": null,
+      "pairwise_agreement": 1.0,
+      "unique_forms": 500,
+      "score_histogram": {
+        "0.0": 258,
+        "12.5": 188,
+        "25.0": 46,
+        "37.5": 8
+      }
+    }
+  ],
+  "families": [
+    {
+      "version": "1.2.0",
+      "family": "http_backoff",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.041,
+      "noise20_correct_fraction": 0.815,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "1.2.0",
+      "family": "http_keys",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.12,
+      "noise20_correct_fraction": 0.837,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "1.2.0",
+      "family": "py_alias",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.031,
+      "noise20_correct_fraction": 0.78,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "1.2.0",
+      "family": "py_boundary",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.352,
+      "noise20_correct_fraction": 0.801,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "1.2.0",
+      "family": "py_dag",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.062,
+      "noise20_correct_fraction": 0.794,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "1.2.0",
+      "family": "py_filter",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.293,
+      "noise20_correct_fraction": 0.795,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "1.2.0",
+      "family": "sql_join",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.544,
+      "noise20_correct_fraction": 0.783,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "1.2.0",
+      "family": "sql_rank",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.16,
+      "noise20_correct_fraction": 0.781,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "1.2.0",
+      "family": "sql_where",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.018,
+      "noise20_correct_fraction": 0.799,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "1.2.0",
+      "family": "stats_median",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.096,
+      "noise20_correct_fraction": 0.783,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "1.2.0",
+      "family": "stats_weighted",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.131,
+      "noise20_correct_fraction": 0.803,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "1.2.0",
+      "family": "tx_snapshot",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.121,
+      "noise20_correct_fraction": 0.823,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "2.0.0",
+      "family": "http_backoff",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.041,
+      "noise20_correct_fraction": 0.815,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "2.0.0",
+      "family": "http_keys",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.12,
+      "noise20_correct_fraction": 0.837,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "2.0.0",
+      "family": "http_quota",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.635,
+      "noise20_correct_fraction": 0.794,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "2.0.0",
+      "family": "http_retry_budget",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.069,
+      "noise20_correct_fraction": 0.824,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "2.0.0",
+      "family": "py_accumulate",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.03,
+      "noise20_correct_fraction": 0.795,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "2.0.0",
+      "family": "py_alias",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.031,
+      "noise20_correct_fraction": 0.78,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "2.0.0",
+      "family": "py_boundary",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.352,
+      "noise20_correct_fraction": 0.801,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "2.0.0",
+      "family": "py_dag",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.062,
+      "noise20_correct_fraction": 0.794,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "2.0.0",
+      "family": "py_default",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.015,
+      "noise20_correct_fraction": 0.793,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "2.0.0",
+      "family": "py_filter",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.293,
+      "noise20_correct_fraction": 0.795,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "2.0.0",
+      "family": "py_lru",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.058,
+      "noise20_correct_fraction": 0.773,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "2.0.0",
+      "family": "sql_group",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.005,
+      "noise20_correct_fraction": 0.773,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "2.0.0",
+      "family": "sql_join",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.544,
+      "noise20_correct_fraction": 0.783,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "2.0.0",
+      "family": "sql_null_sum",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.024,
+      "noise20_correct_fraction": 0.807,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "2.0.0",
+      "family": "sql_rank",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.16,
+      "noise20_correct_fraction": 0.781,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "2.0.0",
+      "family": "sql_where",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.018,
+      "noise20_correct_fraction": 0.799,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "2.0.0",
+      "family": "sql_window",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.011,
+      "noise20_correct_fraction": 0.789,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "2.0.0",
+      "family": "stats_conditional",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.004,
+      "noise20_correct_fraction": 0.797,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "2.0.0",
+      "family": "stats_mean_drop",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.029,
+      "noise20_correct_fraction": 0.802,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "2.0.0",
+      "family": "stats_median",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.096,
+      "noise20_correct_fraction": 0.783,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "2.0.0",
+      "family": "stats_weighted",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.131,
+      "noise20_correct_fraction": 0.803,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "2.0.0",
+      "family": "testing_mutation",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.287,
+      "noise20_correct_fraction": 0.798,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "2.0.0",
+      "family": "tx_optimistic",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.012,
+      "noise20_correct_fraction": 0.784,
+      "observations_per_strategy": 1000
+    },
+    {
+      "version": "2.0.0",
+      "family": "tx_snapshot",
+      "strong_minus_weak": 1,
+      "mode_guess_correct_fraction": 0.121,
+      "noise20_correct_fraction": 0.823,
+      "observations_per_strategy": 1000
+    }
+  ],
+  "oracle_checks": 36000,
+  "oracle_mismatches": [],
+  "simulated_attempts": 42000,
+  "analytic_iid": [
+    {
+      "version": "1.2.0",
+      "probability_correct": 0.8,
+      "pass_probability": 0.6144000000000001
+    },
+    {
+      "version": "1.2.0",
+      "probability_correct": 0.9,
+      "pass_probability": 0.8019000000000001
+    },
+    {
+      "version": "2.0.0",
+      "probability_correct": 0.8,
+      "pass_probability": 0.7340032000000002
+    },
+    {
+      "version": "2.0.0",
+      "probability_correct": 0.9,
+      "pass_probability": 0.9300217499999999
+    }
+  ],
+  "limitations": [
+    "The response model assumes independent slips and fixed knowledge; no real people.",
+    "Wilson intervals describe this synthetic sampling process, not market performance.",
+    "Pairwise comparisons share attempts and are not independent observations.",
+    "Strong/weak separation is defined by construction, not empirical discrimination.",
+    "Remembering solution methods or using external help is still possible.",
+    "Eight numeric questions do not certify a professional grade."
+  ]
+}

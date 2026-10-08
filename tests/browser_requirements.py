@@ -25,8 +25,31 @@ def solve_visible(text):
         duration = int(re.search(r'занимает (\d+)', text)[1])
         pause = int(re.search(r'пауза (\d+)', text)[1])
         return n * duration + sum(pause * 2**i for i in range(n-1))
+    if 'Пустой LRU-кеш Python' in text:
+        from collections import OrderedDict
+        capacity = int(re.search(r'хранит (\d+)',text)[1])
+        keys = ast.literal_eval(re.search(r'Обращения: (\[[^\]]+\])',text)[1])
+        latency = int(re.search(r'длительностью (\d+)',text)[1])
+        cache, misses = OrderedDict(), 0
+        for key in keys:
+            if key in cache: cache.move_to_end(key)
+            else:
+                misses += 1
+                cache[key] = True
+                if len(cache) > capacity: cache.popitem(last=False)
+        return misses * latency
+    if 'Клиент выполняет четыре операции' in text:
+        streams = ast.literal_eval(re.search(r'операциям: (\[.*\])\.',text)[1])
+        duration = int(re.search(r'длится (\d+)',text)[1])
+        return sum(next((i+1 for i,status in enumerate(stream) if status != 503),3) for stream in streams)*duration
+    if 'Требование: функция возвращает abs(x)' in text:
+        values=ast.literal_eval(re.search(r'Входы тестов: (\[[^\]]+\])',text)[1])
+        return sum(abs(v)!=v for v in values)
     if 'xs = ' in text:
         values = ast.literal_eval(re.search(r'xs = (\[[^\n]+\])', text)[1])
+        if 'total =' in text:
+            start=int(re.search(r'total = (\d+)',text)[1])
+            return start + sum(v * (-1 if i%2 else 1) for i,v in enumerate(values))
         divisor = int(re.search(r'x % (\d+)', text)[1])
         return sum(v for v in values if v % divisor == 0)
     if 'Спецификация:' in text:
@@ -110,21 +133,22 @@ def run():
             candidate.get_by_label('Уровень теста').select_option('Senior')
             nav(candidate,'Начать тест')
             candidate.get_by_label('Ответ на задание 1',exact=True).wait_for()
-            wrong_core = False
+            wrong_core = 0
+            failed_core_count = 2 if candidate.locator(".question").count() == 8 else 1
             for q in candidate.locator('.question').all():
                 text = q.locator('pre').inner_text()
                 answer = '-99999'
                 if args.expect_core_rule:
                     answer = str(solve_visible(text))
-                    if 'Планировщик Python' in text and not wrong_core:
+                    if 'Планировщик Python' in text and wrong_core < failed_core_count:
                         answer = '-99999'
-                        wrong_core = True
+                        wrong_core += 1
                 q.locator('input').fill(answer)
             nav(candidate,'Завершить и узнать результат')
             expect(candidate.locator('.result')).to_contain_text('Пока не подтверждён')
             expect(candidate.locator('.result')).to_contain_text('75%' if args.expect_core_rule else '0%')
             if args.expect_core_rule:
-                passed('Новая рубрика: 75% с ошибкой по основному навыку не подтверждают Senior')
+                passed('Новая рубрика: 75% с недостаточным подтверждением основного навыка не подтверждают Senior')
             passed('ТЗ: провал Senior не присваивает более низкий грейд',candidate,'02-failed.png')
             nav(candidate,'К выбору уровня')
             candidate.get_by_label('Уровень теста').select_option('Junior')

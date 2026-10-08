@@ -8,10 +8,12 @@ from pathlib import Path
 from statistics import mean
 
 from fsp import bank
-from fsp.matching import eligible, rank_candidate
+from fsp.matching import VERSION as MATCHING_VERSION, eligible, rank_candidate
 from evaluation.oracles import solve
 
 ROOT = Path(__file__).parent
+# Keep the original published benchmark on its original bank and rubric.
+BANK_VERSION = "1.1.0"
 
 
 def matching():
@@ -82,6 +84,7 @@ def grading():
                     person["specialization"],
                     grade,
                     "eval-" + person["id"] + "-" + str(variant),
+                    version=BANK_VERSION,
                 )
                 unique.add(bank.fingerprint(qs))
                 answers = {}
@@ -95,7 +98,7 @@ def grading():
                         if capable and rng.random() >= person["slip_probability"]
                         else "не знаю"
                     )
-                if bank.grade_answers(qs, answers)["passed"]:
+                if bank.grade_answers(qs, answers, version=BANK_VERSION)["passed"]:
                     predicted = grade
             predictions.append(predicted)
             matrix[person["expected_grade"]][predicted] += 1
@@ -134,8 +137,8 @@ def main():
     }
     result = {
         "kind": "synthetic_simulation_not_human_validation",
-        "bank_version": bank.VERSION,
-        "matching_version": "matching-1.0.0",
+        "bank_version": BANK_VERSION,
+        "matching_version": MATCHING_VERSION,
         "fixture_sha256": hashes,
         "matching": matching(),
         "grading": grading(),

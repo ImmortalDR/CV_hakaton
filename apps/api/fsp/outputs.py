@@ -34,6 +34,14 @@ class Health(Output):
     version: str
 
 
+class AssessmentRubric(Output):
+    question_count: int
+    minutes: int
+    threshold: int
+    core_min_correct: int
+    core_total: int
+
+
 class Catalog(Output):
     specializations: dict[str, str]
     grades: list[Grade]
@@ -42,6 +50,7 @@ class Catalog(Output):
     grade_cooldown_days: int
     retake_hours: int
     demo: bool
+    rubric: AssessmentRubric
 
 
 class Evidence(Output):
@@ -98,7 +107,7 @@ class Profile(Output):
     experience_years: int | None
     experience_source: Literal["self_report"]
     evidence: list[Evidence]
-    test_score: int
+    test_score: float
     achievements: list[Achievement]
     demo: bool
     contacts: Contacts | None
@@ -140,7 +149,7 @@ class SkillResult(Output):
 
 
 class Result(Output):
-    score: int
+    score: float
     passed: bool
     threshold: int
     details: list[AnswerDetail]
@@ -157,6 +166,7 @@ class Attempt(Output):
     expires_at: datetime
     result: Result | None
     questions: list[Question]
+    rubric: AssessmentRubric
 
 
 class Company(Output):

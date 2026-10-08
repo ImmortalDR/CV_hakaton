@@ -458,6 +458,7 @@ def test_non_demo_mail_failure_rolls_back_and_demo_disabled(app, monkeypatch):
 
 def test_new_core_rule_and_inflight_legacy_attempt_keep_their_rubrics(app):
     from evaluation.oracles import solve
+    from fsp import bank
     for version, expected in [('1.1.0', True), ('1.2.0', False)]:
         c, _ = account(app, f'rubric-{version}@example.org')
         profile(c)
@@ -465,6 +466,7 @@ def test_new_core_rule_and_inflight_legacy_attempt_keep_their_rubrics(app):
         with app.state.factory.begin() as db:
             a = db.get(Attempt, attempt['id'])
             a.version = version  # emulate a stored active attempt across deployment
+            a.questions = bank.generate('python', 'Junior', a.seed, version=version)
             answers = {q['id']: str(solve(q)) for q in a.questions}
             answers.pop(next(q['id'] for q in a.questions if q['skill'] == 'python'))
         r = c.post(f"/api/me/attempts/{attempt['id']}/submit", json={'answers': answers})
@@ -488,3 +490,31 @@ def test_search_exposes_required_skill_coverage_and_preserves_it_in_history(app)
     assert match['unmet_skills'] == []
     saved = e.get('/api/searches/' + partial['id']).json()
     assert saved['items'][0]['match'] == partial['items'][0]['match']
+
+
+def test_v2_fractional_score_rubric_and_foreign_question_rejection(app):
+    from fsp import bank
+    from evaluation.oracles import solve
+    c, _ = account(app, 'v2-score@example.org')
+    profile(c)
+    a = c.post('/api/me/attempts', json={'grade':'Junior'}).json()
+    assert a['version'] == '2.0.0' and a['rubric']['question_count'] == 8
+    assert c.post('/api/me/attempts/'+a['id']+'/submit', json={'answers':{'9':'0'}}).status_code == 422
+    with app.state.factory() as db:
+        stored = db.get(Attempt, a['id'])
+        answers = {q['id']:str(solve(q)) for q in stored.questions}
+        answers.pop(next(q['id'] for q in stored.questions if q['skill']=='python'))
+    r = c.post('/api/me/attempts/'+a['id']+'/submit', json={'answers':answers})
+    assert r.status_code == 200, r.text
+    assert r.json()['result']['score'] == 87.5 and r.json()['result']['passed']
+    assert c.get('/api/me/profile').json()['test_score'] == 87.5
+    # An old active attempt cannot accept v2-only question IDs.
+    other, _ = account(app, 'old-question@example.org')
+    profile(other)
+    a = other.post('/api/me/attempts', json={'grade':'Junior'}).json()
+    with app.state.factory.begin() as db:
+        stored = db.get(Attempt,a['id'])
+        stored.version = '1.2.0'
+        stored.questions = bank.generate('python','Junior',stored.seed,version='1.2.0')
+    r = other.post('/api/me/attempts/'+a['id']+'/submit',json={'answers':{'5':'0'}})
+    assert r.status_code == 422 and 'нет в этой попытке' in r.json()['detail']

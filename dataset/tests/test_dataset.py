@@ -360,3 +360,10 @@ def test_duplicate_careercorpus_source_ids_preserve_both_rows(tmp_path):
     assert len(rows) == 2 and rows[0]["record_id"] != rows[1]["record_id"]
     assert all(r["payload"]["original_values"]["ID"] == "3.5421497E7" for r in rows)
     assert report["CareerCorpus"]["duplicate_id_extra_rows"] == 1
+
+
+def test_fractional_assessment_scores_are_retained(package):
+    rows = list(records(package / 'assessment/attempts.jsonl'))
+    scores = [r['payload']['application_result']['score'] for r in rows]
+    assert any(score == 87.5 for score in scores)
+    assert validate(package)['status'] == 'passed'

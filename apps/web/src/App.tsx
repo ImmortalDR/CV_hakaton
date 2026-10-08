@@ -706,7 +706,7 @@ function Overview({
             {candidate
               ? p?.verified_grade
                 ? "Ваш уровень подтверждён тестом. Работодатели могут найти вас в соответствующей категории."
-                : "Четыре коротких задания помогут подтвердить выбранный уровень. ФСП ID для этого не нужен."
+                : "Тест по основному и вспомогательному навыкам поможет подтвердить выбранный уровень. ФСП ID для этого не нужен."
               : "Никакого потока случайных откликов: выбирайте подтверждённую категорию и смотрите основания подбора."}
           </p>
           <button
@@ -1022,6 +1022,12 @@ function Assessments({
     [current, setCurrent] = useState<Attempt | null>(null),
     [answers, setAnswers] = useState<Record<string, string>>({}),
     [grade, setGrade] = useState(profile.claimed_grade ?? "Junior");
+  const policy = current?.rubric ?? catalog.rubric;
+  const ruleText = policy
+    ? `Не менее ${policy.threshold}%` + (policy.core_min_correct
+      ? ` и ${policy.core_min_correct} из ${policy.core_total} верных ответов по основному навыку (Python или SQL).`
+      : ".")
+    : "Правила теста загружаются.";
   const load = async () => {
     const list = await api<Attempt[]>("/me/attempts");
     setAttempts(list);
@@ -1042,7 +1048,7 @@ function Assessments({
       <PageTitle
         kicker="Навыки с доказательствами"
         title="Подтвердите свой уровень"
-        description={`${catalog.specializations[profile.specialization]} · 4 задания · 30 минут. Для новых тестов: не менее 75% и оба задания по основному навыку (Python или SQL) решены верно.`}
+        description={`${catalog.specializations[profile.specialization]} · ${policy?.question_count ?? "—"} заданий · ${policy?.minutes ?? "—"} минут. ${ruleText}`}
       />
       <div className="notice subtle">
         <ShieldCheck size={18} />
@@ -1074,7 +1080,7 @@ function Assessments({
                 <p>
                   {current.result.passed
                     ? "Результат добавлен в профиль."
-                    : "Для новых тестов нужны не менее 75% и оба верных ответа по основному навыку. Прежний подтверждённый уровень, если он был, сохранён. Первый тест ниже можно выбрать сразу; смена подтверждённого уровня — через 90 дней."}
+                    : `${ruleText} Прежний подтверждённый уровень, если он был, сохранён. Первый тест ниже можно выбрать сразу; смена подтверждённого уровня — через 90 дней.`}
                 </p>
               </div>
             </div>
@@ -1096,7 +1102,7 @@ function Assessments({
             {current.questions.map((q, index) => (
               <div className="question" key={q.id}>
                 <div className="question-label">
-                  <span>Задание {index + 1} из 4</span>
+                  <span>Задание {index + 1} из {current.questions.length}</span>
                   <span>{catalog.skills[q.skill]}</span>
                 </div>
                 <pre>{q.text}</pre>

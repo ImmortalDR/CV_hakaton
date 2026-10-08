@@ -75,12 +75,12 @@ class StartAttempt(Input):
 
 
 class Answers(Input):
-    answers: dict[str, str] = Field(max_length=4)
+    answers: dict[str, str] = Field(max_length=8)
 
     @field_validator("answers")
     @classmethod
     def bounded(cls, v):
-        if any(k not in ["1", "2", "3", "4"] or len(x) > 100 for k, x in v.items()):
+        if any(k not in [str(i) for i in range(1, 9)] or len(x) > 100 for k, x in v.items()):
             raise ValueError("Недопустимый ответ")
         return v
 

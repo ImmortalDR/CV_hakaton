@@ -49,7 +49,7 @@ Compose-проект `fsp-mvp`, том `fsp-mvp_fsp_db`. Не удаляйте �
 
 - Кабинеты кандидата и работодателя, регистрация, одноразовое подтверждение
   e-mail, сессии, компания и ручной профиль с PDF на русском языке.
-- Python / бэкенд и аналитика / SQL, Junior–Senior, 12 семейств задач,
+- Python / бэкенд и аналитика / SQL, Junior–Senior, 24 семейства задач,
   воспроизводимые варианты и серверная проверка. Неудача не понижает грейд.
 - Банк и структурированная потребность, группировка по категории,
   доказательства `met / unmet / unknown`, история подборок.
@@ -154,3 +154,24 @@ PYTHONPATH=apps/api:. .venv/bin/python -m evaluation.research_audit
 (или `--dataset` с корнем распакованного опубликованного набора). Вторая
 создаёт три вымышленных аккаунта на демостенде и снимает публикацию своего
 тестового кандидата после проверки; реальные профили не используются.
+
+## Банк 2.0.0 и подготовка реального пилота
+
+Текущий тест: 8 заданий, 30 минут, минимум 6 верных и 3 из 4 по основному
+навыку Python/SQL. Старые попытки сохраняют прежние вопросы и правила.
+[Методика](docs/delivery/ASSESSMENT.md),
+[результаты сравнения](evaluation/bank_v2_results.json),
+[инструкция реального пилота](docs/delivery/HUMAN_PILOT.md),
+[краткий материал для выступления PDF](docs/delivery/RESEARCH_V2.pdf)
+и [DOCX](docs/delivery/RESEARCH_V2.docx).
+
+```bash
+PYTHONPATH=apps/api:. .venv/bin/python -m evaluation.bank_v2_audit
+PYTHONPATH=apps/api:. .venv/bin/python -m evaluation.pilot prepare --root audit/new-pilot
+PYTHONPATH=apps/api:. .venv/bin/python -m evaluation.pilot evaluate --root audit/new-pilot
+```
+
+Первый скрипт не использует БД и внешние источники. Для пилота нужны реальные
+независимые метки и ответы; пустые шаблоны не превращаются в результаты людей.
+Старые `evaluation/run.py` и `research_audit.py` закреплены за своими версиями
+банка 1.1.0 и 1.2.0 соответственно; их отчёты не описывают банк 2.0.0.

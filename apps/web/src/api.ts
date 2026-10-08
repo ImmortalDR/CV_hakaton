@@ -22,11 +22,19 @@ export type User = {
   email: string;
   demo: boolean;
 };
+export type AssessmentRubric = {
+  question_count: number;
+  minutes: number;
+  threshold: number;
+  core_min_correct: number;
+  core_total: number;
+};
 export type Catalog = {
   specializations: Record<string, string>;
   grades: string[];
   skills: Record<string, string>;
   demo: boolean;
+  rubric?: AssessmentRubric;
 };
 export type Evidence = {
   id: string;
@@ -97,6 +105,7 @@ export type Attempt = {
   created_at: string;
   expires_at: string;
   result: Result | null;
+  rubric?: AssessmentRubric;
   questions: { id: string; text: string; skill: string }[];
 };
 export type Company = {

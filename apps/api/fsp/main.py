@@ -291,6 +291,7 @@ def create_app(database_url=None, demo=None, rate_limit=True):
                 else a.status
             ),
             "version": a.version,
+            "rubric": bank.rubric(a.version),
             "created_at": a.created_at,
             "expires_at": a.expires_at,
             "result": a.result,
@@ -353,6 +354,7 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             "grades": bank.GRADES,
             "skills": bank.SKILLS,
             "bank_version": bank.VERSION,
+            "rubric": bank.rubric(),
             "grade_cooldown_days": 90,
             "retake_hours": 24,
             "demo": is_demo,
@@ -685,6 +687,8 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             fail(409, "Время теста истекло. Грейд сохранён.")
         if not p.processing:
             fail(409, "Согласие на обработку отозвано")
+        if set(data.answers) - {q["id"] for q in a.questions}:
+            fail(422, "Ответ содержит задание, которого нет в этой попытке")
         result = bank.grade_answers(a.questions, data.answers, version=a.version)
         a.answers = data.answers
         a.result = result
