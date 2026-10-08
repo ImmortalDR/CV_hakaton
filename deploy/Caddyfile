@@ -2,12 +2,14 @@
 	admin off
 }
 
-{$HTTPS_HOST} {
+{$HTTPS_SITE_ADDRESSES} {
 	tls {
 		issuer acme {
 			dir {$ACME_DIRECTORY}
 			profile shortlived
 		}
 	}
+	@alias not host {$HTTPS_HOST}
+	redir @alias https://{$HTTPS_HOST}{uri} permanent
 	reverse_proxy 127.0.0.1:3080
 }

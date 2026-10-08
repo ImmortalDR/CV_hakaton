@@ -53,6 +53,7 @@ services:
     network_mode: host
     environment:
       HTTPS_HOST: ${HTTPS_HOST:-localhost}
+      HTTPS_SITE_ADDRESSES: ${HTTPS_SITE_ADDRESSES:-${HTTPS_HOST:-localhost}}
       ACME_DIRECTORY: ${ACME_DIRECTORY:-https://acme-v02.api.letsencrypt.org/directory}
     volumes:
       - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
