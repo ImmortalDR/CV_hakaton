@@ -109,7 +109,17 @@ def run():
         page.get_by_label("Публиковать профиль в банке кандидатов").check()
         page.get_by_role("button", name="Сохранить профиль", exact=True).click()
         expect(page.get_by_role("status")).to_contain_text("Профиль сохранён")
-        candidate_id = context.request.get(args.base_url + "/api/auth/me").json()["id"]
+        # Prefer page-bound fetch (shares UI cookies). APIRequestContext alone
+        # has failed on the public stand with a body missing `id`.
+        me = page.evaluate(
+            """async () => {
+              const r = await fetch('/api/auth/me', { credentials: 'include' });
+              return await r.json();
+            }"""
+        )
+        if not isinstance(me, dict) or "id" not in me:
+            me = context.request.get(args.base_url + "/api/auth/me").json()
+        candidate_id = me["id"]
         chapter(
             "Ручное заполнение профиля и отдельное согласие на публикацию",
             "02-profile.png",
