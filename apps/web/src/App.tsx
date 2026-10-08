@@ -1042,7 +1042,7 @@ function Assessments({
       <PageTitle
         kicker="Навыки с доказательствами"
         title="Подтвердите свой уровень"
-        description={`${catalog.specializations[profile.specialization]} · 4 задания · 30 минут · проходной результат 75%. Оценка фиксируется на сервере.`}
+        description={`${catalog.specializations[profile.specialization]} · 4 задания · 30 минут. Для новых тестов: не менее 75% и оба задания по основному навыку (Python или SQL) решены верно.`}
       />
       <div className="notice subtle">
         <ShieldCheck size={18} />
@@ -1074,7 +1074,7 @@ function Assessments({
                 <p>
                   {current.result.passed
                     ? "Результат добавлен в профиль."
-                    : "Ваш ранее подтверждённый уровень сохранён. Можно добровольно выбрать тест ниже."}
+                    : "Для новых тестов нужны не менее 75% и оба верных ответа по основному навыку. Прежний подтверждённый уровень, если он был, сохранён. Первый тест ниже можно выбрать сразу; смена подтверждённого уровня — через 90 дней."}
                 </p>
               </div>
             </div>
@@ -1463,6 +1463,12 @@ function SearchPage({ catalog, act, busy }: Actions) {
                   }
                 />
               </Field>
+              <p className="muted">
+                Текст описывает контекст работы. На подбор влияют выбранные
+                ниже требования; автоматического разбора текста пока нет.
+                Docker и React можно указать, но текущий банк тестов их
+                не проверяет — подтверждённых совпадений по ним не будет.
+              </p>
               <Field label="Специализация">
                 <select
                   value={criteria.specialization}
@@ -1540,6 +1546,11 @@ function SearchPage({ catalog, act, busy }: Actions) {
                   }
                 />
               </Field>
+              <p className="muted">
+                Стаж указан со слов кандидата. Он сохраняется для обсуждения,
+                не подтверждается тестом и не влияет на баллы или фильтрацию.
+                Полное совпадение ниже относится только к обязательным навыкам.
+              </p>
               <label className="checkline">
                 <input
                   type="checkbox"
@@ -1613,6 +1624,68 @@ function SearchPage({ catalog, act, busy }: Actions) {
               title="Подходящих профилей пока нет"
               description="Попробуйте изменить специализацию или фильтры. Прежние подборки остаются в истории."
             />
+          ) : snapshot ? (
+            (() => {
+              const required = snapshot.criteria.required_skills;
+              const full = items.filter((p) =>
+                p.match?.required_skills_met ?? required.every((skill) =>
+                  p.match?.facts.some(
+                    (f) => f.skill === skill && f.state === "met",
+                  ),
+                ),
+              );
+              const partial = items.filter(
+                (p) => !full.some((f) => f.id === p.id),
+              );
+              const renderList = (list: Profile[]) =>
+                list.map((p, index) => (
+                  <div key={p.id}>
+                    {(index === 0 ||
+                      p.verified_grade !== list[index - 1].verified_grade ||
+                      p.specialization !== list[index - 1].specialization) && (
+                      <h3 className="category-heading">
+                        {catalog.specializations[p.specialization]}{" "}
+                        <span>{p.verified_grade ?? "Не подтверждён"}</span>
+                      </h3>
+                    )}
+                    <CandidateCard
+                      profile={p}
+                      catalog={catalog}
+                      onInvite={() => setSelected(p)}
+                    />
+                  </div>
+                ));
+              return (
+                <>
+                  <h3 className="category-heading">
+                    Все обязательные навыки подтверждены{" "}
+                    <span>{full.length}</span>
+                  </h3>
+                  {full.length ? (
+                    renderList(full)
+                  ) : (
+                    <EmptyState
+                      title="Подтверждённых соответствий нет"
+                      description="Ни у кого в этой подборке нет всех обязательных навыков со статусом «подтверждено». Ниже — частичные совпадения, если они есть."
+                    />
+                  )}
+                  {!!partial.length && (
+                    <>
+                      <h3 className="category-heading">
+                        Частичное соответствие{" "}
+                        <span>{partial.length}</span>
+                      </h3>
+                      <p className="muted">
+                        Здесь обязательные навыки не проверены или не
+                        подтверждены тестом. Не считайте таких кандидатов
+                        подтверждёнными по всем требованиям.
+                      </p>
+                      {renderList(partial)}
+                    </>
+                  )}
+                </>
+              );
+            })()
           ) : (
             items.map((p, index) => (
               <div key={p.id}>
@@ -1809,6 +1882,12 @@ function InviteModal({
           <form
             onSubmit={(e) => {
               e.preventDefault();
+              if (min > max || min <= 0 || max <= 0) {
+                window.alert(
+                  "Вилка зарплаты: «от» и «до» должны быть больше 0, и «от» не больше «до».",
+                );
+                return;
+              }
               void act(async () => {
                 await api("/invitations", {
                   candidate_id: profile.id,
@@ -1844,7 +1923,11 @@ function InviteModal({
                   min={1}
                   max={10000000}
                   value={min}
-                  onChange={(e) => setMin(Number(e.target.value))}
+                  onChange={(e) => {
+                    const next = Number(e.target.value);
+                    setMin(next);
+                    if (next > max) setMax(next);
+                  }}
                 />
               </Field>
               <Field label="Зарплата до, ₽ / месяц">
@@ -1881,9 +1964,17 @@ function Invitations({
   refresh,
 }: Actions & { user: User; version: number }) {
   const [items, setItems] = useState<Invitation[]>([]),
-    [chat, setChat] = useState<string | null>(null);
+    [chat, setChat] = useState<string | null>(null),
+    [loading, setLoading] = useState(true);
   useEffect(() => {
-    void act(async () => setItems(await api("/invitations")));
+    setLoading(true);
+    void act(async () => {
+      try {
+        setItems(await api("/invitations"));
+      } finally {
+        setLoading(false);
+      }
+    });
   }, [version]);
   return (
     <>
@@ -1896,7 +1987,12 @@ function Invitations({
             : "Отслеживайте ответы кандидатов. После принятия откроются контакты и внутренний диалог."
         }
       />
-      {!items.length ? (
+      {loading ? (
+        <EmptyState
+          title="Загружаем приглашения"
+          description="Секунда — подтягиваем актуальные статусы с сервера."
+        />
+      ) : !items.length ? (
         <EmptyState
           title="Пока нет приглашений"
           description={

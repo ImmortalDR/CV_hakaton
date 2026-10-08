@@ -4299,6 +4299,33 @@
           "methodology": {
             "type": "string",
             "title": "Methodology"
+          },
+          "required_skills_met": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Required Skills Met"
+          },
+          "missing_skills": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Missing Skills",
+            "default": []
+          },
+          "unmet_skills": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Unmet Skills",
+            "default": []
           }
         },
         "additionalProperties": false,

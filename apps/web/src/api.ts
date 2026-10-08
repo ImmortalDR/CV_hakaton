@@ -49,6 +49,9 @@ export type Match = {
   score: number;
   facts: Fact[];
   breakdown: Record<string, number>;
+  required_skills_met?: boolean;
+  missing_skills?: string[];
+  unmet_skills?: string[];
 };
 export type Profile = {
   id: string;

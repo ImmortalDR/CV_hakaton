@@ -1,0 +1,1646 @@
+{
+  "kind": "synthetic_regression_not_human_validation",
+  "bank_version": "1.2.0",
+  "matching_version": "matching-1.1.0",
+  "hashes": {
+    "evaluation/RESEARCH_PROTOCOL.md": "eae6adde331ac7a9e15f7f4b9d61b5201ad82cf1c27190214337f2f6ba16eccc",
+    "evaluation/research_audit.py": "9464ad4a10e57821268fc5779692a846b00e42a6a6db973f97c71dd85e6df9d7",
+    "evaluation/oracles.py": "7b13c78a487d9016608749eb44196a53062faeded5eb67cce7db7b3a7117be7e",
+    "apps/api/fsp/bank.py": "9d5695dae6e7f6e2d6961140403587ae0ed83f4c0d266dfa64c1ccad503ce3ce",
+    "apps/api/fsp/matching.py": "12f8eb2dd3afa17b54a015af735919d97463425aac23a5548965ac07557e3e12",
+    "dataset/builds/public-v1/data/synthetic/candidates.jsonl": "709d044c5620791d78e61845bafea0ce161aac83e5e32683967e44027e149dd2",
+    "dataset/builds/public-v1/data/synthetic/needs.jsonl": "7d911992fcf0de709f1341c4c62eeda713971ffd18bdfcc55efeb0fdc30baf99",
+    "dataset/builds/public-v1/data/synthetic/pools.jsonl": "48dfebdd3b5defb248e72306840ac3210a8203d6ce51e9f51fb01c5e1fd1f093",
+    "dataset/builds/public-v1/labels/matching.jsonl": "11c7da421e6e22bedf7b8f2c102ec42a231674e6c66cc6de51e68615e5c29e64"
+  },
+  "matching": {
+    "summary": {
+      "dev": {
+        "mixed": {
+          "queries": 24,
+          "mean_p_at_5": 0.35,
+          "unknown_in_top5": 36,
+          "unmet_in_top5": 36,
+          "correct_abstentions": 0,
+          "no_match_queries": 12
+        },
+        "full": {
+          "queries": 24,
+          "mean_p_at_5": 0.35,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstentions": 12,
+          "no_match_queries": 12
+        }
+      },
+      "test": {
+        "mixed": {
+          "queries": 24,
+          "mean_p_at_5": 0.35,
+          "unknown_in_top5": 36,
+          "unmet_in_top5": 36,
+          "correct_abstentions": 0,
+          "no_match_queries": 12
+        },
+        "full": {
+          "queries": 24,
+          "mean_p_at_5": 0.35,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstentions": 12,
+          "no_match_queries": 12
+        }
+      }
+    },
+    "queries": [
+      {
+        "id": "pool:syn:dev:python:Junior:mixed",
+        "split": "dev",
+        "scenario": "mixed",
+        "relevant": 6,
+        "partial": 2,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 1.0,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        },
+        "full": {
+          "returned": 6,
+          "p_at_5": 1.0,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        }
+      },
+      {
+        "id": "pool:syn:dev:python:Junior:none",
+        "split": "dev",
+        "scenario": "none",
+        "relevant": 0,
+        "partial": 8,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 0.0,
+          "precision_served": 0.0,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 5,
+          "correct_abstention": false
+        },
+        "full": {
+          "returned": 0,
+          "p_at_5": 0.0,
+          "precision_served": null,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": true
+        }
+      },
+      {
+        "id": "pool:syn:dev:python:Junior:unknown",
+        "split": "dev",
+        "scenario": "unknown",
+        "relevant": 0,
+        "partial": 8,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 0.0,
+          "precision_served": 0.0,
+          "recall_all": null,
+          "unknown_in_top5": 5,
+          "unmet_in_top5": 0,
+          "correct_abstention": false
+        },
+        "full": {
+          "returned": 0,
+          "p_at_5": 0.0,
+          "precision_served": null,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": true
+        }
+      },
+      {
+        "id": "pool:syn:dev:python:Junior:fsp",
+        "split": "dev",
+        "scenario": "fsp",
+        "relevant": 2,
+        "partial": 2,
+        "mixed": {
+          "returned": 4,
+          "p_at_5": 0.4,
+          "precision_served": 0.5,
+          "recall_all": 1.0,
+          "unknown_in_top5": 1,
+          "unmet_in_top5": 1,
+          "correct_abstention": null
+        },
+        "full": {
+          "returned": 2,
+          "p_at_5": 0.4,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        }
+      },
+      {
+        "id": "pool:syn:dev:python:Middle:mixed",
+        "split": "dev",
+        "scenario": "mixed",
+        "relevant": 6,
+        "partial": 2,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 1.0,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        },
+        "full": {
+          "returned": 6,
+          "p_at_5": 1.0,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        }
+      },
+      {
+        "id": "pool:syn:dev:python:Middle:none",
+        "split": "dev",
+        "scenario": "none",
+        "relevant": 0,
+        "partial": 8,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 0.0,
+          "precision_served": 0.0,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 5,
+          "correct_abstention": false
+        },
+        "full": {
+          "returned": 0,
+          "p_at_5": 0.0,
+          "precision_served": null,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": true
+        }
+      },
+      {
+        "id": "pool:syn:dev:python:Middle:unknown",
+        "split": "dev",
+        "scenario": "unknown",
+        "relevant": 0,
+        "partial": 8,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 0.0,
+          "precision_served": 0.0,
+          "recall_all": null,
+          "unknown_in_top5": 5,
+          "unmet_in_top5": 0,
+          "correct_abstention": false
+        },
+        "full": {
+          "returned": 0,
+          "p_at_5": 0.0,
+          "precision_served": null,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": true
+        }
+      },
+      {
+        "id": "pool:syn:dev:python:Middle:fsp",
+        "split": "dev",
+        "scenario": "fsp",
+        "relevant": 2,
+        "partial": 2,
+        "mixed": {
+          "returned": 4,
+          "p_at_5": 0.4,
+          "precision_served": 0.5,
+          "recall_all": 1.0,
+          "unknown_in_top5": 1,
+          "unmet_in_top5": 1,
+          "correct_abstention": null
+        },
+        "full": {
+          "returned": 2,
+          "p_at_5": 0.4,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        }
+      },
+      {
+        "id": "pool:syn:dev:python:Senior:mixed",
+        "split": "dev",
+        "scenario": "mixed",
+        "relevant": 6,
+        "partial": 2,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 1.0,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        },
+        "full": {
+          "returned": 6,
+          "p_at_5": 1.0,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        }
+      },
+      {
+        "id": "pool:syn:dev:python:Senior:none",
+        "split": "dev",
+        "scenario": "none",
+        "relevant": 0,
+        "partial": 8,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 0.0,
+          "precision_served": 0.0,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 5,
+          "correct_abstention": false
+        },
+        "full": {
+          "returned": 0,
+          "p_at_5": 0.0,
+          "precision_served": null,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": true
+        }
+      },
+      {
+        "id": "pool:syn:dev:python:Senior:unknown",
+        "split": "dev",
+        "scenario": "unknown",
+        "relevant": 0,
+        "partial": 8,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 0.0,
+          "precision_served": 0.0,
+          "recall_all": null,
+          "unknown_in_top5": 5,
+          "unmet_in_top5": 0,
+          "correct_abstention": false
+        },
+        "full": {
+          "returned": 0,
+          "p_at_5": 0.0,
+          "precision_served": null,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": true
+        }
+      },
+      {
+        "id": "pool:syn:dev:python:Senior:fsp",
+        "split": "dev",
+        "scenario": "fsp",
+        "relevant": 2,
+        "partial": 2,
+        "mixed": {
+          "returned": 4,
+          "p_at_5": 0.4,
+          "precision_served": 0.5,
+          "recall_all": 1.0,
+          "unknown_in_top5": 1,
+          "unmet_in_top5": 1,
+          "correct_abstention": null
+        },
+        "full": {
+          "returned": 2,
+          "p_at_5": 0.4,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        }
+      },
+      {
+        "id": "pool:syn:dev:data:Junior:mixed",
+        "split": "dev",
+        "scenario": "mixed",
+        "relevant": 6,
+        "partial": 2,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 1.0,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        },
+        "full": {
+          "returned": 6,
+          "p_at_5": 1.0,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        }
+      },
+      {
+        "id": "pool:syn:dev:data:Junior:none",
+        "split": "dev",
+        "scenario": "none",
+        "relevant": 0,
+        "partial": 8,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 0.0,
+          "precision_served": 0.0,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 5,
+          "correct_abstention": false
+        },
+        "full": {
+          "returned": 0,
+          "p_at_5": 0.0,
+          "precision_served": null,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": true
+        }
+      },
+      {
+        "id": "pool:syn:dev:data:Junior:unknown",
+        "split": "dev",
+        "scenario": "unknown",
+        "relevant": 0,
+        "partial": 8,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 0.0,
+          "precision_served": 0.0,
+          "recall_all": null,
+          "unknown_in_top5": 5,
+          "unmet_in_top5": 0,
+          "correct_abstention": false
+        },
+        "full": {
+          "returned": 0,
+          "p_at_5": 0.0,
+          "precision_served": null,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": true
+        }
+      },
+      {
+        "id": "pool:syn:dev:data:Junior:fsp",
+        "split": "dev",
+        "scenario": "fsp",
+        "relevant": 2,
+        "partial": 2,
+        "mixed": {
+          "returned": 4,
+          "p_at_5": 0.4,
+          "precision_served": 0.5,
+          "recall_all": 1.0,
+          "unknown_in_top5": 1,
+          "unmet_in_top5": 1,
+          "correct_abstention": null
+        },
+        "full": {
+          "returned": 2,
+          "p_at_5": 0.4,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        }
+      },
+      {
+        "id": "pool:syn:dev:data:Middle:mixed",
+        "split": "dev",
+        "scenario": "mixed",
+        "relevant": 6,
+        "partial": 2,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 1.0,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        },
+        "full": {
+          "returned": 6,
+          "p_at_5": 1.0,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        }
+      },
+      {
+        "id": "pool:syn:dev:data:Middle:none",
+        "split": "dev",
+        "scenario": "none",
+        "relevant": 0,
+        "partial": 8,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 0.0,
+          "precision_served": 0.0,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 5,
+          "correct_abstention": false
+        },
+        "full": {
+          "returned": 0,
+          "p_at_5": 0.0,
+          "precision_served": null,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": true
+        }
+      },
+      {
+        "id": "pool:syn:dev:data:Middle:unknown",
+        "split": "dev",
+        "scenario": "unknown",
+        "relevant": 0,
+        "partial": 8,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 0.0,
+          "precision_served": 0.0,
+          "recall_all": null,
+          "unknown_in_top5": 5,
+          "unmet_in_top5": 0,
+          "correct_abstention": false
+        },
+        "full": {
+          "returned": 0,
+          "p_at_5": 0.0,
+          "precision_served": null,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": true
+        }
+      },
+      {
+        "id": "pool:syn:dev:data:Middle:fsp",
+        "split": "dev",
+        "scenario": "fsp",
+        "relevant": 2,
+        "partial": 2,
+        "mixed": {
+          "returned": 4,
+          "p_at_5": 0.4,
+          "precision_served": 0.5,
+          "recall_all": 1.0,
+          "unknown_in_top5": 1,
+          "unmet_in_top5": 1,
+          "correct_abstention": null
+        },
+        "full": {
+          "returned": 2,
+          "p_at_5": 0.4,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        }
+      },
+      {
+        "id": "pool:syn:dev:data:Senior:mixed",
+        "split": "dev",
+        "scenario": "mixed",
+        "relevant": 6,
+        "partial": 2,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 1.0,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        },
+        "full": {
+          "returned": 6,
+          "p_at_5": 1.0,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        }
+      },
+      {
+        "id": "pool:syn:dev:data:Senior:none",
+        "split": "dev",
+        "scenario": "none",
+        "relevant": 0,
+        "partial": 8,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 0.0,
+          "precision_served": 0.0,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 5,
+          "correct_abstention": false
+        },
+        "full": {
+          "returned": 0,
+          "p_at_5": 0.0,
+          "precision_served": null,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": true
+        }
+      },
+      {
+        "id": "pool:syn:dev:data:Senior:unknown",
+        "split": "dev",
+        "scenario": "unknown",
+        "relevant": 0,
+        "partial": 8,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 0.0,
+          "precision_served": 0.0,
+          "recall_all": null,
+          "unknown_in_top5": 5,
+          "unmet_in_top5": 0,
+          "correct_abstention": false
+        },
+        "full": {
+          "returned": 0,
+          "p_at_5": 0.0,
+          "precision_served": null,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": true
+        }
+      },
+      {
+        "id": "pool:syn:dev:data:Senior:fsp",
+        "split": "dev",
+        "scenario": "fsp",
+        "relevant": 2,
+        "partial": 2,
+        "mixed": {
+          "returned": 4,
+          "p_at_5": 0.4,
+          "precision_served": 0.5,
+          "recall_all": 1.0,
+          "unknown_in_top5": 1,
+          "unmet_in_top5": 1,
+          "correct_abstention": null
+        },
+        "full": {
+          "returned": 2,
+          "p_at_5": 0.4,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        }
+      },
+      {
+        "id": "pool:syn:test:python:Junior:mixed",
+        "split": "test",
+        "scenario": "mixed",
+        "relevant": 6,
+        "partial": 2,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 1.0,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        },
+        "full": {
+          "returned": 6,
+          "p_at_5": 1.0,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        }
+      },
+      {
+        "id": "pool:syn:test:python:Junior:none",
+        "split": "test",
+        "scenario": "none",
+        "relevant": 0,
+        "partial": 8,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 0.0,
+          "precision_served": 0.0,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 5,
+          "correct_abstention": false
+        },
+        "full": {
+          "returned": 0,
+          "p_at_5": 0.0,
+          "precision_served": null,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": true
+        }
+      },
+      {
+        "id": "pool:syn:test:python:Junior:unknown",
+        "split": "test",
+        "scenario": "unknown",
+        "relevant": 0,
+        "partial": 8,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 0.0,
+          "precision_served": 0.0,
+          "recall_all": null,
+          "unknown_in_top5": 5,
+          "unmet_in_top5": 0,
+          "correct_abstention": false
+        },
+        "full": {
+          "returned": 0,
+          "p_at_5": 0.0,
+          "precision_served": null,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": true
+        }
+      },
+      {
+        "id": "pool:syn:test:python:Junior:fsp",
+        "split": "test",
+        "scenario": "fsp",
+        "relevant": 2,
+        "partial": 2,
+        "mixed": {
+          "returned": 4,
+          "p_at_5": 0.4,
+          "precision_served": 0.5,
+          "recall_all": 1.0,
+          "unknown_in_top5": 1,
+          "unmet_in_top5": 1,
+          "correct_abstention": null
+        },
+        "full": {
+          "returned": 2,
+          "p_at_5": 0.4,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        }
+      },
+      {
+        "id": "pool:syn:test:python:Middle:mixed",
+        "split": "test",
+        "scenario": "mixed",
+        "relevant": 6,
+        "partial": 2,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 1.0,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        },
+        "full": {
+          "returned": 6,
+          "p_at_5": 1.0,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        }
+      },
+      {
+        "id": "pool:syn:test:python:Middle:none",
+        "split": "test",
+        "scenario": "none",
+        "relevant": 0,
+        "partial": 8,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 0.0,
+          "precision_served": 0.0,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 5,
+          "correct_abstention": false
+        },
+        "full": {
+          "returned": 0,
+          "p_at_5": 0.0,
+          "precision_served": null,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": true
+        }
+      },
+      {
+        "id": "pool:syn:test:python:Middle:unknown",
+        "split": "test",
+        "scenario": "unknown",
+        "relevant": 0,
+        "partial": 8,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 0.0,
+          "precision_served": 0.0,
+          "recall_all": null,
+          "unknown_in_top5": 5,
+          "unmet_in_top5": 0,
+          "correct_abstention": false
+        },
+        "full": {
+          "returned": 0,
+          "p_at_5": 0.0,
+          "precision_served": null,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": true
+        }
+      },
+      {
+        "id": "pool:syn:test:python:Middle:fsp",
+        "split": "test",
+        "scenario": "fsp",
+        "relevant": 2,
+        "partial": 2,
+        "mixed": {
+          "returned": 4,
+          "p_at_5": 0.4,
+          "precision_served": 0.5,
+          "recall_all": 1.0,
+          "unknown_in_top5": 1,
+          "unmet_in_top5": 1,
+          "correct_abstention": null
+        },
+        "full": {
+          "returned": 2,
+          "p_at_5": 0.4,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        }
+      },
+      {
+        "id": "pool:syn:test:python:Senior:mixed",
+        "split": "test",
+        "scenario": "mixed",
+        "relevant": 6,
+        "partial": 2,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 1.0,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        },
+        "full": {
+          "returned": 6,
+          "p_at_5": 1.0,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        }
+      },
+      {
+        "id": "pool:syn:test:python:Senior:none",
+        "split": "test",
+        "scenario": "none",
+        "relevant": 0,
+        "partial": 8,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 0.0,
+          "precision_served": 0.0,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 5,
+          "correct_abstention": false
+        },
+        "full": {
+          "returned": 0,
+          "p_at_5": 0.0,
+          "precision_served": null,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": true
+        }
+      },
+      {
+        "id": "pool:syn:test:python:Senior:unknown",
+        "split": "test",
+        "scenario": "unknown",
+        "relevant": 0,
+        "partial": 8,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 0.0,
+          "precision_served": 0.0,
+          "recall_all": null,
+          "unknown_in_top5": 5,
+          "unmet_in_top5": 0,
+          "correct_abstention": false
+        },
+        "full": {
+          "returned": 0,
+          "p_at_5": 0.0,
+          "precision_served": null,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": true
+        }
+      },
+      {
+        "id": "pool:syn:test:python:Senior:fsp",
+        "split": "test",
+        "scenario": "fsp",
+        "relevant": 2,
+        "partial": 2,
+        "mixed": {
+          "returned": 4,
+          "p_at_5": 0.4,
+          "precision_served": 0.5,
+          "recall_all": 1.0,
+          "unknown_in_top5": 1,
+          "unmet_in_top5": 1,
+          "correct_abstention": null
+        },
+        "full": {
+          "returned": 2,
+          "p_at_5": 0.4,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        }
+      },
+      {
+        "id": "pool:syn:test:data:Junior:mixed",
+        "split": "test",
+        "scenario": "mixed",
+        "relevant": 6,
+        "partial": 2,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 1.0,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        },
+        "full": {
+          "returned": 6,
+          "p_at_5": 1.0,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        }
+      },
+      {
+        "id": "pool:syn:test:data:Junior:none",
+        "split": "test",
+        "scenario": "none",
+        "relevant": 0,
+        "partial": 8,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 0.0,
+          "precision_served": 0.0,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 5,
+          "correct_abstention": false
+        },
+        "full": {
+          "returned": 0,
+          "p_at_5": 0.0,
+          "precision_served": null,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": true
+        }
+      },
+      {
+        "id": "pool:syn:test:data:Junior:unknown",
+        "split": "test",
+        "scenario": "unknown",
+        "relevant": 0,
+        "partial": 8,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 0.0,
+          "precision_served": 0.0,
+          "recall_all": null,
+          "unknown_in_top5": 5,
+          "unmet_in_top5": 0,
+          "correct_abstention": false
+        },
+        "full": {
+          "returned": 0,
+          "p_at_5": 0.0,
+          "precision_served": null,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": true
+        }
+      },
+      {
+        "id": "pool:syn:test:data:Junior:fsp",
+        "split": "test",
+        "scenario": "fsp",
+        "relevant": 2,
+        "partial": 2,
+        "mixed": {
+          "returned": 4,
+          "p_at_5": 0.4,
+          "precision_served": 0.5,
+          "recall_all": 1.0,
+          "unknown_in_top5": 1,
+          "unmet_in_top5": 1,
+          "correct_abstention": null
+        },
+        "full": {
+          "returned": 2,
+          "p_at_5": 0.4,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        }
+      },
+      {
+        "id": "pool:syn:test:data:Middle:mixed",
+        "split": "test",
+        "scenario": "mixed",
+        "relevant": 6,
+        "partial": 2,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 1.0,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        },
+        "full": {
+          "returned": 6,
+          "p_at_5": 1.0,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        }
+      },
+      {
+        "id": "pool:syn:test:data:Middle:none",
+        "split": "test",
+        "scenario": "none",
+        "relevant": 0,
+        "partial": 8,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 0.0,
+          "precision_served": 0.0,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 5,
+          "correct_abstention": false
+        },
+        "full": {
+          "returned": 0,
+          "p_at_5": 0.0,
+          "precision_served": null,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": true
+        }
+      },
+      {
+        "id": "pool:syn:test:data:Middle:unknown",
+        "split": "test",
+        "scenario": "unknown",
+        "relevant": 0,
+        "partial": 8,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 0.0,
+          "precision_served": 0.0,
+          "recall_all": null,
+          "unknown_in_top5": 5,
+          "unmet_in_top5": 0,
+          "correct_abstention": false
+        },
+        "full": {
+          "returned": 0,
+          "p_at_5": 0.0,
+          "precision_served": null,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": true
+        }
+      },
+      {
+        "id": "pool:syn:test:data:Middle:fsp",
+        "split": "test",
+        "scenario": "fsp",
+        "relevant": 2,
+        "partial": 2,
+        "mixed": {
+          "returned": 4,
+          "p_at_5": 0.4,
+          "precision_served": 0.5,
+          "recall_all": 1.0,
+          "unknown_in_top5": 1,
+          "unmet_in_top5": 1,
+          "correct_abstention": null
+        },
+        "full": {
+          "returned": 2,
+          "p_at_5": 0.4,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        }
+      },
+      {
+        "id": "pool:syn:test:data:Senior:mixed",
+        "split": "test",
+        "scenario": "mixed",
+        "relevant": 6,
+        "partial": 2,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 1.0,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        },
+        "full": {
+          "returned": 6,
+          "p_at_5": 1.0,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        }
+      },
+      {
+        "id": "pool:syn:test:data:Senior:none",
+        "split": "test",
+        "scenario": "none",
+        "relevant": 0,
+        "partial": 8,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 0.0,
+          "precision_served": 0.0,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 5,
+          "correct_abstention": false
+        },
+        "full": {
+          "returned": 0,
+          "p_at_5": 0.0,
+          "precision_served": null,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": true
+        }
+      },
+      {
+        "id": "pool:syn:test:data:Senior:unknown",
+        "split": "test",
+        "scenario": "unknown",
+        "relevant": 0,
+        "partial": 8,
+        "mixed": {
+          "returned": 8,
+          "p_at_5": 0.0,
+          "precision_served": 0.0,
+          "recall_all": null,
+          "unknown_in_top5": 5,
+          "unmet_in_top5": 0,
+          "correct_abstention": false
+        },
+        "full": {
+          "returned": 0,
+          "p_at_5": 0.0,
+          "precision_served": null,
+          "recall_all": null,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": true
+        }
+      },
+      {
+        "id": "pool:syn:test:data:Senior:fsp",
+        "split": "test",
+        "scenario": "fsp",
+        "relevant": 2,
+        "partial": 2,
+        "mixed": {
+          "returned": 4,
+          "p_at_5": 0.4,
+          "precision_served": 0.5,
+          "recall_all": 1.0,
+          "unknown_in_top5": 1,
+          "unmet_in_top5": 1,
+          "correct_abstention": null
+        },
+        "full": {
+          "returned": 2,
+          "p_at_5": 0.4,
+          "precision_served": 1.0,
+          "recall_all": 1.0,
+          "unknown_in_top5": 0,
+          "unmet_in_top5": 0,
+          "correct_abstention": null
+        }
+      }
+    ]
+  },
+  "assessment": {
+    "oracle_checks": 2400,
+    "oracle_mismatches": [],
+    "attempts": 3000,
+    "rows": [
+      {
+        "spec": "python",
+        "grade": "Junior",
+        "persona": "weak",
+        "attempts": 100,
+        "pass_rate": 0,
+        "old_rubric_pass_rate": 0,
+        "mean_score": 0,
+        "pairwise_agreement": 1.0
+      },
+      {
+        "spec": "python",
+        "grade": "Junior",
+        "persona": "core_only",
+        "attempts": 100,
+        "pass_rate": 0,
+        "old_rubric_pass_rate": 0,
+        "mean_score": 50,
+        "pairwise_agreement": 1.0
+      },
+      {
+        "spec": "python",
+        "grade": "Junior",
+        "persona": "strong",
+        "attempts": 100,
+        "pass_rate": 1,
+        "old_rubric_pass_rate": 1,
+        "mean_score": 100,
+        "pairwise_agreement": 1.0
+      },
+      {
+        "spec": "python",
+        "grade": "Junior",
+        "persona": "noisy",
+        "attempts": 100,
+        "pass_rate": 0.59,
+        "old_rubric_pass_rate": 0.78,
+        "mean_score": 79.5,
+        "pairwise_agreement": 0.5113131313131313
+      },
+      {
+        "spec": "python",
+        "grade": "Junior",
+        "persona": "frequent_guess",
+        "attempts": 100,
+        "pass_rate": 0.03,
+        "old_rubric_pass_rate": 0.07,
+        "mean_score": 30,
+        "pairwise_agreement": 0.9412121212121212
+      },
+      {
+        "spec": "python",
+        "grade": "Middle",
+        "persona": "weak",
+        "attempts": 100,
+        "pass_rate": 0,
+        "old_rubric_pass_rate": 0,
+        "mean_score": 0,
+        "pairwise_agreement": 1.0
+      },
+      {
+        "spec": "python",
+        "grade": "Middle",
+        "persona": "core_only",
+        "attempts": 100,
+        "pass_rate": 0,
+        "old_rubric_pass_rate": 0,
+        "mean_score": 50,
+        "pairwise_agreement": 1.0
+      },
+      {
+        "spec": "python",
+        "grade": "Middle",
+        "persona": "strong",
+        "attempts": 100,
+        "pass_rate": 1,
+        "old_rubric_pass_rate": 1,
+        "mean_score": 100,
+        "pairwise_agreement": 1.0
+      },
+      {
+        "spec": "python",
+        "grade": "Middle",
+        "persona": "noisy",
+        "attempts": 100,
+        "pass_rate": 0.56,
+        "old_rubric_pass_rate": 0.83,
+        "mean_score": 77.75,
+        "pairwise_agreement": 0.5022222222222222
+      },
+      {
+        "spec": "python",
+        "grade": "Middle",
+        "persona": "frequent_guess",
+        "attempts": 100,
+        "pass_rate": 0,
+        "old_rubric_pass_rate": 0.01,
+        "mean_score": 7,
+        "pairwise_agreement": 1.0
+      },
+      {
+        "spec": "python",
+        "grade": "Senior",
+        "persona": "weak",
+        "attempts": 100,
+        "pass_rate": 0,
+        "old_rubric_pass_rate": 0,
+        "mean_score": 0,
+        "pairwise_agreement": 1.0
+      },
+      {
+        "spec": "python",
+        "grade": "Senior",
+        "persona": "core_only",
+        "attempts": 100,
+        "pass_rate": 0,
+        "old_rubric_pass_rate": 0,
+        "mean_score": 50,
+        "pairwise_agreement": 1.0
+      },
+      {
+        "spec": "python",
+        "grade": "Senior",
+        "persona": "strong",
+        "attempts": 100,
+        "pass_rate": 1,
+        "old_rubric_pass_rate": 1,
+        "mean_score": 100,
+        "pairwise_agreement": 1.0
+      },
+      {
+        "spec": "python",
+        "grade": "Senior",
+        "persona": "noisy",
+        "attempts": 100,
+        "pass_rate": 0.63,
+        "old_rubric_pass_rate": 0.83,
+        "mean_score": 80.75,
+        "pairwise_agreement": 0.5290909090909091
+      },
+      {
+        "spec": "python",
+        "grade": "Senior",
+        "persona": "frequent_guess",
+        "attempts": 100,
+        "pass_rate": 0,
+        "old_rubric_pass_rate": 0,
+        "mean_score": 5.25,
+        "pairwise_agreement": 1.0
+      },
+      {
+        "spec": "data",
+        "grade": "Junior",
+        "persona": "weak",
+        "attempts": 100,
+        "pass_rate": 0,
+        "old_rubric_pass_rate": 0,
+        "mean_score": 0,
+        "pairwise_agreement": 1.0
+      },
+      {
+        "spec": "data",
+        "grade": "Junior",
+        "persona": "core_only",
+        "attempts": 100,
+        "pass_rate": 0,
+        "old_rubric_pass_rate": 0,
+        "mean_score": 50,
+        "pairwise_agreement": 1.0
+      },
+      {
+        "spec": "data",
+        "grade": "Junior",
+        "persona": "strong",
+        "attempts": 100,
+        "pass_rate": 1,
+        "old_rubric_pass_rate": 1,
+        "mean_score": 100,
+        "pairwise_agreement": 1.0
+      },
+      {
+        "spec": "data",
+        "grade": "Junior",
+        "persona": "noisy",
+        "attempts": 100,
+        "pass_rate": 0.64,
+        "old_rubric_pass_rate": 0.83,
+        "mean_score": 79.25,
+        "pairwise_agreement": 0.5345454545454545
+      },
+      {
+        "spec": "data",
+        "grade": "Junior",
+        "persona": "frequent_guess",
+        "attempts": 100,
+        "pass_rate": 0,
+        "old_rubric_pass_rate": 0,
+        "mean_score": 5.5,
+        "pairwise_agreement": 1.0
+      },
+      {
+        "spec": "data",
+        "grade": "Middle",
+        "persona": "weak",
+        "attempts": 100,
+        "pass_rate": 0,
+        "old_rubric_pass_rate": 0,
+        "mean_score": 0,
+        "pairwise_agreement": 1.0
+      },
+      {
+        "spec": "data",
+        "grade": "Middle",
+        "persona": "core_only",
+        "attempts": 100,
+        "pass_rate": 0,
+        "old_rubric_pass_rate": 0,
+        "mean_score": 50,
+        "pairwise_agreement": 1.0
+      },
+      {
+        "spec": "data",
+        "grade": "Middle",
+        "persona": "strong",
+        "attempts": 100,
+        "pass_rate": 1,
+        "old_rubric_pass_rate": 1,
+        "mean_score": 100,
+        "pairwise_agreement": 1.0
+      },
+      {
+        "spec": "data",
+        "grade": "Middle",
+        "persona": "noisy",
+        "attempts": 100,
+        "pass_rate": 0.52,
+        "old_rubric_pass_rate": 0.77,
+        "mean_score": 76.75,
+        "pairwise_agreement": 0.49575757575757573
+      },
+      {
+        "spec": "data",
+        "grade": "Middle",
+        "persona": "frequent_guess",
+        "attempts": 100,
+        "pass_rate": 0.05,
+        "old_rubric_pass_rate": 0.05,
+        "mean_score": 29.75,
+        "pairwise_agreement": 0.9040404040404041
+      },
+      {
+        "spec": "data",
+        "grade": "Senior",
+        "persona": "weak",
+        "attempts": 100,
+        "pass_rate": 0,
+        "old_rubric_pass_rate": 0,
+        "mean_score": 0,
+        "pairwise_agreement": 1.0
+      },
+      {
+        "spec": "data",
+        "grade": "Senior",
+        "persona": "core_only",
+        "attempts": 100,
+        "pass_rate": 0,
+        "old_rubric_pass_rate": 0,
+        "mean_score": 50,
+        "pairwise_agreement": 1.0
+      },
+      {
+        "spec": "data",
+        "grade": "Senior",
+        "persona": "strong",
+        "attempts": 100,
+        "pass_rate": 1,
+        "old_rubric_pass_rate": 1,
+        "mean_score": 100,
+        "pairwise_agreement": 1.0
+      },
+      {
+        "spec": "data",
+        "grade": "Senior",
+        "persona": "noisy",
+        "attempts": 100,
+        "pass_rate": 0.6,
+        "old_rubric_pass_rate": 0.83,
+        "mean_score": 80.5,
+        "pairwise_agreement": 0.5151515151515151
+      },
+      {
+        "spec": "data",
+        "grade": "Senior",
+        "persona": "frequent_guess",
+        "attempts": 100,
+        "pass_rate": 0,
+        "old_rubric_pass_rate": 0,
+        "mean_score": 14.75,
+        "pairwise_agreement": 1.0
+      }
+    ],
+    "families": [
+      {
+        "family": "http_backoff",
+        "strong_minus_weak": 1,
+        "frequent_guess_correct": 0.045,
+        "noisy_correct": 0.8
+      },
+      {
+        "family": "http_keys",
+        "strong_minus_weak": 1,
+        "frequent_guess_correct": 0.105,
+        "noisy_correct": 0.77
+      },
+      {
+        "family": "py_alias",
+        "strong_minus_weak": 1,
+        "frequent_guess_correct": 0.035,
+        "noisy_correct": 0.785
+      },
+      {
+        "family": "py_boundary",
+        "strong_minus_weak": 1,
+        "frequent_guess_correct": 0.335,
+        "noisy_correct": 0.83
+      },
+      {
+        "family": "py_dag",
+        "strong_minus_weak": 1,
+        "frequent_guess_correct": 0.06,
+        "noisy_correct": 0.815
+      },
+      {
+        "family": "py_filter",
+        "strong_minus_weak": 1,
+        "frequent_guess_correct": 0.265,
+        "noisy_correct": 0.76
+      },
+      {
+        "family": "sql_join",
+        "strong_minus_weak": 1,
+        "frequent_guess_correct": 0.505,
+        "noisy_correct": 0.745
+      },
+      {
+        "family": "sql_rank",
+        "strong_minus_weak": 1,
+        "frequent_guess_correct": 0.215,
+        "noisy_correct": 0.78
+      },
+      {
+        "family": "sql_where",
+        "strong_minus_weak": 1,
+        "frequent_guess_correct": 0.01,
+        "noisy_correct": 0.81
+      },
+      {
+        "family": "stats_median",
+        "strong_minus_weak": 1,
+        "frequent_guess_correct": 0.1,
+        "noisy_correct": 0.775
+      },
+      {
+        "family": "stats_weighted",
+        "strong_minus_weak": 1,
+        "frequent_guess_correct": 0.09,
+        "noisy_correct": 0.79
+      },
+      {
+        "family": "tx_snapshot",
+        "strong_minus_weak": 1,
+        "frequent_guess_correct": 0.08,
+        "noisy_correct": 0.83
+      }
+    ]
+  },
+  "limitations": [
+    "Frozen test was examined before: regression, not blind generalization.",
+    "Team-authored programmatic labels, no human raters.",
+    "Strong/weak separation is built into simulator; no professional validation.",
+    "Same families remain recognizable; shuffling is not anti-cheat.",
+    "Four numeric questions do not cover a professional grade."
+  ]
+}

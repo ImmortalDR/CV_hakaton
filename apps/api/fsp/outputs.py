@@ -79,6 +79,9 @@ class Match(Output):
     facts: list[Fact]
     breakdown: dict[str, float]
     methodology: str
+    required_skills_met: bool | None = None
+    missing_skills: list[str] = []
+    unmet_skills: list[str] = []
 
 
 class Contacts(Output):

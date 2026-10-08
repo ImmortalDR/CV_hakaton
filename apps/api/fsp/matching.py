@@ -2,6 +2,30 @@
 
 from .bank import GRADES
 
+VERSION = "matching-1.1.0"
+
+
+def skill_coverage(facts):
+    """Only required skill evidence defines coverage; never infer it from score.
+
+    Experience stays a separately labelled self-report. Missing evidence and a
+    failed assessment remain distinguishable, including mixed partial matches.
+    """
+    required = [f for f in facts if f["kind"] == "required_skills"]
+    missing = [f["skill"] for f in required if f["state"] == "unknown"]
+    failed = [f["skill"] for f in required if f["state"] == "unmet"]
+    return {
+        "required_skills_met": not missing and not failed,
+        "missing_skills": missing,
+        "unmet_skills": failed,
+    }
+
+
+def verified_achievements(candidate):
+    # Only our explicit demo provider is currently supported; arbitrary imported
+    # achievements must not satisfy the FSP filter or award ranking points.
+    return [a for a in candidate.get("achievements", []) if a.get("provider") == "demo_fsp"]
+
 
 def rank_candidate(candidate, criteria):
     facts = []
@@ -53,15 +77,15 @@ def rank_candidate(candidate, criteria):
         5,
         sum(
             a.get("points", 0)
-            for a in candidate.get("achievements", [])
-            if a.get("provider") == "demo_fsp"
+            for a in verified_achievements(candidate)
         ),
     )
     return {
         "score": round(sum(points.values()) + test + fsp, 2),
         "facts": facts,
         "breakdown": {**points, "test": test, "fsp": fsp},
-        "methodology": "matching-1.0.0",
+        "methodology": VERSION,
+        **skill_coverage(facts),
     }
 
 
@@ -69,7 +93,7 @@ def eligible(candidate, criteria):
     return (
         candidate.get("specialization") == criteria["specialization"]
         and candidate.get("verified_grade") in criteria["grades"]
-        and (not criteria.get("fsp_only") or bool(candidate.get("achievements")))
+        and (not criteria.get("fsp_only") or bool(verified_achievements(candidate)))
     )
 
 

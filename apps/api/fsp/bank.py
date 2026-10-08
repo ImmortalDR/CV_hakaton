@@ -6,7 +6,7 @@ import random
 from collections import Counter
 from decimal import Decimal, InvalidOperation
 
-VERSION = "1.1.0"
+VERSION = "1.2.0"
 SPECS = {"python": "Python / бэкенд", "data": "Аналитика данных / SQL"}
 GRADES = ["Junior", "Middle", "Senior"]
 SKILLS = {
@@ -143,6 +143,7 @@ def generate(specialization, grade, seed):
     qs = [
         question(f, rng) for f in BLUEPRINT[(specialization, grade)] for _ in range(2)
     ]
+    rng.shuffle(qs)
     for i, q in enumerate(qs):
         q["id"] = str(i + 1)
     return qs
@@ -154,7 +155,7 @@ def fingerprint(questions):
     ).hexdigest()
 
 
-def grade_answers(questions, answers):
+def grade_answers(questions, answers, version=VERSION):
     details = []
     counts, totals = Counter(), Counter()
     for q in questions:
@@ -175,9 +176,15 @@ def grade_answers(questions, answers):
             }
         )
     score = sum(counts.values()) * 100 // len(questions)
+    # v1.2 requires proof of the specialization's core skill. A high total in
+    # supporting topics alone must not confirm Python/SQL competence. Stored
+    # attempts retain their original rubric, including ones active at upgrade.
+    core = "python" if "python" in totals else "sql"
+    core_met = counts[core] == totals[core] and totals[core] > 0
+    passed = score >= 75 and (version in {"1.0.0", "1.1.0"} or core_met)
     return {
         "score": score,
-        "passed": score >= 75,
+        "passed": passed,
         "threshold": 75,
         "details": details,
         "skills": [

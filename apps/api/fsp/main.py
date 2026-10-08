@@ -685,7 +685,7 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             fail(409, "Время теста истекло. Грейд сохранён.")
         if not p.processing:
             fail(409, "Согласие на обработку отозвано")
-        result = bank.grade_answers(a.questions, data.answers)
+        result = bank.grade_answers(a.questions, data.answers, version=a.version)
         a.answers = data.answers
         a.result = result
         a.status = "completed"

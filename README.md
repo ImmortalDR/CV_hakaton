@@ -137,3 +137,20 @@ python3 scripts/run_local.py .venv/bin/uvicorn fsp.main:app_factory --factory --
 пользователя, см. [запись решения](docs/review/IMPLEMENTATION_AUTHORIZATION.md).
 
 Собственный код — MIT. Заимствования и лицензии: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+## Исследовательская проверка 9 октября
+
+[Доработки и измерения](docs/review/TIMOFEY_RESEARCH_2026-10-09.md): банк 1.2.0
+требует подтверждения основного навыка, matching 1.1.0 явно разделяет полные
+и частичные совпадения по обязательным навыкам. Старые отчёты выше относятся
+к своим версиям; новые результаты — в `evaluation/research_results.json`.
+
+```bash
+PYTHONPATH=apps/api:. .venv/bin/python -m evaluation.research_audit
+.venv/bin/python tests/browser_requirements.py --base-url https://85-137-26-131.sslip.io
+```
+
+Первой команде нужен локальный `dataset/builds/public-v1` версии 1.0.0
+(или `--dataset` с корнем распакованного опубликованного набора). Вторая
+создаёт три вымышленных аккаунта на демостенде и снимает публикацию своего
+тестового кандидата после проверки; реальные профили не используются.

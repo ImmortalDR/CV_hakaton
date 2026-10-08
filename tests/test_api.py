@@ -454,3 +454,37 @@ def test_non_demo_mail_failure_rolls_back_and_demo_disabled(app, monkeypatch):
     with app.state.factory() as db:
         assert db.scalar(select(User).where(User.email == "smtp@example.org")) is None
     live.state.engine.dispose()
+
+
+def test_new_core_rule_and_inflight_legacy_attempt_keep_their_rubrics(app):
+    from evaluation.oracles import solve
+    for version, expected in [('1.1.0', True), ('1.2.0', False)]:
+        c, _ = account(app, f'rubric-{version}@example.org')
+        profile(c)
+        attempt = c.post('/api/me/attempts', json={'grade': 'Junior'}).json()
+        with app.state.factory.begin() as db:
+            a = db.get(Attempt, attempt['id'])
+            a.version = version  # emulate a stored active attempt across deployment
+            answers = {q['id']: str(solve(q)) for q in a.questions}
+            answers.pop(next(q['id'] for q in a.questions if q['skill'] == 'python'))
+        r = c.post(f"/api/me/attempts/{attempt['id']}/submit", json={'answers': answers})
+        assert r.status_code == 200, r.text
+        assert r.json()['result']['score'] == 75
+        assert r.json()['result']['passed'] is expected
+        assert c.get('/api/me/profile').json()['verified_grade'] == ('Junior' if expected else None)
+        again = c.post(f"/api/me/attempts/{attempt['id']}/submit", json={'answers': {}})
+        assert again.json()['result'] == r.json()['result']
+
+
+def test_search_exposes_required_skill_coverage_and_preserves_it_in_history(app):
+    _, cid = confirmed(app)
+    e = employer(app)
+    full = e.post('/api/searches', json=need()).json()
+    match = next(p['match'] for p in full['items'] if p['id'] == cid)
+    assert match['required_skills_met'] and match['missing_skills'] == []
+    partial = e.post('/api/searches', json=need(required_skills=['python','react'])).json()
+    match = next(p['match'] for p in partial['items'] if p['id'] == cid)
+    assert not match['required_skills_met'] and match['missing_skills'] == ['react']
+    assert match['unmet_skills'] == []
+    saved = e.get('/api/searches/' + partial['id']).json()
+    assert saved['items'][0]['match'] == partial['items'][0]['match']
