@@ -706,7 +706,7 @@ function Overview({
             {candidate
               ? p?.verified_grade
                 ? "Ваш уровень подтверждён тестом. Работодатели могут найти вас в соответствующей категории."
-                : "Тест по основному и вспомогательному навыкам поможет подтвердить выбранный уровень. ФСП ID для этого не нужен."
+                : "Четыре коротких задания помогут подтвердить выбранный уровень. ФСП ID для этого не нужен."
               : "Никакого потока случайных откликов: выбирайте подтверждённую категорию и смотрите основания подбора."}
           </p>
           <button
@@ -1022,12 +1022,6 @@ function Assessments({
     [current, setCurrent] = useState<Attempt | null>(null),
     [answers, setAnswers] = useState<Record<string, string>>({}),
     [grade, setGrade] = useState(profile.claimed_grade ?? "Junior");
-  const policy = current?.rubric ?? catalog.rubric;
-  const ruleText = policy
-    ? `Не менее ${policy.threshold}%` + (policy.core_min_correct
-      ? ` и ${policy.core_min_correct} из ${policy.core_total} верных ответов по основному навыку (Python или SQL).`
-      : ".")
-    : "Правила теста загружаются.";
   const load = async () => {
     const list = await api<Attempt[]>("/me/attempts");
     setAttempts(list);
@@ -1048,7 +1042,7 @@ function Assessments({
       <PageTitle
         kicker="Навыки с доказательствами"
         title="Подтвердите свой уровень"
-        description={`${catalog.specializations[profile.specialization]} · ${policy?.question_count ?? "—"} заданий · ${policy?.minutes ?? "—"} минут. ${ruleText}`}
+        description={`${catalog.specializations[profile.specialization]} · 4 задания · 30 минут · проходной результат 75%. Оценка фиксируется на сервере.`}
       />
       <div className="notice subtle">
         <ShieldCheck size={18} />
@@ -1080,7 +1074,7 @@ function Assessments({
                 <p>
                   {current.result.passed
                     ? "Результат добавлен в профиль."
-                    : `${ruleText} Прежний подтверждённый уровень, если он был, сохранён. Первый тест ниже можно выбрать сразу; смена подтверждённого уровня — через 90 дней.`}
+                    : "Ваш ранее подтверждённый уровень сохранён. Можно добровольно выбрать тест ниже."}
                 </p>
               </div>
             </div>
@@ -1102,7 +1096,7 @@ function Assessments({
             {current.questions.map((q, index) => (
               <div className="question" key={q.id}>
                 <div className="question-label">
-                  <span>Задание {index + 1} из {current.questions.length}</span>
+                  <span>Задание {index + 1} из 4</span>
                   <span>{catalog.skills[q.skill]}</span>
                 </div>
                 <pre>{q.text}</pre>
@@ -1469,12 +1463,6 @@ function SearchPage({ catalog, act, busy }: Actions) {
                   }
                 />
               </Field>
-              <p className="muted">
-                Текст описывает контекст работы. На подбор влияют выбранные
-                ниже требования; автоматического разбора текста пока нет.
-                Docker и React можно указать, но текущий банк тестов их
-                не проверяет — подтверждённых совпадений по ним не будет.
-              </p>
               <Field label="Специализация">
                 <select
                   value={criteria.specialization}
@@ -1552,11 +1540,6 @@ function SearchPage({ catalog, act, busy }: Actions) {
                   }
                 />
               </Field>
-              <p className="muted">
-                Стаж указан со слов кандидата. Он сохраняется для обсуждения,
-                не подтверждается тестом и не влияет на баллы или фильтрацию.
-                Полное совпадение ниже относится только к обязательным навыкам.
-              </p>
               <label className="checkline">
                 <input
                   type="checkbox"
@@ -1634,7 +1617,7 @@ function SearchPage({ catalog, act, busy }: Actions) {
             (() => {
               const required = snapshot.criteria.required_skills;
               const full = items.filter((p) =>
-                p.match?.required_skills_met ?? required.every((skill) =>
+                required.every((skill) =>
                   p.match?.facts.some(
                     (f) => f.skill === skill && f.state === "met",
                   ),
@@ -1682,8 +1665,8 @@ function SearchPage({ catalog, act, busy }: Actions) {
                         <span>{partial.length}</span>
                       </h3>
                       <p className="muted">
-                        Здесь обязательные навыки не проверены или не
-                        подтверждены тестом. Не считайте таких кандидатов
+                        Здесь есть unmet или unknown по обязательным навыкам —
+                        это не полный матч. Не считайте таких кандидатов
                         подтверждёнными по всем требованиям.
                       </p>
                       {renderList(partial)}
@@ -1889,9 +1872,6 @@ function InviteModal({
             onSubmit={(e) => {
               e.preventDefault();
               if (min > max || min <= 0 || max <= 0) {
-                window.alert(
-                  "Вилка зарплаты: «от» и «до» должны быть больше 0, и «от» не больше «до».",
-                );
                 return;
               }
               void act(async () => {
@@ -1929,29 +1909,34 @@ function InviteModal({
                   min={1}
                   max={10000000}
                   value={min}
-                  onChange={(e) => {
-                    const next = Number(e.target.value);
-                    setMin(next);
-                    if (next > max) setMax(next);
-                  }}
+                  onChange={(e) => setMin(Number(e.target.value))}
                 />
               </Field>
               <Field label="Зарплата до, ₽ / месяц">
                 <input
                   required
                   type="number"
-                  min={min}
+                  min={1}
                   max={10000000}
                   value={max}
                   onChange={(e) => setMax(Number(e.target.value))}
                 />
               </Field>
             </div>
+            {(min > max || min <= 0 || max <= 0) && (
+              <p className="notice" role="alert">
+                Вилка зарплаты: «от» и «до» должны быть больше 0, и «от» не
+                больше «до». Отправить нельзя, пока вилка кривая.
+              </p>
+            )}
             <small>
               До вычета налогов. Название компании и способ связи добавятся из
               её профиля.
             </small>
-            <button className="full" disabled={busy}>
+            <button
+              className="full"
+              disabled={busy || min > max || min <= 0 || max <= 0}
+            >
               Отправить приглашение
               <Mail size={16} />
             </button>
