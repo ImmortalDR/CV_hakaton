@@ -354,3 +354,75 @@ def test_technology_slice_handles_punctuation_and_word_boundaries():
     assert technology_mentioned("Python, SQL.", "python")
     assert technology_mentioned("Python, SQL.", "sql")
     assert not technology_mentioned("NoSQL", "sql")
+
+
+def test_application_decision_direction_and_window():
+    from application_pairs import decision_reason
+
+    e = {
+        "eid": "e",
+        "kind": "Принятие",
+        "cv": "c",
+        "person": "p",
+        "job": "j",
+        "org": "o",
+        "day": "2020-02-01",
+        "published": "2020-03-01",
+    }
+    a = e | {"eid": "a", "reply": "e", "kind": "Отклик соискателя"}
+    assert decision_reason(e, a, "2020-01-15") is None
+    assert (
+        decision_reason(e | {"kind": "Приглашение"}, a, "2020-01-15")
+        == "not_an_application_decision"
+    )
+    assert decision_reason(e, a, "2019-12-01") == "outside_30_day_window"
+    assert decision_reason(e, a, "2020-02-02") == "reply_precedes_application"
+    assert decision_reason(e, a | {"cv": "other"}, "2020-01-15") == "identity_mismatch"
+    assert decision_reason(e, a | {"reply": ""}, "2020-01-15") == "missing_identity"
+
+
+def test_application_pairs_require_reply_and_pre_application_versions(tmp_path):
+    import csv
+    from prepare import build as scan
+    from pairs import build as join
+    from application_pairs import build as applications
+
+    source = small_source(tmp_path)
+    with (source / "responses.csv").open(newline="") as f:
+        events = list(csv.DictReader(f, delimiter=";"))
+    app_rows = []
+    for i in (0, 1, 2):
+        a = events[i].copy()
+        del a["id_response"]
+        a.update(
+            id_invitation=f"a{i}",
+            id_reply=f"e{i}",
+            response_type="Отклик соискателя",
+            date_creation="2020-01-15",
+            date_modify="2020-02-05",
+            date_creation_mistake="0",
+        )
+        app_rows.append(a)
+    with (source / "invitations.csv").open("w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=list(app_rows[0]), delimiter=";")
+        w.writeheader()
+        w.writerows(app_rows)
+    root = tmp_path / "scan"
+    scan(source, root)
+    join(root)
+    out = tmp_path / "decisions"
+    applications(root, source, out)
+    rows = [json.loads(x) for x in (out / "pairs.jsonl").read_text().splitlines()]
+    assert {p["source_status"] for p in rows} == {"Принятие", "Отказ"}
+    assert len(rows) == 2
+    assert all(
+        p["cv_snapshot_day"] < p["application_day"] <= p["event_day"] for p in rows
+    )
+    assert all(
+        set(p["source_refs"])
+        == {"responses.csv", "invitations.csv", "vacancies.csv", "curricula_vitae.csv"}
+        for p in rows
+    )
+    report = json.loads((out / "pairs-report.json").read_text())
+    assert report["counts"]["not_an_application_decision"] == 1
+    assert report["verified_professional_suitability_labels"] == 0
