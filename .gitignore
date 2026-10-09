@@ -54,3 +54,6 @@ build/
 /dataset/logs/
 /dataset/.venv/
 /Ответы на вопросы трек ФСП ЛЦТ__.xlsx
+
+# Team-local Python environment; preserve it on disk.
+/dataset/.venv-danila/
