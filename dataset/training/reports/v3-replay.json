@@ -1,0 +1,6 @@
+{
+  "status": "pass",
+  "models": 9,
+  "test_rows": 104,
+  "predictions_and_metrics_equal": true
+}

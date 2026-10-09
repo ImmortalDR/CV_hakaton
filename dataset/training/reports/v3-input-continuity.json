@@ -1,0 +1,14 @@
+{
+  "workexp.csv": {
+    "sha256": true,
+    "bytes": true
+  },
+  "edu.csv": {
+    "sha256": true,
+    "bytes": true
+  },
+  "invitations.csv": {
+    "sha256": true,
+    "bytes": true
+  }
+}

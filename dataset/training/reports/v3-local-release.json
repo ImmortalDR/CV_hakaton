@@ -1,0 +1,12 @@
+{
+  "mode": "local_only",
+  "verification": "passed",
+  "files": 62,
+  "bytes": 14128819,
+  "sha256": "7b5c84534a208a59114106250fa86f7ddc64827438ea88814a484248489ded4b",
+  "repeated_build_byte_identical": true,
+  "standalone_archive_replay": "18 models; both 104-row test predictions and metrics equal",
+  "verification_harness_correction": "Initial check resolved venv symlink to system Python without joblib; rerun used venv path.",
+  "tampered_code_rejected": true,
+  "file_permissions": "0600"
+}

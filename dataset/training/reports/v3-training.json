@@ -1,0 +1,690 @@
+{
+  "status": "trained_offline",
+  "target": "recorded_application_acceptance_vs_refusal_within_30_days",
+  "winner_selected_without_test": "boosted_pair",
+  "selection_metric": "macro_within_job_auc_then_ndcg_then_ap",
+  "counts": {
+    "train": {
+      "1": 258,
+      "0": 286
+    },
+    "validation": {
+      "0": 118,
+      "1": 63
+    },
+    "test": {
+      "0": 65,
+      "1": 39
+    }
+  },
+  "near_duplicates_removed": {
+    "enriched": {
+      "validation": 0,
+      "test": 0
+    },
+    "base": {
+      "validation": 0,
+      "test": 0
+    }
+  },
+  "scores": {
+    "base_pair": {
+      "n": 104,
+      "positives": 39,
+      "positive_fraction": 0.375,
+      "average_precision": 0.42375404176453435,
+      "roc_auc": 0.5554240631163707,
+      "mixed_vacancy_pools": 4,
+      "ndcg_at_5": 0.5654648767857287,
+      "precision_at_min_5_n": 0.425,
+      "macro_within_job_auc": 0.1875,
+      "mixed_pool_rows": 14
+    },
+    "enriched_word": {
+      "n": 104,
+      "positives": 39,
+      "positive_fraction": 0.375,
+      "average_precision": 0.4815987288251464,
+      "roc_auc": 0.619723865877712,
+      "mixed_vacancy_pools": 4,
+      "ndcg_at_5": 0.8820340612862954,
+      "precision_at_min_5_n": 0.475,
+      "macro_within_job_auc": 0.75,
+      "mixed_pool_rows": 14
+    },
+    "dual_pair": {
+      "n": 104,
+      "positives": 39,
+      "positive_fraction": 0.375,
+      "average_precision": 0.47600111704506154,
+      "roc_auc": 0.6181459566074952,
+      "mixed_vacancy_pools": 4,
+      "ndcg_at_5": 0.7780511031694173,
+      "precision_at_min_5_n": 0.475,
+      "macro_within_job_auc": 0.40625,
+      "mixed_pool_rows": 14
+    },
+    "dense_pair": {
+      "n": 104,
+      "positives": 39,
+      "positive_fraction": 0.375,
+      "average_precision": 0.3942116601135858,
+      "roc_auc": 0.5069033530571991,
+      "mixed_vacancy_pools": 4,
+      "ndcg_at_5": 0.6813379013607819,
+      "precision_at_min_5_n": 0.475,
+      "macro_within_job_auc": 0.28125,
+      "mixed_pool_rows": 14
+    },
+    "boosted_pair": {
+      "n": 104,
+      "positives": 39,
+      "positive_fraction": 0.375,
+      "average_precision": 0.4323578767350511,
+      "roc_auc": 0.48994082840236686,
+      "mixed_vacancy_pools": 4,
+      "ndcg_at_5": 0.7343758374885466,
+      "precision_at_min_5_n": 0.425,
+      "macro_within_job_auc": 0.5,
+      "mixed_pool_rows": 14
+    },
+    "pairwise_dense": {
+      "n": 104,
+      "positives": 39,
+      "positive_fraction": 0.375,
+      "average_precision": 0.39600828868113147,
+      "roc_auc": 0.5029585798816568,
+      "mixed_vacancy_pools": 4,
+      "ndcg_at_5": 0.6141379365255181,
+      "precision_at_min_5_n": 0.475,
+      "macro_within_job_auc": 0.15625,
+      "mixed_pool_rows": 14
+    },
+    "pairwise_dual": {
+      "n": 104,
+      "positives": 39,
+      "positive_fraction": 0.375,
+      "average_precision": 0.3973595339627677,
+      "roc_auc": 0.504930966469428,
+      "mixed_vacancy_pools": 4,
+      "ndcg_at_5": 0.6342077392384712,
+      "precision_at_min_5_n": 0.475,
+      "macro_within_job_auc": 0.1875,
+      "mixed_pool_rows": 14
+    },
+    "job_only": {
+      "n": 104,
+      "positives": 39,
+      "positive_fraction": 0.375,
+      "average_precision": 0.4454040064617299,
+      "roc_auc": 0.5913214990138067,
+      "mixed_vacancy_pools": 4,
+      "ndcg_at_5": 0.7547159392393306,
+      "precision_at_min_5_n": 0.4583333333333333,
+      "macro_within_job_auc": 0.5,
+      "mixed_pool_rows": 14
+    },
+    "candidate_only": {
+      "n": 104,
+      "positives": 39,
+      "positive_fraction": 0.375,
+      "average_precision": 0.4146204407987,
+      "roc_auc": 0.5181459566074951,
+      "mixed_vacancy_pools": 4,
+      "ndcg_at_5": 0.7936752656808708,
+      "precision_at_min_5_n": 0.475,
+      "macro_within_job_auc": 0.53125,
+      "mixed_pool_rows": 14
+    },
+    "base_cosine": {
+      "n": 104,
+      "positives": 39,
+      "positive_fraction": 0.375,
+      "average_precision": 0.3950940059997129,
+      "roc_auc": 0.5242603550295858,
+      "mixed_vacancy_pools": 4,
+      "ndcg_at_5": 0.8055194994845885,
+      "precision_at_min_5_n": 0.475,
+      "macro_within_job_auc": 0.46875,
+      "mixed_pool_rows": 14
+    },
+    "enriched_cosine": {
+      "n": 104,
+      "positives": 39,
+      "positive_fraction": 0.375,
+      "average_precision": 0.4380228620189771,
+      "roc_auc": 0.5495069033530573,
+      "mixed_vacancy_pools": 4,
+      "ndcg_at_5": 0.8465266489352622,
+      "precision_at_min_5_n": 0.475,
+      "macro_within_job_auc": 0.71875,
+      "mixed_pool_rows": 14
+    },
+    "char_cosine": {
+      "n": 104,
+      "positives": 39,
+      "positive_fraction": 0.375,
+      "average_precision": 0.40889146209429894,
+      "roc_auc": 0.5293885601577909,
+      "mixed_vacancy_pools": 4,
+      "ndcg_at_5": 0.7371016692981415,
+      "precision_at_min_5_n": 0.475,
+      "macro_within_job_auc": 0.5,
+      "mixed_pool_rows": 14
+    },
+    "constant": {
+      "n": 104,
+      "positives": 39,
+      "positive_fraction": 0.375,
+      "average_precision": 0.375,
+      "roc_auc": 0.5,
+      "mixed_vacancy_pools": 4,
+      "ndcg_at_5": 0.7547159392393306,
+      "precision_at_min_5_n": 0.4583333333333333,
+      "macro_within_job_auc": 0.5,
+      "mixed_pool_rows": 14
+    }
+  },
+  "comparisons": {
+    "base_pair": {
+      "ap": {
+        "unit": "connected_component",
+        "components": 60,
+        "valid_repeats": 1000,
+        "ap_gain_95_percentile_ci": [
+          -0.1885781217130624,
+          0.17104551222106543
+        ]
+      },
+      "ranking": {
+        "components": 4,
+        "mixed_pools": 4,
+        "macro_within_job_auc_gain_ci95": [
+          0.0,
+          0.75
+        ]
+      }
+    },
+    "enriched_word": {
+      "ap": {
+        "unit": "connected_component",
+        "components": 60,
+        "valid_repeats": 1000,
+        "ap_gain_95_percentile_ci": [
+          -0.20440573429209227,
+          0.0857523108936822
+        ]
+      },
+      "ranking": {
+        "components": 4,
+        "mixed_pools": 4,
+        "macro_within_job_auc_gain_ci95": [
+          -0.7515624999999999,
+          0.1875
+        ]
+      }
+    },
+    "job_only": {
+      "ap": {
+        "unit": "connected_component",
+        "components": 60,
+        "valid_repeats": 1000,
+        "ap_gain_95_percentile_ci": [
+          -0.19665661396210268,
+          0.12290186813890779
+        ]
+      },
+      "ranking": {
+        "components": 4,
+        "mixed_pools": 4,
+        "macro_within_job_auc_gain_ci95": [
+          -0.375,
+          0.375
+        ]
+      }
+    },
+    "candidate_only": {
+      "ap": {
+        "unit": "connected_component",
+        "components": 60,
+        "valid_repeats": 1000,
+        "ap_gain_95_percentile_ci": [
+          -0.12976527108833158,
+          0.1721042154599381
+        ]
+      },
+      "ranking": {
+        "components": 4,
+        "mixed_pools": 4,
+        "macro_within_job_auc_gain_ci95": [
+          -0.09375,
+          0.0
+        ]
+      }
+    },
+    "enriched_cosine": {
+      "ap": {
+        "unit": "connected_component",
+        "components": 60,
+        "valid_repeats": 1000,
+        "ap_gain_95_percentile_ci": [
+          -0.16362381000605558,
+          0.14754136456484165
+        ]
+      },
+      "ranking": {
+        "components": 4,
+        "mixed_pools": 4,
+        "macro_within_job_auc_gain_ci95": [
+          -0.4375,
+          -0.0625
+        ]
+      }
+    },
+    "constant": {
+      "ap": {
+        "unit": "connected_component",
+        "components": 60,
+        "valid_repeats": 1000,
+        "ap_gain_95_percentile_ci": [
+          -0.02658448907880411,
+          0.18046160718954038
+        ]
+      },
+      "ranking": {
+        "components": 4,
+        "mixed_pools": 4,
+        "macro_within_job_auc_gain_ci95": [
+          -0.375,
+          0.375
+        ]
+      }
+    }
+  },
+  "candidate_permutation": {
+    "repeats": 100,
+    "observed_macro_within_job_auc": 0.5,
+    "shuffled_mean": 0.4965625,
+    "one_sided_p": 0.504950495049505
+  },
+  "slices": {
+    "v2_retained": {
+      "base_pair": {
+        "n": 64,
+        "positives": 24,
+        "positive_fraction": 0.375,
+        "average_precision": 0.4201192048716075,
+        "roc_auc": 0.5552083333333334,
+        "mixed_vacancy_pools": 2,
+        "ndcg_at_5": 0.5654648767857287,
+        "precision_at_min_5_n": 0.26666666666666666,
+        "macro_within_job_auc": 0.5,
+        "mixed_pool_rows": 8
+      },
+      "boosted_pair": {
+        "n": 64,
+        "positives": 24,
+        "positive_fraction": 0.375,
+        "average_precision": 0.45397444557862954,
+        "roc_auc": 0.4854166666666667,
+        "mixed_vacancy_pools": 2,
+        "ndcg_at_5": 0.5088912804029995,
+        "precision_at_min_5_n": 0.26666666666666666,
+        "macro_within_job_auc": 0.25,
+        "mixed_pool_rows": 8
+      },
+      "job_only": {
+        "n": 64,
+        "positives": 24,
+        "positive_fraction": 0.375,
+        "average_precision": 0.5377090070732515,
+        "roc_auc": 0.6322916666666666,
+        "mixed_vacancy_pools": 2,
+        "ndcg_at_5": 0.6500008708165154,
+        "precision_at_min_5_n": 0.26666666666666666,
+        "macro_within_job_auc": 0.5,
+        "mixed_pool_rows": 8
+      },
+      "enriched_cosine": {
+        "n": 64,
+        "positives": 24,
+        "positive_fraction": 0.375,
+        "average_precision": 0.3703172669615381,
+        "roc_auc": 0.44583333333333336,
+        "mixed_vacancy_pools": 2,
+        "ndcg_at_5": 0.5654648767857287,
+        "precision_at_min_5_n": 0.26666666666666666,
+        "macro_within_job_auc": 0.5,
+        "mixed_pool_rows": 8
+      }
+    },
+    "new_vs_v2": {
+      "base_pair": {
+        "n": 40,
+        "positives": 15,
+        "positive_fraction": 0.375,
+        "average_precision": 0.45793947538529584,
+        "roc_auc": 0.584,
+        "mixed_vacancy_pools": 0,
+        "ndcg_at_5": null,
+        "precision_at_min_5_n": null,
+        "macro_within_job_auc": null,
+        "mixed_pool_rows": 0
+      },
+      "boosted_pair": {
+        "n": 40,
+        "positives": 15,
+        "positive_fraction": 0.375,
+        "average_precision": 0.43175263965566185,
+        "roc_auc": 0.508,
+        "mixed_vacancy_pools": 0,
+        "ndcg_at_5": null,
+        "precision_at_min_5_n": null,
+        "macro_within_job_auc": null,
+        "mixed_pool_rows": 0
+      },
+      "job_only": {
+        "n": 40,
+        "positives": 15,
+        "positive_fraction": 0.375,
+        "average_precision": 0.37985266354123337,
+        "roc_auc": 0.504,
+        "mixed_vacancy_pools": 0,
+        "ndcg_at_5": null,
+        "precision_at_min_5_n": null,
+        "macro_within_job_auc": null,
+        "mixed_pool_rows": 0
+      },
+      "enriched_cosine": {
+        "n": 40,
+        "positives": 15,
+        "positive_fraction": 0.375,
+        "average_precision": 0.6288470627601063,
+        "roc_auc": 0.7133333333333334,
+        "mixed_vacancy_pools": 0,
+        "ndcg_at_5": null,
+        "precision_at_min_5_n": null,
+        "macro_within_job_auc": null,
+        "mixed_pool_rows": 0
+      }
+    },
+    "with_work": {
+      "base_pair": {
+        "n": 89,
+        "positives": 32,
+        "positive_fraction": 0.3595505617977528,
+        "average_precision": 0.4465111765831027,
+        "roc_auc": 0.5866228070175439,
+        "mixed_vacancy_pools": 4,
+        "ndcg_at_5": 0.5855346794986818,
+        "precision_at_min_5_n": 0.425,
+        "macro_within_job_auc": 0.125,
+        "mixed_pool_rows": 13
+      },
+      "boosted_pair": {
+        "n": 89,
+        "positives": 32,
+        "positive_fraction": 0.3595505617977528,
+        "average_precision": 0.42973340189208686,
+        "roc_auc": 0.4989035087719298,
+        "mixed_vacancy_pools": 4,
+        "ndcg_at_5": 0.831089039297182,
+        "precision_at_min_5_n": 0.425,
+        "macro_within_job_auc": 0.625,
+        "mixed_pool_rows": 13
+      },
+      "job_only": {
+        "n": 89,
+        "positives": 32,
+        "positive_fraction": 0.3595505617977528,
+        "average_precision": 0.42295181451891206,
+        "roc_auc": 0.5893640350877193,
+        "mixed_vacancy_pools": 4,
+        "ndcg_at_5": 0.7514856092062489,
+        "precision_at_min_5_n": 0.425,
+        "macro_within_job_auc": 0.5,
+        "mixed_pool_rows": 13
+      },
+      "enriched_cosine": {
+        "n": 89,
+        "positives": 32,
+        "positive_fraction": 0.3595505617977528,
+        "average_precision": 0.4349134206431021,
+        "roc_auc": 0.5531798245614035,
+        "mixed_vacancy_pools": 4,
+        "ndcg_at_5": 0.8415288548763434,
+        "precision_at_min_5_n": 0.425,
+        "macro_within_job_auc": 0.75,
+        "mixed_pool_rows": 13
+      }
+    },
+    "without_work": {
+      "base_pair": {
+        "n": 15,
+        "positives": 7,
+        "positive_fraction": 0.4666666666666667,
+        "average_precision": 0.4399790685504972,
+        "roc_auc": 0.33928571428571425,
+        "mixed_vacancy_pools": 0,
+        "ndcg_at_5": null,
+        "precision_at_min_5_n": null,
+        "macro_within_job_auc": null,
+        "mixed_pool_rows": 0
+      },
+      "boosted_pair": {
+        "n": 15,
+        "positives": 7,
+        "positive_fraction": 0.4666666666666667,
+        "average_precision": 0.4557299843014129,
+        "roc_auc": 0.4375,
+        "mixed_vacancy_pools": 0,
+        "ndcg_at_5": null,
+        "precision_at_min_5_n": null,
+        "macro_within_job_auc": null,
+        "mixed_pool_rows": 0
+      },
+      "job_only": {
+        "n": 15,
+        "positives": 7,
+        "positive_fraction": 0.4666666666666667,
+        "average_precision": 0.6126984126984127,
+        "roc_auc": 0.5714285714285714,
+        "mixed_vacancy_pools": 0,
+        "ndcg_at_5": null,
+        "precision_at_min_5_n": null,
+        "macro_within_job_auc": null,
+        "mixed_pool_rows": 0
+      },
+      "enriched_cosine": {
+        "n": 15,
+        "positives": 7,
+        "positive_fraction": 0.4666666666666667,
+        "average_precision": 0.5769841269841269,
+        "roc_auc": 0.6160714285714286,
+        "mixed_vacancy_pools": 0,
+        "ndcg_at_5": null,
+        "precision_at_min_5_n": null,
+        "macro_within_job_auc": null,
+        "mixed_pool_rows": 0
+      }
+    },
+    "with_education": {
+      "base_pair": {
+        "n": 88,
+        "positives": 30,
+        "positive_fraction": 0.3409090909090909,
+        "average_precision": 0.3872600605736551,
+        "roc_auc": 0.5505747126436782,
+        "mixed_vacancy_pools": 3,
+        "ndcg_at_5": 0.672594186935333,
+        "precision_at_min_5_n": 0.4555555555555555,
+        "macro_within_job_auc": 0.3333333333333333,
+        "mixed_pool_rows": 10
+      },
+      "boosted_pair": {
+        "n": 88,
+        "positives": 30,
+        "positive_fraction": 0.3409090909090909,
+        "average_precision": 0.43831247039329024,
+        "roc_auc": 0.5336206896551724,
+        "mixed_vacancy_pools": 3,
+        "ndcg_at_5": 0.774785385729576,
+        "precision_at_min_5_n": 0.4555555555555555,
+        "macro_within_job_auc": 0.3333333333333333,
+        "mixed_pool_rows": 10
+      },
+      "job_only": {
+        "n": 88,
+        "positives": 30,
+        "positive_fraction": 0.3409090909090909,
+        "average_precision": 0.3911538464633296,
+        "roc_auc": 0.5612068965517242,
+        "mixed_vacancy_pools": 3,
+        "ndcg_at_5": 0.7587352549389199,
+        "precision_at_min_5_n": 0.4555555555555555,
+        "macro_within_job_auc": 0.5,
+        "mixed_pool_rows": 10
+      },
+      "enriched_cosine": {
+        "n": 88,
+        "positives": 30,
+        "positive_fraction": 0.3409090909090909,
+        "average_precision": 0.3647776712476266,
+        "roc_auc": 0.5100574712643678,
+        "mixed_vacancy_pools": 3,
+        "ndcg_at_5": 0.7887051398351246,
+        "precision_at_min_5_n": 0.4555555555555555,
+        "macro_within_job_auc": 0.5833333333333334,
+        "mixed_pool_rows": 10
+      }
+    },
+    "python": {
+      "base_pair": {
+        "n": 2,
+        "positives": 0,
+        "positive_fraction": 0.0,
+        "average_precision": null,
+        "roc_auc": null,
+        "mixed_vacancy_pools": 0,
+        "ndcg_at_5": null,
+        "precision_at_min_5_n": null,
+        "macro_within_job_auc": null,
+        "mixed_pool_rows": 0
+      },
+      "boosted_pair": {
+        "n": 2,
+        "positives": 0,
+        "positive_fraction": 0.0,
+        "average_precision": null,
+        "roc_auc": null,
+        "mixed_vacancy_pools": 0,
+        "ndcg_at_5": null,
+        "precision_at_min_5_n": null,
+        "macro_within_job_auc": null,
+        "mixed_pool_rows": 0
+      },
+      "job_only": {
+        "n": 2,
+        "positives": 0,
+        "positive_fraction": 0.0,
+        "average_precision": null,
+        "roc_auc": null,
+        "mixed_vacancy_pools": 0,
+        "ndcg_at_5": null,
+        "precision_at_min_5_n": null,
+        "macro_within_job_auc": null,
+        "mixed_pool_rows": 0
+      },
+      "enriched_cosine": {
+        "n": 2,
+        "positives": 0,
+        "positive_fraction": 0.0,
+        "average_precision": null,
+        "roc_auc": null,
+        "mixed_vacancy_pools": 0,
+        "ndcg_at_5": null,
+        "precision_at_min_5_n": null,
+        "macro_within_job_auc": null,
+        "mixed_pool_rows": 0
+      }
+    },
+    "sql": {
+      "base_pair": {
+        "n": 9,
+        "positives": 3,
+        "positive_fraction": 0.3333333333333333,
+        "average_precision": 0.6111111111111112,
+        "roc_auc": 0.5555555555555556,
+        "mixed_vacancy_pools": 0,
+        "ndcg_at_5": null,
+        "precision_at_min_5_n": null,
+        "macro_within_job_auc": null,
+        "mixed_pool_rows": 0
+      },
+      "boosted_pair": {
+        "n": 9,
+        "positives": 3,
+        "positive_fraction": 0.3333333333333333,
+        "average_precision": 0.5888888888888888,
+        "roc_auc": 0.7777777777777779,
+        "mixed_vacancy_pools": 0,
+        "ndcg_at_5": null,
+        "precision_at_min_5_n": null,
+        "macro_within_job_auc": null,
+        "mixed_pool_rows": 0
+      },
+      "job_only": {
+        "n": 9,
+        "positives": 3,
+        "positive_fraction": 0.3333333333333333,
+        "average_precision": 0.3888888888888889,
+        "roc_auc": 0.4444444444444444,
+        "mixed_vacancy_pools": 0,
+        "ndcg_at_5": null,
+        "precision_at_min_5_n": null,
+        "macro_within_job_auc": null,
+        "mixed_pool_rows": 0
+      },
+      "enriched_cosine": {
+        "n": 9,
+        "positives": 3,
+        "positive_fraction": 0.3333333333333333,
+        "average_precision": 0.4206349206349206,
+        "roc_auc": 0.5,
+        "mixed_vacancy_pools": 0,
+        "ndcg_at_5": null,
+        "precision_at_min_5_n": null,
+        "macro_within_job_auc": null,
+        "mixed_pool_rows": 0
+      }
+    }
+  },
+  "artifact_reload_equal": true,
+  "production_promotion_allowed": false,
+  "test_is_pristine": false,
+  "pairs_sha256": "590683b940e175b941e485c0e9cb3af526416e4bcfc6b79c955fc53f34fef533",
+  "selection_sha256": "cc080790ea48faba4b2c33e8d6b1cfa161ee3a1777663e1b08ed1aefc62b86e8",
+  "split_sha256": "f5b9d5f80d9827fd0ce4a715a2944f71ba4cb1ca72fb8e4e930df6da9de90f9c",
+  "versions": {
+    "python": "3.12.3",
+    "sklearn": "1.6.1",
+    "numpy": "2.2.6"
+  },
+  "seconds": 66.47223749896511,
+  "max_rss_kb": 276288,
+  "code_sha256": {
+    "experiment_v3.py": "9a6d7b00728cd2b52039be4aa2d533286f4ac1046d723a7a7e0575183a6d1b2b",
+    "rank_features.py": "0778209fb588805f457219c598d084e95ea691e8352f2c022571f7c98f53b826",
+    "enrich.py": "1b6185862b0daca7b62137e3d3c74b7faa893fa138de5eaf10afea87344e50c9",
+    "train.py": "b728bcbf6f036ce6f9ee76b5027c088dd4b3d7b3e03a945af0f51b69947636b4",
+    "prepare.py": "a3d48ab63c28059ada3693db4fe8d6ecbd1e18be7613d5e61c0a24437fba7857",
+    "pairs.py": "bee3da5dbace58b8da59340ef73848f6f5c15e02c3a5401c22cf7210a5dc8bd5",
+    "application_pairs.py": "6f0920dfbb3600f1ee4d01138a443c35226b84b8fab43890285e7de183b481f3"
+  },
+  "limitations": [
+    "Recorded reply is not competence or hiring; actor inferred from links.",
+    "Old V1/V2 corpus reused; no new independent external validation.",
+    "Pre-event history is incomplete; entity keys approximate.",
+    "Historical applicant pools are not simultaneously available candidate banks."
+  ]
+}

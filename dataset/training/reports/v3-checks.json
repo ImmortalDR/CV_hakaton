@@ -1,0 +1,26 @@
+{
+  "status": "pass",
+  "pairs_rebuild_byte_identical": true,
+  "pairs_sha256": "590683b940e175b941e485c0e9cb3af526416e4bcfc6b79c955fc53f34fef533",
+  "tests": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m pytest dataset/training/tests -q",
+      "passed": 33,
+      "failed": 0
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m pytest dataset/training/tests/test_predict_v3.py -q",
+      "passed": 1,
+      "failed": 0
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m pytest dataset/training/tests/test_cross_validation_v3.py -q",
+      "passed": 1,
+      "failed": 0
+    }
+  ],
+  "distinct_tests_passed": 35,
+  "app_database_touched": false,
+  "deepseek_used": false,
+  "new_datasets_downloaded": false
+}

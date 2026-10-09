@@ -1,0 +1,55 @@
+{
+  "status": "descriptive_secondary_ablation_not_model_selection",
+  "all_pairs": 829,
+  "technology_mentions": {
+    "python": 8,
+    "sql": 87
+  },
+  "test_technology_mentions": {
+    "python": 2,
+    "sql": 9
+  },
+  "mixed_pools_by_original_split": {
+    "train": 14,
+    "validation": 7,
+    "test": 4
+  },
+  "candidate_enrichment_ap_comparisons": {
+    "base_pair": {
+      "unit": "connected_component",
+      "components": 60,
+      "valid_repeats": 1000,
+      "ap_gain_95_percentile_ci": [
+        -0.006980220650098075,
+        0.1682877818888033
+      ]
+    },
+    "job_only": {
+      "unit": "connected_component",
+      "components": 60,
+      "valid_repeats": 1000,
+      "ap_gain_95_percentile_ci": [
+        -0.04890617253323521,
+        0.1499313626890277
+      ]
+    }
+  },
+  "candidate_enrichment_ranking_comparisons": {
+    "base_pair": {
+      "components": 4,
+      "mixed_pools": 4,
+      "macro_within_job_auc_gain_ci95": [
+        -0.125,
+        0.75
+      ]
+    },
+    "job_only": {
+      "components": 4,
+      "mixed_pools": 4,
+      "macro_within_job_auc_gain_ci95": [
+        -0.4375,
+        0.4375
+      ]
+    }
+  }
+}
