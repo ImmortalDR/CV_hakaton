@@ -8,7 +8,7 @@ import hashlib
 import os
 from pathlib import Path
 import sqlite3
-from prepare import digest, write_json
+from prepare import digest, write_json, technology_mentioned
 
 SEED = "fsp-trudvsem-20261009-v1"
 # Literal source events, deliberately NOT labels of competence or suitability.
@@ -81,6 +81,8 @@ def split_pairs(pairs):
 
 def build(root):
     os.umask(0o077)
+    if not (root / "scan.json").is_file():
+        raise ValueError("Incomplete scan: scan.json is required before freezing pairs")
     if (root / "pairs.jsonl").exists():
         raise FileExistsError("Pairs are frozen; use another build directory")
     db = sqlite3.connect(f'file:{root / "index.sqlite"}?mode=ro', uri=True)
@@ -220,6 +222,10 @@ def build(root):
         "counts": dict(counts),
         "explicit_links": dict(links),
         "pairs": len(pairs),
+        "vacancy_technology_mentions": {
+            term: sum(technology_mentioned(p["need_text"], term) for p in pairs)
+            for term in ("python", "sql")
+        },
         "split": {
             s: dict(Counter(str(p["label"]) for p in pairs if p["split"] == s))
             for s in ("train", "validation", "test")

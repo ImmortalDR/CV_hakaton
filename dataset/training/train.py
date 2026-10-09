@@ -18,7 +18,7 @@ import sklearn
 from sklearn.feature_extraction.text import HashingVectorizer, TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import average_precision_score, roc_auc_score, ndcg_score
-from prepare import clean, write_json
+from prepare import clean, write_json, technology_mentioned
 
 
 def pair_features(vectorizer, rows):
@@ -247,6 +247,18 @@ def train(root, out):
         }
         for s in ("validation", "test")
     }
+    slices = {}
+    for term in ("python", "sql"):
+        ix = [
+            i
+            for i, p in enumerate(splits["test"])
+            if technology_mentioned(p["need_text"], term)
+        ]
+        subset = [splits["test"][i] for i in ix]
+        slices["vacancy_mentions_" + term] = {
+            "learned_pair": metrics(subset, learned["test"][ix]),
+            "tfidf_cosine": metrics(subset, features["test"][1][ix]),
+        }
     ci = bootstrap(splits["test"], learned["test"], features["test"][1])
     # Model weights are trained even when the experiment doesn't justify promotion.
     report = {
@@ -259,6 +271,7 @@ def train(root, out):
         "selection_metric": "validation_average_precision",
         "candidates": candidates,
         "scores": scores,
+        "descriptive_test_slices": slices,
         "bootstrap": ci,
         "artifact_reload_equal": True,
         "production_promotion_allowed": False,

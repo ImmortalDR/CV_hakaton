@@ -155,10 +155,8 @@ def test_frozen_input_hash_required(tmp_path):
         train(root, tmp_path / "out")
 
 
-def test_prepare_and_join_real_schema_fixture(tmp_path):
+def small_source(tmp_path):
     import csv
-    from prepare import build as scan
-    from pairs import build as join
 
     source = tmp_path / "source"
     source.mkdir()
@@ -226,6 +224,14 @@ def test_prepare_and_join_real_schema_fixture(tmp_path):
     app["id_reply"] = "e0"
     app["response_type"] = "Отклик соискателя"
     save("invitations.csv", [app])
+    return source
+
+
+def test_prepare_and_join_real_schema_fixture(tmp_path):
+    from prepare import build as scan
+    from pairs import build as join
+
+    source = small_source(tmp_path)
     out = tmp_path / "build"
     scan(source, out)
     join(out)
@@ -294,3 +300,57 @@ def test_training_artifact_and_final_metrics(tmp_path):
     assert score["production_promotion_allowed"] is False
     assert isinstance(score["observed_event_score"], float)
     assert predict(out / "model.joblib", "", "")["observed_event_score"] is None
+
+
+@pytest.mark.parametrize("legacy", [False, True])
+def test_resume_partial_stage_reproduces_pairs(tmp_path, legacy):
+    import sqlite3
+    from prepare import build as scan
+    from pairs import build as join
+
+    source = small_source(tmp_path)
+    out = tmp_path / "build"
+    scan(source, out)
+    join(out)
+    expected = (out / "pairs.jsonl").read_bytes()
+    for name in ("scan.json", "pairs.jsonl", "pairs-report.json"):
+        (out / name).unlink()
+    with sqlite3.connect(out / "index.sqlite") as db:
+        db.executescript(
+            "DROP INDEX cv_id; DROP INDEX app_eid; DROP INDEX app_reply; DROP INDEX app_pair; DELETE FROM cvs WHERE rownum>1; DELETE FROM applications;"
+        )
+        if legacy:
+            db.execute("DELETE FROM scan_checkpoints")
+    scan(source, out, resume=True)
+    join(out)
+    assert (out / "pairs.jsonl").read_bytes() == expected
+    with pytest.raises(ValueError, match="interrupted"):
+        scan(source, out, resume=True)
+
+
+def test_resume_rejects_changed_completed_input(tmp_path):
+    from prepare import build as scan
+
+    source = small_source(tmp_path)
+    out = tmp_path / "build"
+    scan(source, out)
+    (out / "scan.json").unlink()
+    p = source / "vacancies.csv"
+    p.write_text(p.read_text().replace("Python", "JavaXX"))
+    with pytest.raises(ValueError, match="input changed"):
+        scan(source, out, resume=True)
+
+
+def test_pairs_reject_incomplete_scan(tmp_path):
+    from pairs import build
+
+    with pytest.raises(ValueError, match="Incomplete scan"):
+        build(tmp_path)
+
+
+def test_technology_slice_handles_punctuation_and_word_boundaries():
+    from prepare import technology_mentioned
+
+    assert technology_mentioned("Python, SQL.", "python")
+    assert technology_mentioned("Python, SQL.", "sql")
+    assert not technology_mentioned("NoSQL", "sql")
