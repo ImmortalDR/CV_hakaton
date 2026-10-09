@@ -1,0 +1,46 @@
+{
+  "version": "trudvsem-observed-events-v1",
+  "source_url": "https://data.rcsi.science/data-catalog/datasets/186/",
+  "inputs": {
+    "responses.csv": {
+      "rows": 1820667,
+      "bytes": 442284629,
+      "sha256": "db7eaf366a367f40e8c44422437be9ce7e25ee6defdcdbee6d43384f0d5e65f3"
+    },
+    "vacancies.csv": {
+      "rows": 13282732,
+      "bytes": 21631962386,
+      "sha256": "1d1bf04ae5d88f4fc74c02b9ea5144d75d38595100499f52876fbea9942cbdf3"
+    },
+    "curricula_vitae.csv": {
+      "rows": 10580887,
+      "bytes": 8839652588,
+      "sha256": "c4038857dfa785e4a2357e787f1fbbad37a654fb1566eda0803fdf154f5aa705"
+    },
+    "invitations.csv": {
+      "rows": 6984541,
+      "bytes": 1785986571,
+      "sha256": "5c584451bce85d8f54ac6b20bb6beb33e9bb42a45fcca0b4179fc63e8e833fdb"
+    }
+  },
+  "counts": {
+    "response_types_all": {
+      "Отказ": 146829,
+      "Приглашение": 1385583,
+      "Принятие": 288255
+    },
+    "jobs_with_it_title": 1505,
+    "candidate_cv_ids_for_it_events": 4265,
+    "invitation_types_all": {
+      "Отклик соискателя": 6984541
+    },
+    "stored": {
+      "events": 1820667,
+      "jobs": 296885,
+      "cvs": 18020,
+      "applications": 6398
+    }
+  },
+  "resumed": true,
+  "seconds_this_invocation": 743.8776353989961
+}

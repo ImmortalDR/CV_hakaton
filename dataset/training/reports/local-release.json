@@ -1,0 +1,12 @@
+{
+  "mode": "local_only",
+  "verification": "passed",
+  "files": 29,
+  "bytes": 1756209,
+  "sha256": "b57b8b932d3ed806b839fad92bedd3782414fadbbdc2a6696574f676485b384a",
+  "archive": "dataset/releases/trudvsem-training-2026-10-09-local-v2.zip",
+  "repeated_build_identical": true,
+  "tamper_rejected": true,
+  "standalone_retraining_model_sha_identical": true,
+  "earlier_draft_preserved": "dataset/releases/trudvsem-training-2026-10-09-local.zip"
+}

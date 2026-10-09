@@ -1,0 +1,21 @@
+{
+  "training_tests": {
+    "passed": 21,
+    "seconds": 2.46
+  },
+  "existing_dataset_tests": {
+    "passed": 38,
+    "skipped": 1,
+    "seconds": 88.38,
+    "skipped_reason": "Optional separate PostgreSQL integration DSN not provided"
+  },
+  "production_database_modified": false,
+  "deepseek_called": false,
+  "new_datasets_downloaded": false,
+  "health": {
+    "url": "https://85-137-26-131.sslip.io/api/health",
+    "status": "ok",
+    "demo": true,
+    "version": "1.0.0"
+  }
+}

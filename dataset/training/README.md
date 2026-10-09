@@ -1,5 +1,8 @@
 # Обучение на «Работе в России»
 
+Основной предметный набор — **V2: принятие/отказ в ответ на отклик**.
+V1 сохранён как первый диагностический эксперимент.
+
 Этот каталог содержит отдельный воспроизводимый эксперимент на реальных
 событиях. Он не изменяет БД или ранжирование работающего MVP.
 Смысл задачи и фиксированные правила: [EXPERIMENT.md](EXPERIMENT.md).
@@ -21,6 +24,21 @@ OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 nice -n 10 .venv/bin/python dataset/tra
 OPENBLAS_NUM_THREADS=1 .venv/bin/python -m pytest dataset/training/tests -q
 ```
 
+Для основного набора V2 после этих команд:
+
+```bash
+OPENBLAS_NUM_THREADS=1 .venv/bin/python dataset/training/application_pairs.py \
+  --root dataset/builds/trudvsem-training-v1 --source dataset/raw_sources/trudvsem \
+  --out dataset/builds/trudvsem-decisions-v2
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python dataset/training/train.py train \
+  --root dataset/builds/trudvsem-decisions-v2 --out dataset/builds/trudvsem-model-v2
+```
+
+V2 сверяет прямые ссылки на ответы и восстанавливает дату создания отклика;
+поэтому ещё раз читает `invitations.csv`. Пары V1 нужны для честного отчёта
+о пересечениях двух экспериментов. Первое чтение исходников занимает десятки
+минут; повторное обучение использует уже собранный JSONL.
+
 Каталоги результатов не перезаписываются: для повторного запуска используйте
 другой `--out`. После прерывания первого этапа повторите его команду с `--resume`.
 Завершённые этапы и хеши проверяются, частичная производная таблица
@@ -39,6 +57,7 @@ OPENBLAS_NUM_THREADS=1 .venv/bin/python -m pytest dataset/training/tests -q
   записи CSV после заголовка, с единицы; переносы внутри поля его не увеличивают.
 - `split-manifest.json`: окончательные списки после удаления близких копий.
 - `model.joblib`: словарь, IDF и реально обученные веса логистической регрессии.
+  Основная версия лежит в `dataset/builds/trudvsem-model-v2/`.
 - `training-report.json`: выбор по validation, test, baseline, контроль без
   резюме, интервалы, версии библиотек и хеши.
 - `test-predictions.jsonl`: локальные предсказания для воспроизведения метрик.
@@ -47,7 +66,7 @@ OPENBLAS_NUM_THREADS=1 .venv/bin/python -m pytest dataset/training/tests -q
 
 ```bash
 OPENBLAS_NUM_THREADS=1 .venv/bin/python dataset/training/train.py predict \
-  --model dataset/builds/trudvsem-model-v1/model.joblib \
+  --model dataset/builds/trudvsem-model-v2/model.joblib \
   --candidate-file /tmp/candidate.txt --need-file /tmp/need.txt
 ```
 

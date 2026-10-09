@@ -1,0 +1,59 @@
+{
+  "version": "application-decisions-v2",
+  "target": "recorded_application_acceptance_vs_refusal_within_30_days",
+  "features_as_of": "strictly_before_application_creation",
+  "label_window_days": 30,
+  "direction_basis": "explicit reply link, same CV/person/job/organization, chronological consistency",
+  "actor_semantics_verified_by_publisher": false,
+  "verified_professional_suitability_labels": 0,
+  "pairs": 589,
+  "counts": {
+    "stored_it_applications": 6398,
+    "no_reply_unknown": 3834,
+    "outside_30_day_window": 451,
+    "job_no_pre_event_version": 594,
+    "cv_no_pre_event_version": 360,
+    "insufficient_professional_text": 454,
+    "not_it_at_application": 45,
+    "conflicting_closed_pair_histories": 22,
+    "repeat_closed_pair_observations_removed": 49
+  },
+  "split": {
+    "train": {
+      "1": 167,
+      "0": 189
+    },
+    "validation": {
+      "0": 79,
+      "1": 42
+    },
+    "test": {
+      "0": 70,
+      "1": 42
+    }
+  },
+  "connected_components": 303,
+  "largest_component_pairs": 44,
+  "vacancy_technology_mentions": {
+    "python": 4,
+    "sql": 68
+  },
+  "test_rows_overlapping_v1_by_field": {
+    "pair_id": 72,
+    "cv_id": 82,
+    "person_id": 83,
+    "job_id": 84,
+    "candidate_text": 76,
+    "need_text": 83
+  },
+  "test_pristine_relative_to_v1": false,
+  "pairs_sha256": "83688d10652cad2969dce0584245af06dca43437a86ab902c841b43f8126be89",
+  "code_sha256": "6f0920dfbb3600f1ee4d01138a443c35226b84b8fab43890285e7de183b481f3",
+  "production_promotion_allowed": false,
+  "limitations": [
+    "Recorded reply outcome is not a hiring result or verified skill.",
+    "Only closed observed applications within 30 days; missing/delayed responses are unknown.",
+    "Historical and selected cohort, heuristic broad IT titles, short CV fields.",
+    "V2 is exploratory after V1; overlapping records are disclosed and are not a fresh external test."
+  ]
+}

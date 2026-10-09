@@ -1,0 +1,18 @@
+{
+  "responses.csv": {
+    "unchanged_from_previous_inventory": true,
+    "rows": 1820667
+  },
+  "vacancies.csv": {
+    "unchanged_from_previous_inventory": true,
+    "rows": 13282732
+  },
+  "curricula_vitae.csv": {
+    "unchanged_from_previous_inventory": true,
+    "rows": 10580887
+  },
+  "invitations.csv": {
+    "unchanged_from_previous_inventory": true,
+    "rows": 6984541
+  }
+}
