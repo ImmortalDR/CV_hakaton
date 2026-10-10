@@ -1,0 +1,14 @@
+{
+  "models": [
+    "word_cosine",
+    "char_cosine",
+    "broad_cosine",
+    "e5_cosine",
+    "pairwise_dense",
+    "catboost_ranker"
+  ],
+  "test_rows": 77,
+  "predictions_exact": true,
+  "metrics_exact": true,
+  "note": "Replay uses frozen embeddings; separate encoder probe checks local inference"
+}

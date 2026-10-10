@@ -1,0 +1,47 @@
+{
+  "mode": "local_only",
+  "verification": "passed",
+  "files": 96,
+  "bytes": 120477659,
+  "sha256": "922c0327db4f5caf486a9c54f5b619dcd132f2e31f3a5517dd3e0a117fbe6b3e",
+  "deterministic_duplicate_sha_equal": true,
+  "expanded_bytes": 217976460,
+  "corrupted_content_rejected": true,
+  "model_replay": {
+    "models": [
+      "word_cosine",
+      "char_cosine",
+      "broad_cosine",
+      "e5_cosine",
+      "word_pair",
+      "broad_pair",
+      "e5_pair",
+      "hybrid_pair",
+      "job_only",
+      "pairwise_dense",
+      "catboost_ranker"
+    ],
+    "test_rows": 77,
+    "predictions_exact": true,
+    "metrics_exact": true,
+    "note": "Replay uses frozen embeddings; separate encoder probe checks local inference"
+  },
+  "model-cv_replay": {
+    "models": [
+      "word_cosine",
+      "char_cosine",
+      "broad_cosine",
+      "e5_cosine",
+      "pairwise_dense",
+      "catboost_ranker"
+    ],
+    "test_rows": 77,
+    "predictions_exact": true,
+    "metrics_exact": true,
+    "note": "Replay uses frozen embeddings; separate encoder probe checks local inference"
+  },
+  "standalone_encoder_max_abs_error": 0.0,
+  "standalone_retrieval_recalculation_equal": true,
+  "archive": "dataset/releases/trudvsem-training-2026-10-10-v4-local.zip",
+  "real_texts_publicly_published": false
+}

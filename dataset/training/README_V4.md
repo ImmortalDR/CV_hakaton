@@ -1,7 +1,7 @@
 # V4 — данные и модель, отдельно от сервиса
 
-Протокол: [EXPERIMENT_V4.md](EXPERIMENT_V4.md). Результаты исполнения будут
-записаны в RESULTS_V4.md. Реальные тексты, индексы, эмбеддинги и веса хранятся
+Протокол: [EXPERIMENT_V4.md](EXPERIMENT_V4.md). Результаты: [RESULTS_V4.md](RESULTS_V4.md).
+Карточка данных: [DATA_CARD_V4.md](DATA_CARD_V4.md). Реальные тексты, индексы, эмбеддинги и веса хранятся
 только в игнорируемом `dataset/builds/`, не в GitHub. Старые V1–V3 сохранены.
 Источник: [Trudvsem / RCSI](https://data.rcsi.science/data-catalog/datasets/186/).
 E5: [исходная модель](https://huggingface.co/intfloat/multilingual-e5-small),
@@ -52,10 +52,18 @@ OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 dataset/builds/v4-env/bin/python -m pyt
 ```
 
 ```bash
-dataset/builds/v4-env/bin/python dataset/training/experiment_v4.py predict --model /path/to/selected.joblib --encoder dataset/builds/e5-small-onnx --need /path/need.txt --candidates /path/candidates.jsonl
+dataset/builds/v4-env/bin/python dataset/training/rank_v4.py --root dataset/builds/trudvsem-model-v4 --need /path/need.txt --candidates /path/candidates.jsonl
 ```
 
-Ответ содержит версию/цель модели и список `candidate_id`, относительный
+`Ranker` загружает проверенный по SHA артефакт один раз, а нейросетевой encoder
+только для нуждающихся в нём семейств. Текстовые варианты работают без ONNX-весов.
+Для E5 добавьте `--encoder dataset/builds/e5-small-onnx --cache /private/cache.sqlite`.
+При интеграции сохраняйте экземпляр Ranker и заранее кодируйте профили: полный
+повторный прогон резюме через E5 на каждый HTTP-запрос не измерялся как приемлемый.
+Для выбора конкретного исследовательского варианта предусмотрен `--family`.
+Job-only намеренно недоступен в интерфейсе подбора: это диагностический контроль.
+
+Ответ содержит версию, семейство, SHA/цель модели и список `candidate_id`, относительный
 `score`, `status`. Недостаточный текст → `score=null`; одинаковые ID запрещены.
 Баллы не калиброваны как вероятность найма. Входные категории, согласия,
 подтверждённые навыки и правила ФСП проверяет приложение, **до и независимо
@@ -68,8 +76,9 @@ dataset/builds/v4-env/bin/python dataset/training/experiment_v4.py predict --mod
 Главная метрика NDCG@10 вычисляется только для достаточных смешанных групп.
 `null` означает отсутствие подходящих групп, а не нулевое качество. Малые
 группы и AP подписаны отдельно. Не выбирать test-победителя задним числом.
-Recall@100 относится к ограниченному, датированному пулу людей test, а не ко
-всем миллионам резюме. Неизвестная релевантность посторонних кандидатов не
+Recall@100 относится к ограниченному, датированному пулу: test плюс отдельная
+фиксированная выборка реальных профилей. Это не все миллионы резюме.
+Неизвестная релевантность посторонних кандидатов не
 оценивается как отказ. При <=100 кандидатах такой запрос тривиален и считается
 отдельно в отчёте. Это не доказательство профессиональной пригодности.
 
@@ -97,3 +106,37 @@ Word-artifact нужен для уже обученного на train слов�
 положительные и эмбеддинги остаются приватными. Изменять пул после просмотра
 метрик для улучшения цифры нельзя. Это дополнительная оценка поиска; она не
 устраняет нехватку больших групп с известными исходами для NDCG@10.
+
+## Дополнительная V4-CV
+
+[Протокол V4-CV](EXPERIMENT_V4_CV.md) введён после результатов первой серии.
+Это адаптивное исследование на dev, **не новый слепой test**. Четыре групповых
+fold, повторное обучение словарей/scaler, исключение fold-heldout из корпуса,
+выбор по OOF внутри вакансий. Исходные V4 результаты сохранены.
+
+```bash
+OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 dataset/builds/v4-env/bin/python dataset/training/cv_v4.py --pairs dataset/builds/trudvsem-decisions-v4/pairs.jsonl --corpus dataset/builds/trudvsem-corpus-v4/corpus.jsonl --base dataset/builds/trudvsem-model-v4 --out dataset/builds/trudvsem-model-v4-cv
+OPENBLAS_NUM_THREADS=2 dataset/builds/v4-env/bin/python dataset/training/experiment_v4.py replay --pairs dataset/builds/trudvsem-decisions-v4/pairs.jsonl --root dataset/builds/trudvsem-model-v4-cv
+```
+
+Для CLI дополнительной серии передайте `--root dataset/builds/trudvsem-model-v4-cv`.
+Это не разрешает производственное включение автоматически.
+
+## Передача участнику команды
+
+Приватный архив на сервере:
+`dataset/releases/trudvsem-training-2026-10-10-v4-local.zip`.
+Внутри подготовленные данные, 17 артефактов двух серий, фиксированный E5,
+код, зависимости и отчёты. `LOCAL_ONLY.txt` содержит команды для распакованной
+версии. Интернет при replay и inference не нужен; зависимости Python должны
+быть установлены заранее. Архив с реальными текстами не загружать в публичный GitHub.
+
+```bash
+python3 dataset/training/package_v4.py --out /private/new-v4-local.zip
+python3 dataset/training/package_local.py --verify /private/new-v4-local.zip
+```
+
+Второму участнику нужны `rank_v4.Ranker`, входной JSONL и SHA выбранного
+артефакта. Основная серия по умолчанию использует word cosine, дополнительная
+V4-CV — char cosine. Это исследовательские варианты: статистического основания
+для автоматической замены ранжирования работающего сервиса пока нет.

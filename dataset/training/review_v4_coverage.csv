@@ -14,3 +14,9 @@ dataset/training/README_V4.md,text,read,инструкции и контракт
 dataset/training/REVIEW_V4.md,text,read,содержательное покрытие,read,связь с ТЗ и QA,read,машинные проверки отделены от чтения
 dataset/training/requirements-v4.lock.txt,text,read,изолированные зависимости,read,Python 3.12 и CPU runtime,read,не меняется окружение приложения
 dataset/training/tests/test_v4.py,test,read,fixtures отделены от исследовательских данных,read,проверка полного run/replay,read,"ошибки дат, групп, ties и утечек"
+dataset/training/cv_v4.py,text,read,адаптивный протокол после V4,read,group folds → OOF выбор → refit → прежний test,read,heldout корпус и scaler; NPZ читается один раз; не слепой test
+dataset/training/rank_v4.py,text,read,повторно используемый интерфейс,read,проверка SHA → ленивые признаки → score,read,без encoder для TF-IDF; отказ от job-only; unknown
+dataset/training/check_v4.py,text,read,независимый пересчёт,read,tie membership и свежие E5-векторы,read,не выбирает модель; срезы описательные
+dataset/training/DATA_CARD_V4.md,text,read,смысл реальных исторических меток,read,источники → as-of → split → ограничения,read,не сертификат навыков; unknown не отказ
+dataset/training/EXPERIMENT_V4_CV.md,text,read,правило выбора до CV-fit,read,OOF AUC внутри вакансии,read,адаптивное повторное использование test раскрыто
+dataset/training/RESULTS_V4.md,text,read,фактические результаты двух серий,read,таблицы сверены с JSON отчётами,read,неопределённая NDCG и интервалы с нулём раскрыты

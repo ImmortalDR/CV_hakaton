@@ -1,0 +1,21 @@
+{
+  "extra_people_limit": 2000,
+  "eligible_extra_people": 4640,
+  "selected_extra_people": 2000,
+  "queries": 15,
+  "unique_documents": 2806,
+  "near_training_copies_removed_across_dates": 199,
+  "candidate_people_min": 862,
+  "candidate_people_max": 1817,
+  "pairs_sha256": "d6db3a955e51015c4cf86b9cfc554f550c8667431183c716ba011985e4852a6d",
+  "legacy_sha256": "6c77d90054f3343aa0fd49aad766eebda2edf57b352d605ad2f26e01e19ccbae",
+  "index_sha256": "4365c43d48a89916e18a3bfee109c7bd1bd279d1caf87596baab4fcebd0a36d3",
+  "history_manifest_sha256": "be6eb88375d0fe9ae6274f6c0e64daa48983aea1f094985df8814ca74a1a1738",
+  "files": {
+    "documents.jsonl": "762f1965ce6fa6a512c135806bb574314b56ccc3ccfd7f614a875cfff30af1a9",
+    "queries.jsonl": "1c9b4306b30f63249c04097c6d67e58be49d44b5871308d7b8ebb6b264ac1ad4"
+  },
+  "code_sha256": "90d0714155ccb5e5651a79ae254a031a0c0522fc9d2b6a292de76de0b8ae1ef6",
+  "unobserved_outcome": "unknown, not negative",
+  "scope": "sampled real-CV pool, not the entire marketplace"
+}

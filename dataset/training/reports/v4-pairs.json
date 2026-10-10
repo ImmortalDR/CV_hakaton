@@ -1,0 +1,66 @@
+{
+  "version": "v4-frozen",
+  "seed": "fsp-expanded-v4-20261010",
+  "target": "recorded_application_acceptance_vs_refusal_within_30_days",
+  "split_kind": "group_disjoint; not chronological/external",
+  "legacy_validation_test_entity_overlap": 0,
+  "counts": {
+    "repeated_person_job_rows": 5,
+    "near_duplicate_validation": 0,
+    "near_duplicate_test": 1
+  },
+  "raw_pairs": 1697,
+  "pairs": 1691,
+  "split": {
+    "train": {
+      "rows": 1551,
+      "labels": {
+        "1": 623,
+        "0": 928
+      },
+      "people": 1344,
+      "jobs": 857,
+      "components": 563,
+      "mixed_snapshot_pools": 54,
+      "mixed_jobs": 50,
+      "primary_jobs_min10": 5,
+      "primary_rows": 81,
+      "largest_mixed_pool": 33
+    },
+    "validation": {
+      "rows": 63,
+      "labels": {
+        "0": 39,
+        "1": 24
+      },
+      "people": 62,
+      "jobs": 44,
+      "components": 43,
+      "mixed_snapshot_pools": 3,
+      "mixed_jobs": 3,
+      "primary_jobs_min10": 0,
+      "primary_rows": 0,
+      "largest_mixed_pool": 3
+    },
+    "test": {
+      "rows": 77,
+      "labels": {
+        "0": 46,
+        "1": 31
+      },
+      "people": 74,
+      "jobs": 41,
+      "components": 38,
+      "mixed_snapshot_pools": 3,
+      "mixed_jobs": 3,
+      "primary_jobs_min10": 0,
+      "primary_rows": 0,
+      "largest_mixed_pool": 6
+    }
+  },
+  "pairs_sha256": "d6db3a955e51015c4cf86b9cfc554f550c8667431183c716ba011985e4852a6d",
+  "raw_pairs_sha256": "30996240b1c1081cb867203eb11ac13459be658f3f2e474f2ba639e7935c20db",
+  "legacy_sha256": "6c77d90054f3343aa0fd49aad766eebda2edf57b352d605ad2f26e01e19ccbae",
+  "code_sha256": "50fe5f237bf19587c107ba0d4ed00d9b85a1cfb54dcc140deb3ddaa037b7b37d",
+  "production_promotion_allowed": false
+}

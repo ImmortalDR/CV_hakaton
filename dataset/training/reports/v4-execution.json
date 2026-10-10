@@ -1,0 +1,32 @@
+{
+  "training_pytest": {
+    "command": "OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 dataset/builds/v4-env/bin/python -m pytest dataset/training/tests -q",
+    "passed": 49,
+    "seconds": 114.87,
+    "exit_code": 0,
+    "log": "dataset/logs/v4-final-tests.log"
+  },
+  "frozen_dataset_rebuild_byte_identical": true,
+  "main_replay_models": 11,
+  "cv_replay_models": 6,
+  "failures_preserved": [
+    {
+      "run": "v4 first encoder pass",
+      "cause": "conversation interruption",
+      "test_seen": false
+    },
+    {
+      "run": "v4-cv first attempt",
+      "exit_code": 137,
+      "cause": "NPZ repeated whole-array decompression; fixed and regression tested; no completed fold"
+    },
+    {
+      "run": "retrieval first evaluation",
+      "cause": "conversation interruption",
+      "recovered_from_cached_documents": 1670
+    }
+  ],
+  "deepseek_used": false,
+  "application_changed": false,
+  "live_database_changed": false
+}

@@ -1,0 +1,71 @@
+{
+  "pool": {
+    "extra_people_limit": 2000,
+    "eligible_extra_people": 4640,
+    "selected_extra_people": 2000,
+    "queries": 15,
+    "unique_documents": 2806,
+    "near_training_copies_removed_across_dates": 199,
+    "candidate_people_min": 862,
+    "candidate_people_max": 1817,
+    "pairs_sha256": "d6db3a955e51015c4cf86b9cfc554f550c8667431183c716ba011985e4852a6d",
+    "legacy_sha256": "6c77d90054f3343aa0fd49aad766eebda2edf57b352d605ad2f26e01e19ccbae",
+    "index_sha256": "4365c43d48a89916e18a3bfee109c7bd1bd279d1caf87596baab4fcebd0a36d3",
+    "history_manifest_sha256": "be6eb88375d0fe9ae6274f6c0e64daa48983aea1f094985df8814ca74a1a1738",
+    "files": {
+      "documents.jsonl": "762f1965ce6fa6a512c135806bb574314b56ccc3ccfd7f614a875cfff30af1a9",
+      "queries.jsonl": "1c9b4306b30f63249c04097c6d67e58be49d44b5871308d7b8ebb6b264ac1ad4"
+    },
+    "code_sha256": "90d0714155ccb5e5651a79ae254a031a0c0522fc9d2b6a292de76de0b8ae1ef6",
+    "unobserved_outcome": "unknown, not negative",
+    "scope": "sampled real-CV pool, not the entire marketplace"
+  },
+  "metric": "macro vacancy Recall@100 of observed positives",
+  "scores": {
+    "e5": 0.37916666666666665,
+    "word_tfidf": 0.275
+  },
+  "jobs": 15,
+  "components": 15,
+  "gain_ci95": [
+    -0.12927083333333333,
+    0.3333333333333333
+  ],
+  "small_sample_warning": true,
+  "trivial_queries": 0,
+  "encoder_runtime": {
+    "documents": 1151,
+    "chunks": 2533,
+    "seconds": 865.8140755099012
+  },
+  "seconds": 871.8282660790719,
+  "model_sha256": "c56b3b86f098825e5bfd6822d4cdf7e2319a9f5289128d0a7f0b73751c88102b",
+  "production_promotion_allowed": false,
+  "encoder_manifest": {
+    "repository": "Xenova/multilingual-e5-small",
+    "revision": "761b726dd34fb83930e26aab4e9ac3899aa1fa78",
+    "files": {
+      "config.json": {
+        "sha256": "cb99455288675345e1a4f411438d5d0adbba5fbd3a67ea4fb03c015433b996c1",
+        "bytes": 658,
+        "url": "https://huggingface.co/Xenova/multilingual-e5-small/resolve/761b726dd34fb83930e26aab4e9ac3899aa1fa78/config.json"
+      },
+      "tokenizer.json": {
+        "sha256": "0b44a9d7b51c3c62626640cda0e2c2f70fdacdc25bbbd68038369d14ebdf4c39",
+        "bytes": 17082730,
+        "url": "https://huggingface.co/Xenova/multilingual-e5-small/resolve/761b726dd34fb83930e26aab4e9ac3899aa1fa78/tokenizer.json"
+      },
+      "tokenizer_config.json": {
+        "sha256": "a1d6bc8734a6f635dc158508bef000f8e2e5a759c7d92f984b2c86e5ff53425b",
+        "bytes": 443,
+        "url": "https://huggingface.co/Xenova/multilingual-e5-small/resolve/761b726dd34fb83930e26aab4e9ac3899aa1fa78/tokenizer_config.json"
+      },
+      "onnx/model_int8.onnx": {
+        "sha256": "4d24e2bc01a447951524466ef533e52944bf48509e6552810bcee1a2711cb02c",
+        "bytes": 118054593,
+        "url": "https://huggingface.co/Xenova/multilingual-e5-small/resolve/761b726dd34fb83930e26aab4e9ac3899aa1fa78/onnx/model_int8.onnx"
+      }
+    }
+  },
+  "code_sha256": "37463f673b5a36732441b17056dc98aa01148125c14f6c7e55bec5d27dc560ab"
+}
