@@ -49,17 +49,25 @@ def fold_corpus(corpus,heldout):
     return kept,{'excluded_job_documents':len(corpus)-len(candidates),'excluded_near_copies':removed}
 
 
+def load_embeddings(base,rows):
+    """NPZ members decompress on every access: load each array exactly once."""
+    em={};hashes={}
+    for split in ('train','validation','test'):
+        path=base/(split+'-embeddings.npz');rs=[p for p in rows if p['split']==split]
+        with np.load(path) as packed:a,b=packed['a'],packed['b']
+        if a.shape!=(len(rs),384) or b.shape!=(len(rs),384):raise ValueError('Embedding shape mismatch')
+        if not np.isfinite(a).all() or not np.isfinite(b).all():raise ValueError('Non-finite embeddings')
+        hashes[split]=file_hash(path)
+        for i,p in enumerate(rs):em[p['pair_id']]=(a[i].copy(),b[i].copy())
+    return em,hashes
+
+
 def run(pairs,corpus,base,out):
     os.umask(0o077);out.mkdir(parents=True,exist_ok=False);start=time.monotonic()
     prior=json.loads((base/'training-report.json').read_text())
     if file_hash(pairs)!=prior['pairs_sha256'] or file_hash(corpus)!=prior['corpus_sha256']:raise ValueError('Input changed')
     rows=read_jsonl(pairs);dev=[p for p in rows if p['split']!='test'];test=[p for p in rows if p['split']=='test']
-    corpus_rows=read_jsonl(corpus);em={};embedding_hashes={}
-    for split in ('train','validation','test'):
-        path=base/(split+'-embeddings.npz');e=np.load(path);rs=[p for p in rows if p['split']==split]
-        if e['a'].shape!=(len(rs),384) or e['b'].shape!=(len(rs),384):raise ValueError('Embedding shape mismatch')
-        embedding_hashes[split]=file_hash(path)
-        for i,p in enumerate(rs):em[p['pair_id']]=(e['a'][i],e['b'][i])
+    corpus_rows=read_jsonl(corpus);em,embedding_hashes=load_embeddings(base,rows)
     def embeddings(rs):return tuple(np.stack([em[p['pair_id']][j] for p in rs]) for j in (0,1))
     splitter=StratifiedGroupKFold(n_splits=4,shuffle=True,random_state=20261010)
     predictions={config_key(*c):np.full(len(dev),np.nan) for c in CONFIGS};folds=[]

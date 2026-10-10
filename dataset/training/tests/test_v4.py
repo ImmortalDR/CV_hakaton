@@ -234,3 +234,16 @@ def test_inference_contract_rejects_duplicate_ids_and_preserves_unknown():
     result=rank({'target':'recorded_reply'},need,[{'candidate_id':'x','candidate_base_text':'SQL'}],None)
     assert result['candidates']==[{'candidate_id':'x','score':None,'status':'insufficient_professional_text'}]
     assert result['production_promotion_allowed'] is False
+
+
+def test_cv_loads_each_compressed_embedding_array_once(tmp_path,monkeypatch):
+    import cv_v4
+    rows=[]
+    for split,n in [('train',50),('validation',2),('test',3)]:
+        rows.extend(row(split+str(i),split=split) for i in range(n))
+        np.savez_compressed(tmp_path/(split+'-embeddings.npz'),a=np.ones((n,384),dtype=np.float32),b=np.ones((n,384),dtype=np.float32))
+    calls=[];original=np.lib.npyio.NpzFile.__getitem__
+    def get(self,key):calls.append(key);return original(self,key)
+    monkeypatch.setattr(np.lib.npyio.NpzFile,'__getitem__',get)
+    em,hashes=cv_v4.load_embeddings(tmp_path,rows)
+    assert len(em)==55 and len(hashes)==3 and calls==['a','b']*3
