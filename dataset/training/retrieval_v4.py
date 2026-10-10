@@ -14,7 +14,7 @@ from enrich import read_jsonl,history_asof,file_hash
 from pairs import asof
 from prepare import clean,digest,write_json
 from freeze_v4 import purge
-from e5_local import LocalE5
+from e5_local import LocalE5,cached_encode
 
 
 def prepare(index,history,pairs,legacy,out,limit=2000):
@@ -100,10 +100,8 @@ def evaluate(root,model,encoder_path):
     ix={p['doc_id']:i for i,p in enumerate(docs)}
     enc=LocalE5(encoder_path)
     texts=[p['candidate_text'] for p in docs];needs=[p['need_text'] for p in queries]
-    a=[]
-    for start_i in range(0,len(texts),100):
-        a.extend(enc.encode(texts[start_i:start_i+100]));print(json.dumps({'encoded':min(start_i+100,len(texts)),'total':len(texts)}),flush=True)
-    a=np.asarray(a);b=enc.encode(needs,role='query')
+    a=cached_encode(enc,texts,'passage',root/'encoding-cache.sqlite')
+    b=cached_encode(enc,needs,'query',root/'encoding-cache.sqlite')
     artifact=joblib.load(model);vectorizer=artifact['features'].word
     wa,wb=vectorizer.transform(texts),vectorizer.transform(needs)
     records=[]

@@ -1,0 +1,36 @@
+{
+  "responses.csv": {
+    "sha256": "db7eaf366a367f40e8c44422437be9ce7e25ee6defdcdbee6d43384f0d5e65f3",
+    "bytes": 442284629,
+    "matches_original_scan": true
+  },
+  "vacancies.csv": {
+    "sha256": "1d1bf04ae5d88f4fc74c02b9ea5144d75d38595100499f52876fbea9942cbdf3",
+    "bytes": 21631962386,
+    "matches_original_scan": true
+  },
+  "curricula_vitae.csv": {
+    "rows": 10580887,
+    "bytes": 8839652588,
+    "sha256": "c4038857dfa785e4a2357e787f1fbbad37a654fb1566eda0803fdf154f5aa705",
+    "matches_original_scan": true
+  },
+  "invitations.csv": {
+    "rows": 6984541,
+    "bytes": 1785986571,
+    "sha256": "5c584451bce85d8f54ac6b20bb6beb33e9bb42a45fcca0b4179fc63e8e833fdb",
+    "matches_original_scan": true
+  },
+  "workexp.csv": {
+    "rows": 12162960,
+    "bytes": 8051776967,
+    "sha256": "c8cb0b7d4e7950114402a528e9ead8e5e1c27b8174be1802e0b367643cc48aa0",
+    "matches_original_scan": true
+  },
+  "edu.csv": {
+    "rows": 4540219,
+    "bytes": 921286277,
+    "sha256": "b8e5c77abefddfe4b456f345cbc0683835176edee85af0f3a026abecfd5b76dd",
+    "matches_original_scan": true
+  }
+}

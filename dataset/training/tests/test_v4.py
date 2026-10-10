@@ -132,3 +132,51 @@ def test_training_freezes_selection_before_test_and_replays_all_models(tmp_path,
         experiment.replay(pairs,out)
     report=json.loads((out/'replay.json').read_text())
     assert len(report['models'])==11 and report['predictions_exact'] and report['metrics_exact']
+
+
+def test_extended_retrieval_preserves_unknown_and_rejects_training_and_future(tmp_path):
+    import sqlite3
+    from retrieval_v4 import prepare
+    from enrich import file_hash,read_jsonl
+    from prepare import write_json,digest
+    index=tmp_path/'index.sqlite'
+    db=sqlite3.connect(index)
+    db.execute('CREATE TABLE cvs(id TEXT,person TEXT,day TEXT,text TEXT,rownum INTEGER)')
+    db.executemany('INSERT INTO cvs VALUES(?,?,?,?,?)',[
+        ('a','blocked','2019-01-01','private blocked training professional experience',1),
+        ('b','unknown','2019-01-01','медицинская практика хирургия лечение больных в поликлинике',2),
+        ('c','future','2021-01-01','future professional profile unavailable at query time',3)])
+    db.commit();db.close()
+    history=tmp_path/'history';history.mkdir()
+    for name in ('workexp.csv','edu.csv'):(history/(name+'.jsonl')).write_text('')
+    write_json(history/'complete.json',{'base_index_sha256':file_hash(index),
+               'inputs':{name:{'output_sha256':file_hash(history/(name+'.jsonl'))} for name in ('workexp.csv','edu.csv')}})
+    pairs=tmp_path/'pairs.jsonl';legacy=tmp_path/'legacy.jsonl'
+    train=row(0,person_id=digest('blocked'),cv_id=digest('a'),split='train')
+    test=row(1,label=1,job='q',split='test',source_refs={})
+    pairs.write_text(json.dumps(train)+'\n'+json.dumps(test)+'\n');legacy.write_text('')
+    out=tmp_path/'retrieval';prepare(index,history,pairs,legacy,out)
+    docs=read_jsonl(out/'documents.jsonl');queries=read_jsonl(out/'queries.jsonl')
+    assert len(docs)==2 and len(queries)==1
+    assert {p['person_id'] for p in docs}=={'p1',digest('unknown')}
+    assert all('label' not in p for p in docs)
+    assert queries[0]['positive_people']==['p1']
+
+
+def test_embedding_cache_reuses_only_same_model_role_and_text(tmp_path):
+    from e5_local import cached_encode
+    class Encoder:
+        manifest={'revision':'a'}
+        calls=0
+        def encode(self,texts,role):
+            self.calls+=len(texts)
+            return np.ones((len(texts),384),dtype=np.float32)/np.sqrt(np.float32(384))
+    enc=Encoder();cache=tmp_path/'cache.sqlite'
+    x=cached_encode(enc,['text'],'passage',cache)
+    assert enc.calls==1
+    assert np.array_equal(x,cached_encode(enc,['text'],'passage',cache)) and enc.calls==1
+    cached_encode(enc,['text'],'query',cache)
+    assert enc.calls==2
+    enc.manifest={'revision':'b'}
+    cached_encode(enc,['text'],'passage',cache)
+    assert enc.calls==3

@@ -1,7 +1,9 @@
 """Pinned local ONNX E5, no network/token/env use. Long documents use all chunks."""
 from __future__ import annotations
 import json
+import hashlib
 from pathlib import Path
+import sqlite3
 import time
 import numpy as np
 import onnxruntime as ort
@@ -47,9 +49,36 @@ class LocalE5:
         return np.asarray(out,dtype=np.float32).reshape(len(texts),384)
 
 
-def pair_embeddings(encoder,rows):
+def cached_encode(encoder,texts,role,cache_path):
+    """Commit small batches so an interrupted CPU run does not lose its work."""
+    cache_path=Path(cache_path);cache_path.parent.mkdir(parents=True,exist_ok=True)
+    db=sqlite3.connect(cache_path)
+    db.execute('CREATE TABLE IF NOT EXISTS embeddings(key TEXT PRIMARY KEY,vector BLOB)')
+    version=json.dumps(encoder.manifest,sort_keys=True)+'|chunks256-overlap32-mean-normalized-v1|'+role
+    keys=[hashlib.sha256((version+'|'+t).encode()).hexdigest() for t in texts]
+    result={};missing=[]
+    for i,k in enumerate(keys):
+        r=db.execute('SELECT vector FROM embeddings WHERE key=?',(k,)).fetchone()
+        if r:
+            a=np.frombuffer(r[0],dtype=np.float32).copy()
+            if a.shape!=(384,) or not np.isfinite(a).all():raise ValueError('Corrupt embedding cache')
+            result[i]=a
+        else:missing.append(i)
+    for start in range(0,len(missing),10):
+        ix=missing[start:start+10];vectors=encoder.encode([texts[i] for i in ix],role=role)
+        for i,v in zip(ix,vectors):
+            result[i]=v;db.execute('INSERT OR REPLACE INTO embeddings VALUES(?,?)',(keys[i],v.astype(np.float32).tobytes()))
+        db.commit()
+        if start%100==0 or start+10>=len(missing):
+            print(json.dumps({'e5_role':role,'encoded_new':min(start+10,len(missing)),'new_total':len(missing),'cache_hits':len(texts)-len(missing)}),flush=True)
+    db.close()
+    return np.asarray([result[i] for i in range(len(texts))],dtype=np.float32).reshape(len(texts),384)
+
+
+def pair_embeddings(encoder,rows,cache_path=None):
     docs=sorted({p['candidate_text'] for p in rows});needs=sorted({p['need_text'] for p in rows})
-    cm=dict(zip(docs,encoder.encode(docs)));jm=dict(zip(needs,encoder.encode(needs,role='query')))
+    encode=lambda ts,role:cached_encode(encoder,ts,role,cache_path) if cache_path else encoder.encode(ts,role=role)
+    cm=dict(zip(docs,encode(docs,'passage')));jm=dict(zip(needs,encode(needs,'query')))
     a=np.stack([cm[p['candidate_text']] for p in rows]);b=np.stack([jm[p['need_text']] for p in rows])
     return a,b
 

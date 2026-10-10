@@ -34,7 +34,7 @@ legacy-компоненты и близкие копии. Старые набл�
 ## Обучение, проверка, интерфейс
 
 ```bash
-OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 dataset/builds/v4-env/bin/python dataset/training/experiment_v4.py train --pairs dataset/builds/trudvsem-decisions-v4/pairs.jsonl --corpus dataset/builds/trudvsem-corpus-v4/corpus.jsonl --encoder dataset/builds/e5-small-onnx --out dataset/builds/trudvsem-model-v4
+OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 dataset/builds/v4-env/bin/python dataset/training/experiment_v4.py train --pairs dataset/builds/trudvsem-decisions-v4/pairs.jsonl --corpus dataset/builds/trudvsem-corpus-v4/corpus.jsonl --encoder dataset/builds/e5-small-onnx --cache dataset/builds/e5-cache-v4.sqlite --out dataset/builds/trudvsem-model-v4
 OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 dataset/builds/v4-env/bin/python dataset/training/experiment_v4.py replay --pairs dataset/builds/trudvsem-decisions-v4/pairs.jsonl --root dataset/builds/trudvsem-model-v4
 OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 dataset/builds/v4-env/bin/python -m pytest dataset/training/tests -q
 ```
@@ -79,3 +79,21 @@ Recall@100 относится к ограниченному, датирован�
 актор ответа не подтверждён издателем отдельно. Людей-разметчиков и
 сертификации нет. Полное нейросетевое дообучение/проверка на людях не следуют
 из успешного выполнения этого скрипта.
+
+## Расширенный проверочный пул поиска
+
+Чтобы top-100 не оказался тривиальным на малом test, до оценки отдельно
+фиксируется выборочный пул до 2 000 дополнительных людей. Они не используются
+как отрицательные метки. Исторические профили восстанавливаются на дату каждого
+запроса; исключаются люди/CV train, validation, legacy и близкие копии их текстов.
+
+```bash
+OPENBLAS_NUM_THREADS=2 dataset/builds/v4-env/bin/python dataset/training/retrieval_v4.py prepare --index dataset/builds/trudvsem-index-v4/index.sqlite --history dataset/builds/trudvsem-enrichment-v4 --pairs dataset/builds/trudvsem-decisions-v4/pairs.jsonl --legacy dataset/builds/trudvsem-legacy-v4/pairs.jsonl --out dataset/builds/trudvsem-retrieval-v4
+OPENBLAS_NUM_THREADS=2 dataset/builds/v4-env/bin/python dataset/training/retrieval_v4.py evaluate --root dataset/builds/trudvsem-retrieval-v4 --model dataset/builds/trudvsem-model-v4/word_cosine.joblib --encoder dataset/builds/e5-small-onnx
+```
+
+Word-artifact нужен для уже обученного на train словаря, а не для выбора по test.
+Результат — `retrieval-report.json`. Документы/манифест запросов, известные
+положительные и эмбеддинги остаются приватными. Изменять пул после просмотра
+метрик для улучшения цифры нельзя. Это дополнительная оценка поиска; она не
+устраняет нехватку больших групп с известными исходами для NDCG@10.

@@ -1,0 +1,16 @@
+path,kind,pass1_status,pass1_note,pass2_status,pass2_note,pass3_status,pass3_note
+dataset/training/expand_v4.py,text,read,расширение отбора и отдельный индекс,read,"полные CV/события, immutable base",read,"checkpoint, hashes, отсутствие записи в приложение"
+dataset/training/freeze_v4.py,text,read,legacy-граф и split,read,человек/CV/вакансия/копии,read,"повтор человека, близкие копии, фиксированный seed"
+dataset/training/corpus_v4.py,text,read,неразмеченные вакансии,read,train-only словарь на дополнительном корпусе,read,heldout версии и копии исключены
+dataset/training/e5_local.py,text,read,локальный ONNX encoder,read,token chunks → pooling → normalization,read,без внешних текстовых API; frozen weights
+dataset/training/model_v4.py,text,read,признаки и интерфейс,read,профили → features → relative score,read,"unknown/нет грейдов, duplicate IDs"
+dataset/training/metrics_v4.py,text,read,метрики по вакансиям,read,снимки → job macro → group bootstrap,read,"ties, small pools, as-of retrieval"
+dataset/training/experiment_v4.py,text,read,обучение и replay,read,train → validation selection → test,read,"сохранение выбора до test, hashes и replay"
+dataset/training/retrieval_v4.py,text,read,расширенный тест поиска,read,as-of профили → fixed pool → recall,read,"unjudged unknown, чужие split и future исключены"
+dataset/training/fetch_e5_v4.py,text,read,загрузка фиксированных открытых весов,read,manifest → download → hash,read,никаких резюме в сети
+dataset/training/package_v4.py,text,read,локальная упаковка,read,allowlist → SHA manifest → ZIP,read,проверка измеренного кода; данные не в public
+dataset/training/EXPERIMENT_V4.md,text,read,протокол до измерения,read,цель/модели/выбор/метрики,read,"surrogate оговорён, без post-test выбора"
+dataset/training/README_V4.md,text,read,инструкции и контракт,read,rebuild/train/replay/predict,read,границы оценки и модели
+dataset/training/REVIEW_V4.md,text,read,содержательное покрытие,read,связь с ТЗ и QA,read,машинные проверки отделены от чтения
+dataset/training/requirements-v4.lock.txt,text,read,изолированные зависимости,read,Python 3.12 и CPU runtime,read,не меняется окружение приложения
+dataset/training/tests/test_v4.py,test,read,fixtures отделены от исследовательских данных,read,проверка полного run/replay,read,"ошибки дат, групп, ties и утечек"

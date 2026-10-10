@@ -48,7 +48,7 @@ def cb_pool(rows,x):
     return Pool(x[indices],label=[rows[i]['label'] for i in indices],group_id=gids,group_weight=weights)
 
 
-def run(pairs,corpus,encoder_path,out):
+def run(pairs,corpus,encoder_path,out,cache=None):
     os.umask(0o077);out.mkdir(parents=True,exist_ok=False);start=time.monotonic()
     started_utc=datetime.now(timezone.utc).isoformat()
     rmeta=json.loads(pairs.with_name('pairs-report.json').read_text())
@@ -62,7 +62,7 @@ def run(pairs,corpus,encoder_path,out):
     embeddings={};views={}
     for s in rs:
         print(json.dumps({'stage':'embedding','split':s,'rows':len(rs[s])}),flush=True)
-        embeddings[s]=pair_embeddings(encoder,rs[s]);views[s]=feature.transform(rs[s],embeddings[s])
+        embeddings[s]=pair_embeddings(encoder,rs[s],cache);views[s]=feature.transform(rs[s],embeddings[s])
         np.savez_compressed(out/(s+'-embeddings.npz'),a=embeddings[s][0],b=embeddings[s][1])
     common={'features':feature,'target':TARGET,'encoder_manifest':encoder.manifest}
     artifacts={};trials=[];selection={}
@@ -162,11 +162,12 @@ if __name__=='__main__':
     p=argparse.ArgumentParser();s=p.add_subparsers(dest='command',required=True)
     t=s.add_parser('train')
     for k in ('pairs','corpus','encoder','out'):t.add_argument('--'+k,type=Path,required=True)
+    t.add_argument('--cache',type=Path)
     r=s.add_parser('replay');r.add_argument('--pairs',type=Path,required=True);r.add_argument('--root',type=Path,required=True)
     q=s.add_parser('predict')
     for k in ('model','encoder','need','candidates'):q.add_argument('--'+k,type=Path,required=True)
     a=p.parse_args()
     with threadpool_limits(limits=2):
-        if a.command=='train':run(a.pairs,a.corpus,a.encoder,a.out)
+        if a.command=='train':run(a.pairs,a.corpus,a.encoder,a.out,a.cache)
         elif a.command=='replay':replay(a.pairs,a.root)
         else:print(json.dumps(rank(joblib.load(a.model),a.need.read_text(),read_jsonl(a.candidates),a.encoder),ensure_ascii=False,indent=2))
