@@ -1,0 +1,19 @@
+{
+  "local_pre_run_commit": "65e2ae0581cf53cb310d21ea5251ea0b1d4c8321",
+  "published_identical_tree_commit": "d64769cf9ecafa1d48ee77cfdf8eaa34ee3faaf3",
+  "code_sha256": {
+    "experiment_v4.py": "426041fe7815452b49291483d4de27a6031639068f0e7c89eb39eefb069740a5",
+    "model_v4.py": "ce3829b456c559fe76d7f8dd1a3786257ad53e0e1ae10112d1df7a77aff04899",
+    "e5_local.py": "3961b7d0f564900411219322c0b61d9f95b04f308a0fb398be9888c46a9583eb",
+    "metrics_v4.py": "d423e0d79610c028f2cba3094dcbde1ab5a1bc9867506dc604d2cce29299aeda",
+    "freeze_v4.py": "50fe5f237bf19587c107ba0d4ed00d9b85a1cfb54dcc140deb3ddaa037b7b37d",
+    "corpus_v4.py": "0dcd2a406be3b43cbb8c7542d900622c3bfe8a0b66a32653150380c87b853c65",
+    "expand_v4.py": "47f6a3f07673f6c55487b6d0df59ea2b635968d684e40945e16bec10ba11d1be",
+    "prepare.py": "a3d48ab63c28059ada3693db4fe8d6ecbd1e18be7613d5e61c0a24437fba7857",
+    "pairs.py": "bee3da5dbace58b8da59340ef73848f6f5c15e02c3a5401c22cf7210a5dc8bd5",
+    "application_pairs.py": "6f0920dfbb3600f1ee4d01138a443c35226b84b8fab43890285e7de183b481f3",
+    "enrich.py": "1b6185862b0daca7b62137e3d3c74b7faa893fa138de5eaf10afea87344e50c9",
+    "rank_features.py": "0778209fb588805f457219c598d084e95ea691e8352f2c022571f7c98f53b826",
+    "requirements-v4.lock.txt": "ce305df9e9ca2a37ea5d6b40f70dd342c6c95ebbd2a60f52027f14cd83262daf"
+  }
+}

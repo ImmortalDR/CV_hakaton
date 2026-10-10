@@ -1,0 +1,55 @@
+{
+  "index_counts": {
+    "jobs_with_it_content": 2306,
+    "wanted_cvs": 7282,
+    "stored": {
+      "jobs": 296885,
+      "cvs": 32008,
+      "events": 1820667,
+      "applications": 11010
+    }
+  },
+  "raw_linked_pairs": 1697,
+  "exclusions_and_preparation_counts": {
+    "applications": 11010,
+    "no_reply_unknown": 6477,
+    "outside_30_day_window": 741,
+    "ambiguous_history_entities": 1,
+    "job_no_pre_event_version": 1075,
+    "cv_no_pre_event_version": 616,
+    "not_it_at_application": 104,
+    "insufficient_professional_text": 99,
+    "conflicting_closed_pair_histories": 37,
+    "repeat_closed_pair_observations_removed": 164,
+    "cross_anchor_component_rows_excluded": 0
+  },
+  "with_work": 1499,
+  "with_education": 1452,
+  "history_scan": {
+    "workexp.csv": {
+      "source_records": 12162960,
+      "counts": {
+        "selected_source_rows": 40364,
+        "stored": 39177,
+        "empty_professional_text": 539,
+        "invalid_work_dates": 648
+      }
+    },
+    "edu.csv": {
+      "source_records": 4540219,
+      "counts": {
+        "selected_source_rows": 9253,
+        "empty_professional_text": 740,
+        "stored": 8480,
+        "invalid_education_year": 33
+      }
+    },
+    "invitations.csv": {
+      "source_records": 6984541,
+      "counts": {
+        "stored": 11010
+      }
+    }
+  },
+  "cohort": "heuristic IT title or professional content; not a certified occupation label"
+}

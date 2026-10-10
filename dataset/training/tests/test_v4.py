@@ -115,11 +115,11 @@ def test_training_freezes_selection_before_test_and_replays_all_models(tmp_path,
     for i in range(80):
         split='train' if i<40 else 'validation' if i<60 else 'test'
         rows.append(row(i,job='j'+str(i//10),label=i%2,split=split,
-                        need_text='python software data developer unique job '+str(i//10),
-                        candidate_text='python software developer experience testing '+str(i),
+                        need_text='python software data developer '+('project'+str(i//10)+' ')*10,
+                        candidate_text='python software developer experience '+('specialty'+str(i)+' ')*10,
                         work_text='python production engineering'))
     pairs.write_text(''.join(json.dumps(p)+'\n' for p in rows))
-    corpus.write_text(json.dumps({'need_text':'software developer python data engineering'})+'\n')
+    corpus.write_text(json.dumps({'job_id':'extra','need_text':'software developer python data engineering'})+'\n')
     write_json(pairs.with_name('pairs-report.json'),{'pairs_sha256':file_hash(pairs)})
     write_json(corpus.with_name('corpus-report.json'),{'corpus_sha256':file_hash(corpus),'pairs_sha256':file_hash(pairs)})
     original=experiment.evaluate
@@ -132,6 +132,26 @@ def test_training_freezes_selection_before_test_and_replays_all_models(tmp_path,
         experiment.replay(pairs,out)
     report=json.loads((out/'replay.json').read_text())
     assert len(report['models'])==11 and report['predictions_exact'] and report['metrics_exact']
+    import cv_v4
+    cvout=tmp_path/'cv-model'
+    fit_original=cv_v4.Features.fit;fit_calls=[]
+    def guarded_fit(self,rows,corpus):
+        assert all(p['split']!='test' for p in rows)
+        fit_calls.append({p['group_id'] for p in rows})
+        return fit_original(self,rows,corpus)
+    monkeypatch.setattr(cv_v4.Features,'fit',guarded_fit)
+    evaluate_original=cv_v4.evaluate
+    def guarded_metric(rows,scores):
+        if rows and rows[0]['split']=='test':assert (cvout/'selection.json').exists()
+        return evaluate_original(rows,scores)
+    monkeypatch.setattr(cv_v4,'evaluate',guarded_metric)
+    with threadpool_limits(limits=2):
+        cv_v4.run(pairs,corpus,out,cvout)
+        experiment.replay(pairs,cvout)
+    cvreport=json.loads((cvout/'training-report.json').read_text())
+    assert len(fit_calls)==5 and len(cvreport['models'])==6
+    assert cvreport['adaptive_after_v4_test'] and not cvreport['test_is_pristine']
+    assert cvreport['oof_rows']==60
 
 
 def test_extended_retrieval_preserves_unknown_and_rejects_training_and_future(tmp_path):
@@ -180,3 +200,37 @@ def test_embedding_cache_reuses_only_same_model_role_and_text(tmp_path):
     enc.manifest={'revision':'b'}
     cached_encode(enc,['text'],'passage',cache)
     assert enc.calls==3
+
+
+def test_embedding_cache_keeps_completed_batch_after_interruption(tmp_path):
+    from e5_local import cached_encode
+    import sqlite3
+    class Encoder:
+        manifest={'revision':'checkpoint-fixture'}
+        batches=0
+        documents=0
+        fail=True
+        def encode(self,texts,role):
+            self.batches+=1
+            if self.fail and self.batches==2:raise RuntimeError('interrupted fixture')
+            self.documents+=len(texts)
+            return np.ones((len(texts),384),dtype=np.float32)/np.sqrt(np.float32(384))
+    enc=Encoder();cache=tmp_path/'cache.sqlite';texts=[str(i) for i in range(25)]
+    with pytest.raises(RuntimeError,match='interrupted'):
+        cached_encode(enc,texts,'passage',cache)
+    with sqlite3.connect(cache) as db:assert db.execute('SELECT COUNT(*) FROM embeddings').fetchone()[0]==10
+    enc.fail=False
+    result=cached_encode(enc,texts,'passage',cache)
+    assert result.shape==(25,384) and enc.documents==25
+
+
+def test_inference_contract_rejects_duplicate_ids_and_preserves_unknown():
+    from model_v4 import rank
+    need='Разработка и сопровождение серверных приложений на Python и PostgreSQL'
+    with pytest.raises(ValueError,match='Duplicate'):
+        rank({},need,[{'candidate_id':'x'},{'candidate_id':'x'}],None)
+    with pytest.raises(ValueError,match='Need text'):
+        rank({},'short',[{'candidate_id':'x'}],None)
+    result=rank({'target':'recorded_reply'},need,[{'candidate_id':'x','candidate_base_text':'SQL'}],None)
+    assert result['candidates']==[{'candidate_id':'x','score':None,'status':'insufficient_professional_text'}]
+    assert result['production_promotion_allowed'] is False
