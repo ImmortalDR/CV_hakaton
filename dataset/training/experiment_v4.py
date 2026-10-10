@@ -5,6 +5,7 @@ from collections import defaultdict
 import json
 import os
 from pathlib import Path
+from datetime import datetime,timezone
 import platform
 import resource
 import time
@@ -49,6 +50,7 @@ def cb_pool(rows,x):
 
 def run(pairs,corpus,encoder_path,out):
     os.umask(0o077);out.mkdir(parents=True,exist_ok=False);start=time.monotonic()
+    started_utc=datetime.now(timezone.utc).isoformat()
     rmeta=json.loads(pairs.with_name('pairs-report.json').read_text())
     cmeta=json.loads(corpus.with_name('corpus-report.json').read_text())
     if file_hash(pairs)!=rmeta['pairs_sha256'] or file_hash(corpus)!=cmeta['corpus_sha256'] or cmeta['pairs_sha256']!=file_hash(pairs):raise ValueError('Input hash mismatch')
@@ -112,9 +114,10 @@ def run(pairs,corpus,encoder_path,out):
         'encoder_weights_finetuned':False,'production_promotion_allowed':False,
         'models':{n:file_hash(out/(n+'.joblib')) for n in artifacts},
         'pairs_sha256':file_hash(pairs),'corpus_sha256':file_hash(corpus),
-        'python':platform.python_version(),'seconds':time.monotonic()-start,
+        'python':platform.python_version(),'started_utc':started_utc,'seconds':time.monotonic()-start,
         'max_rss_kib':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,
-        'code_sha256':{n:file_hash(Path(__file__).with_name(n)) for n in ('experiment_v4.py','model_v4.py','e5_local.py','metrics_v4.py','freeze_v4.py','corpus_v4.py','expand_v4.py')}}
+        'code_sha256':{n:file_hash(Path(__file__).with_name(n)) for n in ('experiment_v4.py','model_v4.py','e5_local.py','metrics_v4.py','freeze_v4.py','corpus_v4.py','expand_v4.py',
+                     'prepare.py','pairs.py','application_pairs.py','enrich.py','rank_features.py','requirements-v4.lock.txt')}}
     # Retrieval across the full dated test-only candidate universe, not prefiltered top100.
     a,b=embeddings['test']
     report['retrieval']={'e5':recall_at_100(rs['test'],lambda q,ix:a[ix]@b[q])}
@@ -137,6 +140,8 @@ def run(pairs,corpus,encoder_path,out):
 
 def replay(pairs,root):
     report=json.loads((root/'training-report.json').read_text())
+    for name,h in report['code_sha256'].items():
+        if file_hash(Path(__file__).with_name(name))!=h:raise ValueError('Measured code changed: '+name)
     if file_hash(pairs)!=report['pairs_sha256']:raise ValueError('Pairs changed')
     rows=[p for p in read_jsonl(pairs) if p['split']=='test']
     e=np.load(root/'test-embeddings.npz');expected=np.load(root/'test-scores.npz');verified=[]
