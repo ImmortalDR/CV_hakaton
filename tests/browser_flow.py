@@ -17,20 +17,28 @@ from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session
 
 from evaluation.oracles import solve
-from fsp.models import Attempt
+from fsp.models import Attempt, now
+from fsp import bank
+from datetime import timedelta
+from urllib.parse import urlsplit
+import pymupdf
 
 
 def run():
     parser = argparse.ArgumentParser()
     parser.add_argument("--base-url", default="http://127.0.0.1:3080")
     parser.add_argument("--record", action="store_true")
+    parser.add_argument("--out", type=Path)
+    parser.add_argument("--legacy-fixture", action="store_true", help="Only on isolated fsp_test: add a historical attempt to our new account")
     args = parser.parse_args()
-    output = Path("demo") if args.record else Path("audit/current/browser")
+    output = args.out or (Path("demo") if args.record else Path("audit/current/browser"))
     output.mkdir(parents=True, exist_ok=True)
     suffix = secrets.token_hex(4)
     candidate_email = f"candidate-{suffix}@example.org"
     employer_email = f"employer-{suffix}@example.org"
     password = "Synthetic-demo-" + secrets.token_hex(8)
+    if args.legacy_fixture:
+        assert urlsplit(os.environ["DATABASE_URL"]).path == "/fsp_test", "Historical fixture requires isolated fsp_test"
     engine = create_engine(os.environ["DATABASE_URL"])
     errors = []
     chapters = []
@@ -65,6 +73,33 @@ def run():
                     title,
                 )
                 page.wait_for_timeout(11000)
+
+        def mobile_check(name):
+            for width in (360, 390, 768):
+                page.set_viewport_size({"width": width, "height": 844})
+                if not page.evaluate("document.documentElement.scrollWidth <= innerWidth"):
+                    page.screenshot(path=str(output/(name+"-overflow.png")), full_page=True)
+                    print(page.evaluate("[...document.querySelectorAll('body *')].filter(e=>e.getBoundingClientRect().right>innerWidth+1).map(e=>({tag:e.tagName,cls:e.className,right:e.getBoundingClientRect().right})).slice(0,20)"), flush=True)
+                    raise AssertionError(f"{name}: overflow at {width}")
+                if width == 390:
+                    page.screenshot(path=str(output / (name+"-mobile.png")), full_page=False)
+            page.set_viewport_size({"width": 1440, "height": 1000})
+
+        def pdf_check(opened):
+            response = context.request.get(args.base_url + f"/api/profiles/{candidate_id}/pdf")
+            assert response.status == 200
+            content = response.body()
+            stem = "pdf-open" if opened else "pdf-closed"
+            (output/(stem+".pdf")).write_bytes(content)
+            with pymupdf.open(stream=content, filetype="pdf") as doc:
+                text = "\n".join(p.get_text() for p in doc)
+                assert (candidate_email in text) == opened
+                assert "МСК (UTC+03:00)" in text
+                if opened:
+                    assert "Электронная почта:" in text and "Телефон:" in text
+                else:
+                    assert "+7 000 000-00-00" not in text
+                doc[0].get_pixmap(matrix=pymupdf.Matrix(1.3,1.3)).save(str(output/(stem+".png")))
 
         def register(email, role):
             page.get_by_role("button", name="Регистрация", exact=True).click()
@@ -101,6 +136,7 @@ def run():
         page.get_by_label("Навыки совместной работы").fill(
             "Командная работа, обратная связь"
         )
+        page.get_by_label("Стаж, лет").fill("1")
         page.get_by_label("О себе", exact=True).fill(
             "Вымышленный профиль для сквозной демонстрации. Контакт закрыт до согласия."
         )
@@ -120,16 +156,43 @@ def run():
         if not isinstance(me, dict) or "id" not in me:
             me = context.request.get(args.base_url + "/api/auth/me").json()
         candidate_id = me["id"]
+        if args.legacy_fixture:
+            # This account was just created by this script; no existing records are edited.
+            with Session(engine) as db:
+                qs = bank.generate("python", "Junior", "legacy-ui-"+suffix, version="1.1.0")
+                old = Attempt(user_id=candidate_id, specialization="python", grade="Junior",
+                    seed="legacy-ui-"+suffix, version="1.1.0", variant_hash=bank.fingerprint(qs),
+                    questions=qs, answers={}, result=bank.grade_answers(qs, {}, version="1.1.0"),
+                    status="completed", created_at=now()-timedelta(days=100),
+                    finished_at=now()-timedelta(days=100), expires_at=now()-timedelta(days=100))
+                db.add(old); db.commit()
         chapter(
             "Ручное заполнение профиля и отдельное согласие на публикацию",
             "02-profile.png",
         )
         page.get_by_role("button", name="Подтверждение навыков", exact=True).click()
         page.get_by_label("Уровень теста").select_option("Junior")
+        expect(page.locator(".page-title")).to_contain_text("8 заданий")
+        expect(page.locator(".assessment-access")).to_contain_text("доступен сейчас")
+        mobile_check("01-test-start")
+        if args.legacy_fixture:
+            expect(page.locator(".history-list")).to_contain_text("4 задания")
+            page.get_by_role("button", name="Посмотреть", exact=True).first.click()
+            expect(page.locator(".page-title")).to_contain_text("4 задания")
+            expect(page.locator(".question-label").last).to_contain_text("Задание 4 из 4")
+            chapter("Историческая методика 1.1.0: четыре сохранённых задания", "legacy-four.png")
+            mobile_check("legacy-four")
+            page.get_by_role("button", name="К выбору уровня").click()
         page.get_by_role("button", name="Начать тест", exact=True).click()
         page.get_by_label("Ответ на задание 1", exact=True).wait_for()
+        expect(page.locator(".question-label").last).to_contain_text("Задание 8 из 8")
+        expect(page.locator(".page-title")).to_contain_text("8 заданий")
+        mobile_check("02-test-active")
+        page.locator(".question").last.scroll_into_view_if_needed()
+        page.screenshot(path=str(output/"eight-of-eight.png"))
+        page.evaluate("scrollTo(0,0)")
         chapter(
-            "Первичный тест: 4 варианта задач. Эталон и оценка хранятся на сервере",
+            "Первичный тест: 8 заданий. Эталон и оценка хранятся на сервере",
             "03-assessment.png",
         )
         with Session(engine) as db:
@@ -148,6 +211,19 @@ def run():
             "Результат 100%: Junior подтверждён. Это реальный ответ работающего API",
             "04-result.png",
         )
+        expect(page.locator(".result")).to_contain_text("Верных ответов: 8 из 8")
+        expect(page.locator(".history-list")).to_contain_text("8 заданий")
+        mobile_check("03-test-result")
+        page.get_by_role("button", name="К выбору уровня").click()
+        expect(page.get_by_role("button", name="Начать тест", exact=True)).to_be_disabled()
+        expect(page.locator(".assessment-access")).to_contain_text("24 часа")
+        expect(page.locator(".assessment-access")).to_contain_text("Ближайшее начало")
+        chapter("Пересдача: ограничение и дата видны до запроса", "retake-24h.png")
+        page.get_by_label("Уровень теста").select_option("Middle")
+        expect(page.locator(".assessment-access")).to_contain_text("90 дней")
+        expect(page.get_by_role("button", name="Начать тест", exact=True)).to_be_disabled()
+        mobile_check("04-grade-cooldown")
+        chapter("Смена уровня: ограничение 90 дней до запуска", "grade-90d.png")
         page.get_by_role("button", name="Мой профиль", exact=True).click()
         with page.expect_download() as download:
             page.get_by_role("link", name="Скачать мой PDF").click()
@@ -183,10 +259,19 @@ def run():
         )
         expect(card).to_contain_text("Контакты после согласия")
         expect(card).not_to_contain_text(candidate_email)
+        expect(card).to_contain_text("1 год · со слов кандидата")
+        card.get_by_text("Результаты и источники", exact=True).click()
+        expect(card).to_contain_text("2.0.0")
+        pdf_check(False)
         card.scroll_into_view_if_needed()
         chapter("До согласия имя, контакты и свободный текст кандидата скрыты")
         card.get_by_role("button", name="Пригласить", exact=True).click()
         page.get_by_label("Зарплата от, ₽ / месяц").fill("120000")
+        page.get_by_label("Зарплата до, ₽ / месяц").fill("100000")
+        page.get_by_role("button", name="Отправить приглашение").click()
+        expect(page.locator(".modal [role=alert]")).to_contain_text("Нижняя граница не должна превышать верхнюю")
+        page.screenshot(path=str(output/"salary-validation.png"))
+        mobile_check("05-salary-error")
         page.get_by_label("Зарплата до, ₽ / месяц").fill("180000")
         chapter(
             "Адресное приглашение: обязательная вилка в рублях, без публикации вакансии",
@@ -223,6 +308,7 @@ def run():
         expect(page.locator(".invitation .notice")).to_contain_text(candidate_email)
         page.get_by_role("button", name="Открыть диалог").click()
         expect(page.locator(".message")).to_contain_text("Готов обсудить")
+        pdf_check(True)
         chapter(
             "Работодатель получил согласие, контакт и сообщение кандидата",
             "10-employer-contact.png",

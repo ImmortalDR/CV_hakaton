@@ -1645,6 +1645,122 @@
         ]
       }
     },
+    "/api/me/assessment-availability": {
+      "get": {
+        "tags": [
+          "Тестирование"
+        ],
+        "summary": "Assessment Availability",
+        "operationId": "assessment_availability_api_me_assessment_availability_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssessmentAvailability"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Недействительная ссылка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Требуется вход",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Нет доступа",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Запись недоступна",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Конфликт состояния",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Запрос слишком большой",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Ошибка полей",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Ограничение частоты",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Внешний сервис недоступен",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ]
+      }
+    },
     "/api/me/attempts/{attempt_id}/submit": {
       "post": {
         "tags": [
@@ -3640,6 +3756,130 @@
           "answers"
         ],
         "title": "Answers"
+      },
+      "AssessmentAvailability": {
+        "properties": {
+          "checked_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Checked At"
+          },
+          "bank_version": {
+            "type": "string",
+            "title": "Bank Version"
+          },
+          "specialization": {
+            "type": "string",
+            "enum": [
+              "python",
+              "data"
+            ],
+            "title": "Specialization"
+          },
+          "levels": {
+            "items": {
+              "$ref": "#/components/schemas/AssessmentLevel"
+            },
+            "type": "array",
+            "title": "Levels"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "checked_at",
+          "bank_version",
+          "specialization",
+          "levels"
+        ],
+        "title": "AssessmentAvailability"
+      },
+      "AssessmentLevel": {
+        "properties": {
+          "grade": {
+            "type": "string",
+            "enum": [
+              "Junior",
+              "Middle",
+              "Senior"
+            ],
+            "title": "Grade"
+          },
+          "available": {
+            "type": "boolean",
+            "title": "Available"
+          },
+          "reasons": {
+            "items": {
+              "$ref": "#/components/schemas/AssessmentRestriction"
+            },
+            "type": "array",
+            "title": "Reasons"
+          },
+          "next_available_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Available At"
+          },
+          "rubric": {
+            "$ref": "#/components/schemas/AssessmentRubric"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "grade",
+          "available",
+          "reasons",
+          "next_available_at",
+          "rubric"
+        ],
+        "title": "AssessmentLevel"
+      },
+      "AssessmentRestriction": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": [
+              "profile",
+              "active",
+              "grade_change",
+              "retake"
+            ],
+            "title": "Code"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "until": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Until"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "code",
+          "message",
+          "until"
+        ],
+        "title": "AssessmentRestriction"
       },
       "AssessmentRubric": {
         "properties": {

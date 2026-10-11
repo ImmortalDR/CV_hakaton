@@ -65,7 +65,7 @@ export const date = (s: string) =>
     timeZone: "Europe/Moscow",
     dateStyle: "medium",
     timeStyle: "short",
-  });
+  }) + " МСК (UTC+03:00)";
 export const statusLabels: Record<string, string> = {
   sent: "Отправлено",
   viewed: "Просмотрено",

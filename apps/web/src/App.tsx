@@ -27,6 +27,7 @@ import {
 import {
   api,
   type Attempt,
+  type AssessmentAvailability,
   type Catalog,
   type Company,
   type Criteria,
@@ -44,6 +45,8 @@ import {
   StatCard,
   statusLabels,
 } from "./ui";
+
+import { countLabel, evidenceLabels } from "./formatting";
 
 type Act = (fn: () => Promise<void>) => Promise<void>;
 type Actions = {
@@ -1022,18 +1025,29 @@ function Assessments({
     [current, setCurrent] = useState<Attempt | null>(null),
     [answers, setAnswers] = useState<Record<string, string>>({}),
     [grade, setGrade] = useState(profile.claimed_grade ?? "Junior");
-  const policy = current?.rubric ?? catalog.rubric;
+  const [availability, setAvailability] = useState<AssessmentAvailability | null>(null);
+  const selectedLevel = availability?.levels.find((level) => level.grade === grade);
+  const policy = current?.rubric ?? selectedLevel?.rubric;
+  const questionCount = current ? current.questions.length : policy?.question_count;
+  const loadAvailability = async () => {
+    try {
+      setAvailability(await api<AssessmentAvailability>("/me/assessment-availability"));
+    } catch (error) {
+      setAvailability(null);
+      throw error;
+    }
+  };
   const ruleText = policy
     ? `Не менее ${policy.threshold}%` + (policy.core_min_correct
       ? ` и ${policy.core_min_correct} из ${policy.core_total} верных ответов по основному навыку (Python или SQL).`
       : ".")
     : "Правила теста загружаются.";
   const load = async () => {
-    const list = await api<Attempt[]>("/me/attempts");
+    const [list] = await Promise.all([api<Attempt[]>("/me/attempts"), loadAvailability()]);
     setAttempts(list);
     setCurrent(
       (a) =>
-        a ??
+        (a ? list.find((x) => x.id === a.id) : null) ??
         list.find(
           (x) => x.status === "active" && new Date(x.expires_at) > new Date(),
         ) ??
@@ -1042,13 +1056,20 @@ function Assessments({
   };
   useEffect(() => {
     void act(load);
-  }, []);
+    const refreshAccess = () => { void loadAvailability().catch(() => {}); };
+    const timer = window.setInterval(refreshAccess, 30000);
+    window.addEventListener("focus", refreshAccess);
+    return () => {
+      window.clearInterval(timer);
+      window.removeEventListener("focus", refreshAccess);
+    };
+  }, [profile.specialization]);
   return (
     <>
       <PageTitle
         kicker="Навыки с доказательствами"
         title="Подтвердите свой уровень"
-        description={`${catalog.specializations[profile.specialization]} · ${policy?.question_count ?? "—"} заданий · ${policy?.minutes ?? "—"} минут. ${ruleText}`}
+        description={`${catalog.specializations[current?.specialization ?? profile.specialization]} · ${questionCount === undefined ? "Количество заданий загружается" : countLabel(questionCount, "task")} · ${policy ? countLabel(policy.minutes, "minute") : "Длительность загружается"}. ${ruleText}`}
       />
       <div className="notice subtle">
         <ShieldCheck size={18} />
@@ -1064,19 +1085,21 @@ function Assessments({
             <h2>
               {current.grade} · {statusLabels[current.status]}
             </h2>
-            <span>До {date(current.expires_at)}</span>
+            <span>{countLabel(current.questions.length, "task")} · Методика {current.version}<br />
+              {current.status === "active" ? "До" : "Срок попытки:"} {date(current.expires_at)}</span>
           </div>
           {current.result && (
             <div
               className={current.result.passed ? "result success" : "result"}
             >
-              <strong>{current.result.score}%</strong>
+              <strong>{current.result.score.toLocaleString("ru-RU")}%</strong>
               <div>
                 <h3>
                   {current.result.passed
                     ? "Уровень подтверждён"
                     : "Пока не подтверждён"}
                 </h3>
+                <p>Верных ответов: {current.result.details.filter((d) => d.correct).length} из {current.questions.length}.</p>
                 <p>
                   {current.result.passed
                     ? "Результат добавлен в профиль."
@@ -1177,17 +1200,31 @@ function Assessments({
             <Field label="Уровень теста">
               <select value={grade} onChange={(e) => setGrade(e.target.value)}>
                 {catalog.grades.map((g) => (
-                  <option key={g}>{g}</option>
+                  <option key={g} value={g}>{g}{availability ? (availability.levels.find((l) => l.grade === g)?.available ? " · доступен" : " · ограничен") : ""}</option>
                 ))}
               </select>
             </Field>
+            <div className="assessment-access" role="status" aria-live="polite">
+              {!selectedLevel ? (
+                <><p>Проверяем доступность теста…</p><button className="text-button" disabled={busy} onClick={() => void act(loadAvailability)}>Обновить доступность</button></>
+              ) : selectedLevel.available ? <p>Тест {grade} доступен сейчас.</p> : (
+                <>
+                  <strong>Тест {grade} пока недоступен</strong>
+                  {selectedLevel.reasons.map((r) => <p key={r.code}>{r.message}</p>)}
+                  {selectedLevel.next_available_at && <p>Ближайшее начало: {date(selectedLevel.next_available_at)}.</p>}
+                </>
+              )}
+            </div>
             <button
-              disabled={busy || !profile.name || !profile.processing}
+              disabled={busy || !selectedLevel?.available}
               onClick={() =>
                 void act(async () => {
-                  setCurrent(await api<Attempt>("/me/attempts", { grade }));
-                  setAnswers({});
-                  await load();
+                  try {
+                    setCurrent(await api<Attempt>("/me/attempts", { grade }));
+                    setAnswers({});
+                  } finally {
+                    await load();
+                  }
                 })
               }
             >
@@ -1200,7 +1237,7 @@ function Assessments({
       )}
       <div className="section-heading">
         <h2>История тестирования</h2>
-        <span>{attempts.length} попыток</span>
+        <span>{countLabel(attempts.length, "attempt")}</span>
       </div>
       {!attempts.length ? (
         <EmptyState
@@ -1212,11 +1249,12 @@ function Assessments({
           {attempts.map((a) => (
             <div key={a.id}>
               <div>
-                <strong>{a.grade}</strong>
+                <strong>{catalog.specializations[a.specialization]} · {a.grade}</strong>
+                <small>{countLabel(a.questions.length, "task")} · Методика {a.version}</small>
                 <small>{date(a.created_at)}</small>
               </div>
               <span className="badge">{statusLabels[a.status]}</span>
-              <strong>{a.result ? `${a.result.score}%` : "—"}</strong>
+              <strong>{a.result ? `${a.result.score.toLocaleString("ru-RU")}%` : "—"}</strong>
               <button
                 className="text-button"
                 onClick={() => {
@@ -1613,14 +1651,14 @@ function SearchPage({ catalog, act, busy }: Actions) {
         <section>
           <div className="section-heading">
             <h2>{snapshot ? snapshot.criteria.title : "Банк кандидатов"}</h2>
-            <span>{items.length} профилей</span>
+            <span>{countLabel(items.length, "profile")}</span>
           </div>
           {snapshot && (
             <p className="muted">
               Сохранено {date(snapshot.created_at)}. Уточнение запроса создаст
               новую подборку.
               {snapshot.hidden_count > 0 &&
-                ` ${snapshot.hidden_count} профилей скрыты после отзыва публикации.`}
+                ` Скрыто после отзыва публикации: ${countLabel(snapshot.hidden_count, "profile")}.`}
             </p>
           )}
           {initialLoading ? (
@@ -1745,7 +1783,7 @@ function CandidateCard({
           <p>
             {p.experience_years === null
               ? "Стаж не указан"
-              : `${p.experience_years} лет · со слов кандидата`}
+              : `${countLabel(p.experience_years, "year")} · со слов кандидата`}
             {p.demo && " · демопрофиль"}
           </p>
         </div>
@@ -1779,11 +1817,7 @@ function CandidateCard({
               <span className={"signal " + f.state} />
               <strong>{catalog.skills[f.skill] ?? "Стаж"}</strong>
               <span>
-                {f.state === "met"
-                  ? "Подтверждено"
-                  : f.state === "unmet"
-                    ? "Критерий теста не выполнен"
-                    : "Не проверено"}
+                {evidenceLabels[f.state] ?? evidenceLabels.unknown}
               </span>
               <small>
                 {f.evidence
@@ -1814,7 +1848,7 @@ function CandidateCard({
         </p>
         {p.contacts && (
           <p>
-            {p.contacts.email} · {p.contacts.phone}
+            Электронная почта: {p.contacts.email} · Телефон: {p.contacts.phone || "не указан"}
           </p>
         )}
       </details>
@@ -1856,6 +1890,7 @@ function InviteModal({
     [min, setMin] = useState(100000),
     [max, setMax] = useState(160000),
     [sent, setSent] = useState(false),
+    [salaryError, setSalaryError] = useState(""),
     [requestId] = useState(() => crypto.randomUUID());
   return (
     <div className="modal-backdrop">
@@ -1885,15 +1920,15 @@ function InviteModal({
             <button onClick={close}>Готово</button>
           </>
         ) : (
-          <form
+          <form noValidate
             onSubmit={(e) => {
               e.preventDefault();
-              if (min > max || min <= 0 || max <= 0) {
-                window.alert(
-                  "Вилка зарплаты: «от» и «до» должны быть больше 0, и «от» не больше «до».",
-                );
+              setSalaryError("");
+              if (!Number.isInteger(min) || !Number.isInteger(max) || min > max || min <= 0 || max <= 0 || min > 10000000 || max > 10000000) {
+                setSalaryError("Укажите зарплату от 1 до 10 000 000 ₽. Нижняя граница не должна превышать верхнюю.");
                 return;
               }
+              if (!e.currentTarget.reportValidity()) return;
               void act(async () => {
                 await api("/invitations", {
                   candidate_id: profile.id,
@@ -1940,7 +1975,7 @@ function InviteModal({
                 <input
                   required
                   type="number"
-                  min={min}
+                  min={1}
                   max={10000000}
                   value={max}
                   onChange={(e) => setMax(Number(e.target.value))}
@@ -1951,6 +1986,7 @@ function InviteModal({
               До вычета налогов. Название компании и способ связи добавятся из
               её профиля.
             </small>
+            {salaryError && <ErrorState message={salaryError} />}
             <button className="full" disabled={busy}>
               Отправить приглашение
               <Mail size={16} />
@@ -2027,7 +2063,7 @@ function Invitations({
             {i.contacts && (
               <div className="notice">
                 <LockKeyhole size={16} />
-                Контакты: {i.contacts.email} · {i.contacts.phone}
+                Электронная почта: {i.contacts.email} · Телефон: {i.contacts.phone || "не указан"}
               </div>
             )}
             <div className="actions">

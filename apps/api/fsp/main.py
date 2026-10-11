@@ -20,6 +20,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session as DBSession, sessionmaker
 
 from . import bank, schemas as S, outputs as O
+from .assessment import availability, configured_rubric, stored_rubric
 from .matching import eligible, group_sort, rank_candidate
 from .models import (
     Attempt,
@@ -136,7 +137,14 @@ def create_app(database_url=None, demo=None, rate_limit=True):
         return JSONResponse(
             status_code=422,
             content={
-                "detail": "Проверьте обязательные поля и допустимые значения.",
+                "detail": (
+                    "Укажите зарплату от 1 до 10 000 000 ₽. Нижняя граница не должна превышать верхнюю."
+                    if request.url.path == "/api/invitations" and any(
+                        "salary_min" in e["loc"] or "salary_max" in e["loc"] or
+                        (e["type"] == "value_error" and e["loc"] == ("body",))
+                        for e in exc.errors()
+                    ) else "Проверьте обязательные поля и допустимые значения."
+                ),
                 "fields": [
                     {"field": ".".join(map(str, e["loc"][1:])), "type": e["type"]}
                     for e in exc.errors()
@@ -291,7 +299,7 @@ def create_app(database_url=None, demo=None, rate_limit=True):
                 else a.status
             ),
             "version": a.version,
-            "rubric": bank.rubric(a.version),
+            "rubric": stored_rubric(a),
             "created_at": a.created_at,
             "expires_at": a.expires_at,
             "result": a.result,
@@ -595,6 +603,16 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             )
         ]
 
+    @app.get("/api/me/assessment-availability", response_model=O.AssessmentAvailability,
+             tags=["Тестирование"])
+    def assessment_availability(user: AUTH, db: DB):
+        p = candidate(user, db)
+        t = now()
+        rows = list(db.scalars(select(Attempt).where(Attempt.user_id == user.id)))
+        return {"checked_at": t, "bank_version": bank.VERSION,
+                "specialization": p.specialization,
+                "levels": [availability(p, grade, rows, t) for grade in bank.GRADES]}
+
     @app.post(
         "/api/me/attempts",
         response_model=O.Attempt,
@@ -617,29 +635,10 @@ def create_app(database_url=None, demo=None, rate_limit=True):
                 return attempt_view(active)
             active.status = "expired"
             active.finished_at = t
-        if (
-            p.verified_grade
-            and data.grade != p.verified_grade
-            and t < p.grade_changed_at + timedelta(days=90)
-        ):
-            fail(
-                409,
-                "Смена подтверждённого уровня доступна через 90 дней после последнего изменения",
-            )
-        previous = db.scalar(
-            select(Attempt)
-            .where(
-                Attempt.user_id == user.id,
-                Attempt.grade == data.grade,
-                Attempt.specialization == p.specialization,
-            )
-            .order_by(Attempt.created_at.desc())
-        )
-        if previous and previous.created_at + timedelta(hours=24) > t:
-            fail(
-                409,
-                "Пересдача того же уровня доступна через 24 часа; первый тест ниже можно выбрать сразу",
-            )
+        rows = list(db.scalars(select(Attempt).where(Attempt.user_id == user.id)))
+        access = availability(p, data.grade, rows, t)
+        if not access["available"]:
+            fail(409, " ".join(r["message"] for r in access["reasons"]))
         for _ in range(20):
             seed = secrets.token_hex(16)
             qs = bank.generate(p.specialization, data.grade, seed)
@@ -656,7 +655,7 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             version=bank.VERSION,
             variant_hash=fp,
             questions=qs,
-            expires_at=t + timedelta(minutes=30),
+            expires_at=t + timedelta(minutes=configured_rubric(p.specialization, data.grade)["minutes"]),
         )
         p.claimed_grade = data.grade
         db.add(a)

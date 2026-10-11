@@ -53,6 +53,27 @@ class Catalog(Output):
     rubric: AssessmentRubric
 
 
+class AssessmentRestriction(Output):
+    code: Literal["profile", "active", "grade_change", "retake"]
+    message: str
+    until: datetime | None
+
+
+class AssessmentLevel(Output):
+    grade: Grade
+    available: bool
+    reasons: list[AssessmentRestriction]
+    next_available_at: datetime | None
+    rubric: AssessmentRubric
+
+
+class AssessmentAvailability(Output):
+    checked_at: datetime
+    bank_version: str
+    specialization: Spec
+    levels: list[AssessmentLevel]
+
+
 class Evidence(Output):
     id: str
     skill: str

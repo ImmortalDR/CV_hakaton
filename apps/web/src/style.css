@@ -823,6 +823,21 @@ footer {
 .assessment-start .field {
   min-width: 160px;
 }
+.assessment-start > div:last-child {
+  flex: 1;
+  min-width: 0;
+}
+.assessment-access {
+  padding: 12px;
+  margin: 12px 0;
+  background: #f9f7fb;
+  border-radius: 9px;
+  overflow-wrap: anywhere;
+}
+.history-list > div > div, .question pre {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
 .question {
   border-top: 1px solid #ece5f1;
   padding: 22px 0;
@@ -830,8 +845,8 @@ footer {
 .question-label {
   display: flex;
   justify-content: space-between;
-  font-size: 10px;
-  color: #ab91bd;
+  font-size: 12px;
+  color: #695279;
   margin-bottom: 12px;
 }
 .question pre {
@@ -1360,6 +1375,7 @@ summary {
   }
   .assessment-start > div:last-child {
     width: 100%;
+    flex: 1 0 100%;
   }
   .assessment-start .field {
     min-width: 0;
@@ -1383,6 +1399,10 @@ summary {
   }
   .history-list > div {
     gap: 12px;
+    flex-wrap: wrap;
+  }
+  .history-list > div > div {
+    flex: 1 0 100%;
   }
   .history-list .text-button {
     font-size: 10px;
