@@ -36,7 +36,7 @@ def main():
     report=dict(status='pass' if all(s['status']=='pass' for s in steps) else 'fail',checked_at=datetime.now(timezone.utc).isoformat(),base_url=a.base_url,
         scope=('Read-only smoke; no registration, mail or business mutations' if a.read_only else 'Non-mail engineering acceptance; does not certify real email or human/model validity'),steps=steps,
         backend='not_run' if a.skip_backend else next((s['status'] for s in steps if s['name']=='backend'),'not_run'),
-        external_gates={'real_email':'not_run_excluded_by_user','human_pilot':'not_run_requires_people','independent_ranking_labels':'not_run_requires_labels'})
+        external_gates={'real_email':'not_run_separate_explicit_check','human_pilot':'not_run_requires_people','independent_ranking_labels':'not_run_requires_labels'})
     (a.out/'result.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n');print(json.dumps(report,ensure_ascii=False))
     raise SystemExit(0 if report['status']=='pass' else 1)
 

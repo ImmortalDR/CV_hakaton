@@ -1,0 +1,9 @@
+{
+  "apps/api/fsp/main.py": "4139429f2436eb9d59920889cecce3d1b5b82da946dbeabb8d89103fce847ab3",
+  "apps/web/src/App.tsx": "47d8ebe48684894857055e2cce920288d7d1be07a427a6b0be4e2372c6f82b17",
+  "scripts/check_mail_delivery.py": "6545bea140e5fab3a05e6256b4df3c4672693fec883c52bc2db301463bf3f157",
+  "scripts/acceptance.py": "25ae0035d1bfac150796cca0f36f6f0e7f3e4fd556d4a55da468027231069963",
+  "tests/conftest.py": "58399fe7ec05ea7ae9ea5e9ecbe977052af8827a4a7840e1d7db63c66a441a91",
+  "tests/test_mail.py": "acafd68d790346fa23a1a69e6c8106ac270165996d5210a1c5a791acca528d4d",
+  "tests/browser_mail_navigation.py": "51f7ecf20214e4c218a2479edd9df991e97830b949306f8a58f8e03715acc64d"
+}

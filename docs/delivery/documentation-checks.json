@@ -1,10 +1,10 @@
 {
   "status": "pass",
-  "checked_at": "2026-10-11T19:20:25.145715+00:00",
-  "release": "2026-10-11-modernization",
+  "checked_at": "2026-10-11T20:38:11.536972+00:00",
+  "release": "2026-10-11-mail-verification",
   "scope": "Documentation content, PDF text bounds, DOCX structure and OpenAPI counts; not a rerun of application/model tests",
-  "pdf_pages": 26,
-  "docx_paragraphs": 231,
+  "pdf_pages": 29,
+  "docx_paragraphs": 263,
   "docx_tables": 8,
   "sections": [
     "USER_GUIDE.md",
@@ -17,30 +17,31 @@
     "FSP_INTEGRATION.md",
     "OPERATIONS.md",
     "TASKS.md",
-    "VALIDATION_STUDIES.md"
+    "VALIDATION_STUDIES.md",
+    "MAIL.md"
   ],
   "openapi_operations": 33,
   "openapi_models": 46,
   "docx_render": {
     "status": "pass",
-    "pages": 26
+    "pages": 29
   },
   "artifacts": {
     "FSP_MVP.pdf": {
-      "bytes": 134470,
-      "sha256": "b5810c9345387cba4f1391207b369d5881fdea449711376633cdc7a77ac3681f"
+      "bytes": 144374,
+      "sha256": "d961881a4838ffe5f8ef1eb777b6b038734b9e845ed1fd79a0b3e9389b33a006"
     },
     "FSP_MVP.docx": {
-      "bytes": 69563,
-      "sha256": "1188e144b895b24fad669a5cf3645ef2c9f4ea0517f33044e50b64a25d1e1d10"
+      "bytes": 73230,
+      "sha256": "964b445414f6c8d7c2f040ac6cc9a7b9471ecdd1894b5c45880e08d66498ff41"
     },
     "USER_GUIDE.md": {
-      "bytes": 11716,
-      "sha256": "e9cee0fd42265ca30261005717efd32ee150b57a83b418df81f569154216b65f"
+      "bytes": 11975,
+      "sha256": "461c4ce95265f9c7acd246d3ea6dea4c1456e33fe526d14517328058503933ad"
     },
     "ARCHITECTURE.md": {
-      "bytes": 11941,
-      "sha256": "90256dbb854d3065a09d19b8b18d62c294e0d0410ed82281522f903ce5a7d84d"
+      "bytes": 11945,
+      "sha256": "ba675a86b179744ae5be42b6af69bb81498426d7cb65e00fe413e15a42c65276"
     },
     "ASSESSMENT.md": {
       "bytes": 6773,
@@ -51,12 +52,12 @@
       "sha256": "cb2b22d894dffde0023605d585b2f8112e5000add1c1171675724536653218ba"
     },
     "VALIDATION.md": {
-      "bytes": 10607,
-      "sha256": "c81ec918a3e4e8a35a50a0d8ff8c893fb6b4f89c604dd6ca066c34356c8f1220"
+      "bytes": 14249,
+      "sha256": "5a1605f0827810421473aaa2bd9313de09b91b88c70a846f5acb9eb5a3cd61ab"
     },
     "REQUIREMENTS_STATUS.md": {
-      "bytes": 9212,
-      "sha256": "9c0365f2b040bd080816b9fbe0e48dd6cee58a5b79e1e2223bed23aa0406f0c5"
+      "bytes": 9373,
+      "sha256": "a17bc3c12a0f4316d039d3ee7c08c4ba5f491b31cd18ad820cf2784bbfccad4e"
     },
     "API.md": {
       "bytes": 8447,
@@ -67,8 +68,8 @@
       "sha256": "e1503eea71510f7ccd94e06d023fb1e0944e2c0e566cbfe89fcbdfd38fecccf4"
     },
     "OPERATIONS.md": {
-      "bytes": 13789,
-      "sha256": "fff33adf28c60ced28f6516552e709c328bba61d33c36f227b045f9865b9f6c0"
+      "bytes": 14001,
+      "sha256": "22b11b5a104d54690dc603b9baf904f62ac40f75f6d3a8708185e5aae0032e26"
     },
     "TASKS.md": {
       "bytes": 6016,
@@ -77,6 +78,10 @@
     "VALIDATION_STUDIES.md": {
       "bytes": 9163,
       "sha256": "68ca4ac0fb4bc6d220514cc6f92d01b80fa1be86cd805386e6a0aebdb93a1b20"
+    },
+    "MAIL.md": {
+      "bytes": 8065,
+      "sha256": "d4770e597cf39c934e255b8ec678d4750e5f65abb9e722eae13894036874350b"
     }
   }
 }

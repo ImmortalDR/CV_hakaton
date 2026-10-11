@@ -1,0 +1,72 @@
+{
+  "status": "pass",
+  "checked_at": "2026-10-11T20:33:45.934651+00:00",
+  "base_url": "http://127.0.0.1:3084",
+  "scope": "Non-mail engineering acceptance; does not certify real email or human/model validity",
+  "steps": [
+    {
+      "name": "backend",
+      "command": [
+        "/root/hakaton-fixes-20261011/.venv/bin/python",
+        "/root/hakaton-fixes-20261011/scripts/run_local.py",
+        "/root/hakaton-fixes-20261011/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "seconds": 33.38
+    },
+    {
+      "name": "numerals",
+      "command": [
+        "node",
+        "apps/web/tests/formatting.test.mjs"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "seconds": 1.19
+    },
+    {
+      "name": "requirements",
+      "command": [
+        "/root/hakaton-fixes-20261011/.venv/bin/python",
+        "tests/browser_requirements.py",
+        "--base-url",
+        "http://127.0.0.1:3084",
+        "--expect-core-rule",
+        "--output",
+        "/root/hakaton-fixes-20261011/audit/mail-review/acceptance-final/requirements"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "seconds": 28.73
+    },
+    {
+      "name": "employer_tasks",
+      "command": [
+        "/root/hakaton-fixes-20261011/.venv/bin/python",
+        "tests/browser_tasks.py",
+        "--base-url",
+        "http://127.0.0.1:3084",
+        "--out",
+        "/root/hakaton-fixes-20261011/audit/mail-review/acceptance-final/tasks"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "seconds": 38.55
+    },
+    {
+      "name": "published_openapi",
+      "status": "pass"
+    }
+  ],
+  "backend": "pass",
+  "external_gates": {
+    "real_email": "not_run_excluded_by_user",
+    "human_pilot": "not_run_requires_people",
+    "independent_ranking_labels": "not_run_requires_labels"
+  }
+}

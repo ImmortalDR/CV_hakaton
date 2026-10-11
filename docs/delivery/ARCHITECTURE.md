@@ -1,6 +1,6 @@
 # Архитектура MVP · редакция 11 октября 2026
 
-Состояние приложения: `2026-10-11-modernization`, банк 2.0.0, подбор matching-1.1.0.
+Состояние приложения: `2026-10-11-mail-verification`, банк 2.0.0, подбор matching-1.1.0.
 
 Один React/TypeScript frontend, один FastAPI backend и одна PostgreSQL 16.
 Nginx раздаёт статические файлы и проксирует `/api`. GPU, платные модели,

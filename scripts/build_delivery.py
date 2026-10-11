@@ -178,7 +178,7 @@ def presentation(template=None):
     fill(
         s,
         4,
-        "84 серверных теста\n55 проверок склонений\n18 сценариев требований\n\nE09: согласие → ответ → оценка\nМобильные экраны и приватность\n\nНовая БД, backup/restore\nи перезапуск: pass",
+        "92 серверных теста\n55 проверок склонений\n18 сценариев требований\n\nE09: согласие → ответ → оценка\nМобильные экраны и приватность\n\nНовая БД, backup/restore\nи перезапуск: pass",
         23,
         PURPLE,
         y=1.45,
@@ -307,7 +307,7 @@ def presentation(template=None):
     fill(
         s,
         5,
-        "Пилот с экспертами и людьми\nРасширение банка и рубрики\nРеальные SMTP и ФСП / OIDC\nПагинация и ускорение банка\nПроцедуры работы с данными\n\nСейчас: публичный HTTPS-стенд.\nПочта исключена из модернизации.",
+        "Пилот с экспертами и людьми\nРасширение банка и рубрики\nРеальная ФСП / OIDC\nПагинация и ускорение банка\nПроцедуры работы с данными\n\nСейчас: публичный HTTPS-стенд.\nGmail SMTP: доставка проверена.",
         21,
         PURPLE,
         h=4.5,
@@ -333,7 +333,7 @@ def presentation(template=None):
                 slide_text(shape, str(number), 12, color)
         slide.notes_slide.notes_text_frame.text = (
             "MVP 1.0.0. Фактические результаты: docs/delivery/VALIDATION.md; evaluation/bank_v2_results.json; docs/review/MODERNIZATION_2026-10-11.md. "
-            "Имена и роли: docs/TEAM_TASKS.md. HTTPS и E09 проверены. Реальный SMTP/ФСП и человеческая валидация не подтверждены. "
+            "Имена и роли: docs/TEAM_TASKS.md. HTTPS и E09 проверены. Gmail SMTP проверен. Реальный ФСП и человеческая валидация не подтверждены. "
             "Шаблон организаторов сохранён в исходном файле без изменений."
         )
     # Drop unused native layouts/masters so their image assets are not shipped.
@@ -423,7 +423,7 @@ def documentation():
         style.font.color.rgb = DColor.from_string(PURPLE)
     doc.add_heading("ФСП · карьера", 0)
     doc.add_paragraph("Техническая документация и отчёт проверки MVP 1.0.0")
-    doc.add_paragraph("Обратный найм по подтверждённым навыкам\nРедакция 11 октября 2026 · релиз 2026-10-11-modernization")
+    doc.add_paragraph("Обратный найм по подтверждённым навыкам\nРедакция 11 октября 2026 · релиз 2026-10-11-mail-verification")
     doc.add_paragraph(
         "Код: github.com/ImmortalDR/CV_hakaton\nРабочая ветка: codex/modernization-20261011"
     )
@@ -438,7 +438,7 @@ def documentation():
         ),
         Spacer(1, 25),
         Paragraph(
-            "Обратный найм по подтверждённым навыкам<br/>Редакция 11 октября 2026 · релиз 2026-10-11-modernization",
+            "Обратный найм по подтверждённым навыкам<br/>Редакция 11 октября 2026 · релиз 2026-10-11-mail-verification",
             styles["body"],
         ),
         Paragraph(
@@ -463,6 +463,7 @@ def documentation():
         "OPERATIONS.md",
         "TASKS.md",
         "VALIDATION_STUDIES.md",
+        "MAIL.md",
     ]
     doc.add_page_break()
     doc.add_heading("Содержание", 1)

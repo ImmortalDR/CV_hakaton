@@ -3,10 +3,12 @@ import copy
 import os
 import secrets
 import smtplib
+import ssl
 import time
 from collections import defaultdict, deque
 from datetime import timedelta
 from email.message import EmailMessage
+from email.utils import formatdate, make_msgid
 from typing import Annotated
 
 from argon2 import PasswordHasher
@@ -414,26 +416,31 @@ def create_app(database_url=None, demo=None, rate_limit=True):
         smtp_host = (os.getenv("SMTP_HOST") or "").strip()
         use_smtp = bool(smtp_host)
         if use_smtp:
-            msg = EmailMessage()
-            msg["To"] = email
-            msg["From"] = os.getenv("SMTP_FROM", "noreply@example.org")
-            msg["Subject"] = "Подтвердите почту — ФСП"
-            msg.set_content("Подтвердите адрес в течение часа: " + link)
             try:
+                msg = EmailMessage()
+                msg["To"] = email
+                msg["From"] = os.getenv("SMTP_FROM", "noreply@example.org")
+                msg["Subject"] = "Подтвердите почту — ФСП"
+                msg["Date"] = formatdate(localtime=False, usegmt=True)
+                msg["Message-ID"] = make_msgid(domain="fsp.local")
+                msg.set_content("Подтвердите адрес в течение часа: " + link)
                 with smtplib.SMTP(
                     smtp_host, int(os.getenv("SMTP_PORT", "587")), timeout=10
                 ) as smtp:
+                    smtp.ehlo()
                     if os.getenv("SMTP_TLS", "true").lower() == "true":
-                        smtp.starttls()
+                        smtp.starttls(context=ssl.create_default_context())
+                        smtp.ehlo()
                     if os.getenv("SMTP_USER"):
                         smtp.login(os.environ["SMTP_USER"], os.environ["SMTP_PASSWORD"])
                     smtp.send_message(msg)
-            except (OSError, smtplib.SMTPException):
+            except (OSError, smtplib.SMTPException, ValueError, KeyError):
                 fail(503, "Письмо не отправлено. Повторите регистрацию позже.")
         elif not is_demo:
             fail(503, "Доставка почты пока не настроена. Обратитесь к оператору.")
         return {
-            "message": "Подтвердите адрес почты",
+            "message": ("Письмо отправлено. Откройте ссылку в течение часа; проверьте также папку «Спам»."
+                        if use_smtp else "Подтвердите адрес почты"),
             "demo_verification_url": link if (is_demo and not use_smtp) else None,
             "delivery": "smtp" if use_smtp else "simulated",
         }

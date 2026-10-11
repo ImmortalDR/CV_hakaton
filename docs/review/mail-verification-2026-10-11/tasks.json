@@ -1,0 +1,47 @@
+{
+  "status": "pass",
+  "base_url": "http://127.0.0.1:3084",
+  "duration_seconds": 38.22,
+  "checks": [
+    "consent",
+    "create",
+    "answer",
+    "review",
+    "grade_unchanged",
+    "profile_freshness",
+    "cross_company_isolation",
+    "cross_candidate_isolation",
+    "mobile_360_390_768",
+    "pause",
+    "revocation"
+  ],
+  "page_errors": [],
+  "records": [
+    {
+      "role": "candidate",
+      "id": "71a5843c-a120-40f6-bec8-af9aa6c8b354",
+      "email": "tasks-36d0521f5c@example.org"
+    },
+    {
+      "role": "employer",
+      "id": "77f08780-aaba-4a8d-9212-28c6805cebef",
+      "email": "tasks-151b4e4a56@example.org"
+    },
+    {
+      "role": "candidate",
+      "id": "99c8c0a9-2cbc-416f-9c3d-cd22854422f5",
+      "email": "tasks-0340a7c5ca@example.org"
+    },
+    {
+      "role": "employer",
+      "id": "27321b6e-a7ad-4211-a55d-88c5ea69db58",
+      "email": "tasks-d6b24fb226@example.org"
+    },
+    {
+      "plan_id": "690ced62-59d5-4a72-9473-2f182407dff1",
+      "invitation_id": "5189c979-47d9-490b-a81a-31778a57ffa7"
+    }
+  ],
+  "own_candidate_unpublished": true,
+  "scope": "Task lifecycle through UI; fictional account/invitation setup and adversarial checks through API; periodic deadlines covered separately by server/worker tests"
+}

@@ -137,14 +137,18 @@ export function App() {
         .then(setUser)
         .catch(() => {}),
     ]).finally(() => setLoading(false));
-    if (location.hash.startsWith("#verify=")) {
+    const confirmEmailFromHash = () => {
+      if (!location.hash.startsWith("#verify=")) return;
       const token = location.hash.slice(8);
       history.replaceState(null, "", location.pathname);
       void act(async () => {
         await api("/auth/verify", { token });
         setNotice("Почта подтверждена. Войдите в кабинет.");
       });
-    }
+    };
+    confirmEmailFromHash();
+    window.addEventListener("hashchange", confirmEmailFromHash);
+    return () => window.removeEventListener("hashchange", confirmEmailFromHash);
   }, [act]);
   useEffect(() => {
     if (!user) return;
