@@ -11,10 +11,10 @@
 ## Запуск
 
 Нужны Docker Engine с Compose v2 и Python 3 для создания конфигурации.
-Актуальная ветка: `codex/platform-fixes-20261011`.
+Актуальная ветка: `codex/modernization-20261011`.
 
 ```bash
-git clone --branch codex/platform-fixes-20261011 https://github.com/ImmortalDR/CV_hakaton.git
+git clone --branch codex/modernization-20261011 https://github.com/ImmortalDR/CV_hakaton.git
 cd CV_hakaton
 python3 scripts/configure.py
 docker compose up -d --build --wait
@@ -62,11 +62,14 @@ Compose-проект `fsp-mvp`, том `fsp-mvp_fsp_db`. Не удаляйте �
 явно выбранные и подтверждённые структурированные поля; автоматического
 понимания произвольного текста и внешнего поиска вакансий нет.
 
+Адресные регулярные задания доступны после принятия приглашения и отдельного
+согласия кандидата. [Условия и сценарий](docs/delivery/TASKS.md).
+
 ## Проверки и измерения
 
-Последний прогон платформы (11 октября): **73 серверных теста, 55 проверок
+Последний прогон платформы (11 октября): **84 серверных теста, 55 проверок
 склонений, 18 браузерных проверок требований**. Сквозной HTTPS-сценарий,
-старые попытки и закрытые/открытые PDF проверены; [отчёт и границы](docs/review/PLATFORM_FIXES_2026-10-11.md).
+старые попытки и закрытые/открытые PDF проверены; [отчёт модернизации](docs/review/MODERNIZATION_2026-10-11.md).
 
 [Фактический отчёт](docs/delivery/VALIDATION.md),
 [матрица приёмки](docs/delivery/REQUIREMENTS_STATUS.md),
@@ -92,7 +95,7 @@ Node 22 (локальная сборка также проверена на Node
 python3 -m venv .venv
 .venv/bin/pip install -r requirements-dev.lock
 docker compose exec -T db createdb -U fsp fsp_test
-COOKIE_SECURE=false python3 scripts/run_local.py .venv/bin/pytest -q tests
+SMTP_HOST= COOKIE_SECURE=false python3 scripts/run_local.py .venv/bin/pytest -q tests
 PYTHONPATH=apps/api:. .venv/bin/python -m evaluation.run
 .venv/bin/playwright install --with-deps chromium
 python3 scripts/run_local.py .venv/bin/python tests/browser_flow.py
@@ -133,9 +136,9 @@ python3 scripts/run_local.py .venv/bin/uvicorn fsp.main:app_factory --factory --
 - [Презентация](demo/FSP_MVP.pptx), [PDF слайдов](demo/FSP_MVP.pdf),
   [сквозное видео](demo/walkthrough.webm), [сценарий](demo/SCENARIO.md).
 
-Реальный SMTP и ФСП ID / Keycloak не подключены. Публичный HTTPS-стенд работает.
-Не реализованы вакансии, прямой отклик, импорт резюме, дополнительные задания
-работодателей, восстановление пароля и управление составом компании.
+ФСП ID / Keycloak не подключён. Публичный HTTPS-стенд работает.
+Почту коллеги настраивают отдельно; доставка этой модернизацией не проверялась.
+Не реализованы вакансии, прямой отклик, импорт резюме, восстановление пароля и управление составом компании.
 Имена и роли команды указаны в `docs/TEAM_TASKS.md`; фамилии, контакты
 и история команды пока не предоставлены и помечены в презентации. Подробности — в отчёте приёмки.
 

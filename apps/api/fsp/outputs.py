@@ -147,6 +147,7 @@ class Profile(Output):
     grade_changed_at: datetime | None = None
     next_grade_change: datetime | None = None
     match: Match | None = None
+    task_last_reviewed_at: datetime | None = None
 
 
 class Question(Output):

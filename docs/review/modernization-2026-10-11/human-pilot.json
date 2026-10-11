@@ -1,0 +1,39 @@
+{
+  "status": "not_run",
+  "participants": 0,
+  "paired_people": 0,
+  "recorded_sessions": 0,
+  "recorded_retest_intervals": 0,
+  "retest_interval_hours_mean": null,
+  "paired_agreement": null,
+  "paired_agreement_ci95": null,
+  "score_retest_correlation": null,
+  "absolute_score_change_mean": null,
+  "expert_families_reviewed": 0,
+  "expert_families_total": 24,
+  "expert_flags": [],
+  "family_analysis": [],
+  "source_metrics": {
+    "status": "not_run",
+    "participants_observed": 0,
+    "attempts": 0,
+    "labels_used": 0,
+    "agreement_with_independent_labels": null,
+    "confusion": [],
+    "paired_people": 0,
+    "paired_agreement": null,
+    "family_discrimination": [],
+    "limitations": [
+      "No conclusion without actual independent labels.",
+      "Repeated forms share a participant; item observations are not independent people.",
+      "No automatic reassignment of professional grade; pilot is separate from the application."
+    ]
+  },
+  "limitations": [
+    "No participants or independent labels are manufactured.",
+    "Bootstrap resamples people; small samples do not establish professional validity.",
+    "Family/rest analysis uses first form per person within specialization/grade.",
+    "Pearson retest coefficient is descriptive; timing and outside help require a separate session log.",
+    "Reviewer identity and independence require human verification; a non-empty source field is not certification."
+  ]
+}

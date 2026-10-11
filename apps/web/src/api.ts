@@ -98,6 +98,7 @@ export type Profile = {
   demo: boolean;
   achievements: { title: string; result: string; verification: string }[];
   match?: Match;
+  task_last_reviewed_at?: string | null;
 };
 export type Result = {
   score: number;

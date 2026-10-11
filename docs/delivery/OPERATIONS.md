@@ -80,7 +80,7 @@ CV; они не импортированы в публичную БД серви
 Для новой установки: Docker Engine/Compose v2, Python 3; команды из корня checkout:
 
 ```bash
-git clone --branch codex/platform-fixes-20261011 https://github.com/ImmortalDR/CV_hakaton.git
+git clone --branch codex/modernization-20261011 https://github.com/ImmortalDR/CV_hakaton.git
 cd CV_hakaton
 python3 scripts/configure.py
 docker compose up -d --build --wait
@@ -99,14 +99,15 @@ ssh -L 3080:127.0.0.1:3080 USER@SERVER, затем http://localhost:3080.
 После получения совместимой версии, сохранения дампа и проверки миграций:
 
 ```bash
-docker compose build api web
-docker compose up -d --no-deps --wait api web
+docker compose build api web task-worker
+docker compose up -d --no-deps --wait api web task-worker
 curl --fail https://85-137-26-131.sslip.io/api/health
 docker compose ps
 docker compose logs --tail=80 api web
 ```
 
-Для изменений 11 октября миграции не нужны. У других обновлений совместимость
+Модернизация добавляет миграцию b9e1c4d7a201 с двумя таблицами заданий.
+Существующие попытки и данные не переписываются. У других обновлений совместимость
 схемы нужно проверять отдельно. Откат образов безопасен только при совместимой
 БД; сначала проверьте восстановление дампа в отдельной тестовой базе.
 
@@ -120,3 +121,50 @@ PUBLIC_URL, COOKIE_SECURE=true, HTTPS_HOST, HTTPS_SITE_ADDRESSES и ACME_DIRECTO
 Секреты не копируйте в логи. Здоровье Caddy, срок сертификата и внешний HTTP-запрос
 проверяются отдельно: успешный API health не доказывает исправность каждой пробы.
 Обновление документации само по себе не требует перезапуска приложения.
+
+## Воспроизводимая приёмка и восстановление
+
+```bash
+.venv/bin/python scripts/acceptance.py --base-url http://127.0.0.1:3080 --out audit/acceptance
+.venv/bin/python scripts/verify_release.py --project fsp-verify-new --port 3084 --out audit/clean-new
+```
+
+Приёмка требует dev-зависимости, Chromium и отдельную fsp_test для backend.
+Браузерные сценарии работают только на демостенде и создают вымышленные
+аккаунты, затем снимают публикацию своего кандидата. --skip-backend позволяет
+отдельно проверить удалённый стенд; отчёт явно укажет пропуск backend.
+
+verify_release допускает только новый проект с префиксом fsp-verify-,
+создаёт независимый пароль и том. Выполняет сборку, миграции, проверку
+схемы, повтор seed, pg_dump/restore в отдельную БД, сравнение хешей всех
+16 таблиц, перезапуск API/web/worker и HTTP-проверку. Секретный compose, env
+и дамп остаются в audit с правами 0600; публикуется только result.json.
+Команда оставляет стенд и том для расследования. Остановите именно его:
+
+```bash
+docker compose -p fsp-verify-new -f audit/clean-new/compose.json stop
+```
+
+Worker выдаёт задания с точностью до периода опроса (60 секунд), если БД
+доступна. При сбое он пишет тип ошибки и повторяет цикл; проверяйте logs
+task-worker. Сам статус Running не доказывает своевременную выдачу. При
+обновлении с предыдущей версии сохраните дамп и образы; не запускайте
+downgrade таблиц заданий после начала их использования.
+
+Коллеги независимо подключили SMTP во время модернизации. Сохранено правило:
+если SMTP_HOST задан, регистрация использует настоящую доставку даже при
+DEMO_MODE=true; демоссылка в этом случае не возвращается. Без SMTP_HOST
+демоссылка доступна только в деморежиме, иначе 503. Модернизация не проверяла
+внешнюю доставку и не меняла почтовые секреты. Поэтому acceptance запускать
+на отдельном демостенде с пустым SMTP_HOST, а не на публичном сайте с почтой.
+
+Проверка публичного сайта без регистрации и отправки писем:
+
+```bash
+.venv/bin/python scripts/acceptance.py --read-only --skip-backend --base-url https://85-137-26-131.sslip.io --out audit/public-smoke
+```
+
+Нужны доступные общие демовходы; режим не меняет профиль/задания. Caddy теперь
+запускается с init и GET-пробой /api/health. После наблюдавшегося накопления
+процессов проверяйте docker stats и healthcheck; долгосрочная стабильность
+требует наблюдения, краткий успешный прогон её не доказывает.

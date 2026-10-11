@@ -1,0 +1,21 @@
+{
+  "status": "not_run",
+  "queries_total": 0,
+  "queries_evaluated": 0,
+  "independent_components": 0,
+  "excluded_queries": [],
+  "baseline_ndcg10": null,
+  "challenger_ndcg10": null,
+  "delta": null,
+  "delta_ci95": null,
+  "reviewer_exact_agreement": null,
+  "statistical_gate_passed": false,
+  "production_promotion_allowed": false,
+  "results": [],
+  "limitations": [
+    "Labels and reviewer independence must be verified by people; source strings are not certification.",
+    "Unknown/incomplete judgments exclude queries, not count as negative relevance.",
+    "A statistical gate is necessary, not sufficient: privacy and product acceptance are separate.",
+    "The protocol must be frozen before labels/test inspection; file hashes cannot prove historical independence."
+  ]
+}

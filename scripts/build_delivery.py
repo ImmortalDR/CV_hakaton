@@ -72,8 +72,8 @@ def fill(
     return slide_text(s, text, size, color, bold)
 
 
-def presentation():
-    template = ROOT / "ЛЦТ_2026_Шаблон презентации ФСП(1).pptx"
+def presentation(template=None):
+    template = template or ROOT / "ЛЦТ_2026_Шаблон презентации ФСП(1).pptx"
     p = Presentation(template)
     s = p.slides[6]
     fill(
@@ -166,7 +166,7 @@ def presentation():
     fill(
         s,
         1,
-        "12 семейств · 6 категорий · 4 задания на попытку\n\nСервер хранит seed, версию, эталон и результат.\nПроходной балл 75%. Неудача не понижает грейд.\nПересдача — через 24 часа; смена уровня — через 90 дней.\n\nПараметризация уменьшает пользу копирования ответов.\nЗащита от внешней помощи и валидность на людях не доказаны.",
+        "24 семейства · 6 категорий · 8 заданий на попытку\n\nСервер хранит seed, версию, эталон и результат.\nНужно 6/8 и 3/4 по основному навыку. Грейд не понижается.\nПересдача — через 24 часа; смена уровня — через 90 дней.\n\nПараметризация уменьшает пользу копирования ответов.\nЗащита от внешней помощи и валидность на людях не доказаны.",
         23,
         PURPLE,
         y=1.8,
@@ -178,22 +178,22 @@ def presentation():
     fill(
         s,
         4,
-        "36 тестов пройдено\nПрава, грейды, повторы, PDF\n\n30 пользователей · 270 чтений\n0 ошибок · p95 3,04 с\n\nDocker, новая БД, перезапуск\nи реальный Chromium-сценарий",
+        "84 серверных теста\n55 проверок склонений\n18 сценариев требований\n\nE09: согласие → ответ → оценка\nМобильные экраны и приватность\n\nНовая БД, backup/restore\nи перезапуск: pass",
         23,
         PURPLE,
         y=1.45,
         h=5.2,
     )
     fill(s, 3, "", 20, INK)
-    textbox(s, 7.05, 1.35, 5.7, 0.7, "P@5 на синтетическом test", 25, WHITE, True)
-    textbox(s, 7.05, 2.25, 5.7, 1.1, "0,80  /  0,475", 38, WHITE, True)
+    textbox(s, 7.05, 1.35, 5.7, 0.7, "Проверка банка · симуляция", 25, WHITE, True)
+    textbox(s, 7.05, 2.25, 5.7, 1.1, "42 000 попыток", 38, WHITE, True)
     textbox(
         s,
         7.05,
         3.25,
         5.7,
         1.0,
-        "MVP                       baseline\n8 запросов · 48 профилей",
+        "36 000 сверок эталонов\n0 расхождений",
         18,
         WHITE,
     )
@@ -203,7 +203,7 @@ def presentation():
         4.55,
         5.7,
         2.0,
-        "97,92% — согласие грейдов\nна 240 синтетических классификациях.\nВнешних экспертов: 0. Пилот на людях предстоит.",
+        "Пилот на людях: 0 участников.\nV4: итоговая NDCG@10 не определена.\nМодель в API не внедрена.",
         20,
         WHITE,
     )
@@ -299,7 +299,7 @@ def presentation():
     fill(
         s,
         4,
-        "React / TypeScript\nFastAPI / PostgreSQL\n\nВерсионный банк и доказательства\nПодбор внутри категории\nТранзакционное согласие\nPDF по правам получателя\n\nБез платных LLM и GPU",
+        "React / TypeScript\nFastAPI / PostgreSQL\n\nВерсионный банк и доказательства\nПодбор внутри категории\nТранзакционное согласие\nPDF по правам получателя\nАдресные задания по расписанию\n\nБез платных LLM и GPU",
         21,
         PURPLE,
         h=4.5,
@@ -307,7 +307,7 @@ def presentation():
     fill(
         s,
         5,
-        "Пилот с экспертами и людьми\nРасширение банка и рубрики\nРеальные SMTP и ФСП / OIDC\nПагинация и ускорение банка\nПроцедуры работы с данными\n\nСейчас: локальный стенд и видео.\nПубличный домен не настроен.",
+        "Пилот с экспертами и людьми\nРасширение банка и рубрики\nРеальные SMTP и ФСП / OIDC\nПагинация и ускорение банка\nПроцедуры работы с данными\n\nСейчас: публичный HTTPS-стенд.\nПочта исключена из модернизации.",
         21,
         PURPLE,
         h=4.5,
@@ -332,8 +332,8 @@ def presentation():
                 color = PURPLE if number in (2, 7) else WHITE
                 slide_text(shape, str(number), 12, color)
         slide.notes_slide.notes_text_frame.text = (
-            "MVP 1.0.0. Фактические результаты: docs/delivery/VALIDATION.md; evaluation/results.json. "
-            "Имена и роли: docs/TEAM_TASKS.md. Реальный SMTP/ФСП, человеческая валидация и публичный HTTPS не подтверждены. "
+            "MVP 1.0.0. Фактические результаты: docs/delivery/VALIDATION.md; evaluation/bank_v2_results.json; docs/review/MODERNIZATION_2026-10-11.md. "
+            "Имена и роли: docs/TEAM_TASKS.md. HTTPS и E09 проверены. Реальный SMTP/ФСП и человеческая валидация не подтверждены. "
             "Шаблон организаторов сохранён в исходном файле без изменений."
         )
     # Drop unused native layouts/masters so their image assets are not shipped.
@@ -423,9 +423,9 @@ def documentation():
         style.font.color.rgb = DColor.from_string(PURPLE)
     doc.add_heading("ФСП · карьера", 0)
     doc.add_paragraph("Техническая документация и отчёт проверки MVP 1.0.0")
-    doc.add_paragraph("Обратный найм по подтверждённым навыкам\nРедакция 11 октября 2026 · приложение 785d362")
+    doc.add_paragraph("Обратный найм по подтверждённым навыкам\nРедакция 11 октября 2026 · релиз 2026-10-11-modernization")
     doc.add_paragraph(
-        "Код: github.com/ImmortalDR/CV_hakaton\nРабочая ветка: codex/platform-fixes-20261011"
+        "Код: github.com/ImmortalDR/CV_hakaton\nРабочая ветка: codex/modernization-20261011"
     )
     doc.add_paragraph(
         "Демонстрационная реализация. Результаты синтетических измерений не являются экспертной валидацией профессиональных грейдов."
@@ -438,11 +438,11 @@ def documentation():
         ),
         Spacer(1, 25),
         Paragraph(
-            "Обратный найм по подтверждённым навыкам<br/>Редакция 11 октября 2026 · приложение 785d362",
+            "Обратный найм по подтверждённым навыкам<br/>Редакция 11 октября 2026 · релиз 2026-10-11-modernization",
             styles["body"],
         ),
         Paragraph(
-            "Код: github.com/ImmortalDR/CV_hakaton<br/>Рабочая ветка: codex/platform-fixes-20261011",
+            "Код: github.com/ImmortalDR/CV_hakaton<br/>Рабочая ветка: codex/modernization-20261011",
             styles["body"],
         ),
         Spacer(1, 40),
@@ -461,6 +461,8 @@ def documentation():
         "API.md",
         "FSP_INTEGRATION.md",
         "OPERATIONS.md",
+        "TASKS.md",
+        "VALIDATION_STUDIES.md",
     ]
     doc.add_page_break()
     doc.add_heading("Содержание", 1)
@@ -474,7 +476,6 @@ def documentation():
     doc.add_paragraph(note)
     story.append(Paragraph(escape(note), styles["body"]))
     for filename in files:
-        doc.add_page_break()
         story.append(PageBreak())
         lines = (OUT / filename).read_text().splitlines()
         i = 0
@@ -561,7 +562,9 @@ def documentation():
             elif line.startswith("#"):
                 level = len(line) - len(line.lstrip("#"))
                 title = plain(line.lstrip("#").strip())
-                doc.add_heading(title, min(level, 2))
+                heading = doc.add_heading(title, min(level, 2))
+                if level == 1:
+                    heading.paragraph_format.page_break_before = True
                 story.append(
                     Paragraph(escape(title), styles["h1" if level == 1 else "h2"])
                 )
@@ -600,12 +603,13 @@ def documentation():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--docs-only", action="store_true", help="Build DOCX/PDF without overwriting the presentation")
+    parser.add_argument("--template", type=Path)
     args = parser.parse_args()
     documentation()
     if args.docs_only:
         print("Built docs/delivery/FSP_MVP.docx and FSP_MVP.pdf; presentation preserved")
         raise SystemExit(0)
-    slides = presentation()
+    slides = presentation(args.template)
     print(
         json.dumps(
             {

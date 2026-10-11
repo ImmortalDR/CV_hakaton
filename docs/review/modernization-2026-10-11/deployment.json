@@ -1,0 +1,35 @@
+{
+  "status": "pass",
+  "schema_revision": "b9e1c4d7a201",
+  "schema_drift": false,
+  "backup": "local-backups/modernization-20261011/fsp-before.dump (private, pg_restore --list checked)",
+  "services": {
+    "api": {
+      "state": "running",
+      "health": "healthy"
+    },
+    "db": {
+      "state": "running",
+      "health": "healthy"
+    },
+    "edge": {
+      "state": "running",
+      "health": "healthy"
+    },
+    "task-worker": {
+      "state": "running",
+      "health": ""
+    },
+    "web": {
+      "state": "running",
+      "health": "healthy"
+    }
+  },
+  "smtp": "colleague code preserved; no configuration edits or mail tests",
+  "protected_project": "not modified",
+  "notes": [
+    "API/web/task-worker deployed",
+    "Caddy init enabled and health probe uses GET; 4601 PIDs observed before restart, 9 after",
+    "No data volumes removed"
+  ]
+}

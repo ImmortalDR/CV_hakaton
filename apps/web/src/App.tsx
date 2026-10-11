@@ -46,6 +46,7 @@ import {
   statusLabels,
 } from "./ui";
 
+import { Tasks, type TaskInbox } from "./Tasks";
 import { countLabel, evidenceLabels } from "./formatting";
 
 type Act = (fn: () => Promise<void>) => Promise<void>;
@@ -160,6 +161,15 @@ export function App() {
     setTab("overview");
     setNotice("");
   };
+  const [taskPending, setTaskPending] = useState(0);
+  useEffect(() => {
+    setTaskPending(0);
+    if (!user) return;
+    let disposed = false;
+    const poll = () => { void api<TaskInbox>("/tasks").then(x => { if (!disposed) setTaskPending(x.pending); }).catch(() => {}); };
+    poll(); const timer = window.setInterval(poll, 30000);
+    return () => { disposed = true; window.clearInterval(timer); };
+  }, [user?.id, version]);
   const props = { act, busy, catalog, refresh };
   if (loading) return <Loading />;
   if (!user)
@@ -238,12 +248,14 @@ export function App() {
           ["profile", "Мой профиль", FileUser],
           ["assessment", "Подтверждение навыков", ShieldCheck],
           ["invitations", "Приглашения", Mail],
+          ["tasks", "Задания от компаний", BookOpen],
           ["fsp", "Достижения ФСП", Award],
         ] as const)
       : ([
           ["overview", "Обзор", LayoutDashboard],
           ["search", "Подбор кандидатов", Search],
           ["invitations", "Приглашения", Mail],
+          ["tasks", "Задания от компаний", BookOpen],
           ["company", "Моя компания", BriefcaseBusiness],
         ] as const);
   return (
@@ -267,7 +279,7 @@ export function App() {
               }}
             >
               <Icon size={19} />
-              {label}
+              {label}{key === "tasks" && taskPending > 0 && <span className="task-count" aria-label="Требуют внимания">{taskPending}</span>}
               {tab === key && <ChevronRight size={15} />}
             </button>
           ))}
@@ -360,6 +372,7 @@ export function App() {
             ) : (
               <Loading />
             ))}
+          {tab === "tasks" && <Tasks user={user} {...props} />}
           {tab === "search" && <SearchPage {...props} />}
           {tab === "invitations" && (
             <Invitations {...props} user={user} version={version} />
@@ -1846,6 +1859,7 @@ function CandidateCard({
           Стек со слов кандидата:{" "}
           {p.skills.map((s) => catalog.skills[s]).join(", ") || "не указан"}
         </p>
+        {p.task_last_reviewed_at && <p>Последняя оценка задания вашей компанией: {date(p.task_last_reviewed_at)}. Грейд не изменён.</p>}
         {p.contacts && (
           <p>
             Электронная почта: {p.contacts.email} · Телефон: {p.contacts.phone || "не указан"}

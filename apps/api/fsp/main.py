@@ -21,6 +21,7 @@ from sqlalchemy.orm import Session as DBSession, sessionmaker
 
 from . import bank, schemas as S, outputs as O
 from .assessment import availability, configured_rubric, stored_rubric
+from . import tasks
 from .matching import eligible, group_sort, rank_candidate
 from .models import (
     Attempt,
@@ -268,7 +269,8 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             "contacts": {"email": u.email, "phone": p.phone} if permitted else None,
         }
         if permitted:
-            result.update(about=p.about, roles=p.roles, soft_skills=p.soft_skills)
+            result.update(about=p.about, roles=p.roles, soft_skills=p.soft_skills,
+                          task_last_reviewed_at=tasks.last_reviewed(db, p.user_id, None if owner else company_id))
         if owner:
             result.update(
                 name=p.name,
@@ -408,10 +410,10 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             + "/#verify="
             + token
         )
-        if not is_demo:
-            host = os.getenv("SMTP_HOST")
-            if not host:
-                fail(503, "Доставка почты пока не настроена. Обратитесь к оператору.")
+        # Real SMTP when host is set — even if DEMO_MODE stays on for demo buttons / FSP mock.
+        smtp_host = (os.getenv("SMTP_HOST") or "").strip()
+        use_smtp = bool(smtp_host)
+        if use_smtp:
             msg = EmailMessage()
             msg["To"] = email
             msg["From"] = os.getenv("SMTP_FROM", "noreply@example.org")
@@ -419,19 +421,21 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             msg.set_content("Подтвердите адрес в течение часа: " + link)
             try:
                 with smtplib.SMTP(
-                    host, int(os.getenv("SMTP_PORT", "587")), timeout=10
+                    smtp_host, int(os.getenv("SMTP_PORT", "587")), timeout=10
                 ) as smtp:
-                    if os.getenv("SMTP_TLS", "true") == "true":
+                    if os.getenv("SMTP_TLS", "true").lower() == "true":
                         smtp.starttls()
                     if os.getenv("SMTP_USER"):
                         smtp.login(os.environ["SMTP_USER"], os.environ["SMTP_PASSWORD"])
                     smtp.send_message(msg)
             except (OSError, smtplib.SMTPException):
                 fail(503, "Письмо не отправлено. Повторите регистрацию позже.")
+        elif not is_demo:
+            fail(503, "Доставка почты пока не настроена. Обратитесь к оператору.")
         return {
             "message": "Подтвердите адрес почты",
-            "demo_verification_url": link if is_demo else None,
-            "delivery": "simulated" if is_demo else "smtp",
+            "demo_verification_url": link if (is_demo and not use_smtp) else None,
+            "delivery": "smtp" if use_smtp else "simulated",
         }
 
     @app.post(
@@ -561,6 +565,7 @@ def create_app(database_url=None, demo=None, rate_limit=True):
                 db.execute(
                     delete(ContactGrant).where(ContactGrant.candidate_id == user.id)
                 )
+                tasks.suspend(db, user.id)
         db.flush()
         return projection(p, user, db)
 
@@ -1070,6 +1075,8 @@ def create_app(database_url=None, demo=None, rate_limit=True):
         db.add(m)
         db.flush()
         return {"id": m.id, "text": m.text, "mine": True, "created_at": m.created_at}
+
+    tasks.install_routes(app, AUTH, DB, candidate, company)
 
     @app.get("/api/docs", include_in_schema=False, response_class=HTMLResponse)
     def api_documentation():

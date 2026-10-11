@@ -200,3 +200,51 @@ class Message(Base):
     author_id: Mapped[str] = mapped_column(ForeignKey("users.id"))
     text: Mapped[str] = mapped_column(String(2000))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+
+
+class TaskPlan(Base):
+    __tablename__ = "task_plans"
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=uid)
+    company_id: Mapped[str] = mapped_column(ForeignKey("companies.id"), index=True)
+    candidate_id: Mapped[str] = mapped_column(ForeignKey("users.id"), index=True)
+    request_id: Mapped[str] = mapped_column(String(36))
+    title: Mapped[str] = mapped_column(String(160))
+    prompt: Mapped[str] = mapped_column(String(4000))
+    rubric: Mapped[str] = mapped_column(String(2000))
+    interval_days: Mapped[int] = mapped_column(Integer)
+    response_days: Mapped[int] = mapped_column(Integer)
+    version: Mapped[int] = mapped_column(Integer, default=1)
+    status: Mapped[str] = mapped_column(String(20), default="awaiting")
+    next_issue_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    consent_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+    __table_args__ = (
+        UniqueConstraint("company_id", "request_id"),
+        CheckConstraint("interval_days BETWEEN 1 AND 365"),
+        CheckConstraint("response_days BETWEEN 1 AND interval_days"),
+        CheckConstraint("status IN ('awaiting','active','paused','closed')"),
+    )
+
+
+class TaskAssignment(Base):
+    __tablename__ = "task_assignments"
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=uid)
+    plan_id: Mapped[str] = mapped_column(ForeignKey("task_plans.id"), index=True)
+    sequence: Mapped[int] = mapped_column(Integer)
+    version: Mapped[int] = mapped_column(Integer)
+    title: Mapped[str] = mapped_column(String(160))
+    prompt: Mapped[str] = mapped_column(String(4000))
+    rubric: Mapped[str] = mapped_column(String(2000))
+    status: Mapped[str] = mapped_column(String(20), default="issued")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+    due_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    answer: Mapped[str | None] = mapped_column(String(6000))
+    submitted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    score: Mapped[int | None] = mapped_column(Integer)
+    feedback: Mapped[str | None] = mapped_column(String(2000))
+    reviewed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    __table_args__ = (
+        UniqueConstraint("plan_id", "sequence"),
+        CheckConstraint("score IS NULL OR score BETWEEN 0 AND 100"),
+        CheckConstraint("status IN ('issued','viewed','submitted','reviewed','expired','cancelled')"),
+    )

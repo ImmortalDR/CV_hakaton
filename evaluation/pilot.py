@@ -38,7 +38,7 @@ def prepare(out):
     write_json(out/'forms.json',public)
     write_json(out/'answer-key.json',private)
     (out/'answer-key.json').chmod(0o600)
-    for name,columns in [('participants.csv',PEOPLE_COLUMNS),('responses.csv',RESPONSE_COLUMNS)]:
+    for name,columns in [('participants.csv',PEOPLE_COLUMNS),('responses.csv',RESPONSE_COLUMNS),('sessions.csv',['participant_id','form_id','started_at','submitted_at'])]:
         with (out/name).open('w',newline='') as f:
             csv.writer(f).writerow(columns)
     with (out/'expert-review.csv').open('w',newline='') as f:

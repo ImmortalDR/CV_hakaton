@@ -13,7 +13,7 @@ OUT = ROOT / 'docs/delivery'
 SECTIONS = [
     'USER_GUIDE.md', 'ARCHITECTURE.md', 'ASSESSMENT.md', 'DATA_AND_MODELS.md',
     'VALIDATION.md', 'REQUIREMENTS_STATUS.md', 'API.md', 'FSP_INTEGRATION.md',
-    'OPERATIONS.md',
+    'OPERATIONS.md', 'TASKS.md', 'VALIDATION_STUDIES.md',
 ]
 
 
@@ -41,7 +41,7 @@ def main():
         title = (OUT / section).read_text().splitlines()[0].lstrip('# ')
         assert title in pdf_text, ('PDF missing section', title)
         assert title in doc_text, ('DOCX missing section', title)
-    for term in ['11 октября 2026', '785d362', 'matching-1.1.0', '73 passed', 'NDCG@10', '24 часа', '90 дней', 'assessment-availability', 'production_promotion_allowed=false']:
+    for term in ['11 октября 2026', '2026-10-11-modernization', 'matching-1.1.0', '84 passed', 'NDCG@10', '24 часа', '90 дней', 'assessment-availability', 'production_promotion_allowed=false']:
         assert term in pdf_text and term in doc_text, ('Missing current fact', term)
     for obsolete in ['публичного домена нет', 'Реальные CV для разработки не использовались', '12 семейств', 'Рабочая ветка: codex/fsp-mvp']:
         assert obsolete not in pdf_text and obsolete not in doc_text, ('Obsolete claim', obsolete)
@@ -51,7 +51,7 @@ def main():
     assert f'{operations} операций / {models} моделей' in (OUT / 'REQUIREMENTS_STATUS.md').read_text()
     result = {
         'status': 'pass', 'checked_at': datetime.now(timezone.utc).isoformat(),
-        'application_commit': '785d362ef17e3ba92e417ccee630deebcaee05b0',
+        'release': '2026-10-11-modernization',
         'scope': 'Documentation content, PDF text bounds, DOCX structure and OpenAPI counts; not a rerun of application/model tests',
         'pdf_pages': pages, 'docx_paragraphs': len(doc.paragraphs),
         'docx_tables': len(doc.tables), 'sections': SECTIONS,
