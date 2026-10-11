@@ -11,10 +11,10 @@
 ## Запуск
 
 Нужны Docker Engine с Compose v2 и Python 3 для создания конфигурации.
-Рабочая ветка: `codex/fsp-mvp`.
+Актуальная ветка: `codex/platform-fixes-20261011`.
 
 ```bash
-git clone --branch codex/fsp-mvp https://github.com/ImmortalDR/CV_hakaton.git
+git clone --branch codex/platform-fixes-20261011 https://github.com/ImmortalDR/CV_hakaton.git
 cd CV_hakaton
 python3 scripts/configure.py
 docker compose up -d --build --wait
@@ -64,11 +64,15 @@ Compose-проект `fsp-mvp`, том `fsp-mvp_fsp_db`. Не удаляйте �
 
 ## Проверки и измерения
 
+Последний прогон платформы (11 октября): **73 серверных теста, 55 проверок
+склонений, 18 браузерных проверок требований**. Сквозной HTTPS-сценарий,
+старые попытки и закрытые/открытые PDF проверены; [отчёт и границы](docs/review/PLATFORM_FIXES_2026-10-11.md).
+
 [Фактический отчёт](docs/delivery/VALIDATION.md),
 [матрица приёмки](docs/delivery/REQUIREMENTS_STATUS.md),
 [результаты синтетической оценки](evaluation/results.json).
 
-P@5 на 8 тестовых потребностях / 48 синтетических профилях: **0,80**,
+Исторический замер раннего MVP: P@5 на 8 тестовых потребностях / 48 синтетических профилях: **0,80**,
 baseline **0,475**. Знаменатель всегда 5. Это авторские сценарии без внешних
 экспертов; профессиональная валидность грейдов на людях не доказана.
 
@@ -88,7 +92,7 @@ Node 22 (локальная сборка также проверена на Node
 python3 -m venv .venv
 .venv/bin/pip install -r requirements-dev.lock
 docker compose exec -T db createdb -U fsp fsp_test
-python3 scripts/run_local.py .venv/bin/pytest -q tests
+COOKIE_SECURE=false python3 scripts/run_local.py .venv/bin/pytest -q tests
 PYTHONPATH=apps/api:. .venv/bin/python -m evaluation.run
 .venv/bin/playwright install --with-deps chromium
 python3 scripts/run_local.py .venv/bin/python tests/browser_flow.py
@@ -114,6 +118,10 @@ python3 scripts/run_local.py .venv/bin/uvicorn fsp.main:app_factory --factory --
 Затем в `apps/web`: `npm run dev`. Vite проксирует `/api` на порт 8007.
 
 ## Материалы сдачи
+
+**[Единое руководство и навигация по документации](docs/delivery/README.md)** —
+редакция от 11 октября 2026, текущие PDF/DOCX, руководство пользователя,
+архитектура, API, эксплуатация, данные и результаты проверки.
 
 - [Архитектура и правила](docs/delivery/ARCHITECTURE.md).
 - [Банк, оценка и ограничения](docs/delivery/ASSESSMENT.md).

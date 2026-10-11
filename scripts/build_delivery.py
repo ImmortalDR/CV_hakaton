@@ -4,6 +4,7 @@ The supplied template is read only. All output belongs to demo/docs/delivery.
 Run from the repository root with requirements-dev.lock installed.
 """
 
+import argparse
 import json
 import re
 import textwrap
@@ -11,6 +12,7 @@ from pathlib import Path
 from xml.sax.saxutils import escape
 
 from docx import Document
+from docx.oxml import OxmlElement
 from docx.shared import Inches as DInches, Pt as DPt, RGBColor as DColor
 from pptx import Presentation
 from pptx.dml.color import RGBColor
@@ -421,9 +423,9 @@ def documentation():
         style.font.color.rgb = DColor.from_string(PURPLE)
     doc.add_heading("ФСП · карьера", 0)
     doc.add_paragraph("Техническая документация и отчёт проверки MVP 1.0.0")
-    doc.add_paragraph("Обратный найм по подтверждённым навыкам\n7 октября 2026 · UTC")
+    doc.add_paragraph("Обратный найм по подтверждённым навыкам\nРедакция 11 октября 2026 · приложение 785d362")
     doc.add_paragraph(
-        "Код: github.com/ImmortalDR/CV_hakaton\nРабочая ветка: codex/fsp-mvp"
+        "Код: github.com/ImmortalDR/CV_hakaton\nРабочая ветка: codex/platform-fixes-20261011"
     )
     doc.add_paragraph(
         "Демонстрационная реализация. Результаты синтетических измерений не являются экспертной валидацией профессиональных грейдов."
@@ -436,11 +438,11 @@ def documentation():
         ),
         Spacer(1, 25),
         Paragraph(
-            "Обратный найм по подтверждённым навыкам<br/>7 октября 2026 · UTC",
+            "Обратный найм по подтверждённым навыкам<br/>Редакция 11 октября 2026 · приложение 785d362",
             styles["body"],
         ),
         Paragraph(
-            "Код: github.com/ImmortalDR/CV_hakaton<br/>Рабочая ветка: codex/fsp-mvp",
+            "Код: github.com/ImmortalDR/CV_hakaton<br/>Рабочая ветка: codex/platform-fixes-20261011",
             styles["body"],
         ),
         Spacer(1, 40),
@@ -450,14 +452,27 @@ def documentation():
         ),
     ]
     files = [
+        "USER_GUIDE.md",
         "ARCHITECTURE.md",
         "ASSESSMENT.md",
+        "DATA_AND_MODELS.md",
         "VALIDATION.md",
         "REQUIREMENTS_STATUS.md",
         "API.md",
         "FSP_INTEGRATION.md",
         "OPERATIONS.md",
     ]
+    doc.add_page_break()
+    doc.add_heading("Содержание", 1)
+    story.extend([PageBreak(), Paragraph("Содержание", styles["h1"])])
+    for index, filename in enumerate(files, 1):
+        title = (OUT / filename).read_text().splitlines()[0].lstrip("# ")
+        label = f"{index}. {title}"
+        doc.add_paragraph(label)
+        story.append(Paragraph(escape(label), styles["body"]))
+    note = "Версии: API 1.0.0 · банк 2.0.0 · подбор matching-1.1.0. Источники разделов и ссылки: docs/delivery/README.md в репозитории."
+    doc.add_paragraph(note)
+    story.append(Paragraph(escape(note), styles["body"]))
     for filename in files:
         doc.add_page_break()
         story.append(PageBreak())
@@ -515,6 +530,10 @@ def documentation():
                     cells = table.add_row().cells
                     for j, cell in enumerate(row):
                         cells[j].text = cell
+                header_repeat = OxmlElement("w:tblHeader")
+                table.rows[0]._tr.get_or_add_trPr().append(header_repeat)
+                for table_row in table.rows:
+                    table_row._tr.get_or_add_trPr().append(OxmlElement("w:cantSplit"))
                 cells = [
                     [Paragraph(escape(v), styles["cell"]) for v in row] for row in rows
                 ]
@@ -552,6 +571,7 @@ def documentation():
                     i < len(lines)
                     and lines[i].strip()
                     and not lines[i].startswith(("#", "|", "```", "- "))
+                    and not re.match(r"^\d+\. ", lines[i])
                 ):
                     block.append(lines[i])
                     i += 1
@@ -578,7 +598,13 @@ def documentation():
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--docs-only", action="store_true", help="Build DOCX/PDF without overwriting the presentation")
+    args = parser.parse_args()
     documentation()
+    if args.docs_only:
+        print("Built docs/delivery/FSP_MVP.docx and FSP_MVP.pdf; presentation preserved")
+        raise SystemExit(0)
     slides = presentation()
     print(
         json.dumps(

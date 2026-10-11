@@ -1,0 +1,72 @@
+{
+  "status": "pass",
+  "checked_at": "2026-10-11T18:24:35.224368+00:00",
+  "application_commit": "785d362ef17e3ba92e417ccee630deebcaee05b0",
+  "scope": "Documentation content, PDF text bounds, DOCX structure and OpenAPI counts; not a rerun of application/model tests",
+  "pdf_pages": 20,
+  "docx_paragraphs": 181,
+  "docx_tables": 6,
+  "sections": [
+    "USER_GUIDE.md",
+    "ARCHITECTURE.md",
+    "ASSESSMENT.md",
+    "DATA_AND_MODELS.md",
+    "VALIDATION.md",
+    "REQUIREMENTS_STATUS.md",
+    "API.md",
+    "FSP_INTEGRATION.md",
+    "OPERATIONS.md"
+  ],
+  "openapi_operations": 28,
+  "openapi_models": 39,
+  "docx_render": {
+    "status": "pass",
+    "pages": 20
+  },
+  "artifacts": {
+    "FSP_MVP.pdf": {
+      "bytes": 114534,
+      "sha256": "264046df718d47b81e5e4e6a206646c10acbe9f209decd6573100823a98b8c45"
+    },
+    "FSP_MVP.docx": {
+      "bytes": 61851,
+      "sha256": "14d412f30ab1febe1fa5d9f8db96f97f996c0a6581b6499029358eac405e8fc0"
+    },
+    "USER_GUIDE.md": {
+      "bytes": 10366,
+      "sha256": "380c9322663c78604bbdfb3b63ac7612f6c138eda8d575a861e49ea55447a492"
+    },
+    "ARCHITECTURE.md": {
+      "bytes": 10717,
+      "sha256": "3998884cbbc78a3f89bb4cae1847f65f28f401472003ea3f2b1bca820ba7f131"
+    },
+    "ASSESSMENT.md": {
+      "bytes": 6773,
+      "sha256": "946b13f3ed22208974ff091e539641b57678d687ca1ad1e0a55d29f006155b2e"
+    },
+    "DATA_AND_MODELS.md": {
+      "bytes": 8120,
+      "sha256": "cb2b22d894dffde0023605d585b2f8112e5000add1c1171675724536653218ba"
+    },
+    "VALIDATION.md": {
+      "bytes": 7540,
+      "sha256": "e94a6beb486addce0fbeab09028d1f218622e04da12d76327876ee11a41ebbe9"
+    },
+    "REQUIREMENTS_STATUS.md": {
+      "bytes": 9151,
+      "sha256": "9d85d326f6bb4b619b6a3f3d9f389fe125c95c8fd8007022f455e3897ac90142"
+    },
+    "API.md": {
+      "bytes": 6950,
+      "sha256": "bc194afc28feaf6e43feb4461403fdefb1cd3abdce649948aae063b89a1b0b75"
+    },
+    "FSP_INTEGRATION.md": {
+      "bytes": 3704,
+      "sha256": "e1503eea71510f7ccd94e06d023fb1e0944e2c0e566cbfe89fcbdfd38fecccf4"
+    },
+    "OPERATIONS.md": {
+      "bytes": 9915,
+      "sha256": "53430d975be4ef8d867a413b24fb709da2ddfea4f062ae7c88b5fe205d8e7067"
+    }
+  }
+}
