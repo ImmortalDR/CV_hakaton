@@ -4,10 +4,11 @@
 
 | | |
 |---|---|
-| **Канон** | [`COMPREHENSIVE_CLOSED_CONTOUR_2026-10-21.md`](COMPREHENSIVE_CLOSED_CONTOUR_2026-10-21.md) |
 | **Handoff (что/как/проверка)** | [`HANDOFF_CLOSED_CONTOUR.md`](HANDOFF_CLOSED_CONTOUR.md) |
+| **Канон** | [`COMPREHENSIVE_CLOSED_CONTOUR_2026-10-21.md`](COMPREHENSIVE_CLOSED_CONTOUR_2026-10-21.md) |
 | Статусы | [`BACKLOG_CLOSED_CONTOUR.json`](BACKLOG_CLOSED_CONTOUR.json) |
 | Промпт Astra (сборка) | [`prompts/ASTRA_CLOSED_CONTOUR.md`](prompts/ASTRA_CLOSED_CONTOUR.md) |
+| Промпт перепроверки | [`prompts/ASTRA_REVERIFY_CLOSED_CONTOUR.md`](prompts/ASTRA_REVERIFY_CLOSED_CONTOUR.md) |
 | Проверки по задачам | [`prompts/ASTRA_VERIFY_BY_TASK_CC.md`](prompts/ASTRA_VERIFY_BY_TASK_CC.md) |
 | Протокол человеку | [`templates/HUMAN_VERIFY_PROTOCOL_CLOSED_CONTOUR.TEMPLATE.md`](templates/HUMAN_VERIFY_PROTOCOL_CLOSED_CONTOUR.TEMPLATE.md) |
 | Источник запроса | Данила, чат 21.10.2026 (закрытый контур / инфбез / ПДн·ТД) |
