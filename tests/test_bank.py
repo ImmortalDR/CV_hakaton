@@ -111,3 +111,27 @@ def test_historical_question_texts_match_frozen_release_fingerprints():
     for r in rows:
         qs = bank.generate(r['spec'], r['grade'], r['seed'], version=r['version'])
         assert bank.fingerprint(qs) == r['fingerprint']
+
+
+@pytest.mark.parametrize('num,den,expected', [(2900,32,'90.63'), (1005,1000,'1.01'), (625,1000,'0.63')])
+def test_half_up_exact_boundaries(num, den, expected):
+    assert bank.round_ratio(num, den) == expected
+
+
+def test_conditional_rounding_new_and_historical_versions():
+    for seed in range(10000):
+        qs = bank.generate('data', 'Middle', seed)
+        q = next((q for q in qs if q['family'] == 'stats_conditional'
+                  and q['params']['returning'] == 32 and q['params']['bought'] == 29), None)
+        if q:
+            break
+    assert q is not None
+    assert q['answer'] == '90.63'
+    assert '90,625 → 90,63' in q['text']
+    for answer in ['90.63', '90,63']:
+        assert bank.grade_answers([q], {q['id']: answer})['details'][0]['correct']
+    assert not bank.grade_answers([q], {q['id']: '90.62'})['details'][0]['correct']
+    old = bank.generate('data', 'Middle', seed, version='2.0.0')
+    old_q = next(x for x in old if x['id'] == q['id'])
+    assert old_q['answer'] == '90.62'
+    assert len(old) == 8 and bank.rubric('2.0.0')['core_min_correct'] == 3

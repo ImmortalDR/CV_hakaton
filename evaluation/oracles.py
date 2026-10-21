@@ -10,6 +10,16 @@ import statistics
 
 def solve(question):
     family, p = question["family"], question["params"]
+    if "При ровно половине" in question["text"]:
+        # Independent integer arithmetic, no production rounding helper.
+        if family == "stats_conditional":
+            num, den = 100 * p["bought"], p["returning"]
+        elif family == "stats_mean_drop":
+            num, den = sum(p["values"]) - p["values"][p["drop_index"]], len(p["values"]) - 1
+        else:
+            num, den = p["a"] * 10 + p["b"] * 30, p["a"] + p["b"]
+        cents, remainder = divmod(num * 100, den)
+        return (cents + (remainder * 2 >= den)) / 100
     a, b, values = p["a"], p["b"], p["values"]
     if family == "py_accumulate":
         total = a

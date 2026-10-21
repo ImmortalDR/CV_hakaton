@@ -42,12 +42,13 @@
       "id": "Q2",
       "audit": "B02",
       "owner": "timofey",
-      "status": "todo",
+      "status": "done",
       "priority": "P1",
       "title": "Document/fix rounding rule for SQL Middle 90.625 case",
       "dod": [
         "single rounding rule; 90.63/90.62 ambiguity gone"
-      ]
+      ],
+      "verification": "38 tests passed; bank 2.1.0 HALF_UP; historical attempts retain original version (no bulk recalculation)"
     },
     {
       "id": "Q3",

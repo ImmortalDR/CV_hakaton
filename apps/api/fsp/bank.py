@@ -4,9 +4,10 @@ import hashlib
 import json
 import random
 from collections import Counter
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 
-VERSION = "2.0.0"
+VERSION = "2.1.0"
+V2_VERSIONS = {"2.0.0", VERSION}
 SPECS = {"python": "Python / бэкенд", "data": "Аналитика данных / SQL"}
 GRADES = ["Junior", "Middle", "Senior"]
 SKILLS = {
@@ -78,22 +79,26 @@ FAMILY_SKILL.update({
     "sql_group": "sql", "stats_conditional": "statistics",
     "sql_window": "sql", "tx_optimistic": "transactions",
 })
-SUPPORTED_VERSIONS = {"1.0.0", "1.1.0", "1.2.0", VERSION}
+SUPPORTED_VERSIONS = {"1.0.0", "1.1.0", "1.2.0", "2.0.0", VERSION}
 
 
 def rubric(version=VERSION):
     if version not in SUPPORTED_VERSIONS:
         raise ValueError(f"Unsupported bank version: {version}")
     return {
-        "question_count": 8 if version == VERSION else 4,
+        "question_count": 8 if version in V2_VERSIONS else 4,
         "minutes": 30,
         "threshold": 75,
-        "core_min_correct": 3 if version == VERSION else 2 if version == "1.2.0" else 0,
-        "core_total": 4 if version == VERSION else 2,
+        "core_min_correct": 3 if version in V2_VERSIONS else 2 if version == "1.2.0" else 0,
+        "core_total": 4 if version in V2_VERSIONS else 2,
     }
 
 
-def question(family, rng):
+def round_ratio(numerator, denominator):
+    return str((Decimal(numerator) / Decimal(denominator)).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP))
+
+
+def question(family, rng, version=VERSION):
     a = rng.randint(2, 9)
     b = rng.randint(2, 8)
     values = [rng.randint(1, 20) for _ in range(7)]
@@ -148,7 +153,7 @@ def question(family, rng):
         why = "LEFT JOIN сохраняет клиентов без заказов; WHERE выбирает именно эти строки."
     elif family == "stats_weighted":
         text = f"Группа A: {a*10} конверсий из {a*100} посещений. Группа B: {b*30} конверсий из {b*100} посещений.\nОбщая конверсия в процентах? Округлите до двух знаков."
-        answer = round((a * 10 + b * 30) / (a + b), 2)
+        answer = round_ratio(a * 10 + b * 30, a + b) if version == VERSION else round((a * 10 + b * 30) / (a + b), 2)
         why = "Складываем конверсии и посещения отдельно. Среднее процентов без весов неверно."
     elif family == "sql_rank":
         target = values[0]
@@ -221,7 +226,7 @@ def question(family, rng):
         index = rng.randrange(len(values))
         p["drop_index"] = index
         text = f"Замеры времени (мс): {values}. Известно, что замер номер {index+1} ошибочен (нумерация с 1).\nЧему равно среднее арифметическое после удаления только этого замера? Округлите до двух знаков."
-        answer = round((sum(values) - values[index]) / (len(values)-1), 2)
+        answer = round_ratio(sum(values) - values[index], len(values)-1) if version == VERSION else round((sum(values) - values[index]) / (len(values)-1), 2)
         why = "Исключаем одно наблюдение по номеру, даже если такое же значение встречается ещё раз, и делим на оставшееся число наблюдений."
     elif family == "sql_group":
         rows = [[i % 3 + 1, rng.randint(5, 40)] for i in range(9)]
@@ -239,7 +244,7 @@ def question(family, rng):
         new = rng.randint(20, 80)
         p.update(returning=returning, bought=bought, new=new)
         text = f"За день пришли {returning} вернувшихся и {new} новых пользователей. Из вернувшихся покупку совершили {bought}.\nКакой процент вернувшихся совершил покупку? Округлите до двух знаков."
-        answer = round(100 * bought / returning, 2)
+        answer = round_ratio(100 * bought, returning) if version == VERSION else round(100 * bought / returning, 2)
         why = "Условная доля считается только среди вернувшихся; новые пользователи не входят в знаменатель."
     elif family == "sql_window":
         rows = [[i+1, i % 2 + 1, rng.randint(5, 40)] for i in range(8)]
@@ -262,6 +267,8 @@ def question(family, rng):
         why = "Применяем только обновления, чья ожидаемая версия совпадает с текущей; успешное обновление увеличивает версию на один."
     else:
         raise ValueError(f"Unknown question family: {family}")
+    if version == VERSION and "Округлите до двух знаков." in text:
+        text += " При ровно половине округляйте вверх: 90,625 → 90,63."
     return {
         "family": family,
         "skill": FAMILY_SKILL[family],
@@ -274,14 +281,14 @@ def question(family, rng):
 
 def generate(specialization, grade, seed, version=VERSION):
     rubric(version)
-    blueprint = BLUEPRINT if version == VERSION else LEGACY_BLUEPRINT
+    blueprint = BLUEPRINT if version in V2_VERSIONS else LEGACY_BLUEPRINT
     rng = random.Random(str(seed))
     qs = [
-        question(f, rng) for f in blueprint[(specialization, grade)] for _ in range(2)
+        question(f, rng, version) for f in blueprint[(specialization, grade)] for _ in range(2)
     ]
     if version == "1.0.0":
         raise ValueError("Generation of 1.0.0 is unavailable; use stored questions for replay")
-    if version in {"1.2.0", VERSION}:
+    if version in {"1.2.0", "2.0.0", VERSION}:
         rng.shuffle(qs)
     for i, q in enumerate(qs):
         q["id"] = str(i + 1)
