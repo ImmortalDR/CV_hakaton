@@ -54,7 +54,7 @@
     {
       "id": "CC1",
       "priority": "P1",
-      "status": "todo",
+      "status": "PASS",
       "owner": "astra",
       "title": "Inventory deploy surface (compose, env, configure, binds, volumes, health)",
       "artifact": "docs/delivery/closed_contour/01_INVENTORY.md"
