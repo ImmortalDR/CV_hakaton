@@ -1,0 +1,209 @@
+{
+  "canon": "COMPREHENSIVE_CLOSED_CONTOUR_2026-10-21.md",
+  "updated": "2026-10-21",
+  "track": "closed_contour_readiness",
+  "team": "Нанотехнологический альянс",
+  "source_of_truth_chat": {
+    "date": "2026-10-21",
+    "from": "Данила Бессмертный",
+    "anchors": [
+      "infobec + plan внедрения во внутренний контур",
+      "стандартный закрытый контур (устройство заказчика неизвестно)",
+      "законы РФ: персональные данные + ТД",
+      "разрешено скачивать зависимости",
+      "публичная платформа остаётся; цель — показать готовность внедрить"
+    ]
+  },
+  "stand_public": "https://85-137-26-131.sslip.io/",
+  "repo": "ImmortalDR/CV_hakaton",
+  "base_branch": "codex/fsp-mvp",
+  "work_branch": "codex/closed-contour-readiness",
+  "worktree": "/root/hakaton-contour",
+  "main_clone_docs": "/root/hakaton/docs/closed_contour_2026-10-21/",
+  "constraints": {
+    "deps_download": "allowed",
+    "air_gap": false,
+    "do_not_break_public_stand": true,
+    "do_not_touch_foreign_wip": true,
+    "not_vpn_only_product": true
+  },
+  "must_for_pitch_claim": [
+    "CC1",
+    "CC2",
+    "CC3",
+    "CC4",
+    "CC5",
+    "CC6",
+    "CC8",
+    "CC9",
+    "CC12",
+    "CCV1"
+  ],
+  "tasks": [
+    {
+      "id": "CC0",
+      "priority": "P0",
+      "status": "PASS",
+      "owner": "astra",
+      "title": "Frame track in repo (canon + JSON + NOT TODO + two contours)",
+      "dod": [
+        "canon files present",
+        "no air-gap/FSTEC promises"
+      ]
+    },
+    {
+      "id": "CC1",
+      "priority": "P1",
+      "status": "todo",
+      "owner": "astra",
+      "title": "Inventory deploy surface (compose, env, configure, binds, volumes, health)",
+      "artifact": "docs/delivery/closed_contour/01_INVENTORY.md"
+    },
+    {
+      "id": "CC2",
+      "priority": "P1",
+      "status": "todo",
+      "owner": "astra",
+      "title": "Inventory personal/labor-adjacent data fields",
+      "artifact": "docs/delivery/closed_contour/02_DATA_MAP.md"
+    },
+    {
+      "id": "CC3",
+      "priority": "P1",
+      "status": "todo",
+      "owner": "astra",
+      "title": "Install runbook for customer Linux VM (deps download allowed)",
+      "artifact": "docs/delivery/closed_contour/03_INSTALL_RUNBOOK.md"
+    },
+    {
+      "id": "CC4",
+      "priority": "P1",
+      "status": "todo",
+      "owner": "astra",
+      "title": "Isolated dry-run install script with evidence log",
+      "artifact": "scripts/closed_contour_dry_run.sh"
+    },
+    {
+      "id": "CC5",
+      "priority": "P2",
+      "status": "todo",
+      "owner": "astra",
+      "title": "Secrets and config hygiene checklist + proof .env not committed",
+      "artifact": "docs/delivery/closed_contour/04_SECRETS_AND_CONFIG.md"
+    },
+    {
+      "id": "CC6",
+      "priority": "P1",
+      "status": "todo",
+      "owner": "astra",
+      "title": "Lightweight threat model (assets, zones, gaps, owner)",
+      "artifact": "docs/delivery/closed_contour/05_THREAT_MODEL.md"
+    },
+    {
+      "id": "CC7",
+      "priority": "P2",
+      "status": "todo",
+      "owner": "astra",
+      "title": "Anti-DDoS / edge posture (honest not_implemented)",
+      "artifact": "docs/delivery/closed_contour/06_EDGE_AND_DDOS.md"
+    },
+    {
+      "id": "CC8",
+      "priority": "P1",
+      "status": "todo",
+      "owner": "astra",
+      "title": "Hardening checklist for internal contour",
+      "artifact": "docs/delivery/closed_contour/07_HARDENING_CHECKLIST.md"
+    },
+    {
+      "id": "CC9",
+      "priority": "P1",
+      "status": "todo",
+      "owner": "astra",
+      "title": "152-FZ PD notes grounded in code; LEGAL_REVIEW_NEEDED where needed",
+      "artifact": "docs/delivery/closed_contour/08_PDN_152_NOTES.md"
+    },
+    {
+      "id": "CC10",
+      "priority": "P2",
+      "status": "todo",
+      "owner": "astra",
+      "title": "Labor-law boundary: not HRIS / not full employment dossier",
+      "artifact": "docs/delivery/closed_contour/09_LABOR_BOUNDARY.md"
+    },
+    {
+      "id": "CC11",
+      "priority": "P2",
+      "status": "todo",
+      "owner": "astra",
+      "title": "Demo policy: DEMO_MODE, no real PD on public stand",
+      "artifact": "docs/delivery/closed_contour/08_PDN_152_NOTES.md#demo"
+    },
+    {
+      "id": "CC12",
+      "priority": "P1",
+      "status": "todo",
+      "owner": "astra",
+      "title": "Ready-to-deploy onepager for pitch/jury",
+      "artifact": "docs/delivery/closed_contour/READY_TO_DEPLOY_ONEPAGER.md"
+    },
+    {
+      "id": "CC13",
+      "priority": "P2",
+      "status": "todo",
+      "owner": "astra",
+      "title": "Short pointer from FOR_JURY/CHANGELOG without bloating Stage A",
+      "artifact": "docs/delivery/FOR_JURY.md"
+    },
+    {
+      "id": "CC14",
+      "priority": "P2",
+      "status": "todo",
+      "owner": "astra",
+      "title": "90s pitch text for Stage B",
+      "artifact": "docs/delivery/closed_contour/PITCH_CLOSED_CONTOUR_90S.md"
+    },
+    {
+      "id": "CCV1",
+      "priority": "P1",
+      "status": "todo",
+      "owner": "astra",
+      "title": "Adversarial matrix + agent protocol"
+    },
+    {
+      "id": "CCV2",
+      "priority": "P1",
+      "status": "todo",
+      "owner": "astra+human",
+      "title": "Human verify protocol"
+    },
+    {
+      "id": "CCV3",
+      "priority": "P1",
+      "status": "todo",
+      "owner": "astra",
+      "title": "Regression: public stand alive; foreign WIP untouched"
+    }
+  ],
+  "not_todo": [
+    "air_gap_full_offline_bundle",
+    "fstec_certification",
+    "in_repo_enterprise_waf",
+    "force_public_stand_behind_vpn_only",
+    "reset_hard_or_force_push",
+    "claim_full_152_compliance_without_legal_review",
+    "promise_hris_or_1c_zup_replacement",
+    "mix_stage_a_q_star_rewrites",
+    "edit_foreign_dirty_branch_in_place"
+  ],
+  "waves": [
+    "W0",
+    "W1",
+    "W2",
+    "W3",
+    "W4",
+    "W5",
+    "W6",
+    "H"
+  ]
+}
