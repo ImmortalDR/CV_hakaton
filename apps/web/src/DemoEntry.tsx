@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { api, type User } from "./api";
 
-const AFTER_CALL =
+const WHAT_CHANGED =
   "https://github.com/ImmortalDR/CV_hakaton/blob/main/docs/delivery/AFTER_ORGANIZERS_CALL_2026-10-21.md";
 
 export function DemoEntry({ onLogin }: { onLogin: (user: User) => void }) {
@@ -23,8 +23,7 @@ export function DemoEntry({ onLogin }: { onLogin: (user: User) => void }) {
     <small>Для проверки двух ролей: кандидат — в обычном окне, работодатель — в инкогнито или другом браузере.</small>
     <small>Это общие демонстрационные аккаунты. После часа без действий в обоих аккаунтах пробная история очищается, исходные профили и примеры тестов восстанавливаются. Используйте только вымышленные данные.</small>
     <small className="after-call-note">
-      Обновлено 21.10 после созвона с организаторами.{" "}
-      <a href={AFTER_CALL} target="_blank" rel="noreferrer">Что изменилось — коротко</a>
+      <a href={WHAT_CHANGED} target="_blank" rel="noreferrer">Что изменилось после созвона с организаторами</a>
     </small>
     {error && <p role="alert" className="field-error">{error}</p>}
   </div>;
