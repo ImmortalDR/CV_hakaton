@@ -1547,3 +1547,6 @@ button:focus-visible, summary:focus-visible, a:focus-visible { outline: 3px soli
 .demo-entry { display: grid; gap: 16px; }
 
 .company-retry { display: grid; gap: 10px; margin: 16px 0; }
+.chat-candidate { margin: 8px 0 24px; }
+.chat-candidate .candidate-footer { flex-wrap: wrap; }
+.chat-candidate .candidate-footer .button { max-width: 100%; white-space: normal; }
