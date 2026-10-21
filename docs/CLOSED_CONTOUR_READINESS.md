@@ -1,6 +1,6 @@
 # Closed contour readiness — для жюри и команды
 
-**Канон сдачи сейчас: ветка `main` @ `81aa030`.**
+**Канон сдачи сейчас: ветка `main` (актуальный tip = `origin/main`).**
 
 Запрос Данилы (21.10.2026): показать готовность внедрить продукт у заказчика (инфбез / типовой контур / ПДн·ТД), не превращая публичное демо в VPN-only.
 
@@ -14,7 +14,7 @@
 
 | Место | Значение |
 |---|---|
-| Tip `main` | `81aa030` |
+| Tip | смотрите `git rev-parse origin/main` / GitHub `main` |
 | GitHub (дефолт) | https://github.com/ImmortalDR/CV_hakaton/tree/main |
 | Handoff | https://github.com/ImmortalDR/CV_hakaton/blob/main/docs/delivery/closed_contour/HANDOFF_CLOSED_CONTOUR.md |
 | Стенд | https://85-137-26-131.sslip.io/ |
