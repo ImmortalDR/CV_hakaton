@@ -38,8 +38,22 @@ services:
       timeout: 4s
       retries: 20
     restart: unless-stopped
+  task-worker:
+    build: ./apps/api
+    command: ["python", "-m", "fsp.task_worker"]
+    environment:
+      DATABASE_URL: postgresql+psycopg://fsp:${POSTGRES_PASSWORD}@db:5432/fsp
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
   web:
     build: ./apps/web
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1/api/health"]
+      interval: 5s
+      timeout: 4s
+      retries: 20
     ports:
       - "${BIND_ADDRESS:-127.0.0.1}:3080:80"
     depends_on:
@@ -47,6 +61,7 @@ services:
         condition: service_healthy
     restart: unless-stopped
   edge:
+    init: true
     image: caddy:2.11.7-alpine@sha256:d8542f48d34a9cf4e4c11a478865229840e87e4c96ea3f439101f31a5d35f75f
     profiles: [https]
     # Linux host networking reaches the loopback web port without exposing it.
@@ -63,7 +78,7 @@ services:
       web:
         condition: service_started
     healthcheck:
-      test: ["CMD-SHELL", "wget -q --spider https://$${HTTPS_HOST}/api/health"]
+      test: ["CMD-SHELL", "wget -q -O /dev/null https://$${HTTPS_HOST}/api/health"]
       interval: 30s
       timeout: 5s
       start_period: 30s

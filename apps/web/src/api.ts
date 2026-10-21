@@ -29,6 +29,18 @@ export type AssessmentRubric = {
   core_min_correct: number;
   core_total: number;
 };
+export type AssessmentAvailability = {
+  checked_at: string;
+  bank_version: string;
+  specialization: string;
+  levels: {
+    grade: string;
+    available: boolean;
+    reasons: { code: string; message: string; until: string | null }[];
+    next_available_at: string | null;
+    rubric: AssessmentRubric;
+  }[];
+};
 export type Catalog = {
   specializations: Record<string, string>;
   grades: string[];
@@ -87,6 +99,7 @@ export type Profile = {
   demo: boolean;
   achievements: { title: string; result: string; verification: string }[];
   match?: Match;
+  task_last_reviewed_at?: string | null;
 };
 export type Result = {
   score: number;
@@ -101,6 +114,7 @@ export type Result = {
 export type Attempt = {
   answers: Record<string, string>;
   id: string;
+  specialization: string;
   grade: string;
   status: string;
   version: string;

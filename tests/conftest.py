@@ -11,6 +11,13 @@ from fsp.models import Base
 HEADERS = {"X-Requested-With": "fsp-web"}
 
 
+@pytest.fixture(autouse=True)
+def isolate_smtp(monkeypatch):
+    """Routine tests must never inherit production mail credentials."""
+    for key in ("SMTP_HOST", "SMTP_USER", "SMTP_PASSWORD", "SMTP_FROM", "SMTP_PORT", "SMTP_TLS"):
+        monkeypatch.delenv(key, raising=False)
+
+
 @pytest.fixture(scope="session")
 def pgapp():
     url = (

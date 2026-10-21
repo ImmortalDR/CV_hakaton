@@ -3,10 +3,12 @@ import copy
 import os
 import secrets
 import smtplib
+import ssl
 import time
 from collections import defaultdict, deque
 from datetime import timedelta
 from email.message import EmailMessage
+from email.utils import formatdate, make_msgid
 from typing import Annotated
 
 from argon2 import PasswordHasher
@@ -20,6 +22,8 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session as DBSession, sessionmaker
 
 from . import bank, schemas as S, outputs as O
+from .assessment import availability, configured_rubric, stored_rubric
+from . import tasks
 from .matching import eligible, group_sort, rank_candidate
 from .models import (
     Attempt,
@@ -136,7 +140,14 @@ def create_app(database_url=None, demo=None, rate_limit=True):
         return JSONResponse(
             status_code=422,
             content={
-                "detail": "Проверьте обязательные поля и допустимые значения.",
+                "detail": (
+                    "Укажите зарплату от 1 до 10 000 000 ₽. Нижняя граница не должна превышать верхнюю."
+                    if request.url.path == "/api/invitations" and any(
+                        "salary_min" in e["loc"] or "salary_max" in e["loc"] or
+                        (e["type"] == "value_error" and e["loc"] == ("body",))
+                        for e in exc.errors()
+                    ) else "Проверьте обязательные поля и допустимые значения."
+                ),
                 "fields": [
                     {"field": ".".join(map(str, e["loc"][1:])), "type": e["type"]}
                     for e in exc.errors()
@@ -260,7 +271,8 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             "contacts": {"email": u.email, "phone": p.phone} if permitted else None,
         }
         if permitted:
-            result.update(about=p.about, roles=p.roles, soft_skills=p.soft_skills)
+            result.update(about=p.about, roles=p.roles, soft_skills=p.soft_skills,
+                          task_last_reviewed_at=tasks.last_reviewed(db, p.user_id, None if owner else company_id))
         if owner:
             result.update(
                 name=p.name,
@@ -291,7 +303,7 @@ def create_app(database_url=None, demo=None, rate_limit=True):
                 else a.status
             ),
             "version": a.version,
-            "rubric": bank.rubric(a.version),
+            "rubric": stored_rubric(a),
             "created_at": a.created_at,
             "expires_at": a.expires_at,
             "result": a.result,
@@ -403,30 +415,37 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             + "/#verify="
             + token
         )
-        if not is_demo:
-            host = os.getenv("SMTP_HOST")
-            if not host:
-                fail(503, "Доставка почты пока не настроена. Обратитесь к оператору.")
-            msg = EmailMessage()
-            msg["To"] = email
-            msg["From"] = os.getenv("SMTP_FROM", "noreply@example.org")
-            msg["Subject"] = "Подтвердите почту — ФСП"
-            msg.set_content("Подтвердите адрес в течение часа: " + link)
+        # Real SMTP when host is set — even if DEMO_MODE stays on for demo buttons / FSP mock.
+        smtp_host = (os.getenv("SMTP_HOST") or "").strip()
+        use_smtp = bool(smtp_host)
+        if use_smtp:
             try:
+                msg = EmailMessage()
+                msg["To"] = email
+                msg["From"] = os.getenv("SMTP_FROM", "noreply@example.org")
+                msg["Subject"] = "Подтвердите почту — ФСП"
+                msg["Date"] = formatdate(localtime=False, usegmt=True)
+                msg["Message-ID"] = make_msgid(domain="fsp.local")
+                msg.set_content("Подтвердите адрес в течение часа: " + link)
                 with smtplib.SMTP(
-                    host, int(os.getenv("SMTP_PORT", "587")), timeout=10
+                    smtp_host, int(os.getenv("SMTP_PORT", "587")), timeout=10
                 ) as smtp:
-                    if os.getenv("SMTP_TLS", "true") == "true":
-                        smtp.starttls()
+                    smtp.ehlo()
+                    if os.getenv("SMTP_TLS", "true").lower() == "true":
+                        smtp.starttls(context=ssl.create_default_context())
+                        smtp.ehlo()
                     if os.getenv("SMTP_USER"):
                         smtp.login(os.environ["SMTP_USER"], os.environ["SMTP_PASSWORD"])
                     smtp.send_message(msg)
-            except (OSError, smtplib.SMTPException):
+            except (OSError, smtplib.SMTPException, ValueError, KeyError):
                 fail(503, "Письмо не отправлено. Повторите регистрацию позже.")
+        elif not is_demo:
+            fail(503, "Доставка почты пока не настроена. Обратитесь к оператору.")
         return {
-            "message": "Подтвердите адрес почты",
-            "demo_verification_url": link if is_demo else None,
-            "delivery": "simulated" if is_demo else "smtp",
+            "message": ("Письмо отправлено. Откройте ссылку в течение часа; проверьте также папку «Спам»."
+                        if use_smtp else "Подтвердите адрес почты"),
+            "demo_verification_url": link if (is_demo and not use_smtp) else None,
+            "delivery": "smtp" if use_smtp else "simulated",
         }
 
     @app.post(
@@ -556,6 +575,7 @@ def create_app(database_url=None, demo=None, rate_limit=True):
                 db.execute(
                     delete(ContactGrant).where(ContactGrant.candidate_id == user.id)
                 )
+                tasks.suspend(db, user.id)
         db.flush()
         return projection(p, user, db)
 
@@ -598,6 +618,16 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             )
         ]
 
+    @app.get("/api/me/assessment-availability", response_model=O.AssessmentAvailability,
+             tags=["Тестирование"])
+    def assessment_availability(user: AUTH, db: DB):
+        p = candidate(user, db)
+        t = now()
+        rows = list(db.scalars(select(Attempt).where(Attempt.user_id == user.id)))
+        return {"checked_at": t, "bank_version": bank.VERSION,
+                "specialization": p.specialization,
+                "levels": [availability(p, grade, rows, t) for grade in bank.GRADES]}
+
     @app.post(
         "/api/me/attempts",
         response_model=O.Attempt,
@@ -620,29 +650,10 @@ def create_app(database_url=None, demo=None, rate_limit=True):
                 return attempt_view(active)
             active.status = "expired"
             active.finished_at = t
-        if (
-            p.verified_grade
-            and data.grade != p.verified_grade
-            and t < p.grade_changed_at + timedelta(days=90)
-        ):
-            fail(
-                409,
-                "Смена подтверждённого уровня доступна через 90 дней после последнего изменения",
-            )
-        previous = db.scalar(
-            select(Attempt)
-            .where(
-                Attempt.user_id == user.id,
-                Attempt.grade == data.grade,
-                Attempt.specialization == p.specialization,
-            )
-            .order_by(Attempt.created_at.desc())
-        )
-        if previous and previous.created_at + timedelta(hours=24) > t:
-            fail(
-                409,
-                "Пересдача того же уровня доступна через 24 часа; первый тест ниже можно выбрать сразу",
-            )
+        rows = list(db.scalars(select(Attempt).where(Attempt.user_id == user.id)))
+        access = availability(p, data.grade, rows, t)
+        if not access["available"]:
+            fail(409, " ".join(r["message"] for r in access["reasons"]))
         for _ in range(20):
             seed = secrets.token_hex(16)
             qs = bank.generate(p.specialization, data.grade, seed)
@@ -659,7 +670,7 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             version=bank.VERSION,
             variant_hash=fp,
             questions=qs,
-            expires_at=t + timedelta(minutes=30),
+            expires_at=t + timedelta(minutes=configured_rubric(p.specialization, data.grade)["minutes"]),
         )
         p.claimed_grade = data.grade
         db.add(a)
@@ -1093,6 +1104,8 @@ def create_app(database_url=None, demo=None, rate_limit=True):
         db.add(m)
         db.flush()
         return {"id": m.id, "text": m.text, "mine": True, "created_at": m.created_at}
+
+    tasks.install_routes(app, AUTH, DB, candidate, company)
 
     @app.get("/api/docs", include_in_schema=False, response_class=HTMLResponse)
     def api_documentation():

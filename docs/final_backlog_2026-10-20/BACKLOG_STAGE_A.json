@@ -92,9 +92,10 @@
       "id": "Q6",
       "audit": "B04",
       "owner": "danila",
-      "status": "todo",
+      "status": "done",
       "priority": "P2",
-      "title": "Task schedule: pause/resume must not spawn early duplicate"
+      "title": "Task schedule: pause/resume must not spawn early duplicate",
+      "verification": "96 tests passed; 6 scheduler tests after close hardening; build and 55 numeral assertions passed; production runtime preserved from b769e03"
     },
     {
       "id": "Q7",

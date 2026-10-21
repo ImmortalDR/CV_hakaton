@@ -823,6 +823,21 @@ footer {
 .assessment-start .field {
   min-width: 160px;
 }
+.assessment-start > div:last-child {
+  flex: 1;
+  min-width: 0;
+}
+.assessment-access {
+  padding: 12px;
+  margin: 12px 0;
+  background: #f9f7fb;
+  border-radius: 9px;
+  overflow-wrap: anywhere;
+}
+.history-list > div > div, .question pre {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
 .question {
   border-top: 1px solid #ece5f1;
   padding: 22px 0;
@@ -830,8 +845,8 @@ footer {
 .question-label {
   display: flex;
   justify-content: space-between;
-  font-size: 10px;
-  color: #ab91bd;
+  font-size: 12px;
+  color: #695279;
   margin-bottom: 12px;
 }
 .question pre {
@@ -1360,6 +1375,7 @@ summary {
   }
   .assessment-start > div:last-child {
     width: 100%;
+    flex: 1 0 100%;
   }
   .assessment-start .field {
     min-width: 0;
@@ -1383,6 +1399,10 @@ summary {
   }
   .history-list > div {
     gap: 12px;
+    flex-wrap: wrap;
+  }
+  .history-list > div > div {
+    flex: 1 0 100%;
   }
   .history-list .text-button {
     font-size: 10px;
@@ -1476,3 +1496,11 @@ nav svg {
     flex-shrink: 0;
   }
 }
+
+.task-create, .task-plan { margin: 20px 0; min-width: 0; }
+.task-assignment { border-top: 1px solid #ded8e7; margin-top: 20px; padding-top: 20px; min-width: 0; }
+.task-text { white-space: pre-wrap; overflow-wrap: anywhere; }
+.task-plan .section-heading { flex-wrap: wrap; gap: 8px; }
+.task-plan h2, .task-plan h3 { overflow-wrap: anywhere; }
+.task-count { margin-left: auto; border-radius: 12px; padding: 2px 7px; background: #520978; color: white; font-size: 12px; }
+.task-create input, .task-create select, .task-create textarea, .task-assignment input, .task-assignment textarea { max-width: 100%; min-width: 0; }

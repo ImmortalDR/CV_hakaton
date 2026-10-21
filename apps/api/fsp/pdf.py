@@ -7,6 +7,7 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from .bank import SPECS, SKILLS
+from .formatting import readable_date
 
 
 def profile_pdf(profile):
@@ -38,7 +39,8 @@ def profile_pdf(profile):
         ),
     ]
     if profile["contacts"]:
-        lines += [f"{k}: {v}" for k, v in profile["contacts"].items()]
+        lines += [f"{label}: {profile['contacts'][key] or 'не указан'}"
+                  for key, label in (("email", "Электронная почта"), ("phone", "Телефон"))]
         lines += [
             profile.get("roles", ""),
             profile.get("soft_skills", ""),
@@ -46,7 +48,7 @@ def profile_pdf(profile):
         ]
     for e in profile["evidence"]:
         lines.append(
-            f"{SKILLS[e['skill']]}: {'подтверждено' if e['state']=='met' else 'критерий теста не выполнен'}; {e['correct']}/{e['total']}; методика {e['version']}; {e['date']}"
+            f"{SKILLS[e['skill']]}: {'подтверждено' if e['state']=='met' else 'критерий теста не выполнен'}; {e['correct']}/{e['total']}; методика {e['version']}; {readable_date(e['date'])}"
         )
     if profile["demo"]:
         lines.append("Демонстрационный профиль. Данные и результаты синтетические.")
