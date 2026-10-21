@@ -1,6 +1,6 @@
 {
   "status": "pass",
-  "checked_at": "2026-10-21T09:06:35.443189+00:00",
+  "checked_at": "2026-10-21T10:33:32.295674+00:00",
   "base_url": "https://85-137-26-131.sslip.io",
   "checks": [
     "https_health_ok",
@@ -8,6 +8,7 @@
     "three_review_logins_ok",
     "Q1_navigation_reload_server_draft_owner_expiry",
     "Q2_live_bank_2_1_rounding_hint",
+    "Q1_failed_PUT_leave_cancel_accept_reload_close_reopen_retry_server_ack",
     "Q3_direct_API_without_confirm_409_active_draft_unchanged",
     "Q3_cancel_keeps_active_accept_completes",
     "Q4_verified_published_hidden_empty_invitations_and_overview_CTA",
