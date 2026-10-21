@@ -12,6 +12,7 @@ import time
 from pathlib import Path
 from uuid import uuid4
 
+import pymupdf
 import uvicorn
 from fastapi.staticfiles import StaticFiles
 from starlette.exceptions import HTTPException
@@ -236,6 +237,45 @@ try:
         hr.reload(); expect(hr.get_by_text('Проверка навигации', exact=True)).to_be_visible()
         assert len(call(e, '/invitations/' + invite['id'] + '/messages')) == 1
         checked('chat open/back/forward/reload, message sent exactly once')
+
+        summary = hr.get_by_role('region', name='Профиль кандидата в переписке')
+        expect(summary).to_contain_text(own['candidate_code'])
+        expect(summary).to_contain_text(own['display_name'])
+        expect(summary).to_contain_text('Python / бэкенд')
+        expect(summary.get_by_role('button', name='Пригласить', exact=True)).to_have_count(0)
+        summary.get_by_text('Результаты и источники', exact=True).click()
+        expect(summary).to_contain_text(own['contacts']['email'])
+        with hr.expect_download() as downloaded:
+            summary.get_by_role('link', name='Скачать PDF профиля', exact=True).click()
+        with pymupdf.open(downloaded.value.path()) as pdf:
+            pdf_text = '\n'.join(p.get_text() for p in pdf)
+        assert own['display_name'] in pdf_text and own['contacts']['email'] in pdf_text
+        page.goto(chat_url)
+        expect(page.get_by_label('Сообщение', exact=True)).to_be_visible()
+        expect(page.locator('.chat-candidate')).to_have_count(0)
+        hr.route('**/api/candidates/'+own['id'], lambda route: route.fulfill(status=503, content_type='application/json', body='{"detail":"Temporary error"}'))
+        summary.get_by_role('button', name='Обновить профиль', exact=True).click()
+        expect(summary).to_contain_text('Не удалось загрузить профиль')
+        expect(hr.get_by_text('Проверка навигации', exact=True)).to_be_visible()
+        expect(hr.get_by_label('Сообщение', exact=True)).to_be_visible()
+        hr.unroute('**/api/candidates/'+own['id'])
+        summary.get_by_role('button', name='Обновить профиль', exact=True).click()
+        expect(summary).to_contain_text(own['candidate_code'])
+        hr.set_viewport_size({'width':390,'height':844})
+        expect(summary.get_by_role('link', name='Скачать PDF профиля', exact=True)).to_be_visible()
+        assert hr.evaluate('document.documentElement.scrollWidth <= innerWidth')
+        hr.screenshot(path=str(out/'chat-candidate-mobile.png'), full_page=True)
+        hr.set_viewport_size({'width':1365,'height':1000})
+        checked('chat candidate card matches profile, PDF download contains consented contacts, failure retries independently, mobile fits')
+        page.goto('/profile')
+        page.get_by_label('Публиковать профиль в банке кандидатов').uncheck()
+        page.get_by_role('button', name='Сохранить профиль', exact=True).click()
+        expect(page.get_by_text('Профиль сохранён', exact=True)).to_be_visible()
+        hr.evaluate("window.dispatchEvent(new Event('focus'))")
+        expect(hr.locator('.chat-candidate .candidate-card')).to_have_count(0)
+        expect(hr.get_by_role('link', name='Скачать PDF профиля', exact=True)).to_have_count(0)
+        assert e.request.get('/api/profiles/'+own['id']+'/pdf').status == 404
+        checked('revoking consent removes chat candidate details and PDF; server rejects old download URL')
 
         hr.get_by_role('button', name='Выйти', exact=True).click(); at(hr, '/login')
         back(hr); expect(hr.get_by_role('heading', name='Добро пожаловать')).to_be_visible()

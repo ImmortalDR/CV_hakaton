@@ -1,0 +1,39 @@
+{
+  "checked_at_utc": "2026-10-21T19:33:20.755584+00:00",
+  "base_commit": "515483b",
+  "build": "TypeScript/Vite and Docker web passed",
+  "navigation_and_chat": {
+    "checks": [
+      "auth modes, refresh, protected deep link resumes after login",
+      "all candidate sections back/forward, refresh, unknown and wrong-role routes",
+      "unsaved assessment: cancel browser/menu leave, accept, forward, recovery, reload",
+      "completed result deep link/back/reload, no attempt resubmission",
+      "scroll position restored after Back and page reload",
+      "all employer sections, saved search, bank filters, invite modal, no repeated POST",
+      "candidate code search after consent: visible alongside name, refresh, reset and Back",
+      "chat open/back/forward/reload, message sent exactly once",
+      "chat candidate card matches profile, PDF download contains consented contacts, failure retries independently, mobile fits",
+      "revoking consent removes chat candidate details and PDF; server rejects old download URL",
+      "logout followed by Back does not reopen private workspace",
+      "email hash after mount, consumed token removed, reset without token explained",
+      "mobile menu/back/forward, no horizontal overflow"
+    ],
+    "page_errors": [],
+    "scope": "isolated database, synthetic seed, no external mail"
+  },
+  "public": {
+    "profile_card": true,
+    "candidate_code": "C7D0B82B",
+    "pdf_download_and_content": true,
+    "reload": true,
+    "mobile_no_overflow": true,
+    "page_errors": [],
+    "scope": "Existing accepted demo invitation; read-only business checks, no messages sent"
+  },
+  "scope": "Frontend-only change; backend and full jury replay were not rerun. Existing server authorization used.",
+  "source_sha256": {
+    "apps/web/src/App.tsx": "b46aa3ea665bdac662764751f99a7120df12226ee662f21baf3e411bf30e5c74",
+    "apps/web/src/style.css": "0c166f5a0b2cbeed03cf1ddd5761d0ac6662ec35320a42d97031a76344d023e8",
+    "tests/browser_navigation.py": "0e040917d1ad0cac09ade0fbd91bc186aa546dbe8e1bc072d08a2245dec116c0"
+  }
+}

@@ -522,7 +522,7 @@ export function App() {
           {tab === "tasks" && <Tasks user={user} {...props} />}
           {tab === "search" && <SearchPage {...props} userId={user.id} openInvitations={() => setTab("invitations")} />}
           {tab === "invitations" && (
-            <Invitations {...props} user={user} profile={profile} version={version} />
+            <Invitations {...props} user={user} profile={profile} version={version} catalog={catalog} />
           )}
           {tab === "company" &&
             (company ? (
@@ -1887,12 +1887,14 @@ function CandidateCard({
   onInvite,
   invitation,
   openInvitations,
+  inChat = false,
 }: {
   profile: Profile;
   catalog: Catalog;
-  onInvite: () => void;
+  onInvite?: () => void;
   invitation?: Invitation;
-  openInvitations: () => void;
+  openInvitations?: () => void;
+  inChat?: boolean;
 }) {
   return (
     <article className="candidate-card">
@@ -1904,6 +1906,7 @@ function CandidateCard({
           <h3>{p.display_name}</h3>
           {p.candidate_code && !p.display_name.includes(p.candidate_code) && <small>Кандидат №{p.candidate_code}</small>}
           <p>
+            {inChat && <>{catalog.specializations[p.specialization]} · </>}
             {p.experience_years === null
               ? "Стаж не указан"
               : `${countLabel(p.experience_years, "year")} · со слов кандидата`}
@@ -1984,16 +1987,17 @@ function CandidateCard({
           {p.contacts ? "Контакты раскрыты вам" : "Контакты после согласия"}
         </span>
         <a
-          className="icon-button"
+          className={inChat ? "button secondary" : "icon-button"}
           aria-label="Скачать PDF профиля"
           href={`/api/profiles/${p.id}/pdf`}
         >
           <Download size={17} />
+          {inChat && "Скачать PDF профиля"}
         </a>
-        <button onClick={onInvite}>
+        {onInvite && <button onClick={onInvite}>
           Пригласить
           <ArrowRight size={15} />
-        </button>
+        </button>}
       </div>
     </article>
   );
@@ -2204,12 +2208,13 @@ function InviteModal({
 
 function Invitations({
   user,
+  catalog,
   profile,
   version,
   act,
   busy,
   refresh,
-}: Actions & { user: User; profile: Profile | null; version: number }) {
+}: Actions & { user: User; profile: Profile | null; version: number; catalog: Catalog }) {
   const route = useLocation();
   const chat = route.params.get("chat");
   const setChat = (id: string | null) => navigate(screenUrl("invitations", { chat: id }));
@@ -2363,7 +2368,8 @@ function Invitations({
             </div>
             {i.status === "accepted" && !i.chat_available && <p className="muted">Диалог недоступен: согласие на доступ к профилю отозвано.</p>}
             {chat === i.id && i.chat_available && (
-              <Chat invitationId={i.id} act={act} busy={busy} />
+              <Chat invitationId={i.id} act={act} busy={busy}
+                candidateId={user.role === "employer" ? i.candidate_id : undefined} catalog={catalog} />
             )}
           </article>
         ))
@@ -2371,12 +2377,59 @@ function Invitations({
     </>
   );
 }
+function ChatCandidate({ candidateId, catalog }: { candidateId: string; catalog: Catalog }) {
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [error, setError] = useState("");
+  const request = useRef<AbortController | null>(null);
+  const load = useCallback(async () => {
+    request.current?.abort();
+    const controller = new AbortController();
+    request.current = controller;
+    setError("");
+    try {
+      const value = await api<Profile>(`/candidates/${candidateId}`, undefined, undefined, { signal: controller.signal });
+      if (!controller.signal.aborted) setProfile(value.contacts ? value : null);
+      if (!controller.signal.aborted && !value.contacts) setError("Доступ к профилю отозван.");
+    } catch (e) {
+      if (controller.signal.aborted) return;
+      setProfile(null);
+      setError(e instanceof ApiError && [401, 403, 404, 409].includes(e.status)
+        ? "Профиль недоступен. Проверьте согласие кандидата."
+        : "Не удалось загрузить профиль. Повторите загрузку; переписка доступна ниже.");
+    }
+  }, [candidateId]);
+  useEffect(() => {
+    setProfile(null);
+    const reload = () => { void load(); };
+    reload();
+    const timer = window.setInterval(reload, 15000);
+    window.addEventListener("focus", reload);
+    return () => {
+      request.current?.abort();
+      window.clearInterval(timer);
+      window.removeEventListener("focus", reload);
+    };
+  }, [load]);
+  return <section className="chat-candidate" aria-label="Профиль кандидата в переписке">
+    <div className="section-heading">
+      <h4>Профиль кандидата</h4>
+      <button type="button" className="text-button" onClick={() => void load()}>Обновить профиль</button>
+    </div>
+    {profile ? <CandidateCard profile={profile} catalog={catalog} inChat />
+      : error ? <p role="alert" className="field-error">{error}</p>
+      : <p role="status">Загружаем профиль кандидата…</p>}
+  </section>;
+}
 function Chat({
   invitationId,
+  candidateId,
+  catalog,
   act,
   busy,
 }: {
   invitationId: string;
+  candidateId?: string;
+  catalog: Catalog;
   act: Act;
   busy: boolean;
 }) {
@@ -2421,6 +2474,7 @@ function Chat({
           Обновить
         </button>
       </div>
+      {available && candidateId && <ChatCandidate key={candidateId} candidateId={candidateId} catalog={catalog} />}
       {messages.map((m) => (
         <div className={"message " + (m.mine ? "mine" : "")} key={m.id}>
           <span>{m.text}</span>
