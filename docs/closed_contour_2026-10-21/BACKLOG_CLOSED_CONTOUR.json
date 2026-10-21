@@ -102,7 +102,7 @@
     {
       "id": "CC7",
       "priority": "P2",
-      "status": "todo",
+      "status": "PASS",
       "owner": "astra",
       "title": "Anti-DDoS / edge posture (honest not_implemented)",
       "artifact": "docs/delivery/closed_contour/06_EDGE_AND_DDOS.md"
