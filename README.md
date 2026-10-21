@@ -40,6 +40,8 @@ docker compose up -d --build --wait
 | Разобраться в устройстве | [Архитектура](docs/delivery/ARCHITECTURE.md) · [API и OpenAPI](docs/delivery/API.md) |
 | Разрабатывать и запускать тесты | [Руководство разработчика](docs/DEVELOPMENT.md) |
 | Понять оценку и подбор | [Методика тестирования](docs/delivery/ASSESSMENT.md) · [Данные и модели](docs/delivery/DATA_AND_MODELS.md) |
+| Что изменилось после созвона и аудита | [AFTER_ORGANIZERS_CALL_2026-10-21](docs/delivery/AFTER_ORGANIZERS_CALL_2026-10-21.md) |
+| Архитектурный план следующего этапа | [Agentic Roadmap](docs/delivery/AGENTIC_ROADMAP.md) |
 | Посмотреть результаты проверки | [Валидация](docs/delivery/VALIDATION.md) · [Объединение и проверка main](docs/REPOSITORY.md) |
 | Скачать материалы | [Документация PDF](docs/delivery/FSP_MVP.pdf) · [Итоговый отчёт](docs/delivery/FINAL_REPORT_2026-10-21.pdf) · [Все документы](docs/README.md) |
 
