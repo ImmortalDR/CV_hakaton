@@ -421,7 +421,7 @@ def documentation():
         style.font.color.rgb = DColor.from_string(PURPLE)
     doc.add_heading("ФСП · карьера", 0)
     doc.add_paragraph("Техническая документация и отчёт проверки MVP 1.0.0")
-    doc.add_paragraph("Обратный найм по подтверждённым навыкам\n7 октября 2026 · UTC")
+    doc.add_paragraph("Обратный найм по подтверждённым навыкам\n21 октября 2026 · после ручной приёмки")
     doc.add_paragraph(
         "Код: github.com/ImmortalDR/CV_hakaton\nРабочая ветка: codex/fsp-mvp"
     )
@@ -436,7 +436,7 @@ def documentation():
         ),
         Spacer(1, 25),
         Paragraph(
-            "Обратный найм по подтверждённым навыкам<br/>7 октября 2026 · UTC",
+            "Обратный найм по подтверждённым навыкам<br/>21 октября 2026 · после ручной приёмки",
             styles["body"],
         ),
         Paragraph(
@@ -450,6 +450,7 @@ def documentation():
         ),
     ]
     files = [
+        "CURRENT_STATUS_2026-10-21.md",
         "ARCHITECTURE.md",
         "ASSESSMENT.md",
         "VALIDATION.md",

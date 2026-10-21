@@ -525,5 +525,7 @@
       "checked_at": "2026-10-21T10:48:31.092494+00:00",
       "git_sha": "ab915af6eb771c9688d60f08dcf1bd9211f59d25"
     }
-  ]
+  ],
+  "historical_snapshot": true,
+  "current_status_document": "CURRENT_STATUS_2026-10-21.md"
 }

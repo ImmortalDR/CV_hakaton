@@ -36,7 +36,7 @@
       "dod": [
         "answers survive Overview round-trip or explicit warn before loss"
       ],
-      "verification": "PASS: E2 18 групп smoke: failed PUT, отмена/подтверждение ухода, reload, закрытие/новая вкладка, retry и серверный ACK; id/expiry неизменны.; E3 Отдельная HTTP503 контрпроба: два ответа, отмена reload, ручной retry; задержанный ACK не стирает более новый ввод.; E4 Owner/lifecycle/expiry API tests PASS. Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
+      "verification": "DONE within technical DoD. Current application c4bca3c; 119 backend tests, 8 isolated auth browser checks, 24 live HTTPS smoke groups. See CURRENT_STATUS_2026-10-21.md and HUMAN_ACCEPTANCE_2026-10-21.md for per-item evidence and limits. ",
       "verification_history": [
         {
           "recorded_at": "2026-10-21T09:07:51.003704+00:00",
@@ -49,6 +49,12 @@
           "previous_status": "done",
           "previous_verification": "PASS: Fresh 97 pytest + 17 live smoke groups; see VERIFY_STAGE_A_PROTOCOL.md, 8af82c45184c4c5821137ebc02b2b2f7f12e24b4",
           "reason": "Q1 recovery: fresh canon verification; previous evidence retained, including d4501b9 Q1/Pck1/Pck4 FAIL in git history."
+        },
+        {
+          "recorded_at": "2026-10-21T14:28:39.268102+00:00",
+          "previous_status": "done",
+          "previous_verification": "PASS: E2 18 групп smoke: failed PUT, отмена/подтверждение ухода, reload, закрытие/новая вкладка, retry и серверный ACK; id/expiry неизменны.; E3 Отдельная HTTP503 контрпроба: два ответа, отмена reload, ручной retry; задержанный ACK не стирает более новый ввод.; E4 Owner/lifecycle/expiry API tests PASS. Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
+          "reason": "Documentation reconciliation after human acceptance; historical evidence retained."
         }
       ]
     },
@@ -62,7 +68,7 @@
       "dod": [
         "single rounding rule; 90.63/90.62 ambiguity gone"
       ],
-      "verification": "PASS: E2 Новая выдача bank 2.1.0 содержит 90,625 → 90,63.; E4 90.625, 1.005, 0.625 half-up; точка/запятая; legacy 2.0.0 и новый 2.1.0 PASS. Старые попытки не пересчитываются (CHANGELOG Q2). Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
+      "verification": "DONE within technical DoD. Current application c4bca3c; 119 backend tests, 8 isolated auth browser checks, 24 live HTTPS smoke groups. See CURRENT_STATUS_2026-10-21.md and HUMAN_ACCEPTANCE_2026-10-21.md for per-item evidence and limits. ",
       "verification_history": [
         {
           "recorded_at": "2026-10-21T09:07:51.003704+00:00",
@@ -75,6 +81,12 @@
           "previous_status": "done",
           "previous_verification": "PASS: Fresh 97 pytest + 17 live smoke groups; see VERIFY_STAGE_A_PROTOCOL.md, 8af82c45184c4c5821137ebc02b2b2f7f12e24b4",
           "reason": "Q1 recovery: fresh canon verification; previous evidence retained, including d4501b9 Q1/Pck1/Pck4 FAIL in git history."
+        },
+        {
+          "recorded_at": "2026-10-21T14:28:39.268102+00:00",
+          "previous_status": "done",
+          "previous_verification": "PASS: E2 Новая выдача bank 2.1.0 содержит 90,625 → 90,63.; E4 90.625, 1.005, 0.625 half-up; точка/запятая; legacy 2.0.0 и новый 2.1.0 PASS. Старые попытки не пересчитываются (CHANGELOG Q2). Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
+          "reason": "Documentation reconciliation after human acceptance; historical evidence retained."
         }
       ]
     },
@@ -88,7 +100,7 @@
       "dod": [
         "modal with skip count; no silent empty submit"
       ],
-      "verification": "PASS: E2 Без confirm →409/active/снимок прежний; UI 7 из 8, отмена сохраняет active, принятие завершает.; E4 false/absent confirm и whitespace отклонены; explicit true завершает. Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
+      "verification": "DONE within technical DoD. Current application c4bca3c; 119 backend tests, 8 isolated auth browser checks, 24 live HTTPS smoke groups. See CURRENT_STATUS_2026-10-21.md and HUMAN_ACCEPTANCE_2026-10-21.md for per-item evidence and limits. ",
       "verification_history": [
         {
           "recorded_at": "2026-10-21T08:50:21.295611+00:00",
@@ -107,6 +119,12 @@
           "previous_status": "done",
           "previous_verification": "PASS: Fresh 97 pytest + 17 live smoke groups; see VERIFY_STAGE_A_PROTOCOL.md, 8af82c45184c4c5821137ebc02b2b2f7f12e24b4",
           "reason": "Q1 recovery: fresh canon verification; previous evidence retained, including d4501b9 Q1/Pck1/Pck4 FAIL in git history."
+        },
+        {
+          "recorded_at": "2026-10-21T14:28:39.268102+00:00",
+          "previous_status": "done",
+          "previous_verification": "PASS: E2 Без confirm →409/active/снимок прежний; UI 7 из 8, отмена сохраняет active, принятие завершает.; E4 false/absent confirm и whitespace отклонены; explicit true завершает. Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
+          "reason": "Documentation reconciliation after human acceptance; historical evidence retained."
         }
       ]
     },
@@ -120,7 +138,7 @@
       "status": "done",
       "priority": "P2",
       "title": "Hints match profile/dialog state after hide/revoke",
-      "verification": "PASS: E2 Новый/неподтверждённый/подтверждённый published/hidden: CTA и текст; открытый composer исчезает после отзыва, PDF 404.; E1 Полный suite: privacy lifecycle, повторная публикация не возвращает согласие, новое принятие возвращает. Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
+      "verification": "DONE within technical DoD. Current application c4bca3c; 119 backend tests, 8 isolated auth browser checks, 24 live HTTPS smoke groups. See CURRENT_STATUS_2026-10-21.md and HUMAN_ACCEPTANCE_2026-10-21.md for per-item evidence and limits. ",
       "verification_history": [
         {
           "recorded_at": "2026-10-21T08:50:21.295611+00:00",
@@ -145,6 +163,12 @@
           "previous_status": "partial",
           "previous_verification": "PARTIAL: Статичная надпись «навыки подтверждены» показана и при verified=false: полная согласованность всех текстов не достигнута. Прежние два сценария B05 исправлены. Требуется человеческая оценка этой надписи; PARTIAL пока не отражён в актуальном changelog.",
           "reason": "Q1 recovery: fresh canon verification; previous evidence retained, including d4501b9 Q1/Pck1/Pck4 FAIL in git history."
+        },
+        {
+          "recorded_at": "2026-10-21T14:28:39.268102+00:00",
+          "previous_status": "done",
+          "previous_verification": "PASS: E2 Новый/неподтверждённый/подтверждённый published/hidden: CTA и текст; открытый composer исчезает после отзыва, PDF 404.; E1 Полный suite: privacy lifecycle, повторная публикация не возвращает согласие, новое принятие возвращает. Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
+          "reason": "Documentation reconciliation after human acceptance; historical evidence retained."
         }
       ]
     },
@@ -160,7 +184,7 @@
       "status": "done",
       "priority": "P2",
       "title": "Employer UX: distinct anon, filters, compact need, score breakdown",
-      "verification": "PASS: E2 Анонимный label в selection/invitation/PDF/UI; фильтры/reload/scroll, snapshot/date/changed banner, один select навыка, свёрнутый context; две суммы ≤0.02; статусы приглашений. Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
+      "verification": "DONE within technical DoD. Current application c4bca3c; 119 backend tests, 8 isolated auth browser checks, 24 live HTTPS smoke groups. See CURRENT_STATUS_2026-10-21.md and HUMAN_ACCEPTANCE_2026-10-21.md for per-item evidence and limits. ",
       "verification_history": [
         {
           "recorded_at": "2026-10-21T08:50:21.295611+00:00",
@@ -179,6 +203,12 @@
           "previous_status": "done",
           "previous_verification": "PASS: Fresh 97 pytest + 17 live smoke groups; see VERIFY_STAGE_A_PROTOCOL.md, 8af82c45184c4c5821137ebc02b2b2f7f12e24b4",
           "reason": "Q1 recovery: fresh canon verification; previous evidence retained, including d4501b9 Q1/Pck1/Pck4 FAIL in git history."
+        },
+        {
+          "recorded_at": "2026-10-21T14:28:39.268102+00:00",
+          "previous_status": "done",
+          "previous_verification": "PASS: E2 Анонимный label в selection/invitation/PDF/UI; фильтры/reload/scroll, snapshot/date/changed banner, один select навыка, свёрнутый context; две суммы ≤0.02; статусы приглашений. Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
+          "reason": "Documentation reconciliation after human acceptance; historical evidence retained."
         }
       ]
     },
@@ -189,7 +219,7 @@
       "status": "done",
       "priority": "P2",
       "title": "Task schedule: pause/resume must not spawn early duplicate",
-      "verification": "PASS: E2 Live 7-day plan: answer/review/pause/resume не создаёт дубль; дата UI равна next_issue_at API в МСК.; E4 6 scheduler tests, включая управляемую границу, конкурентные ticks, legacy pause и closed PASS. Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
+      "verification": "DONE within technical DoD. Current application c4bca3c; 119 backend tests, 8 isolated auth browser checks, 24 live HTTPS smoke groups. See CURRENT_STATUS_2026-10-21.md and HUMAN_ACCEPTANCE_2026-10-21.md for per-item evidence and limits. ",
       "verification_history": [
         {
           "recorded_at": "2026-10-21T08:50:21.295611+00:00",
@@ -208,6 +238,12 @@
           "previous_status": "done",
           "previous_verification": "PASS: Fresh 97 pytest + 17 live smoke groups; see VERIFY_STAGE_A_PROTOCOL.md, 8af82c45184c4c5821137ebc02b2b2f7f12e24b4",
           "reason": "Q1 recovery: fresh canon verification; previous evidence retained, including d4501b9 Q1/Pck1/Pck4 FAIL in git history."
+        },
+        {
+          "recorded_at": "2026-10-21T14:28:39.268102+00:00",
+          "previous_status": "done",
+          "previous_verification": "PASS: E2 Live 7-day plan: answer/review/pause/resume не создаёт дубль; дата UI равна next_issue_at API в МСК.; E4 6 scheduler tests, включая управляемую границу, конкурентные ticks, legacy pause и closed PASS. Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
+          "reason": "Documentation reconciliation after human acceptance; historical evidence retained."
         }
       ]
     },
@@ -231,7 +267,7 @@
         "test+FSP move rank more than skill checkboxes",
         "update VALIDATION"
       ],
-      "verification": "PASS: E5 Свежий dev-only selection [30,15,45,10]; dev 1→1, holdout .8→.8; bank 36000 oracle checks без ошибок / 42000 synthetic attempts.; E4 Production совпадает с выбранными весами на fixture; test/FSP меняет ранг внутри категории, self-report не даёт доказательства.; E8 VALIDATION и FOR_JURY честно описывают синтетику, отсутствие улучшения P@5 и человеческого пилота. Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
+      "verification": "DONE within technical DoD. Current application c4bca3c; 119 backend tests, 8 isolated auth browser checks, 24 live HTTPS smoke groups. See CURRENT_STATUS_2026-10-21.md and HUMAN_ACCEPTANCE_2026-10-21.md for per-item evidence and limits. Q7: synthetic dev/holdout only, P@5 .8 to .8; no independent human validation.",
       "verification_history": [
         {
           "recorded_at": "2026-10-21T09:07:51.003704+00:00",
@@ -244,6 +280,12 @@
           "previous_status": "done",
           "previous_verification": "PASS: Fresh 97 pytest + 17 live smoke groups; see VERIFY_STAGE_A_PROTOCOL.md, 8af82c45184c4c5821137ebc02b2b2f7f12e24b4",
           "reason": "Q1 recovery: fresh canon verification; previous evidence retained, including d4501b9 Q1/Pck1/Pck4 FAIL in git history."
+        },
+        {
+          "recorded_at": "2026-10-21T14:28:39.268102+00:00",
+          "previous_status": "done",
+          "previous_verification": "PASS: E5 Свежий dev-only selection [30,15,45,10]; dev 1→1, holdout .8→.8; bank 36000 oracle checks без ошибок / 42000 synthetic attempts.; E4 Production совпадает с выбранными весами на fixture; test/FSP меняет ранг внутри категории, self-report не даёт доказательства.; E8 VALIDATION и FOR_JURY честно описывают синтетику, отсутствие улучшения P@5 и человеческого пилота. Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
+          "reason": "Documentation reconciliation after human acceptance; historical evidence retained."
         }
       ]
     },
@@ -252,7 +294,7 @@
       "owner": "nikita",
       "status": "done",
       "title": "Changelog after interim + audit 20.10",
-      "verification": "PASS: E8 Changelog содержит Q1–Q7, новый факт E3 и исправление, текущие 97/20/18 и оставшиеся Pck2/Pck5; старые STOP помечены историей. Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
+      "verification": "DONE within technical DoD. Current application c4bca3c; 119 backend tests, 8 isolated auth browser checks, 24 live HTTPS smoke groups. See CURRENT_STATUS_2026-10-21.md and HUMAN_ACCEPTANCE_2026-10-21.md for per-item evidence and limits. ",
       "verification_history": [
         {
           "recorded_at": "2026-10-21T09:07:51.003704+00:00",
@@ -271,6 +313,12 @@
           "previous_status": "failed_verification",
           "previous_verification": "FAIL: Упаковка противоречит свежим проверкам и собственному описанию исправлений. Старый STOP выглядит действующим. Нужно явно отделить историю от текущего результата и указать оставшийся PARTIAL Q4; в этой сессии файл changelog не менялся.",
           "reason": "Q1 recovery: fresh canon verification; previous evidence retained, including d4501b9 Q1/Pck1/Pck4 FAIL in git history."
+        },
+        {
+          "recorded_at": "2026-10-21T14:28:39.268102+00:00",
+          "previous_status": "done",
+          "previous_verification": "PASS: E8 Changelog содержит Q1–Q7, новый факт E3 и исправление, текущие 97/20/18 и оставшиеся Pck2/Pck5; старые STOP помечены историей. Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
+          "reason": "Documentation reconciliation after human acceptance; historical evidence retained."
         }
       ]
     },
@@ -279,7 +327,7 @@
       "owner": "nikita",
       "status": "partial",
       "title": "For-jury / README path 10-15 min",
-      "verification": "PARTIAL: E2 Три review login →200; OpenAPI exact.; E8 FOR_JURY: URL, ветка, роли, маршрут, 2 метрики, not_run, аудит; локальные ссылки существуют.; E9 Push реально выполнен: fatal could not read Username; remote остаётся 2e6d6da. Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
+      "verification": "PARTIAL: local README/FOR_JURY/docs updated, human guided walkthrough complete. Current remote publication and independent timed walkthrough unconfirmed; push deferred by user.",
       "verification_history": [
         {
           "recorded_at": "2026-10-21T08:50:21.295611+00:00",
@@ -298,6 +346,12 @@
           "previous_status": "partial",
           "previous_verification": "PARTIAL: HUMAN_ONLY: push невозможен без GitHub auth: fatal: could not read Username for 'https://github.com': terminal prompts disabled. Remote 2e6d6da; нужен push из авторизованного окружения и проверка ссылок.",
           "reason": "Q1 recovery: fresh canon verification; previous evidence retained, including d4501b9 Q1/Pck1/Pck4 FAIL in git history."
+        },
+        {
+          "recorded_at": "2026-10-21T14:28:39.268102+00:00",
+          "previous_status": "partial",
+          "previous_verification": "PARTIAL: E2 Три review login →200; OpenAPI exact.; E8 FOR_JURY: URL, ветка, роли, маршрут, 2 метрики, not_run, аудит; локальные ссылки существуют.; E9 Push реально выполнен: fatal could not read Username; remote остаётся 2e6d6da. Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
+          "reason": "Documentation reconciliation after human acceptance; historical evidence retained."
         }
       ]
     },
@@ -306,7 +360,7 @@
       "owner": "danila",
       "status": "done",
       "title": "Deploy to sslip after Q merges",
-      "verification": "PASS: E6 17 API + 17 worker source files равны HEAD; 3 fresh web assets равны контейнеру и HTTPS; health ok; том fsp-mvp_fsp_db сохранён. Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
+      "verification": "DONE within technical DoD. Current application c4bca3c; 119 backend tests, 8 isolated auth browser checks, 24 live HTTPS smoke groups. See CURRENT_STATUS_2026-10-21.md and HUMAN_ACCEPTANCE_2026-10-21.md for per-item evidence and limits. ",
       "verification_history": [
         {
           "recorded_at": "2026-10-21T09:07:51.003704+00:00",
@@ -319,6 +373,12 @@
           "previous_status": "done",
           "previous_verification": "PASS: Fresh 97 pytest + 17 live smoke groups; see VERIFY_STAGE_A_PROTOCOL.md, 8af82c45184c4c5821137ebc02b2b2f7f12e24b4",
           "reason": "Q1 recovery: fresh canon verification; previous evidence retained, including d4501b9 Q1/Pck1/Pck4 FAIL in git history."
+        },
+        {
+          "recorded_at": "2026-10-21T14:28:39.268102+00:00",
+          "previous_status": "done",
+          "previous_verification": "PASS: E6 17 API + 17 worker source files равны HEAD; 3 fresh web assets равны контейнеру и HTTPS; health ok; том fsp-mvp_fsp_db сохранён. Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
+          "reason": "Documentation reconciliation after human acceptance; historical evidence retained."
         }
       ]
     },
@@ -327,7 +387,7 @@
       "owner": "any",
       "status": "done",
       "title": "Smoke: Q1-Q3 + invite consent + isolation regression",
-      "verification": "PASS: E2 Свежий smoke PASS, 18 групп, page_errors=[]; Q1 negative included, Q2/Q3, invite→accept→contacts, isolation/FSP/old snapshot.; E3 Дополнительная контрпроба HTTP503 и delayed ACK PASS. Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
+      "verification": "DONE within technical DoD. Current application c4bca3c; 119 backend tests, 8 isolated auth browser checks, 24 live HTTPS smoke groups. See CURRENT_STATUS_2026-10-21.md and HUMAN_ACCEPTANCE_2026-10-21.md for per-item evidence and limits. ",
       "verification_history": [
         {
           "recorded_at": "2026-10-21T08:50:21.295611+00:00",
@@ -346,6 +406,12 @@
           "previous_status": "done",
           "previous_verification": "PASS: Fresh 97 pytest + 17 live smoke groups; see VERIFY_STAGE_A_PROTOCOL.md, 8af82c45184c4c5821137ebc02b2b2f7f12e24b4",
           "reason": "Q1 recovery: fresh canon verification; previous evidence retained, including d4501b9 Q1/Pck1/Pck4 FAIL in git history."
+        },
+        {
+          "recorded_at": "2026-10-21T14:28:39.268102+00:00",
+          "previous_status": "done",
+          "previous_verification": "PASS: E2 Свежий smoke PASS, 18 групп, page_errors=[]; Q1 negative included, Q2/Q3, invite→accept→contacts, isolation/FSP/old snapshot.; E3 Дополнительная контрпроба HTTP503 и delayed ACK PASS. Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
+          "reason": "Documentation reconciliation after human acceptance; historical evidence retained."
         }
       ]
     },
@@ -354,7 +420,7 @@
       "owner": "team",
       "status": "human_pending",
       "title": "Submit links like previous round",
-      "verification": "HUMAN_ONLY: E8 SUBMISSION_LINKS подготовлен; внешняя отправка не выполнялась. Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
+      "verification": "HUMAN_PENDING: submission copy prepared; no external send; publication deferred by user.",
       "verification_history": [
         {
           "recorded_at": "2026-10-21T09:07:51.003704+00:00",
@@ -367,6 +433,12 @@
           "previous_status": "human_pending",
           "previous_verification": "HUMAN_ONLY: Отправку ссылок выполняет человек после push и проверки; агент ничего на площадку не отправлял.",
           "reason": "Q1 recovery: fresh canon verification; previous evidence retained, including d4501b9 Q1/Pck1/Pck4 FAIL in git history."
+        },
+        {
+          "recorded_at": "2026-10-21T14:28:39.268102+00:00",
+          "previous_status": "human_pending",
+          "previous_verification": "HUMAN_ONLY: E8 SUBMISSION_LINKS подготовлен; внешняя отправка не выполнялась. Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
+          "reason": "Documentation reconciliation after human acceptance; historical evidence retained."
         }
       ]
     }
@@ -389,7 +461,7 @@
   "publication": {
     "local_commits": "complete",
     "deployment": "complete",
-    "git_push": "blocked_no_https_or_ssh_credentials",
+    "git_push": "deferred_by_user",
     "external_form": "not_sent"
   },
   "adversarial_verification": {
@@ -434,5 +506,15 @@
       },
       "reason": "Отправка заблокирована: Pck1 FAIL; Pck2 PARTIAL (нет push); Q4 PARTIAL должен быть отражён в упаковке. Прежние Q3 и B05 empty-state блокеры не воспроизвелись."
     }
-  ]
+  ],
+  "current_status_document": "../delivery/CURRENT_STATUS_2026-10-21.md",
+  "application_git_sha": "c4bca3c",
+  "unverified_by_audit_scope": "Historical audit of 20 October only; current coverage below.",
+  "current_tail": {
+    "smtp": "registration_delivery_confirm_verify_login_pass; user follow-up positive; recovery negative tests simulated",
+    "server_acl": "tested API role/owner/company matrix; not full pentest",
+    "long_schedule_intervals": "controlled time and live pause/resume pass; real week not observed",
+    "load": "bounded read load pass; sustained/write load pending",
+    "source_bundle": "installation/source checks pass; GitHub publication pending"
+  }
 }

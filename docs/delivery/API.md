@@ -14,7 +14,10 @@
 | GET /api/health | состояние БД, версия, режим |
 | GET /api/catalog | направления, навыки, уровни, версия банка, интервалы |
 | POST /api/auth/register | email, пароль 10…128, роль, processing=true; 201 |
-| POST /api/auth/verify | одноразовый token; успех или 400 |
+| POST /api/auth/verify | одноразовый token, срок один час; успех или 400 |
+| POST /api/auth/resend-verification | email; общий ответ, повтор не чаще раза в минуту для аккаунта |
+| POST /api/auth/forgot-password | email; общий ответ, ссылка на 30 минут; неизвестный адрес не раскрывается |
+| POST /api/auth/reset-password | token и password 10…128; одноразовое использование, завершение старых сессий |
 | POST /api/auth/login | подтверждённый email/пароль; устанавливает cookie |
 | POST /api/auth/logout | аннулирует сессию и cookie |
 | GET /api/auth/me | своя роль, ID, email, признак демо |
@@ -22,7 +25,9 @@
 | GET/PUT /api/me/profile | только кандидат, собственный профиль и согласия |
 | POST /api/me/fsp | пример demo-winner/demo-participant или unlink |
 | GET/POST /api/me/attempts | история / старт {grade}; сервер выбирает вариант |
-| POST /api/me/attempts/{id}/submit | только владелец; {answers:{"1":"42",…}}; повтор неизменен |
+| GET /api/me/assessment-availability | доступные уровни и причины ограничений до старта |
+| PUT /api/me/attempts/{id}/answers | черновик владельца активной попытки; срок не продлевается |
+| POST /api/me/attempts/{id}/submit | answers и confirm_incomplete=true при пропусках; без подтверждения 409; повтор завершённого результата неизменен |
 | GET/PUT /api/me/company | только своя компания |
 | GET /api/candidates | только работодатель; specialization, grade, skill, fsp_only |
 | GET /api/candidates/{id} | опубликованная проекция с текущими правами |
@@ -69,3 +74,15 @@ fields есть при ошибке валидации, содержит тол�
 OpenAPI содержит модели ошибок, cookie security scheme, обязательный
 заголовок изменения данных и application/pdf. `/api/docs` — локальная
 страница со спецификацией; внешние Swagger CDN в runtime не используются.
+
+## Задания работодателей
+
+| Маршрут | Доступ и результат |
+|---|---|
+| GET /api/tasks | собственные планы и выдачи в пределах роли и согласия |
+| POST /api/tasks/plans | работодатель создаёт адресный план после действующего согласия на контакты |
+| PATCH /api/tasks/plans/{id} | разрешённые ролью переходы: включение, пауза, закрытие |
+| POST /api/tasks/assignments/{id}/answer | кандидат отвечает на свою открытую выдачу |
+| POST /api/tasks/assignments/{id}/review | работодатель оценивает ответ 0…100; грейд не меняется |
+
+Текущая схема: 37 операций, 49 моделей. Повтор пароля проверяется формой; API получает один пароль. Восстановление не входит в аккаунт автоматически, а завершает прежние сессии. SMTP-ошибка возвращает 503 с откатом записи токена; без SMTP восстановление не имитируется даже в деморежиме.

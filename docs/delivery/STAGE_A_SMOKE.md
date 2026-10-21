@@ -1,9 +1,19 @@
-# Проверка этапа A после восстановления черновика
+# Последние проверки этапа A
 
-Дата: 2026-10-21T10:35:44.229363+00:00. Код стенда: `7f3dde4cbe5b17b0f16154e4ede90a91673428f8`. Канон: COMPREHENSIVE_STAGE_A_2026-10-21.md + accept B01.
+Прикладной код: `aaa7164`; затем `c4bca3c` удаляет только необязательную фразу из подсказки пароля. Для последней правки выполнены сборка frontend и проверка опубликованного текста; полный набор заново не запускался без необходимости.
 
-97 pytest PASS; 20 отдельных целевых проверок PASS; [smoke](stage-a-smoke.json): 18 групп PASS, page_errors=[]; [контрпроба](evidence/q1-recovery/probe.log): HTTP503, два несохранённых ответа, отмена reload, ручной повтор, поздний ACK и более новый ввод PASS.
+| Проверка | Результат | Артефакт |
+|---|---|---|
+| Серверные тесты | 119 PASS, одно предупреждение зависимости | команда и результат в HUMAN_ACCEPTANCE_2026-10-21.md |
+| Регистрация/восстановление | 8 проверок, page_errors=[] | [auth-browser.json](evidence/human_followup_2026-10-21/auth-browser.json) |
+| Живой HTTPS smoke | 24 группы PASS, page_errors=[] | [live-smoke.json](evidence/human_followup_2026-10-21/live-smoke.json) |
+| Сборка | TypeScript/Vite и контейнер frontend успешны | развёрнута версия c4bca3c |
+| Ручной маршрут | ПК и физический Android; замечания исправлены, пользователь подтвердил работу | [ручная приёмка](HUMAN_ACCEPTANCE_2026-10-21.md) |
 
-Команды и выводы: [VERIFY_STAGE_A_PROTOCOL](VERIFY_STAGE_A_PROTOCOL.md). [Хеши деплоя](evidence/q1-recovery/deploy.json): API/worker равны HEAD, web build равен контейнеру и HTTPS. DB volume сохранён.
+Живой smoke включает отрицательные сценарии сохранения, подтверждение пропусков, историю, порядок подбора, адресные контакты/PDF, чат, задания, очистку числовых полей, отзыв контактов без F5 и мобильные ширины. Тестовые пользователи вымышлены; SMTP в этом прогоне не проверяется.
 
-Первый цикл поймал лишнее подтверждение при возврате в тест; исправлен во втором. Прежние журналы доступны в git, не являются текущим PASS. Текущая матрица: 14 PASS, 1 PARTIAL (GitHub auth), 1 HUMAN_ONLY (отправка), 0 FAIL. Это не человеческий UX-аудит и не подтверждение отправки на площадку.
+Для воспроизведения: `COOKIE_SECURE=false python3 scripts/run_local.py .venv/bin/pytest tests -q`; `npm --prefix apps/web run build`; после сборки `python3 scripts/run_local.py .venv/bin/python scripts/check_auth_browser.py`; на стенде `python3 scripts/run_local.py .venv/bin/python scripts/smoke_stage_a.py --out /tmp/fsp-smoke.json`. Браузерный smoke создаёт отдельные вымышленные аккаунты; не запускайте его ради одной текстовой правки.
+
+Исторический прогон на 7f3dde4: 97 тестов, 20 целевых проверок, 18 групп smoke и HTTP503/delayed-ACK контрпроба. [Протокол](VERIFY_STAGE_A_PROTOCOL.md), [сверка файлов того деплоя](evidence/q1-recovery/deploy.json). Эти числа относятся к прежнему срезу.
+
+Отсутствие FAIL в перечисленных проверках не означает завершения Pck5, публикации GitHub или независимой валидации качества. См. [сверку утреннего плана](CURRENT_STATUS_2026-10-21.md).

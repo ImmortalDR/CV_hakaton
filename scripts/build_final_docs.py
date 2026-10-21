@@ -13,7 +13,7 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, LongTable, 
 from PIL import Image as PILImage
 
 out=Path('docs/delivery')
-files=['FINAL_AUDIT_2026-10-21.md','MATCHING_CHALLENGE_2026-10-21.md','ASSESSMENT_CONTENT_REVIEW_2026-10-21.md','ACCESS_AND_OPERATIONS_AUDIT_2026-10-21.md','REMAINING_AFTER_FINAL_AUDIT_2026-10-21.md','FINAL_DEMO_AND_PITCH_2026-10-21.md']
+files=['CURRENT_STATUS_2026-10-21.md','HUMAN_ACCEPTANCE_2026-10-21.md','FINAL_AUDIT_2026-10-21.md','MATCHING_CHALLENGE_2026-10-21.md','ASSESSMENT_CONTENT_REVIEW_2026-10-21.md','ACCESS_AND_OPERATIONS_AUDIT_2026-10-21.md','REMAINING_AFTER_FINAL_AUDIT_2026-10-21.md','FINAL_DEMO_AND_PITCH_2026-10-21.md']
 pdfmetrics.registerFont(TTFont('FinalDejaVu','/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'))
 pdfmetrics.registerFont(TTFont('FinalDejaVuBold','/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'))
 styles=getSampleStyleSheet()
@@ -70,9 +70,9 @@ for index,name in enumerate(files):
   else:story.append(Spacer(1,5))
   i+=1
 story.append(PageBreak());doc.add_page_break();doc.add_heading('Проверенные экраны',level=1);story.append(para('Проверенные экраны','Heading1'))
-for image_index,(name,label) in enumerate([('invitation-salary.png','Предпросмотр компании и зарплаты'),('invitation-mobile.png','Приглашение на ширине 360 px'),('mobile-390.png','Мобильное меню на ширине 390 px')]):
+for image_index,(name,label) in enumerate([('live-registration.png','Регистрация после ручной приёмки'),('mobile-password-reset.png','Восстановление пароля на ширине 390 px'),('mobile-candidate.png','Кабинет на ширине 390 px')]):
  if image_index: story.append(PageBreak());doc.add_page_break()
- path=out/'evidence/final_2026-10-21'/name
+ path=out/'evidence/human_followup_2026-10-21'/name
  doc.add_heading(label,level=2);story.append(para(label,'Heading2'))
  w,h=PILImage.open(path).size;scale=min(507/w,530/h)
  story.append(Image(str(path),width=w*scale,height=h*scale))

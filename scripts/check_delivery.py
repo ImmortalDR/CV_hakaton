@@ -1,4 +1,8 @@
-"""Read-only checks for exported specifications, documents and actual logs."""
+"""Historical 2026-10-07 release check (36 tests / 27 operations).
+
+Not the current acceptance gate. For current document exports use
+`python scripts/check_current_docs.py`; historical release-checks.json is preserved.
+"""
 
 import hashlib
 import json
