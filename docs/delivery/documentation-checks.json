@@ -1,11 +1,11 @@
 {
   "status": "pass",
-  "checked_at": "2026-10-21T14:37:02.151162+00:00",
+  "checked_at": "2026-10-21T16:05:11.413923+00:00",
   "scope": "Documentation structure, local links, PDF bounds/nonempty pages, DOCX rendering and existing evidence consistency. No new functional test run or external publication.",
   "visual_review": "Representative pages inspected; automated bounds/nonempty checks cover all exported and DOCX-rendered pages.",
   "openapi_operations": 37,
   "openapi_schemas": 49,
-  "markdown_files_checked": 15,
+  "markdown_files_checked": 27,
   "existing_evidence": {
     "docs/delivery/evidence/human_followup_2026-10-21/auth-browser.json": {
       "previously_recorded_checks": 8
@@ -16,33 +16,33 @@
   },
   "artifacts": {
     "docs/delivery/FSP_MVP.pdf": {
-      "bytes": 116282,
-      "sha256": "8ec885613fdbba369bc49c3506df920951f8374c7f28575656a4441a884dd446",
+      "bytes": 116472,
+      "sha256": "7fc22ac38c21251de3d74f9ab71d44c20557bdda3471b19e7bc9ce3f25096dab",
       "pages": 19
     },
     "docs/delivery/FSP_MVP.docx": {
-      "bytes": 62760,
-      "sha256": "50e8dbd45d164dc65026d9bda6802ca356e7b1829ec557ea1743026a95336bac",
+      "bytes": 62890,
+      "sha256": "2c788302e4ca26f24f9469480395795c6f350795ee26bf5706d23dba705ff2d6",
       "rendered_pages": 20
     },
     "docs/delivery/FINAL_REPORT_2026-10-21.pdf": {
-      "bytes": 1059842,
-      "sha256": "370c493b67a8d11f4cac7bb30ea47992f2267fe23a76f0b4180854f9d0d4b93b",
-      "pages": 23
+      "bytes": 1056815,
+      "sha256": "aa669090d1cfec97564a7d4dac23c0a0e56f0a8aea1857eb5c2c1257154a4cfe",
+      "pages": 22
     },
     "docs/delivery/FINAL_REPORT_2026-10-21.docx": {
-      "bytes": 1023411,
-      "sha256": "2e84f2e02067595e39233e69829d0d9fe894574d4a03231fff23aead78a4af46",
-      "rendered_pages": 28
+      "bytes": 1022407,
+      "sha256": "29ee559fabad2fb47b805a29eccbdd863d81cdccfeeb49d874d7283c33b5b648",
+      "rendered_pages": 27
     },
     "docs/delivery/STAGE_A.pdf": {
-      "bytes": 37455,
-      "sha256": "ac38ceebc26afc48256cb4d76176db1c4c88f8e81006567e163d8551a3f82c0d",
+      "bytes": 37463,
+      "sha256": "edae33f3172f6a69e68c78cb6eabdb93ecc298060e705522d0abd3c69b89facd",
       "pages": 4
     },
     "docs/delivery/STAGE_A.docx": {
-      "bytes": 41918,
-      "sha256": "579138db6ef607b994cc5a2a7137911971dd142e0b0f961a46abbb266fbb0a86",
+      "bytes": 41847,
+      "sha256": "8624199751bf55527d283d8a14876c8fb1b9503cbee67cec7dd99151c9d52960",
       "rendered_pages": 4
     }
   }

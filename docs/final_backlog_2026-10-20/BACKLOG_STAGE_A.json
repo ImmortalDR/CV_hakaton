@@ -325,9 +325,9 @@
     {
       "id": "Pck2",
       "owner": "nikita",
-      "status": "partial",
+      "status": "done",
       "title": "For-jury / README path 10-15 min",
-      "verification": "PARTIAL: local README/FOR_JURY/docs updated, human guided walkthrough complete. Current remote publication and independent timed walkthrough unconfirmed; push deferred by user.",
+      "verification": "README, FOR_JURY, public installation and developer guides consolidated in main. Merge and link/export checks: docs/REPOSITORY.md. Guided manual walkthrough remains the actual human evidence; independent timed walkthrough was not performed and is outside the final agreed scope.",
       "verification_history": [
         {
           "recorded_at": "2026-10-21T08:50:21.295611+00:00",
@@ -352,6 +352,12 @@
           "previous_status": "partial",
           "previous_verification": "PARTIAL: E2 Три review login →200; OpenAPI exact.; E8 FOR_JURY: URL, ветка, роли, маршрут, 2 метрики, not_run, аудит; локальные ссылки существуют.; E9 Push реально выполнен: fatal could not read Username; remote остаётся 2e6d6da. Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
           "reason": "Documentation reconciliation after human acceptance; historical evidence retained."
+        },
+        {
+          "recorded_at": "2026-10-21T16:04:09.537410+00:00",
+          "previous_status": "partial",
+          "previous_verification": "PARTIAL: local README/FOR_JURY/docs updated, human guided walkthrough complete. Current remote publication and independent timed walkthrough unconfirmed; push deferred by user.",
+          "reason": "Owner requested consolidated main and final hackathon documentation; human pilot/timed independent walkthrough excluded from remaining scope. Prior evidence preserved."
         }
       ]
     },
@@ -420,7 +426,7 @@
       "owner": "team",
       "status": "human_pending",
       "title": "Submit links like previous round",
-      "verification": "HUMAN_PENDING: submission copy prepared; no external send; publication deferred by user.",
+      "verification": "HUMAN_PENDING: links target main; no external submission message sent. Team must record actual submission.",
       "verification_history": [
         {
           "recorded_at": "2026-10-21T09:07:51.003704+00:00",
@@ -439,6 +445,12 @@
           "previous_status": "human_pending",
           "previous_verification": "HUMAN_ONLY: E8 SUBMISSION_LINKS подготовлен; внешняя отправка не выполнялась. Runtime 7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
           "reason": "Documentation reconciliation after human acceptance; historical evidence retained."
+        },
+        {
+          "recorded_at": "2026-10-21T16:04:09.537462+00:00",
+          "previous_status": "human_pending",
+          "previous_verification": "HUMAN_PENDING: submission copy prepared; no external send; publication deferred by user.",
+          "reason": "Owner requested consolidated main and final hackathon documentation; human pilot/timed independent walkthrough excluded from remaining scope. Prior evidence preserved."
         }
       ]
     }

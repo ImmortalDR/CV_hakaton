@@ -52,6 +52,7 @@ def main():
                 page.get_by_label('Я на платформе как').select_option(role)
                 page.get_by_label('Электронная почта',exact=True).fill(recipient)
                 page.get_by_label('Пароль',exact=True).fill(password)
+                page.get_by_label('Повторите пароль',exact=True).fill(password)
                 page.get_by_role('checkbox').check()
                 with page.expect_response(lambda r:r.url.endswith('/api/auth/register') and r.request.method=='POST',timeout=30000) as response:
                     page.get_by_role('button',name='Создать аккаунт',exact=True).click()

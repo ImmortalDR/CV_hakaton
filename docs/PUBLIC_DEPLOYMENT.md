@@ -1,6 +1,6 @@
 # Публичное развёртывание: полная инструкция
 
-[Короткий запуск](../README.md). Код приложения находится в ветке `codex/fsp-mvp`.
+[Короткий запуск](../README.md). Код приложения находится в ветке `main`.
 
 ## Публичный сайт: домен, HTTPS и регистрация пользователей
 
@@ -61,7 +61,7 @@ getent ahosts jobs.example.org
 Для новой публичной установки выполните **на сервере**:
 
 ```bash
-git clone --branch codex/fsp-mvp https://github.com/ImmortalDR/CV_hakaton.git
+git clone --branch main https://github.com/ImmortalDR/CV_hakaton.git
 cd CV_hakaton
 python3 scripts/configure.py
 chmod 600 .env
@@ -174,7 +174,7 @@ docker compose exec -T db pg_dump -U fsp -d fsp -Fc > "$FSP_BACKUP_PATH"
 
 ```bash
 git status --short
-git pull --ff-only origin codex/fsp-mvp
+git pull --ff-only origin main
 docker compose up -d --build --force-recreate --no-deps --wait --wait-timeout 180 api web task-worker edge
 curl --fail https://jobs.example.org/api/health
 ```
@@ -185,12 +185,12 @@ curl --fail https://jobs.example.org/api/health
 
 ## Документация и результаты
 
-- [README приложения и запуск](https://github.com/ImmortalDR/CV_hakaton/blob/codex/fsp-mvp/README.md)
-- [Текущий статус и сверка плана](https://github.com/ImmortalDR/CV_hakaton/blob/codex/fsp-mvp/docs/delivery/CURRENT_STATUS_2026-10-21.md)
-- [Проверки и ограничения](https://github.com/ImmortalDR/CV_hakaton/blob/codex/fsp-mvp/docs/delivery/VALIDATION.md)
-- [Эксплуатация и резервирование](https://github.com/ImmortalDR/CV_hakaton/blob/codex/fsp-mvp/docs/delivery/OPERATIONS.md)
-- [Матрица требований](https://github.com/ImmortalDR/CV_hakaton/blob/codex/fsp-mvp/docs/delivery/REQUIREMENTS_STATUS.md)
-- [Актуальная презентация и сценарий](https://github.com/ImmortalDR/CV_hakaton/blob/codex/fsp-mvp/docs/delivery/FINAL_DEMO_AND_PITCH_2026-10-21.md)
-- [PDF/DOCX и OpenAPI](https://github.com/ImmortalDR/CV_hakaton/tree/codex/fsp-mvp/docs/delivery)
+- [README приложения и запуск](https://github.com/ImmortalDR/CV_hakaton/blob/main/README.md)
+- [Текущий статус и сверка плана](https://github.com/ImmortalDR/CV_hakaton/blob/main/docs/delivery/CURRENT_STATUS_2026-10-21.md)
+- [Проверки и ограничения](https://github.com/ImmortalDR/CV_hakaton/blob/main/docs/delivery/VALIDATION.md)
+- [Эксплуатация и резервирование](https://github.com/ImmortalDR/CV_hakaton/blob/main/docs/delivery/OPERATIONS.md)
+- [Матрица требований](https://github.com/ImmortalDR/CV_hakaton/blob/main/docs/delivery/REQUIREMENTS_STATUS.md)
+- [Актуальная презентация и сценарий](https://github.com/ImmortalDR/CV_hakaton/blob/main/docs/delivery/FINAL_DEMO_AND_PITCH_2026-10-21.md)
+- [PDF/DOCX и OpenAPI](https://github.com/ImmortalDR/CV_hakaton/tree/main/docs/delivery)
 
 Последний зафиксированный комплект проверок 21 октября 2026: **119 серверных тестов**, **8 браузерных проверок регистрации/восстановления с имитацией SMTP** и **24 группы живого HTTPS smoke** — PASS. Это результаты проверенной версии приложения, а не новый прогон на сервере читателя. Качество подбора измерено на авторской синтетике; независимый пилот на людях ещё не проведён.

@@ -1,0 +1,61 @@
+{
+  "checked_at": "2026-10-21T16:04:09.595259+00:00",
+  "status": "pass",
+  "scope": "main integration: preserved application source, backend/research tests, frontend build, documentation and ancestry; no production redeployment or real emails",
+  "source_refs": {
+    "origin/codex/dataset-v4": "4f432a5c20679b7f2b92ef0c49720963408eecc6",
+    "origin/codex/fsp-mvp": "cf91823219e76974a688e8c74f8d3f15dce54e84",
+    "origin/codex/modernization-20261011": "b769e03e206020a25023352fb79de3dc3cdac480",
+    "origin/codex/platform-fixes-20261011": "edc9a7d2f8e2b4a2d75f592c92beee12313640e2",
+    "origin/main": "83550943b1a1629781af33c1a727f1f8f16a5cbc"
+  },
+  "all_source_heads_are_ancestors": true,
+  "runtime_unchanged_from": "cf91823219e76974a688e8c74f8d3f15dce54e84",
+  "checks": {
+    "backend": {
+      "command": "COOKIE_SECURE=false PYTHONPATH=apps/api:. python -m pytest -q tests",
+      "database": "fsp_test",
+      "passed": 125,
+      "seconds": 35.33,
+      "warnings": 1,
+      "mail": "mocked"
+    },
+    "research": {
+      "command": "PYTHONPATH=. python -m pytest -q dataset/training/tests",
+      "environment": "existing V4 environment, requirements-v4.lock.txt",
+      "passed": 49,
+      "seconds": 43.35
+    },
+    "frontend": {
+      "commands": [
+        "npm ci --ignore-scripts --no-audit --no-fund",
+        "npm run build"
+      ],
+      "status": "pass"
+    },
+    "russian_numerals": {
+      "command": "node apps/web/tests/formatting.test.mjs",
+      "assertions": 55
+    },
+    "compose": {
+      "commands": [
+        "python3 scripts/configure.py",
+        "docker compose config --quiet"
+      ],
+      "status": "pass",
+      "started_services": false
+    },
+    "documents": {
+      "report": "documentation-checks.json",
+      "exports": 6,
+      "docx_rendered_with": "LibreOffice",
+      "representative_pages_visually_inspected": true
+    }
+  },
+  "not_run": [
+    "new production browser acceptance",
+    "real email delivery",
+    "human pilot",
+    "offline installation"
+  ]
+}

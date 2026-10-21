@@ -51,7 +51,7 @@ def main():
     backlog = json.loads((ROOT / "docs/final_backlog_2026-10-20/BACKLOG_STAGE_A.json").read_text())
     tasks = {task["id"]: task["status"] for task in backlog["tasks"]}
     assert all(tasks[f"Q{i}"] == "done" for i in range(1, 8))
-    assert tasks["Pck2"] == "partial" and tasks["Pck5"] != "done"
+    assert tasks["Pck2"] == "done" and tasks["Pck5"] != "done"
     artifacts = {}
     for name in ["FSP_MVP", "FINAL_REPORT_2026-10-21", "STAGE_A"]:
         doc = Document(OUT / f"{name}.docx")
@@ -69,7 +69,15 @@ def main():
              "REQUIREMENTS_STATUS", "VALIDATION", "HUMAN_ACCEPTANCE_2026-10-21",
              "HUMAN_VERIFY_PROTOCOL_STAGE_A", "REMAINING_AFTER_FINAL_AUDIT_2026-10-21",
              "FOR_JURY", "SUBMISSION_LINKS", "GIT_DELIVERY", "STAGE_A_SMOKE"]
-    sources = [ROOT / "README.md", ROOT / "demo/SCENARIO.md"] + [OUT / f"{name}.md" for name in names]
+    entrypoints = [
+        "README.md", "demo/SCENARIO.md", "docs/README.md", "docs/DEVELOPMENT.md",
+        "docs/REPOSITORY.md", "docs/PUBLIC_DEPLOYMENT.md", "docs/GIT_WORKFLOW.md",
+        "docs/archive/readme-2026-10-21/README.md", "docs/delivery/README.md",
+        "docs/delivery/USER_GUIDE.md", "docs/delivery/MAIL.md",
+        "docs/delivery/DATA_AND_MODELS.md", "docs/delivery/VALIDATION_STUDIES.md",
+        "docs/delivery/TASKS.md",
+    ]
+    sources = [ROOT / path for path in entrypoints] + [OUT / f"{name}.md" for name in names]
     for path in sources:
         for target in re.findall(r"\[[^\]]*\]\(([^)]+)\)", path.read_text()):
             if "://" in target or target.startswith(("#", "mailto:")):

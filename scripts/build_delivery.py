@@ -423,7 +423,7 @@ def documentation():
     doc.add_paragraph("Техническая документация и отчёт проверки MVP 1.0.0")
     doc.add_paragraph("Обратный найм по подтверждённым навыкам\n21 октября 2026 · после ручной приёмки")
     doc.add_paragraph(
-        "Код: github.com/ImmortalDR/CV_hakaton\nРабочая ветка: codex/fsp-mvp"
+        "Код: github.com/ImmortalDR/CV_hakaton\nОсновная ветка: main"
     )
     doc.add_paragraph(
         "Демонстрационная реализация. Результаты синтетических измерений не являются экспертной валидацией профессиональных грейдов."
@@ -440,7 +440,7 @@ def documentation():
             styles["body"],
         ),
         Paragraph(
-            "Код: github.com/ImmortalDR/CV_hakaton<br/>Рабочая ветка: codex/fsp-mvp",
+            "Код: github.com/ImmortalDR/CV_hakaton<br/>Основная ветка: main",
             styles["body"],
         ),
         Spacer(1, 40),
@@ -579,18 +579,11 @@ def documentation():
 
 
 if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser(description="Build FSP delivery documents")
+    parser.add_argument("--docs-only", action="store_true", help="Preserve existing presentation")
+    args = parser.parse_args()
     documentation()
-    slides = presentation()
-    print(
-        json.dumps(
-            {
-                "documentation": [
-                    "docs/delivery/FSP_MVP.docx",
-                    "docs/delivery/FSP_MVP.pdf",
-                ],
-                "presentation": "demo/FSP_MVP.pptx",
-                "slides": slides,
-            },
-            ensure_ascii=False,
-        )
-    )
+    if not args.docs_only:
+        presentation()
+    print("Documentation exported" if args.docs_only else "Documentation and presentation exported")

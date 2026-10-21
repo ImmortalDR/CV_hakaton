@@ -1,4 +1,4 @@
-"""Check the current guide, independently of historical slide/release checks."""
+"""Historical 11 October guide checker. For current exports use check_current_docs.py."""
 import argparse
 import hashlib
 import json
