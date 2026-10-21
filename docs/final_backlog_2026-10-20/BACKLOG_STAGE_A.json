@@ -122,14 +122,16 @@
     {
       "id": "Pck1",
       "owner": "nikita",
-      "status": "todo",
-      "title": "Changelog after interim + audit 20.10"
+      "status": "done",
+      "title": "Changelog after interim + audit 20.10",
+      "verification": "CHANGELOG_STAGE_A, FOR_JURY, OpenAPI, Stage A PDF/DOCX prepared; deployment smoke pending"
     },
     {
       "id": "Pck2",
       "owner": "nikita",
-      "status": "todo",
-      "title": "For-jury / README path 10-15 min"
+      "status": "done",
+      "title": "For-jury / README path 10-15 min",
+      "verification": "CHANGELOG_STAGE_A, FOR_JURY, OpenAPI, Stage A PDF/DOCX prepared; deployment smoke pending"
     },
     {
       "id": "Pck3",
@@ -146,8 +148,9 @@
     {
       "id": "Pck5",
       "owner": "team",
-      "status": "todo",
-      "title": "Submit links like previous round"
+      "status": "human_pending",
+      "title": "Submit links like previous round",
+      "verification": "docs/delivery/SUBMISSION_LINKS.md prepared; no external submission"
     }
   ],
   "stage_b_after_submission": [
