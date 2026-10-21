@@ -62,7 +62,7 @@
     {
       "id": "CC2",
       "priority": "P1",
-      "status": "todo",
+      "status": "PASS",
       "owner": "astra",
       "title": "Inventory personal/labor-adjacent data fields",
       "artifact": "docs/delivery/closed_contour/02_DATA_MAP.md"
