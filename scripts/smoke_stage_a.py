@@ -11,7 +11,7 @@ import secrets
 import re
 from pathlib import Path
 from uuid import uuid4
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 import pymupdf
 from playwright.sync_api import sync_playwright, expect
 from sqlalchemy import create_engine, delete
@@ -19,6 +19,8 @@ from sqlalchemy.orm import Session
 from fsp.main import PASSWORDS
 from fsp.models import User, Profile, Company, CompanyMember, Consent, Attempt, ContactGrant
 from evaluation.oracles import solve
+from fsp.bank import VERSION
+from fsp import bank
 
 parser=argparse.ArgumentParser()
 parser.add_argument('--base-url', default='https://85-137-26-131.sslip.io')
@@ -55,7 +57,10 @@ try:
             r=ctx.request.fetch('/api'+path,method=method or ('GET' if data is None else 'POST'),data=data)
             assert r.ok, (path,r.status,r.text()[:250])
             return r.json()
-        def nav(p,name): p.locator('nav').get_by_role('button',name=name,exact=True).click()
+        def nav(p,name):
+            menu=p.get_by_role('button',name=re.compile('^Все разделы'))
+            if menu.is_visible(): menu.click()
+            p.locator('nav').get_by_role('button',name=name,exact=True).click()
         assert call(c,'/health')['status']=='ok'
         live=call(c,'/openapi.json'); assert live==json.loads(Path('docs/delivery/openapi.json').read_text())
         checks += ['https_health_ok','openapi_exact']
@@ -74,7 +79,7 @@ try:
         page.get_by_role('button',name='Начать тест',exact=True).click()
         answer=page.get_by_label('Ответ на задание 1',exact=True);expect(answer).to_be_visible()
         answer.fill('90,63');expect(page.get_by_role('status').filter(has_text='Ответы сохранены')).to_be_visible()
-        started=call(c,'/me/attempts')[0];assert started['version']=='2.1.0'
+        started=call(c,'/me/attempts')[0];assert started['version']==VERSION
         assert any('90,625 → 90,63' in q['text'] for q in started['questions'])
         assert started['answers']['1']=='90,63' and started['result'] is None
         nav(page,'Обзор');nav(page,'Подтверждение навыков');expect(answer).to_have_value('90,63')
@@ -210,6 +215,10 @@ try:
             assert len(values)==4 and abs(values[0]-sum(values[1:]))<=0.02,line
         labels=hr.locator('.candidate-card h3').all_text_contents()
         assert len(labels)==len(set(labels))
+        latest=call(e,'/searches')[0]['id']
+        expected_order=[p['display_name'] for p in call(e,'/searches/'+latest)['items']]
+        assert labels==expected_order, 'UI must keep server score order within categories'
+        checks.append('matching_UI_order_equals_server')
         hr.get_by_label('Специализация').select_option('python')
         expect(hr.get_by_text('Параметры изменены',exact=False)).to_be_visible()
         hr.evaluate('window.scrollTo(0, 400)');hr.wait_for_timeout(200)
@@ -233,8 +242,75 @@ try:
         date_line=page.get_by_text('Следующая выдача не ранее',exact=False)
         expect(date_line).to_contain_text(expected_date+' МСК (UTC+03:00)')
         call(c,'/tasks/plans/'+plan['id'],{'status':'closed'},'PATCH');checks.append('Q6_live_7day_resume_no_duplicate_UI_date_equals_API')
+        # Extended audit: whitespace, salary, focus trap and real error recovery.
+        nav(hr,'Моя компания')
+        company_name=hr.get_by_label('Название компании',exact=True)
+        original=company_name.input_value()
+        company_name.fill('   ')
+        hr.get_by_role('button',name='Сохранить компанию',exact=True).click()
+        expect(hr.get_by_text('Заполните поле «Название компании».',exact=True)).to_be_visible()
+        expect(company_name).to_be_focused()
+        company_name.fill(original)
+        expect(hr.get_by_text('Заполните поле «Название компании».',exact=True)).to_have_count(0)
+        nav(hr,'Подбор кандидатов')
+        hr.get_by_role('button',name='Банк кандидатов',exact=True).click()
+        expect(hr.get_by_role('heading',name='Банк кандидатов',exact=True)).to_be_visible()
+        expect(hr.get_by_text('Сохранённая подборка на',exact=False)).to_have_count(0)
+        trigger=hr.locator('.candidate-card').first.get_by_role('button',name='Пригласить',exact=True)
+        trigger.click()
+        modal=hr.get_by_role('dialog')
+        expect(modal.get_by_label('Предложение и задачи')).to_be_focused()
+        lower=modal.get_by_label('Зарплата от, ₽ / месяц',exact=True)
+        upper=modal.get_by_label('Зарплата до, ₽ / месяц',exact=True)
+        lower.fill('200000')
+        expect(upper).to_have_value('160000')
+        modal.get_by_role('button',name='Отправить приглашение',exact=True).click()
+        expect(modal.get_by_role('alert')).to_contain_text('Нижняя граница')
+        expect(lower).to_be_focused()
+        upper.fill('250000')
+        expect(modal.get_by_role('alert')).to_have_count(0)
+        expect(modal.locator('.invitation-preview')).to_contain_text('250')
+        modal.get_by_role('button',name='Закрыть приглашение').focus()
+        hr.keyboard.press('Shift+Tab')
+        expect(modal.get_by_role('button',name='Отправить приглашение',exact=True)).to_be_focused()
+        hr.keyboard.press('Tab')
+        expect(modal.get_by_role('button',name='Закрыть приглашение')).to_be_focused()
+        hr.once('dialog',lambda d:d.dismiss());hr.keyboard.press('Escape')
+        expect(modal).to_be_visible()
+        hr.screenshot(path=str(Path(a.out).parent/'invitation-salary.png'))
+        hr.set_viewport_size({'width':360,'height':740})
+        assert hr.evaluate('document.documentElement.scrollWidth <= innerWidth+1')
+        expect(modal.get_by_role('button',name='Отправить приглашение',exact=True)).to_be_visible()
+        hr.screenshot(path=str(Path(a.out).parent/'invitation-mobile.png'))
+        hr.set_viewport_size({'width':1365,'height':1000})
+        hr.once('dialog',lambda d:d.accept());hr.keyboard.press('Escape')
+        expect(modal).to_have_count(0);expect(trigger).to_be_focused()
+        checks.append('B07_trimmed_company_B08_focus_escape_restore_U05_no_salary_mutation')
+        nav(hr,'Приглашения');hr.get_by_role('button',name='Открыть диалог').click()
+        message=hr.get_by_label('Сообщение',exact=True)
+        message.fill('Первая проверка сохранения переписки')
+        hr.get_by_role('button',name='Отправить',exact=True).click()
+        expect(hr.locator('.message').filter(has_text='Первая проверка')).to_be_visible()
+        message.fill('   ')
+        expect(hr.get_by_role('button',name='Отправить',exact=True)).to_be_disabled()
+        for status in [422,503]:
+            message.fill('Черновик после ошибки '+str(status))
+            def fail_post(route):
+                if route.request.method=='POST': route.fulfill(status=status,json={'detail':'Исправимая ошибка'})
+                else: route.continue_()
+            hr.route('**/api/invitations/*/messages',fail_post)
+            hr.get_by_role('button',name='Отправить',exact=True).click()
+            expect(hr.locator('.chat [role="alert"]')).to_be_visible()
+            expect(message).to_have_value('Черновик после ошибки '+str(status))
+            expect(hr.locator('.message').filter(has_text='Первая проверка')).to_be_visible()
+            hr.unroute('**/api/invitations/*/messages',fail_post)
+        hr.screenshot(path=str(Path(a.out).parent/'chat-recovery.png'),full_page=True)
+        hr.get_by_role('button',name='Отправить',exact=True).click()
+        expect(message).to_have_value('')
+        expect(hr.locator('.message').filter(has_text='Черновик после ошибки 503')).to_be_visible()
+        checks.append('B07_chat_whitespace_422_503_preserves_messages_draft_retry')
         # Q4 hide with an open employer chat: poll must close input.
-        nav(hr,'Приглашения');hr.get_by_role('button',name='Открыть диалог').click();expect(hr.get_by_label('Сообщение',exact=True)).to_be_visible()
+        expect(hr.get_by_label('Сообщение',exact=True)).to_be_visible()
         own=call(c,'/me/profile')
         fields=['name','phone','about','specialization','claimed_grade','skills','roles','soft_skills','experience_years','processing','published','show_experience']
         payload={k:own[k] for k in fields};payload['published']=False
@@ -245,9 +321,29 @@ try:
         assert cid not in [p['id'] for p in call(e,'/searches/'+snap['id'])['items']]
         page.reload();nav(page,'Обзор');expect(page.get_by_text('Ваш уровень подтверждён, но профиль скрыт.',exact=False)).to_be_visible()
         checks.append('Q4_hidden_overview_revoked_chat_snapshot_PDF')
-        for width in [390,768,1365]:
-            hr.set_viewport_size({'width':width,'height':900});assert hr.evaluate('document.documentElement.scrollWidth <= innerWidth+1')
+        for width in [360,390,768,1365]:
+            hr.set_viewport_size({'width':width,'height':900})
+            nav(hr,'Моя компания');nav(hr,'Приглашения')
+            assert hr.evaluate('document.documentElement.scrollWidth <= innerWidth+1')
+            if width<850:
+                hr.get_by_role('button',name=re.compile('^Все разделы')).click()
+                expect(hr.locator('nav')).to_be_visible()
+                hr.screenshot(path=str(Path(a.out).parent/f'mobile-{width}.png'),full_page=True)
+                hr.get_by_role('button',name=re.compile('^Свернуть меню')).click()
         checks.append('mobile_no_horizontal_overflow')
+        # Historical stored attempt: no rewrite, visible rounding policy note.
+        seed='historical-final-'+run
+        qs=bank.generate('data','Middle',seed,version='2.0.0')
+        answers={q['id']:q['answer'] for q in qs}
+        with Session(engine) as db:
+            db.add(Attempt(user_id=accounts[3]['id'],specialization='data',grade='Middle',seed=seed,version='2.0.0',variant_hash=bank.fingerprint(qs),questions=qs,answers=answers,result=bank.grade_answers(qs,answers,version='2.0.0'),status='completed',created_at=datetime.now(timezone.utc)-timedelta(days=10),expires_at=datetime.now(timezone.utc)-timedelta(days=10)+timedelta(minutes=30)))
+            db.commit()
+        new_page.reload();nav(new_page,'Подтверждение навыков')
+        new_page.get_by_role('button',name='Посмотреть',exact=True).click()
+        expect(new_page.get_by_text('Историческая попытка:',exact=False)).to_be_visible()
+        expect(new_page.get_by_text('Задание 8 из 8',exact=False)).to_be_visible()
+        new_page.screenshot(path=str(Path(a.out).parent/'historical-attempt.png'),full_page=True)
+        checks.append('historical_2_0_count_and_explicit_rounding_note')
         browser.close()
 finally:
     # Hide only the candidates created by this invocation, even on smoke failure.

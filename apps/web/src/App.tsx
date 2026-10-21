@@ -3,6 +3,9 @@ import {
   useRef,
   useEffect,
   useState,
+  useId,
+  cloneElement,
+  isValidElement,
   type FormEvent,
   type ReactNode,
 } from "react";
@@ -27,6 +30,7 @@ import {
 } from "./icons";
 import {
   api,
+  ApiError,
   type Attempt,
   type AssessmentAvailability,
   type Catalog,
@@ -65,10 +69,36 @@ const emptyCatalog: Catalog = {
 };
 
 function Field({ label, children }: { label: string; children: ReactNode }) {
+  const [error, setError] = useState("");
+  const errorId = useId();
+  const validate = (target: EventTarget | null, show: boolean) => {
+    if (!(target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement)) return;
+    if (target.type === "checkbox" || target.type === "radio") return;
+    const length = target.value.trim().length;
+    const message = target.required && !length ? `Заполните поле «${label}».`
+      : length && target.minLength > length ? `Введите не менее ${target.minLength} символов без крайних пробелов.` : "";
+    target.setCustomValidity(message);
+    if (show || !message) {
+      setError(message);
+      target.setAttribute("aria-invalid", String(!!message));
+      if (message) target.setAttribute("aria-describedby", errorId);
+      else target.removeAttribute("aria-describedby");
+    }
+  };
   return (
-    <label className="field">
-      <span>{label}</span>
-      {children}
+    <label className="field"
+      onInputCapture={(e) => validate(e.target, !!error)}
+      onBlurCapture={(e) => validate(e.target, true)}
+      onInvalidCapture={(e) => {
+        validate(e.target, true);
+        const target = e.target as HTMLInputElement;
+        setError(target.validationMessage);
+        target.setAttribute("aria-invalid", "true");
+        target.setAttribute("aria-describedby", errorId);
+      }}>
+      <span id={`${errorId}-label`}>{label}</span>
+      {isValidElement<Record<string, unknown>>(children) ? cloneElement(children, {"aria-labelledby": `${errorId}-label`}) : children}
+      {error && <small id={errorId} className="field-error" role="alert">{error}</small>}
     </label>
   );
 }
@@ -126,6 +156,7 @@ export function App() {
     [busy, setBusy] = useState(false),
     [version, setVersion] = useState(0);
   const unsavedAssessment = useRef(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const confirmLeave = () => !unsavedAssessment.current || window.confirm("Есть ответы, не сохранённые на сервере. Покинуть тест? Черновик останется в этом браузере; срок теста продолжает идти.");
   const setTab = (value: string) => {
     if (tab === "assessment" && value !== tab && !confirmLeave()) return;
@@ -293,13 +324,17 @@ export function App() {
             ? "КАБИНЕТ КАНДИДАТА"
             : "КАБИНЕТ РАБОТОДАТЕЛЯ"}
         </div>
-        <nav>
+        <button className="mobile-menu" aria-expanded={menuOpen} aria-controls="workspace-nav" onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? "Свернуть меню" : "Все разделы"} · {items.find(([key]) => key === tab)?.[1]}
+        </button>
+        <nav id="workspace-nav" className={menuOpen ? "mobile-open" : ""} aria-label="Разделы кабинета">
           {items.map(([key, label, Icon]) => (
             <button
               key={key}
               className={tab === key ? "active" : ""}
               onClick={() => {
                 setTab(key);
+                setMenuOpen(false);
                 setError("");
                 setNotice("");
               }}
@@ -1239,6 +1274,9 @@ function Assessments({
               </div>
             </div>
           )}
+          {current.result && current.specialization === "data" && !["2.1.0", "2.1.1"].includes(current.version) && (
+            <p className="notice subtle">Историческая попытка: результат сохранён по методике {current.version}. В старых дробных заданиях правило округления половины не было явно указано, поэтому 90,625 могло оцениваться как 90,62. Новые попытки используют явное округление половины вверх; прежний результат автоматически не пересчитывался.</p>
+          )}
           <p role="status">{saveStatus}</p>
           {dirtyRef.current && <button type="button" className="secondary" onClick={flush}>Повторить сохранение</button>}
           <form
@@ -1524,6 +1562,25 @@ function SearchPage({ catalog, act, busy, userId, openInvitations }: Actions & {
     window.addEventListener("scroll", save);
     return () => window.removeEventListener("scroll", save);
   }, [initialLoading]);
+  const resultsRef = useRef<HTMLElement>(null);
+  const showResults = () => window.requestAnimationFrame(() => {
+    if (window.innerWidth <= 850) resultsRef.current?.scrollIntoView({behavior: "smooth", block: "start"});
+  });
+  const switchMode = (toBank: boolean) => {
+    if (bank === toBank) return;
+    void act(async () => {
+      if (toBank) {
+        const params = new URLSearchParams();
+        Object.entries(filter).forEach(([k, v]) => { if (v) params.set(k, String(v)); });
+        const rows = await api<Profile[]>("/candidates?" + params);
+        setItems(rows); setSnapshot(null);
+      } else if (snapshotId) {
+        const saved = await api<Snapshot>("/searches/" + snapshotId);
+        setSnapshot(saved); setItems(saved.items);
+      } else { setSnapshot(null); setItems([]); }
+      setBank(toBank);
+    });
+  };
   const loadHistory = async () => setHistory(await api("/searches"));
   useEffect(() => {
     void act(async () => {
@@ -1553,6 +1610,7 @@ function SearchPage({ catalog, act, busy, userId, openInvitations }: Actions & {
       window.scrollTo(0, 0);
       setItems(s.items);
       setBank(false);
+      showResults();
       await loadHistory();
     });
   };
@@ -1568,13 +1626,13 @@ function SearchPage({ catalog, act, busy, userId, openInvitations }: Actions & {
           <div className="segmented">
             <button
               className={!bank ? "selected" : ""}
-              onClick={() => setBank(false)}
+              onClick={() => switchMode(false)}
             >
               По потребности
             </button>
             <button
               className={bank ? "selected" : ""}
-              onClick={() => setBank(true)}
+              onClick={() => switchMode(true)}
             >
               Банк кандидатов
             </button>
@@ -1590,6 +1648,7 @@ function SearchPage({ catalog, act, busy, userId, openInvitations }: Actions & {
                   });
                   setItems(await api("/candidates?" + params.toString()));
                   setSnapshot(null);
+                  showResults();
                 });
               }}
             >
@@ -1803,7 +1862,7 @@ function SearchPage({ catalog, act, busy, userId, openInvitations }: Actions & {
             </div>
           )}
         </aside>
-        <section>
+        <section ref={resultsRef}>
           <div className="section-heading">
             <h2>{snapshot ? snapshot.criteria.title : "Банк кандидатов"}</h2>
             <span>{countLabel(items.length, "profile")}</span>
@@ -1817,6 +1876,11 @@ function SearchPage({ catalog, act, busy, userId, openInvitations }: Actions & {
             </p>
           )}
           {snapshot && <p className="muted">Применено: {catalog.specializations[snapshot.criteria.specialization]} · {snapshot.criteria.grades.join(", ")} · обязательные: {snapshot.criteria.required_skills.map(s => catalog.skills[s]).join(", ") || "нет"}.</p>}
+          {snapshot && items.length > 0 && <p className="match-gap">
+            {items.every(p => p.match?.required_skills_met === false) ? "Подтверждённых соответствий нет. " : ""}
+            Полное покрытие обязательных навыков: {items.filter(p => p.match?.required_skills_met).length} из {items.length}.
+            Внутри категории кандидаты идут по общему баллу; пробелы указаны в карточках.
+          </p>}
           {!bank && snapshot && JSON.stringify(criteria) !== JSON.stringify(snapshot.criteria) && <p role="status">Параметры изменены — сформируйте новую подборку. Ниже сохранённый результат.</p>}
           {initialLoading ? (
             <Loading />
@@ -1825,70 +1889,6 @@ function SearchPage({ catalog, act, busy, userId, openInvitations }: Actions & {
               title="Подходящих профилей пока нет"
               description="Попробуйте изменить специализацию или фильтры. Прежние подборки остаются в истории."
             />
-          ) : snapshot ? (
-            (() => {
-              const required = snapshot.criteria.required_skills;
-              const full = items.filter((p) =>
-                p.match?.required_skills_met ?? required.every((skill) =>
-                  p.match?.facts.some(
-                    (f) => f.skill === skill && f.state === "met",
-                  ),
-                ),
-              );
-              const partial = items.filter(
-                (p) => !full.some((f) => f.id === p.id),
-              );
-              const renderList = (list: Profile[]) =>
-                list.map((p, index) => (
-                  <div key={p.id}>
-                    {(index === 0 ||
-                      p.verified_grade !== list[index - 1].verified_grade ||
-                      p.specialization !== list[index - 1].specialization) && (
-                      <h3 className="category-heading">
-                        {catalog.specializations[p.specialization]}{" "}
-                        <span>{p.verified_grade ?? "Не подтверждён"}</span>
-                      </h3>
-                    )}
-                    <CandidateCard
-                      profile={p}
-                      catalog={catalog}
-                      onInvite={() => setSelected(p)}
-                      invitation={latestInvitation(p.id)}
-                      openInvitations={openInvitations}
-                    />
-                  </div>
-                ));
-              return (
-                <>
-                  <h3 className="category-heading">
-                    Все обязательные навыки подтверждены{" "}
-                    <span>{full.length}</span>
-                  </h3>
-                  {full.length ? (
-                    renderList(full)
-                  ) : (
-                    <EmptyState
-                      title="Подтверждённых соответствий нет"
-                      description="Ни у кого в этой подборке нет всех обязательных навыков со статусом «подтверждено». Ниже — частичные совпадения, если они есть."
-                    />
-                  )}
-                  {!!partial.length && (
-                    <>
-                      <h3 className="category-heading">
-                        Частичное соответствие{" "}
-                        <span>{partial.length}</span>
-                      </h3>
-                      <p className="muted">
-                        Здесь обязательные навыки не проверены или не
-                        подтверждены тестом. Не считайте таких кандидатов
-                        подтверждёнными по всем требованиям.
-                      </p>
-                      {renderList(partial)}
-                    </>
-                  )}
-                </>
-              );
-            })()
           ) : (
             items.map((p, index) => (
               <div key={p.id}>
@@ -1977,6 +1977,7 @@ function CandidateCard({
       {p.match && p.match.facts.length > 0 && (
         <div className="evidence">
           <h4>Почему в подборке</h4>
+          {p.match.required_skills_met === false && <p className="match-gap">Неполное соответствие обязательным навыкам. Общий балл учитывает тест и ФСП; проверьте требования ниже перед приглашением.</p>}
           {p.match.facts.map((f, i) => (
             <div key={i}>
               <span className={"signal " + f.state} />
@@ -2000,7 +2001,7 @@ function CandidateCard({
       )}
       <details>
         <summary>Результаты и источники</summary>
-        {p.match && <p>Формула: {p.match.methodology ?? "версия сохранённой подборки"}. Балл не является вероятностью найма. Без ФСП бонус равен нулю.</p>}
+        {p.match && <p>Формула: {p.match.methodology ?? "историческая (номер не сохранён)"}. Балл не является вероятностью найма. Без ФСП бонус равен нулю.</p>}
         {p.evidence.map((e) => (
           <p key={e.id}>
             {catalog.skills[e.skill]} · {e.correct}/{e.total} · {date(e.date)} ·
@@ -2059,10 +2060,58 @@ function InviteModal({
     [sent, setSent] = useState(false),
     [salaryError, setSalaryError] = useState(""),
     [requestId] = useState(() => crypto.randomUUID());
+  const dialogRef = useRef<HTMLElement>(null);
+  const [company, setCompany] = useState<Company | null>(null);
+  const [companyError, setCompanyError] = useState("");
+  const dirty = description !== "Приглашаем обсудить работу в нашей команде. Задачи — развитие и поддержка продукта." || min !== 100000 || max !== 160000;
+  const dismiss = () => {
+    if (!busy && (sent || !dirty || window.confirm("Закрыть приглашение? Изменения предложения и зарплаты не будут сохранены."))) close();
+  };
+  const dismissRef = useRef(dismiss);
+  dismissRef.current = dismiss;
+  useEffect(() => {
+    const trigger = document.activeElement as HTMLElement | null;
+    const dialog = dialogRef.current!;
+    const backdrop = dialog.parentElement!;
+    // Disable every sibling along the ancestor chain, including the sidebar.
+    const backgrounds: {node: HTMLElement; inert: boolean}[] = [];
+    let node: HTMLElement = backdrop;
+    while (node.parentElement && node !== document.body) {
+      for (const sibling of node.parentElement.children) {
+        if (sibling !== node && sibling instanceof HTMLElement) {
+          backgrounds.push({node: sibling, inert: sibling.inert}); sibling.inert = true;
+        }
+      }
+      node = node.parentElement;
+    }
+    (dialog.querySelector("textarea") as HTMLElement | null)?.focus();
+    const keydown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") { event.preventDefault(); dismissRef.current(); }
+      if (event.key === "Tab") {
+        const targets = [...dialog.querySelectorAll<HTMLElement>('button:not(:disabled), input:not(:disabled), textarea:not(:disabled), a[href], [tabindex="0"]')].filter(el => el.getClientRects().length);
+        const first = targets[0], last = targets[targets.length - 1];
+        if (!first) { event.preventDefault(); dialog.focus(); }
+        else if (event.shiftKey && (document.activeElement === first || !dialog.contains(document.activeElement))) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && (document.activeElement === last || !dialog.contains(document.activeElement))) { event.preventDefault(); first.focus(); }
+      }
+    };
+    document.addEventListener("keydown", keydown);
+    let cancelled = false;
+    api<Company>("/me/company").then(value => { if (!cancelled) setCompany(value); }).catch(() => { if (!cancelled) setCompanyError("Не удалось загрузить компанию. Закройте приглашение и повторите попытку."); });
+    return () => {
+      cancelled = true;
+      document.removeEventListener("keydown", keydown);
+      backgrounds.forEach(({node, inert}) => { node.inert = inert; });
+      if (trigger?.isConnected) trigger.focus();
+    };
+  }, []);
+  useEffect(() => { if (sent) dialogRef.current?.querySelector<HTMLButtonElement>("button.close")?.focus(); }, [sent]);
   return (
     <div className="modal-backdrop">
       <section
         className="modal"
+        ref={dialogRef}
+        tabIndex={-1}
         role="dialog"
         aria-modal="true"
         aria-labelledby="invite-title"
@@ -2070,7 +2119,8 @@ function InviteModal({
         <button
           className="close"
           aria-label="Закрыть приглашение"
-          onClick={close}
+          onClick={dismiss}
+          disabled={busy}
         >
           ×
         </button>
@@ -2093,6 +2143,7 @@ function InviteModal({
               setSalaryError("");
               if (!Number.isInteger(min) || !Number.isInteger(max) || min > max || min <= 0 || max <= 0 || min > 10000000 || max > 10000000) {
                 setSalaryError("Укажите зарплату от 1 до 10 000 000 ₽. Нижняя граница не должна превышать верхнюю.");
+                e.currentTarget.querySelector<HTMLInputElement>('input[type="number"]')?.focus();
                 return;
               }
               if (!e.currentTarget.reportValidity()) return;
@@ -2100,7 +2151,7 @@ function InviteModal({
                 await api("/invitations", {
                   candidate_id: profile.id,
                   request_id: requestId,
-                  description,
+                  description: description.trim(),
                   salary_min: min,
                   salary_max: max,
                   currency: "RUB",
@@ -2134,8 +2185,10 @@ function InviteModal({
                   onChange={(e) => {
                     const next = Number(e.target.value);
                     setMin(next);
-                    if (next > max) setMax(next);
+                    setSalaryError("");
                   }}
+                  aria-invalid={!!salaryError}
+                  aria-describedby={salaryError ? "salary-error" : undefined}
                 />
               </Field>
               <Field label="Зарплата до, ₽ / месяц">
@@ -2145,16 +2198,16 @@ function InviteModal({
                   min={1}
                   max={10000000}
                   value={max}
-                  onChange={(e) => setMax(Number(e.target.value))}
+                  onChange={(e) => { setMax(Number(e.target.value)); setSalaryError(""); }}
+                  aria-invalid={!!salaryError}
+                  aria-describedby={salaryError ? "salary-error" : undefined}
                 />
               </Field>
             </div>
-            <small>
-              До вычета налогов. Название компании и способ связи добавятся из
-              её профиля.
-            </small>
-            {salaryError && <ErrorState message={salaryError} />}
-            <button className="full" disabled={busy}>
+            {company && <p className="invitation-preview">{company.name} · {min === max ? currency(min) : `${currency(min)} — ${currency(max)}`} / месяц до вычета налогов. Связь: {company.contact}.</p>}
+            {companyError && <ErrorState message={companyError} />}
+            {salaryError && <p id="salary-error" className="field-error" role="alert">{salaryError}</p>}
+            <button className="full" disabled={busy || !company}>
               Отправить приглашение
               <Mail size={16} />
             </button>
@@ -2330,17 +2383,30 @@ function Chat({
     >([]),
     [text, setText] = useState("");
   const [available, setAvailable] = useState(false);
+  const [connectionError, setConnectionError] = useState("");
+  const handleError = (error: unknown) => {
+    if (error instanceof ApiError && [401, 403, 404, 409].includes(error.status)) {
+      setAvailable(false);
+      setMessages([]);
+      setConnectionError("Доступ к диалогу закрыт. Проверьте статус приглашения.");
+    } else {
+      setConnectionError(error instanceof ApiError && error.status === 422
+        ? "Проверьте сообщение: от 1 до 2000 символов без крайних пробелов."
+        : "Не удалось связаться с сервером. Переписка и черновик сохранены на экране; повторите попытку.");
+    }
+  };
   const load = async () => {
     try {
       setMessages(await api("/invitations/" + invitationId + "/messages"));
       setAvailable(true);
+      setConnectionError("");
     } catch (error) {
-      setAvailable(false);
-      setMessages([]);
+      handleError(error);
       throw error;
     }
   };
   useEffect(() => {
+    setAvailable(false); setMessages([]); setText("");
     void act(load);
     const timer = window.setInterval(() => { void load().catch(() => {}); }, 15000);
     return () => window.clearInterval(timer);
@@ -2362,16 +2428,17 @@ function Chat({
         </div>
       ))}
       {!available && <p role="status">Диалог недоступен или загружается. Отправка сообщений закрыта до проверки доступа.</p>}
+      {connectionError && <p role="alert" className="field-error">{connectionError}</p>}
       {available && <form
         onSubmit={(e) => {
           e.preventDefault();
+          if (!text.trim()) return;
           void act(async () => {
             try {
-              await api("/invitations/" + invitationId + "/messages", { text });
+              await api("/invitations/" + invitationId + "/messages", { text: text.trim() });
             } catch (error) {
-              setAvailable(false);
-              setMessages([]);
-              throw error;
+              handleError(error);
+              return;
             }
             setText("");
             await load();
@@ -2387,7 +2454,7 @@ function Chat({
             rows={2}
           />
         </Field>
-        <button disabled={busy}>Отправить</button>
+        <button disabled={busy || !text.trim()}>Отправить</button>
       </form>}
     </div>
   );

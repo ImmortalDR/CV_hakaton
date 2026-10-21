@@ -219,7 +219,27 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             path="/",
         )
 
-    def evidence_for(p, db):
+    def projection_cache(profiles, db, company_id):
+        """Request-local bulk reads; never share contact permissions between users."""
+        ids = [p.user_id for p in profiles]
+        attempt_ids = [p.verified_attempt_id for p in profiles if p.verified_attempt_id]
+        users = {u.id: u for u in db.scalars(select(User).where(User.id.in_(ids)))}
+        attempts = {a.id: a for a in db.scalars(select(Attempt).where(Attempt.id.in_(attempt_ids)))}
+        evidence = {}
+        for e in db.scalars(select(Evidence).where(Evidence.attempt_id.in_(attempt_ids))):
+            evidence.setdefault(e.attempt_id, []).append(e)
+        grants = set(db.scalars(select(ContactGrant.candidate_id).where(
+            ContactGrant.company_id == company_id, ContactGrant.candidate_id.in_(ids))))
+        # Only the addressed company may see its task activity.
+        from .models import TaskPlan, TaskAssignment
+        from sqlalchemy import func
+        reviewed = dict(db.execute(select(TaskPlan.candidate_id, func.max(TaskAssignment.reviewed_at))
+            .join(TaskAssignment, TaskAssignment.plan_id == TaskPlan.id)
+            .where(TaskPlan.company_id == company_id, TaskPlan.candidate_id.in_(grants))
+            .group_by(TaskPlan.candidate_id)).all()) if grants else {}
+        return dict(users=users, attempts=attempts, evidence=evidence, grants=grants, reviewed=reviewed)
+
+    def evidence_for(p, db, cache=None):
         if not p.verified_attempt_id:
             return []
         return [
@@ -234,23 +254,23 @@ def create_app(database_url=None, demo=None, rate_limit=True):
                 "date": e.created_at.isoformat(),
                 "source": "assessment",
             }
-            for e in db.scalars(
+            for e in (cache["evidence"].get(p.verified_attempt_id, []) if cache is not None else db.scalars(
                 select(Evidence).where(Evidence.attempt_id == p.verified_attempt_id)
-            )
+            ))
         ]
 
-    def projection(p, viewer, db, company_id=None):
+    def projection(p, viewer, db, company_id=None, cache=None):
         owner = p.user_id == viewer.id
         if not owner and viewer.role != "employer":
             fail(403, "Чужой профиль недоступен")
-        u = db.get(User, p.user_id)
+        u = cache["users"][p.user_id] if cache is not None else db.get(User, p.user_id)
         if not owner and (not p.processing or not p.published or not u.verified):
             fail(404, "Профиль не опубликован")
         permitted = owner or (
-            company_id and db.get(ContactGrant, (p.user_id, company_id)) is not None
+            company_id and (p.user_id in cache["grants"] if cache is not None else db.get(ContactGrant, (p.user_id, company_id)) is not None)
         )
         attempt = (
-            db.get(Attempt, p.verified_attempt_id) if p.verified_attempt_id else None
+            (cache["attempts"].get(p.verified_attempt_id) if cache is not None else db.get(Attempt, p.verified_attempt_id)) if p.verified_attempt_id else None
         )
         result = {
             "id": p.user_id,
@@ -264,7 +284,7 @@ def create_app(database_url=None, demo=None, rate_limit=True):
                 p.experience_years if owner or p.show_experience else None
             ),
             "experience_source": "self_report",
-            "evidence": evidence_for(p, db),
+            "evidence": evidence_for(p, db, cache),
             "test_score": attempt.result["score"] if attempt else 0,
             "achievements": p.achievements,
             "demo": u.demo,
@@ -272,7 +292,7 @@ def create_app(database_url=None, demo=None, rate_limit=True):
         }
         if permitted:
             result.update(about=p.about, roles=p.roles, soft_skills=p.soft_skills,
-                          task_last_reviewed_at=tasks.last_reviewed(db, p.user_id, None if owner else company_id))
+                          task_last_reviewed_at=cache["reviewed"].get(p.user_id) if cache is not None else tasks.last_reviewed(db, p.user_id, None if owner else company_id))
         if owner:
             result.update(
                 name=p.name,
@@ -783,7 +803,7 @@ def create_app(database_url=None, demo=None, rate_limit=True):
         c = company(user, db)
         if skill and skill not in bank.SKILLS:
             fail(422, "Неизвестный навык")
-        profiles = db.scalars(
+        profiles = list(db.scalars(
             select(Profile)
             .join(User)
             .where(
@@ -791,7 +811,8 @@ def create_app(database_url=None, demo=None, rate_limit=True):
                 Profile.processing.is_(True),
                 User.verified.is_(True),
             )
-        )
+        ))
+        cache = projection_cache(profiles, db, c.id)
         results = []
         for p in profiles:
             if (
@@ -801,7 +822,7 @@ def create_app(database_url=None, demo=None, rate_limit=True):
                 and p.verified_grade != grade
             ):
                 continue
-            view = projection(p, user, db, c.id)
+            view = projection(p, user, db, c.id, cache)
             if fsp_only and not view["achievements"]:
                 continue
             if skill and not any(
@@ -841,12 +862,14 @@ def create_app(database_url=None, demo=None, rate_limit=True):
         criteria = db.get(Need, s.need_id).criteria
         results = []
         hidden = 0
+        profiles = {p.user_id: p for p in db.scalars(select(Profile).where(Profile.user_id.in_([item["id"] for item in s.items])))}
+        cache = projection_cache(list(profiles.values()), db, s.company_id)
         for item in s.items:
-            p = db.get(Profile, item["id"])
-            if not p or not p.published or not p.processing:
+            p = profiles.get(item["id"])
+            if not p or not p.published or not p.processing or not cache["users"][p.user_id].verified:
                 hidden += 1
                 continue
-            v = projection(p, user, db, s.company_id)
+            v = projection(p, user, db, s.company_id, cache)
             # Keep historical, non-identifying proof; recheck consent/contacts on every read.
             v.update(item.get("assessment", {}))
             v["match"] = copy.deepcopy(item["match"])
@@ -875,7 +898,7 @@ def create_app(database_url=None, demo=None, rate_limit=True):
         c = company(user, db)
         criteria = data.model_dump()
         items = []
-        profiles = db.scalars(
+        profiles = list(db.scalars(
             select(Profile)
             .join(User)
             .where(
@@ -883,9 +906,10 @@ def create_app(database_url=None, demo=None, rate_limit=True):
                 Profile.processing.is_(True),
                 User.verified.is_(True),
             )
-        )
+        ))
+        cache = projection_cache(profiles, db, c.id)
         for p in profiles:
-            v = projection(p, user, db, c.id)
+            v = projection(p, user, db, c.id, cache)
             if eligible(v, criteria):
                 v["match"] = rank_candidate(v, criteria)
                 items.append(v)

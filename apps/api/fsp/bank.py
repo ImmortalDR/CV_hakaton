@@ -5,9 +5,11 @@ import json
 import random
 from collections import Counter
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
+from .formatting import count_label
 
-VERSION = "2.1.0"
-V2_VERSIONS = {"2.0.0", VERSION}
+VERSION = "2.1.1"
+HALF_UP_VERSIONS = {"2.1.0", VERSION}
+V2_VERSIONS = {"2.0.0", *HALF_UP_VERSIONS}
 SPECS = {"python": "Python / бэкенд", "data": "Аналитика данных / SQL"}
 GRADES = ["Junior", "Middle", "Senior"]
 SKILLS = {
@@ -79,7 +81,7 @@ FAMILY_SKILL.update({
     "sql_group": "sql", "stats_conditional": "statistics",
     "sql_window": "sql", "tx_optimistic": "transactions",
 })
-SUPPORTED_VERSIONS = {"1.0.0", "1.1.0", "1.2.0", "2.0.0", VERSION}
+SUPPORTED_VERSIONS = {"1.0.0", "1.1.0", "1.2.0", *V2_VERSIONS}
 
 
 def rubric(version=VERSION):
@@ -132,7 +134,8 @@ def question(family, rng, version=VERSION):
     elif family == "http_backoff":
         n = rng.randint(3, 5)
         p["n"] = n
-        text = f"Клиент делает ровно {n} попытки HTTP. Каждая занимает {b} с. После неудачной попытки i (считая с 1) пауза {a} × 2^(i−1) с.\nПоследняя попытка успешна; паузы после неё нет. Сколько секунд прошло всего?"
+        attempts = count_label(n, "попытку", "попытки", "попыток") if version == VERSION else f"{n} попытки"
+        text = f"Клиент делает ровно {attempts} HTTP. Каждая занимает {b} с. После неудачной попытки i (считая с 1) пауза {a} × 2^(i−1) с.\nПоследняя попытка успешна; паузы после неё нет. Сколько секунд прошло всего?"
         answer = n * b + a * (2 ** (n - 1) - 1)
         why = (
             "Суммируем время всех запросов и геометрическую прогрессию пауз между ними."
@@ -153,7 +156,7 @@ def question(family, rng, version=VERSION):
         why = "LEFT JOIN сохраняет клиентов без заказов; WHERE выбирает именно эти строки."
     elif family == "stats_weighted":
         text = f"Группа A: {a*10} конверсий из {a*100} посещений. Группа B: {b*30} конверсий из {b*100} посещений.\nОбщая конверсия в процентах? Округлите до двух знаков."
-        answer = round_ratio(a * 10 + b * 30, a + b) if version == VERSION else round((a * 10 + b * 30) / (a + b), 2)
+        answer = round_ratio(a * 10 + b * 30, a + b) if version in HALF_UP_VERSIONS else round((a * 10 + b * 30) / (a + b), 2)
         why = "Складываем конверсии и посещения отдельно. Среднее процентов без весов неверно."
     elif family == "sql_rank":
         target = values[0]
@@ -226,7 +229,7 @@ def question(family, rng, version=VERSION):
         index = rng.randrange(len(values))
         p["drop_index"] = index
         text = f"Замеры времени (мс): {values}. Известно, что замер номер {index+1} ошибочен (нумерация с 1).\nЧему равно среднее арифметическое после удаления только этого замера? Округлите до двух знаков."
-        answer = round_ratio(sum(values) - values[index], len(values)-1) if version == VERSION else round((sum(values) - values[index]) / (len(values)-1), 2)
+        answer = round_ratio(sum(values) - values[index], len(values)-1) if version in HALF_UP_VERSIONS else round((sum(values) - values[index]) / (len(values)-1), 2)
         why = "Исключаем одно наблюдение по номеру, даже если такое же значение встречается ещё раз, и делим на оставшееся число наблюдений."
     elif family == "sql_group":
         rows = [[i % 3 + 1, rng.randint(5, 40)] for i in range(9)]
@@ -244,7 +247,7 @@ def question(family, rng, version=VERSION):
         new = rng.randint(20, 80)
         p.update(returning=returning, bought=bought, new=new)
         text = f"За день пришли {returning} вернувшихся и {new} новых пользователей. Из вернувшихся покупку совершили {bought}.\nКакой процент вернувшихся совершил покупку? Округлите до двух знаков."
-        answer = round_ratio(100 * bought, returning) if version == VERSION else round(100 * bought / returning, 2)
+        answer = round_ratio(100 * bought, returning) if version in HALF_UP_VERSIONS else round(100 * bought / returning, 2)
         why = "Условная доля считается только среди вернувшихся; новые пользователи не входят в знаменатель."
     elif family == "sql_window":
         rows = [[i+1, i % 2 + 1, rng.randint(5, 40)] for i in range(8)]
@@ -257,17 +260,17 @@ def question(family, rng, version=VERSION):
     elif family == "tx_optimistic":
         changes = [[rng.randint(0, 3), rng.randint(3, 30)] for _ in range(8)]
         p["changes"] = changes
-        balance, version = a * 100, 0
+        balance, row_version = a * 100, 0
         for expected, delta in changes:
-            if expected == version:
+            if expected == row_version:
                 balance += delta
-                version += 1
+                row_version += 1
         text = f"Начальный balance={a*100}, version=0. Последовательно выполняются UPDATE: balance=balance+delta, version=version+1 WHERE version=expected. Обновление атомарно; при несовпадении версии ничего не меняется, повторов нет.\nПары [expected, delta]: {changes}. Каков итоговый balance?"
         answer = balance
         why = "Применяем только обновления, чья ожидаемая версия совпадает с текущей; успешное обновление увеличивает версию на один."
     else:
         raise ValueError(f"Unknown question family: {family}")
-    if version == VERSION and "Округлите до двух знаков." in text:
+    if version in HALF_UP_VERSIONS and "Округлите до двух знаков." in text:
         text += " При ровно половине округляйте вверх: 90,625 → 90,63."
     return {
         "family": family,
@@ -288,7 +291,7 @@ def generate(specialization, grade, seed, version=VERSION):
     ]
     if version == "1.0.0":
         raise ValueError("Generation of 1.0.0 is unavailable; use stored questions for replay")
-    if version in {"1.2.0", "2.0.0", VERSION}:
+    if version in {"1.2.0", *V2_VERSIONS}:
         rng.shuffle(qs)
     for i, q in enumerate(qs):
         q["id"] = str(i + 1)

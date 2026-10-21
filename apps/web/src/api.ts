@@ -1,3 +1,10 @@
+export class ApiError extends Error {
+  constructor(message: string, public readonly status: number) {
+    super(message);
+    this.name = "ApiError";
+  }
+}
+
 export async function api<T>(
   path: string,
   body?: unknown,
@@ -12,8 +19,11 @@ export async function api<T>(
     },
     body: body === undefined ? undefined : JSON.stringify(body),
   });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.detail ?? "Не удалось выполнить запрос");
+  const data = await res.json().catch(() => null);
+  if (!res.ok) throw new ApiError(
+    typeof data?.detail === "string" ? data.detail : "Не удалось выполнить запрос. Повторите попытку.", res.status,
+  );
+  if (data === null) throw new ApiError("Сервер вернул неполный ответ. Повторите попытку.", res.status);
   return data as T;
 }
 export type User = {

@@ -135,3 +135,33 @@ def test_conditional_rounding_new_and_historical_versions():
     old_q = next(x for x in old if x['id'] == q['id'])
     assert old_q['answer'] == '90.62'
     assert len(old) == 8 and bank.rubric('2.0.0')['core_min_correct'] == 3
+
+
+def test_2_1_history_keeps_text_answers_order_and_rounding():
+    import json
+    from pathlib import Path
+    for row in json.loads(Path('tests/bank_2_1_fingerprints.json').read_text()):
+        qs = bank.generate(row['spec'], row['grade'], row['seed'], version=row['version'])
+        assert bank.fingerprint(qs) == row['fingerprint']
+        assert [q['answer'] for q in qs] == row['answers']
+        assert bank.grade_answers(qs, {q['id']: q['answer'] for q in qs}, row['version'])['score'] == 100
+
+
+@pytest.mark.parametrize('n,word', [(0,'попыток'),(1,'попытка'),(2,'попытки'),(4,'попытки'),(5,'попыток'),(11,'попыток'),(14,'попыток'),(21,'попытка'),(22,'попытки'),(25,'попыток'),(101,'попытка')])
+def test_russian_count_boundaries(n, word):
+    from fsp.formatting import count_label
+    assert count_label(n, 'попытка', 'попытки', 'попыток') == f'{n} {word}'
+
+
+def test_backoff_new_text_and_legacy_five_attempts():
+    import random
+    for seed in range(100):
+        new = bank.question('http_backoff', random.Random(seed))
+        old = bank.question('http_backoff', random.Random(seed), version='2.1.0')
+        if new['params']['n'] == 5:
+            assert '5 попыток HTTP' in new['text']
+            assert '5 попытки HTTP' in old['text']
+            assert new['answer'] == old['answer']
+            break
+    else:
+        pytest.fail('No five-attempt case exercised')
