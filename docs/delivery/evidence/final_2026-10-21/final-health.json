@@ -1,0 +1,38 @@
+{
+  "checked_at": "2026-10-21T11:56:22.807773+00:00",
+  "services": [
+    {
+      "name": "fsp-mvp-api-1",
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "name": "fsp-mvp-web-1",
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "name": "fsp-mvp-db-1",
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "name": "fsp-mvp-task-worker-1",
+      "status": "running",
+      "health": "not_configured"
+    },
+    {
+      "name": "fsp-mvp-edge-1",
+      "status": "running",
+      "health": "healthy"
+    }
+  ],
+  "api_runtime_errors_last_5min": 0,
+  "task-worker_runtime_errors_last_5min": 0,
+  "https_status": 200,
+  "health": {
+    "status": "ok",
+    "demo": true,
+    "version": "1.0.0"
+  }
+}

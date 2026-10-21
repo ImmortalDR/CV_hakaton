@@ -173,7 +173,9 @@ try:
         new=call(e,'/searches',need);with_fsp=next(p for p in new['items'] if p['id']==cid)
         assert with_fsp['match']['score']-base_item['match']['score']==6
         assert call(e,'/searches/'+snap['id'])['id']==snap['id']
-        assert accounts[0]['email'] not in pdf(e.request.get('/api/profiles/'+cid+'/pdf'))
+        closed_pdf=e.request.get('/api/profiles/'+cid+'/pdf')
+        assert accounts[0]['email'] not in pdf(closed_pdf)
+        (Path(a.out).parent/'closed-contacts.pdf').write_bytes(closed_pdf.body())
         inv=call(e,'/invitations',dict(candidate_id=cid,request_id=str(uuid4()),description='Предложение для smoke этапа A',salary_min=100000,salary_max=150000,currency='RUB'))
         assert inv['contacts'] is None
         assert inv['candidate_name']==base_item['display_name']
@@ -189,7 +191,9 @@ try:
         call(c,'/invitations/'+inv['id'],{'status':'accepted'},'PATCH')
         assert call(e,'/candidates/'+cid)['contacts']['email']==accounts[0]['email']
         assert call(other,'/candidates/'+cid)['contacts'] is None
-        assert accounts[0]['email'] in pdf(e.request.get('/api/profiles/'+cid+'/pdf'))
+        open_pdf=e.request.get('/api/profiles/'+cid+'/pdf')
+        assert accounts[0]['email'] in pdf(open_pdf)
+        (Path(a.out).parent/'open-contacts.pdf').write_bytes(open_pdf.body())
         assert accounts[0]['email'] not in pdf(other.request.get('/api/profiles/'+cid+'/pdf'))
         assert outsider.request.get('/api/profiles/'+cid+'/pdf').status==403
         checks+=['invite_accept_addressed_contacts_PDF_isolation','FSP_does_not_change_grade_zero_without_FSP','old_snapshot_preserved']

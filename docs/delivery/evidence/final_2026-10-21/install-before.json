@@ -1,0 +1,9 @@
+{
+  "status": "pass",
+  "database": "fsp_finalcheck_0fa8f023",
+  "initial_database": "new_empty",
+  "migration": "b9e1c4d7a201",
+  "users_after_two_seeds": 15,
+  "schema_drift": false,
+  "limitations": "Fresh PostgreSQL DB; built runtime images reuse cached pinned dependencies; no offline archive install."
+}

@@ -35,7 +35,7 @@ docker compose exec -T db pg_dump -U fsp -d fsp -Fc > local-backups/fsp.dump
 ## Переход из демонстрации
 
 Для реальной доставки нужны SMTP_HOST/PORT/FROM, при необходимости USER/PASSWORD,
-SMTP_TLS=true и DEMO_MODE=false. При отсутствии доставки регистрация
+SMTP_TLS=true. Если SMTP_HOST задан, письмо отправляется и при DEMO_MODE=true; токен в ответе API не показывается. При отсутствии SMTP в DEMO_MODE=false регистрация
 откатывается и возвращает 503, токен не показывается. При рабочем SMTP в
 ответе нет демонстрационной ссылки. Реальная отправка в этой сдаче не запускалась.
 

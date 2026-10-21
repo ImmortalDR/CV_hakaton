@@ -19,7 +19,7 @@ def snapshot():
     with Session(engine) as db:
         rows = {
             model.__tablename__: [
-                dict(row) for row in db.execute(select(model.__table__)).mappings()
+                dict(row) for row in db.execute(select(model.__table__).order_by(*model.__table__.primary_key.columns)).mappings()
             ]
             for model in [User, Profile, Attempt, Invitation, Snapshot]
         }
@@ -53,7 +53,7 @@ result = {
     "after": after,
     "volume_removed": False,
 }
-Path("docs/delivery/restart-results.json").write_text(
+Path(os.getenv("RESTART_OUTPUT", "docs/delivery/restart-results.json")).write_text(
     json.dumps(result, indent=2) + "\n"
 )
 print(json.dumps(result))

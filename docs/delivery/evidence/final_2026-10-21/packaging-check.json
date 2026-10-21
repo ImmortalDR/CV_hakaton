@@ -1,0 +1,8 @@
+{
+  "report_links": "pass",
+  "known_secret_scan": "pass",
+  "scope": "New final report links and evidence; actual secret values never emitted",
+  "pdf_pages": 18,
+  "docx_render_pages": 21,
+  "presentation_slides": 10
+}

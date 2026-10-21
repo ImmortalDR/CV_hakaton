@@ -1,0 +1,45 @@
+{
+  "status": "pass",
+  "checked_at": "2026-10-21T11:48:19.688752+00:00",
+  "runtime_commit": "60317b112352b24cebd55eae267dce36d4444f32",
+  "services": {
+    "api": {
+      "files": 14,
+      "exact": true
+    },
+    "task-worker": {
+      "files": 14,
+      "exact": true
+    },
+    "web": {
+      "files": 3,
+      "exact": true
+    }
+  },
+  "health": {
+    "status": "ok",
+    "demo": true,
+    "version": "1.0.0"
+  },
+  "api_files": {
+    "fsp/schemas.py": "f8cd2f8fe464e3d3407ef07f1bbc12508fb84b4ad873d78825bd31baac573912",
+    "fsp/seed.py": "9db892cab8be235b22f636d016c8d96a6f16c74395da8c9cfa8c2681aa8c60fc",
+    "fsp/formatting.py": "390067aff21f00f87a9e5deca6cb8dd07774d00eafc08f5b696a22149b0a1315",
+    "fsp/tasks.py": "258134a8ea6e3a126a2a365e790775db8fcf1e99df20f5ed3f7ebee186082b6e",
+    "fsp/models.py": "5040873b582b60ac9729c5f1459555684a5e9ad6131ab54a8f391dac8d5491cd",
+    "fsp/matching.py": "6f4b042f1d438eaefceae3c92717b3426c89913143c1d80dddaedf3b4b39ad43",
+    "fsp/pdf.py": "4ae9259a27ad3de8bfdbc388b20866e9cd629badfd37cdbe033e429a28a73552",
+    "fsp/assessment.py": "d5b30eab36bfdda4d978584be30b42fea6c0cea537dd55f1ee91da0a2e369b58",
+    "fsp/outputs.py": "2ec9c8e367979ccbf195a4223fc98510028fdf0178c8337d4e4ef5eec07871a6",
+    "fsp/task_worker.py": "9dc4d9b97a9fec495ff08af98efc25428f3e7f92baf395f392a28bac661ee85f",
+    "fsp/bank.py": "77933805dfab56e583d9749b2b7eee2931046f4d6b64930ee66d4b75791e7209",
+    "fsp/main.py": "730e8d49b84eb8b0eda210bab9bbb5aac85e8c74e56d459f91e1dae39259cf32",
+    "fsp/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fsp/fsp_provider.py": "5b119010cf47324fc619228204ad12763b8cb7cfefb8ad39336a204fe5b11b64"
+  },
+  "web_files": {
+    "index.html": "f9bd5e18b7af394b1524da54636c602b6675d6f17c463c75508ad2293050eacb",
+    "assets/index-Ba64Ju2F.css": "a8a88c02bf7e9ec73a96a3432c9aa2d84247f23a7c2f7e50cde005e2951d7769",
+    "assets/index-BONHRVeM.js": "f66ed11cf4ddfda9e50889f2c2e4a399cf31baed861b3a1ed73986b827ce9834"
+  }
+}

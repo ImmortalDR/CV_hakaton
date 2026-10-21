@@ -17,7 +17,9 @@ out=Path('docs/delivery/evidence/final_2026-10-21/mail.json')
 result=dict(checked_at=datetime.now(timezone.utc).isoformat(),status='not_run',mailbox='owner_controlled_gmail',checks=[])
 try:
     user=os.environ.get('SMTP_USER','')
-    if user.lower()!='nikalhol@gmail.com': raise RuntimeError('controlled_mailbox_not_configured')
+    controlled=os.environ.get('CONTROLLED_MAILBOX','').strip().lower()
+    if not controlled or user.lower()!=controlled or not controlled.endswith('@gmail.com'):
+        raise RuntimeError('controlled_mailbox_not_configured')
     password=os.environ.get('SMTP_PASSWORD','')
     if not password: raise RuntimeError('smtp_password_missing')
     # Check mailbox access before triggering a real registration email.

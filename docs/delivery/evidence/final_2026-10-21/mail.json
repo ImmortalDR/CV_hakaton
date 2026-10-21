@@ -1,0 +1,14 @@
+{
+  "checked_at": "2026-10-21T11:32:16.241073+00:00",
+  "status": "pass",
+  "mailbox": "owner_controlled_gmail",
+  "checks": [
+    "registration_smtp_no_token_in_response",
+    "real_message_received_in_inbox",
+    "verify",
+    "token_single_use",
+    "login",
+    "duplicate_registration_409",
+    "new_profile_private"
+  ]
+}

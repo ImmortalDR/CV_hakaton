@@ -1,0 +1,38 @@
+{
+  "status": "pass",
+  "checked_at": "2026-10-21T11:40:35.108780+00:00",
+  "credentials_location": "/root/.local/share/fsp-demo-accounts/final-review-20261021-974f35.json",
+  "accounts": [
+    {
+      "scenario": "fresh_python",
+      "email": "final-review-fresh_python-974f35@example.org",
+      "login": "pass",
+      "state": "unused_no_attempts"
+    },
+    {
+      "scenario": "fresh_sql_middle",
+      "email": "final-review-fresh_sql_middle-974f35@example.org",
+      "login": "pass",
+      "state": "unused_no_attempts"
+    },
+    {
+      "scenario": "ready_candidate",
+      "email": "final-review-ready_candidate-974f35@example.org",
+      "login": "pass",
+      "state": "synthetic_confirmed_Junior"
+    },
+    {
+      "scenario": "inviting_company",
+      "email": "final-review-inviting_company-974f35@example.org",
+      "login": "pass",
+      "state": "new_company_no_grants"
+    },
+    {
+      "scenario": "other_company",
+      "email": "final-review-other_company-974f35@example.org",
+      "login": "pass",
+      "state": "new_company_no_grants"
+    }
+  ],
+  "scope": "Demo bootstrap, not email verification or human pilot. No history reset. Each login checked."
+}
