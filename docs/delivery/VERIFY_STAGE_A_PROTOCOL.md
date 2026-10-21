@@ -1,3 +1,184 @@
+# Проверка этапа A — актуальный spot re-audit
+
+Дата: 2026-10-21T09:32:20.584451+00:00. Проверенный продуктовый HEAD: `f86d7331f8b208a461d2f76d6288036a46513d86`, ветка `codex/fsp-mvp`.
+Основание: независимый аудит `44c3fb0`, исправление упаковки и орба `f86d733`.
+
+**Pck1 PASS, Q4 PASS. Технических FAIL нет; после успешного push и human PASS обязательных шагов можно слать.**
+Сейчас отправка ещё не разрешена: Pck2 PARTIAL (ветка GitHub отстаёт), Pck5 HUMAN_ONLY (факта сдачи нет).
+Итог: 14 PASS / 1 PARTIAL / 0 FAIL / 1 HUMAN_ONLY. Старые запреты ниже сохранены исключительно как история.
+
+<a id="spot-re-audit"></a>
+## Spot re-audit после packaging and orb fix
+
+### Объём и результаты
+
+Код продукта, changelog и smoke-скрипт в этой сессии не менялись. Содержательно прочитаны
+актуальный changelog, относящиеся к Q4 ветви App.tsx (обзор, орб, пустые приглашения),
+smoke и фикстура изоляции pytest. Выполнены трассировка условий и проверки на стенде.
+Это точечная перепроверка, а не новый полный аудит ТЗ, архивов и бинарных материалов.
+Исходные результаты matching/oracle, ревью презентации и NOTTODO наследуются из `44c3fb0`;
+массовые измерения качества и визуальный осмотр презентации заново не выполнялись.
+
+- Pck1: в CHANGELOG_STAGE_A.md раздел старого STOP имеет заголовок «Архив … ИСТОРИЯ, не текущий статус»,
+  пояснение о закрытии FAIL и свёрнутый блок «Исторический STOP (устарело)». После него отдельный актуальный статус.
+  Действующего запрета из-за старых Q3/Q4 FAIL нет. Матрица и human-протокол синхронизированы этой записью.
+- Q4: App.tsx:775–778 выбирает «навыки / к проверке» при отсутствии verified_grade.
+  Основной текст предлагает тест, CTA — «Перейти к тестированию»; сообщение о подтверждении доступно в ветви verified_grade.
+  Свежий публичный бандл содержит то же условие (ниже). Chromium подтвердил его при published=false и true.
+- Q3: свежий HTTPS POST submit без confirm_incomplete → 409; попытка active, ответы и expires_at прежние.
+  Далее браузерная отмена оставляет active, явное подтверждение завершает попытку.
+- B05: у published+verified и пустого списка приглашений текст «Ваш профиль опубликован, уровень подтверждён.
+  Ожидайте приглашений работодателей; настройки видимости доступны в профиле.» Нет требования заново подтвердить и опубликовать.
+- Health: `{"status":"ok","demo":true,"version":"1.0.0"}`; api/web/db/edge healthy, worker Up.
+  Перезапуск, миграции, удаление рабочих данных не выполнялись.
+
+### Исполненные команды
+
+| Команда | Результат |
+|---|---|
+| `COOKIE_SECURE=false python3 scripts/run_local.py .venv/bin/pytest tests -q` | exit 0; **97 passed, 2 warnings in 42.82s** (httpx/Starlette и anyio deprecation) |
+| `python3 scripts/run_local.py .venv/bin/python scripts/smoke_stage_a.py --out /tmp/stage-a-spot-smoke.json` | exit 0; **17/17**, page_errors=[] |
+| `npm run build` в apps/web | exit 0; tsc + Vite, 55 modules, 3.38s |
+| `python3 scripts/run_local.py .venv/bin/python /tmp/stage-a-spot-orb.py` | повторный запуск exit 0; два состояния неподтверждённого кандидата PASS |
+| `curl -fsS https://85-137-26-131.sslip.io/api/health` | exit 0; status=ok |
+| `docker compose ps` | api/web/db/edge healthy, worker Up |
+| `git rev-parse HEAD` | f86d7331f8b208a461d2f76d6288036a46513d86 |
+| `git ls-remote origin refs/heads/codex/fsp-mvp` | 2e6d6daa5bfb59f6d5a7e7317aa41093c8f05980 |
+| `GIT_TERMINAL_PROMPT=0 git push --dry-run origin codex/fsp-mvp` | exit 128; could not read Username for https://github.com: terminal prompts disabled |
+
+Pytest работал с отдельной fsp_test. Smoke и probe создавали только вымышленные demo-аккаунты;
+общие review-аккаунты использованы только для входа. Первая попытка probe завершилась ошибкой
+IndentationError во временном cleanup-коде (не в приложении); отступ исправлен, probe повторён успешно.
+Оба кандидата первого запуска адресно скрыты отдельным cleanup, кандидаты smoke/повторного probe также скрыты.
+Рабочая БД не сбрасывалась. SMTP, реальные семь дней, человек и внешняя сеть жюри — not_run.
+
+### Бандл и DOM
+
+Публичный HTML прочитан через urllib.request, из src извлечён текущий JS; его байты сравнили
+с `docker compose exec -T web cat /usr/share/nginx/html/assets/index-CiUyEab4.js`
+и apps/web/dist/assets/index-CiUyEab4.js после успешной свежей сборки.
+
+```json
+{
+  "asset": "/assets/index-CiUyEab4.js",
+  "sha256": "23fedeb2b2986c3b5c4e1b7df33a0a946156bfa3fecfb44b9dd9f0e1829794dc",
+  "public_container_local_equal": true,
+  "conditional_excerpt": "jsx(Dn,{size:18})]})]}),i.jsxs(\"div\",{className:\"orb\",children:[i.jsx(Aa,{size:78}),i.jsx(\"span\",{children:p?f!=null&&f.verified_grade?i.jsxs(i.Fragment,{children:[\"навыки\",i.jsx(\"br\",{}),\"подтверждены\"]}):i.jsxs(i.Fragment,{children:[\"навыки\",i.jsx(\"br\",{}),\"к проверке\"]}):i.jsxs(i.Fragment,{children:[\"навыки\",i.jsx(\"br\",{}),\"в основе\"]})})]})]}),i.jsx(\"div\",{className:\"stats\""
+}
+```
+
+Фактические DOM-тексты нового кандидата:
+
+```json
+[
+  {
+    "published": false,
+    "verified_grade": null,
+    "orb": "навыки\nк проверке",
+    "banner": "Ваш профиль — больше, чем резюме\nПокажите, что вы умеете\n\nТест по основному и вспомогательному навыкам поможет подтвердить выбранный уровень. ФСП ID для этого не нужен.\n\nПерейти к тестированию\nнавыки\nк проверке"
+  },
+  {
+    "published": true,
+    "verified_grade": null,
+    "orb": "навыки\nк проверке",
+    "banner": "Ваш профиль — больше, чем резюме\nПокажите, что вы умеете\n\nТест по основному и вспомогательному навыкам поможет подтвердить выбранный уровень. ФСП ID для этого не нужен.\n\nПерейти к тестированию\nнавыки\nк проверке"
+  }
+]
+```
+
+Воспроизводимый дополнительный probe (временный файл /tmp/stage-a-spot-orb.py; bootstrap и cleanup из неизменённого smoke):
+
+```python
+from pathlib import Path
+source=Path('scripts/smoke_stage_a.py').read_text()
+exec(source.split('try:\n    with sync_playwright()')[0])
+records=[]
+try:
+ with sync_playwright() as pw:
+  browser=pw.chromium.launch()
+  ctx=browser.new_context(base_url=a.base_url,extra_http_headers={'X-Requested-With':'fsp-web'})
+  assert ctx.request.post('/api/auth/login',data={k:accounts[0][k] for k in ['email','password']}).status==200
+  own=ctx.request.get('/api/me/profile').json()
+  assert own['verified_grade'] is None
+  fields=['name','phone','about','specialization','claimed_grade','skills','roles','soft_skills','experience_years','processing','published','show_experience']
+  page=ctx.new_page()
+  for published in [False,True]:
+   assert ctx.request.put('/api/me/profile',data={**{k:own[k] for k in fields},'published':published}).ok
+   page.goto(a.base_url)
+   page.locator('nav').get_by_role('button',name='Обзор',exact=True).click()
+   expect(page.locator('.orb')).to_contain_text('к проверке')
+   banner=page.locator('.feature-banner').inner_text()
+   assert 'подтверждены' not in banner and 'Ваш уровень подтверждён' not in banner
+   records.append(dict(published=published,verified_grade=None,orb=page.locator('.orb').inner_text(),banner=banner))
+  browser.close()
+finally:
+ exec(__import__("textwrap").dedent(source.split('finally:\n')[1].split('assert not errors')[0]))
+Path('/tmp/stage-a-spot-orb.json').write_text(json.dumps(records,ensure_ascii=False,indent=2))
+print(json.dumps(records,ensure_ascii=False))
+```
+
+Полный свежий smoke-report:
+
+```json
+{
+  "status": "pass",
+  "checked_at": "2026-10-21T09:30:16.735418+00:00",
+  "base_url": "https://85-137-26-131.sslip.io",
+  "checks": [
+    "https_health_ok",
+    "openapi_exact",
+    "three_review_logins_ok",
+    "Q1_navigation_reload_server_draft_owner_expiry",
+    "Q2_live_bank_2_1_rounding_hint",
+    "Q3_direct_API_without_confirm_409_active_draft_unchanged",
+    "Q3_cancel_keeps_active_accept_completes",
+    "Q4_verified_published_hidden_empty_invitations_and_overview_CTA",
+    "Q5_anonymous_label_selection_invitation_PDF_UI",
+    "invite_accept_addressed_contacts_PDF_isolation",
+    "FSP_does_not_change_grade_zero_without_FSP",
+    "old_snapshot_preserved",
+    "Q5_two_visible_score_sums_unique_labels_changed_banner_scroll",
+    "Q5_filters_snapshot_and_score_UI",
+    "Q6_live_7day_resume_no_duplicate_UI_date_equals_API",
+    "Q4_hidden_overview_revoked_chat_snapshot_PDF",
+    "mobile_no_horizontal_overflow"
+  ],
+  "page_errors": [],
+  "scope": "Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed."
+}
+```
+
+### Все ID после spot re-audit
+
+| ID | Вердикт | Остаток |
+|---|---|---|
+| Q1 | PASS | Связанные human-шаги остаются для заполнения. |
+| Q2 | PASS | Связанные human-шаги остаются для заполнения. |
+| Q3 | PASS | Связанные human-шаги остаются для заполнения. |
+| Q4 | PASS | Связанные human-шаги остаются для заполнения. |
+| Q5 | PASS | Связанные human-шаги остаются для заполнения. |
+| Q6 | PASS | Связанные human-шаги остаются для заполнения. |
+| Q7 | PASS | Связанные human-шаги остаются для заполнения. |
+| Pck1 | PASS | Связанные human-шаги остаются для заполнения. |
+| Pck2 | PARTIAL | Push актуальной ветки + H-PUSH. |
+| Pck3 | PASS | Связанные human-шаги остаются для заполнения. |
+| Pck4 | PASS | Связанные human-шаги остаются для заполнения. |
+| Pck5 | HUMAN_ONLY | Факт отправки фиксирует человек после допуска. |
+| REG_FSP | PASS | Связанные human-шаги остаются для заполнения. |
+| REG_ISO | PASS | Связанные human-шаги остаются для заполнения. |
+| REG_OLD_SEL | PASS | Связанные human-шаги остаются для заполнения. |
+| NOTTODO | PASS | Связанные human-шаги остаются для заполнения. |
+
+Допуск: успешный push этого docs-коммита вместе с f86d733, сверка GitHub-ссылок и human PASS всех ★;
+решение по календарному наблюдению Q6 фиксируется честно. Старые FAIL больше не блокируют отправку.
+
+---
+
+## Архив независимого аудита 44c3fb0 — ИСТОРИЯ
+
+Весь текст ниже описывает состояние **до f86d733**. Вердикты Pck1 FAIL / Q4 PARTIAL и запрет отправки
+отменены результатами spot re-audit выше. Старые доказательства сохранены для трассируемости.
+
 # Независимая adversarial-перепроверка этапа A
 
 Дата: 2026-10-21T09:22:32.651398+00:00. Проверяемый HEAD: `6b965aca20f70efe4e6430c30aaabc102c52581d`, ветка `codex/fsp-mvp`.

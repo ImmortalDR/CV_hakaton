@@ -1,16 +1,16 @@
 {
-  "session": "independent-stage-a-2026-10-21",
-  "checked_at": "2026-10-21T09:22:32.651398+00:00",
-  "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d",
+  "session": "spot-stage-a-after-f86d733-2026-10-21",
+  "checked_at": "2026-10-21T09:32:20.584451+00:00",
+  "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86",
   "branch": "codex/fsp-mvp",
   "submission_allowed": false,
   "counts": {
-    "PASS": 12,
-    "PARTIAL": 2,
-    "FAIL": 1,
-    "HUMAN_ONLY": 1
+    "PASS": 14,
+    "PARTIAL": 1,
+    "HUMAN_ONLY": 1,
+    "FAIL": 0
   },
-  "summary": "Отправка заблокирована: Pck1 FAIL; Pck2 PARTIAL (нет push); Q4 PARTIAL должен быть отражён в упаковке. Прежние Q3 и B05 empty-state блокеры не воспроизвелись.",
+  "summary": "Pck1 и Q4 закрыты точечной перепроверкой после f86d733. Технических FAIL нет. После успешного push актуальной ветки и human PASS по обязательным шагам можно отправлять; сейчас Pck2 PARTIAL, Pck5 HUMAN_ONLY.",
   "tasks": [
     {
       "id": "Q1",
@@ -29,6 +29,11 @@
           "kind": "command",
           "ref": "VERIFY_STAGE_A_PROTOCOL.md#pytest",
           "excerpt": "97 passed; test_draft_answers_owner_lifecycle, test_draft_expired; UI status Ответы сохранены, outsider draft 404"
+        },
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
+          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
         }
       ],
       "gaps": [],
@@ -36,8 +41,8 @@
         "H-Q1"
       ],
       "regression_risk": "low",
-      "checked_at": "2026-10-21T09:22:32.651398+00:00",
-      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+      "checked_at": "2026-10-21T09:32:20.584451+00:00",
+      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
     },
     {
       "id": "Q2",
@@ -61,6 +66,11 @@
           "kind": "file",
           "ref": "CHANGELOG_STAGE_A.md",
           "excerpt": "Старые попытки сохраняют исходные версии; массового пересчёта не было."
+        },
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
+          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
         }
       ],
       "gaps": [],
@@ -68,8 +78,8 @@
         "H-Q2"
       ],
       "regression_risk": "low",
-      "checked_at": "2026-10-21T09:22:32.651398+00:00",
-      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+      "checked_at": "2026-10-21T09:32:20.584451+00:00",
+      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
     },
     {
       "id": "Q3",
@@ -88,6 +98,11 @@
           "kind": "api",
           "ref": "VERIFY_STAGE_A_PROTOCOL.md#blockers",
           "excerpt": "POST submit: 409; detail=Не заполнено 7 из 8 заданий. Подтвердите завершение теста с пропусками.; status=active, answers={1:42}, same_expiry=true"
+        },
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
+          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
         }
       ],
       "gaps": [],
@@ -95,12 +110,12 @@
         "H-Q3"
       ],
       "regression_risk": "low",
-      "checked_at": "2026-10-21T09:22:32.651398+00:00",
-      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+      "checked_at": "2026-10-21T09:32:20.584451+00:00",
+      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
     },
     {
       "id": "Q4",
-      "verdict": "PARTIAL",
+      "verdict": "PASS",
       "dod_from_canon": "Обзор/приглашения/диалог соответствуют текущему состоянию профиля и согласия.",
       "audit_refs": [
         "B05",
@@ -109,31 +124,23 @@
       "agent_evidence": [
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
-          "excerpt": "Q4_verified_published_hidden_empty_invitations_and_overview_CTA; Q4_hidden_overview_revoked_chat_snapshot_PDF"
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
+          "excerpt": "App.tsx: verified_grade определяет орб; свежая dist = web = публичный JS. Chromium: verified_grade=null, published=false/true → «навыки к проверке»; B05 regression PASS."
         },
         {
-          "kind": "api",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#blockers",
-          "excerpt": "published+verified: Ваш профиль опубликован, уровень подтверждён.; hidden+verified: профиль скрыт; contacts_after_republish=null, old_chat_available=false, new_accepted_chat_available=true"
-        },
-        {
-          "kind": "file",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#blockers",
-          "excerpt": "verified=false: основной текст предлагает тест, но декоративная надпись в feature-banner остаётся «навыки подтверждены»."
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
+          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
         }
       ],
-      "gaps": [
-        "Статичная надпись «навыки подтверждены» показана и при verified=false: полная согласованность всех текстов не достигнута. Прежние два сценария B05 исправлены.",
-        "Требуется человеческая оценка этой надписи; PARTIAL пока не отражён в актуальном changelog."
-      ],
+      "gaps": [],
       "human_checks_required": [
         "H-Q4a",
         "H-Q4b"
       ],
-      "regression_risk": "med",
-      "checked_at": "2026-10-21T09:22:32.651398+00:00",
-      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+      "regression_risk": "low",
+      "checked_at": "2026-10-21T09:32:20.584451+00:00",
+      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
     },
     {
       "id": "Q5",
@@ -150,6 +157,11 @@
           "kind": "command",
           "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
           "excerpt": "Q5_anonymous_label_selection_invitation_PDF_UI; Q5_two_visible_score_sums_unique_labels_changed_banner_scroll; Q5_filters_snapshot_and_score_UI"
+        },
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
+          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
         }
       ],
       "gaps": [],
@@ -159,8 +171,8 @@
         "H-Q5c"
       ],
       "regression_risk": "low",
-      "checked_at": "2026-10-21T09:22:32.651398+00:00",
-      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+      "checked_at": "2026-10-21T09:32:20.584451+00:00",
+      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
     },
     {
       "id": "Q6",
@@ -179,6 +191,11 @@
           "kind": "command",
           "ref": "VERIFY_STAGE_A_PROTOCOL.md#pytest",
           "excerpt": "97 passed включает 6 tests/test_employer_tasks.py: управляемое время до границы/на границе, 4 concurrent ticks, closed не выдаёт."
+        },
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
+          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
         }
       ],
       "gaps": [],
@@ -186,8 +203,8 @@
         "H-Q6-calendar"
       ],
       "regression_risk": "low",
-      "checked_at": "2026-10-21T09:22:32.651398+00:00",
-      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+      "checked_at": "2026-10-21T09:32:20.584451+00:00",
+      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
     },
     {
       "id": "Q7",
@@ -219,26 +236,28 @@
     },
     {
       "id": "Pck1",
-      "verdict": "FAIL",
+      "verdict": "PASS",
       "dod_from_canon": "Эксперт за 2 минуты видит однозначное текущее состояние Q1–Q7. ",
       "audit_refs": [],
       "agent_evidence": [
         {
           "kind": "file",
-          "ref": "CHANGELOG_STAGE_A.md",
-          "excerpt": "Начало: сервер отклоняет submit без confirm; конец: STOP, submit возвращает HTTP 200, Q3 FAIL и Q4 FAIL. Раздел не помечен как отменённый/исторический."
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
+          "excerpt": "CHANGELOG_STAGE_A.md: старый STOP явно ИСТОРИЯ/архив, актуальный статус отдельно. Прежний запрет по старым FAIL отменён."
+        },
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
+          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
         }
       ],
-      "gaps": [
-        "Упаковка противоречит свежим проверкам и собственному описанию исправлений. Старый STOP выглядит действующим.",
-        "Нужно явно отделить историю от текущего результата и указать оставшийся PARTIAL Q4; в этой сессии файл changelog не менялся."
-      ],
+      "gaps": [],
       "human_checks_required": [
         "H-Pck1"
       ],
-      "regression_risk": "high",
-      "checked_at": "2026-10-21T09:22:32.651398+00:00",
-      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+      "regression_risk": "low",
+      "checked_at": "2026-10-21T09:32:20.584451+00:00",
+      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
     },
     {
       "id": "Pck2",
@@ -260,6 +279,11 @@
           "kind": "command",
           "ref": "VERIFY_STAGE_A_PROTOCOL.md#environment",
           "excerpt": "git ls-remote: 2e6d6daa5bfb59f6d5a7e7317aa41093c8f05980; локальный HEAD 6b965aca; push dry-run: could not read Username"
+        },
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
+          "excerpt": "Свежий remote: 2e6d6da; push --dry-run exit 128, GitHub credentials unavailable."
         }
       ],
       "gaps": [
@@ -271,8 +295,8 @@
         "H-PUSH"
       ],
       "regression_risk": "high",
-      "checked_at": "2026-10-21T09:22:32.651398+00:00",
-      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+      "checked_at": "2026-10-21T09:32:20.584451+00:00",
+      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
     },
     {
       "id": "Pck3",
@@ -294,6 +318,11 @@
           "kind": "command",
           "ref": "VERIFY_STAGE_A_PROTOCOL.md#environment",
           "excerpt": "Том fsp-mvp_fsp_db создан 2026-10-07T22:42:58+02:00; деплой/миграции/удаление БД в этой сессии не выполнялись."
+        },
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
+          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
         }
       ],
       "gaps": [],
@@ -302,8 +331,8 @@
         "H-Pck3-reach"
       ],
       "regression_risk": "low",
-      "checked_at": "2026-10-21T09:22:32.651398+00:00",
-      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+      "checked_at": "2026-10-21T09:32:20.584451+00:00",
+      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
     },
     {
       "id": "Pck4",
@@ -315,6 +344,11 @@
           "kind": "command",
           "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
           "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:18:21.766998+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
+        },
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
+          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
         }
       ],
       "gaps": [],
@@ -322,8 +356,8 @@
         "H-Pck4-spot"
       ],
       "regression_risk": "low",
-      "checked_at": "2026-10-21T09:22:32.651398+00:00",
-      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+      "checked_at": "2026-10-21T09:32:20.584451+00:00",
+      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
     },
     {
       "id": "Pck5",
@@ -334,18 +368,23 @@
         {
           "kind": "file",
           "ref": "SUBMISSION_LINKS.md",
-          "excerpt": "Текст подготовлен, отправка не выполнялась. Нынешнее «Закрыты Q1–Q7» требует согласования с PARTIAL Q4 перед копированием."
+          "excerpt": "Текст подготовлен; Q1–Q7 PASS по агентским проверкам. Отправка человеком ещё не подтверждена."
+        },
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
+          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
         }
       ],
       "gaps": [
-        "Нужны исправление упаковки, push, human PASS и подтверждение отправки."
+        "Нужны успешный push актуальной ветки, human PASS обязательных шагов и подтверждение отправки."
       ],
       "human_checks_required": [
         "H-Pck5"
       ],
       "regression_risk": "high",
-      "checked_at": "2026-10-21T09:22:32.651398+00:00",
-      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+      "checked_at": "2026-10-21T09:32:20.584451+00:00",
+      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
     },
     {
       "id": "REG_FSP",
@@ -357,6 +396,11 @@
           "kind": "command",
           "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
           "excerpt": "FSP_does_not_change_grade_zero_without_FSP"
+        },
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
+          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
         }
       ],
       "gaps": [],
@@ -364,8 +408,8 @@
         "H-REG-FSP"
       ],
       "regression_risk": "low",
-      "checked_at": "2026-10-21T09:22:32.651398+00:00",
-      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+      "checked_at": "2026-10-21T09:32:20.584451+00:00",
+      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
     },
     {
       "id": "REG_ISO",
@@ -377,6 +421,11 @@
           "kind": "command",
           "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
           "excerpt": "invite_accept_addressed_contacts_PDF_isolation"
+        },
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
+          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
         }
       ],
       "gaps": [],
@@ -384,8 +433,8 @@
         "H-REG-ISO"
       ],
       "regression_risk": "low",
-      "checked_at": "2026-10-21T09:22:32.651398+00:00",
-      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+      "checked_at": "2026-10-21T09:32:20.584451+00:00",
+      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
     },
     {
       "id": "REG_OLD_SEL",
@@ -397,6 +446,11 @@
           "kind": "command",
           "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
           "excerpt": "old_snapshot_preserved; Q4_hidden_overview_revoked_chat_snapshot_PDF"
+        },
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
+          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
         }
       ],
       "gaps": [],
@@ -404,8 +458,8 @@
         "H-REG-OLD"
       ],
       "regression_risk": "low",
-      "checked_at": "2026-10-21T09:22:32.651398+00:00",
-      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+      "checked_at": "2026-10-21T09:32:20.584451+00:00",
+      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
     },
     {
       "id": "NOTTODO",
@@ -433,5 +487,7 @@
       "checked_at": "2026-10-21T09:22:32.651398+00:00",
       "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
     }
-  ]
+  ],
+  "previous_audit_commit": "44c3fb0",
+  "submission_allowed_after_push_and_human": true
 }
