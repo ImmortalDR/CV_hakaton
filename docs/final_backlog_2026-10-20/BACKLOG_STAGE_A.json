@@ -136,8 +136,9 @@
     {
       "id": "Pck3",
       "owner": "danila",
-      "status": "todo",
-      "title": "Deploy to sslip after Q merges"
+      "status": "done",
+      "title": "Deploy to sslip after Q merges",
+      "verification": "docker compose build/up api web task-worker; healthy API/web, HTTPS health ok; all deployed API SHA256 match; DB preserved"
     },
     {
       "id": "Pck4",
