@@ -19,6 +19,37 @@ from .models import (
 )
 
 
+def ready_candidate(db, user):
+    """Create visible, graded examples only for a newly created synthetic user."""
+    passed = None
+    for offset, success in [(10, True), (9, False)]:
+        value = secrets.token_hex(16)
+        qs = bank.generate("python", "Junior", value)
+        answers = {q["id"]: q["answer"] for q in qs}
+        if not success:
+            answers = {q["id"]: q["answer"] if i < 4 else "-9999" for i, q in enumerate(qs)}
+        result = bank.grade_answers(qs, answers)
+        at = now() - timedelta(days=offset)
+        attempt = Attempt(user_id=user.id, specialization="python", grade="Junior",
+            seed=value, version=bank.VERSION, variant_hash=bank.fingerprint(qs),
+            questions=qs, answers=answers, result=result, status="completed",
+            created_at=at, finished_at=at + timedelta(minutes=12), expires_at=at + timedelta(minutes=30))
+        db.add(attempt)
+        db.flush()
+        for item in result["skills"]:
+            db.add(Evidence(user_id=user.id, attempt_id=attempt.id, version=bank.VERSION, **item))
+        if success:
+            passed = attempt
+    profile = Profile(user_id=user.id, name="Алексей · демо", phone="+7 000 000-00-00",
+        skills=["python", "testing"], roles="Бэкенд-разработчик", specialization="python",
+        claimed_grade="Junior", verified_grade="Junior", verified_attempt_id=passed.id,
+        grade_changed_at=passed.finished_at, published=True, processing=True,
+        about="Вымышленный кандидат. Результаты тестов созданы для демонстрации.")
+    db.add(profile)
+    db.add(Consent(user_id=user.id, processing=True, publication=True))
+    return profile
+
+
 def seed(db):
     for account in ["candidate", "employer", "other_employer"]:
         email = account + "@demo.example.org"
@@ -33,19 +64,10 @@ def seed(db):
         )
         db.add(u)
         db.flush()
-        db.add(Consent(user_id=u.id, processing=True, publication=False))
         if u.role == "candidate":
-            db.add(
-                Profile(
-                    user_id=u.id,
-                    name="Алексей · демо",
-                    skills=["python", "testing"],
-                    roles="Бэкенд-разработчик",
-                    about="Демонстрационный аккаунт для самостоятельного прохождения теста.",
-                    experience_years=None,
-                )
-            )
+            ready_candidate(db, u)
         else:
+            db.add(Consent(user_id=u.id, processing=True, publication=False))
             c = Company(
                 name="Вымышленная компания" if account == "employer" else "Вектор · демо",
                 description="Создаём сервисы обработки данных и надёжные API. Демонстрационная компания.",

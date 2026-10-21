@@ -5,6 +5,14 @@
 отображает московское время. Неизвестные значения представлены null/unknown,
 а не положительным совпадением. Cookie HttpOnly хранит сессию.
 
+Кабинет восстанавливает текущий аккаунт через `GET /api/auth/me`, включая возврат
+во вкладку. В запросах кабинета frontend передаёт `X-FSP-User` с ID отображаемого
+аккаунта. Если cookie уже принадлежит другому пользователю, API отвечает 409 и
+`X-FSP-Session-Changed: true` до чтения или изменения данных; frontend заново
+получает текущую сессию. Заголовок не заменяет авторизацию cookie. Ответы старого
+аккаунта отбрасываются при переключении. Вкладки одного профиля браузера имеют
+общую сессию; для одновременной работы двух ролей нужны независимые окна.
+
 Для POST/PUT/PATCH нужен заголовок `X-Requested-With: fsp-web`.
 Неизвестные поля входа отвергаются: нельзя добавить `verified_grade`,
 `seed`, `score`, `company_id` или роль в обход нужного маршрута.
@@ -21,7 +29,8 @@
 | POST /api/auth/login | подтверждённый email/пароль; устанавливает cookie |
 | POST /api/auth/logout | аннулирует сессию и cookie |
 | GET /api/auth/me | своя роль, ID, email, признак демо |
-| POST /api/auth/demo | только DEMO_MODE; candidate/employer/other_employer |
+| POST /api/auth/demo-runs | только DEMO_MODE; создаёт отдельную синтетическую пару, возвращает token и candidate_code |
+| POST /api/auth/demo | только DEMO_MODE; account=candidate/employer и run_token для своего прохода; без токена — общие candidate/employer/other_employer |
 | GET/PUT /api/me/profile | только кандидат, собственный профиль и согласия |
 | POST /api/me/fsp | пример demo-winner/demo-participant или unlink |
 | GET/POST /api/me/attempts | история / старт {grade}; сервер выбирает вариант |
@@ -29,7 +38,7 @@
 | PUT /api/me/attempts/{id}/answers | черновик владельца активной попытки; срок не продлевается |
 | POST /api/me/attempts/{id}/submit | answers и confirm_incomplete=true при пропусках; без подтверждения 409; повтор завершённого результата неизменен |
 | GET/PUT /api/me/company | только своя компания |
-| GET /api/candidates | только работодатель; specialization, grade, skill, fsp_only |
+| GET /api/candidates | только работодатель; candidate_code, specialization, grade, skill, fsp_only; границы демопрохода соблюдаются и при поиске по номеру |
 | GET /api/candidates/{id} | опубликованная проекция с текущими правами |
 | GET /api/profiles/{id}/pdf | собственный либо доступный работодателю PDF |
 | POST /api/searches | подтверждённая NeedInput; создаёт потребность и снимок |

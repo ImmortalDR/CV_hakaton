@@ -112,6 +112,7 @@ try:
         checked('all candidate sections back/forward, refresh, unknown and wrong-role routes')
 
         nav(page, 'Подтверждение навыков')
+        initial_attempt_count = len(call(c, '/me/attempts'))
         page.get_by_role('button', name='Начать тест', exact=True).click()
         expect(page.get_by_label('Ответ на задание 1', exact=True)).to_be_visible()
         attempt = call(c, '/me/attempts')[0]
@@ -156,7 +157,7 @@ try:
         back(page); at(page, test_url)
         expect(page.get_by_role('heading', name='Уровень подтверждён', exact=True)).to_be_visible()
         page.reload(); expect(page.get_by_role('heading', name='Уровень подтверждён', exact=True)).to_be_visible()
-        assert len(call(c, '/me/attempts')) == 1
+        assert len(call(c, '/me/attempts')) == initial_attempt_count + 1
         checked('completed result deep link/back/reload, no attempt resubmission')
 
         e = context(); hr = e.new_page(); hr.goto('/'); hr.get_by_role('button', name='Я работодатель', exact=True).click()

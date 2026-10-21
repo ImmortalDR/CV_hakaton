@@ -1,0 +1,223 @@
+{
+  "status": "pass",
+  "checked_at": "2026-10-21T18:45:17.426527+00:00",
+  "public_url": "https://85-137-26-131.sslip.io",
+  "scope": "Automated real-browser checks with real API/PostgreSQL. New isolated synthetic demo runs; shared C7D0B82B checked read-only. No external email or independent human pilot.",
+  "root_cause": "A retained candidate view could send requests with an employer cookie after another tab changed login. Public history/availability requests returned 403; reproduced in two tabs sharing cookies.",
+  "fix": "Shared session transition for login/restoration; revalidate on focus, pageshow, visibility, storage and rejected API requests; reject stale-account reads/writes before execution; ignore old responses. Independently load history and availability, bound requests to 15 seconds and allow manual abort/retry.",
+  "server_tests": {
+    "passed": 132,
+    "warnings": 1,
+    "warning": "anyio BlockingPortal deprecation in test dependency",
+    "command": "COOKIE_SECURE=false .venv/bin/python scripts/run_local.py .venv/bin/pytest -q tests"
+  },
+  "builds": {
+    "typescript_vite": "pass",
+    "docker_api_web_worker": "pass",
+    "published_bundle": "index-CGh74vV2.js"
+  },
+  "deploy": {
+    "services_healthy": [
+      "api",
+      "web",
+      "task-worker"
+    ],
+    "api_health": {
+      "status": "ok",
+      "demo": true,
+      "version": "1.0.0"
+    },
+    "openapi_matches_repository": true,
+    "migration": "d7f21021a001 (additive)",
+    "existing_data_preserved": true
+  },
+  "repeatability": "Two runs have the same initial grade, publication, scores, question counts and empty conversations/tasks. IDs, times and generated question values deliberately differ. Rejoining the same run preserves its changes; a new run restores the baseline without resetting others.",
+  "restoration_test_scope": "Real saved cookies in fresh contexts and reloads; pageshow(persisted=true) dispatched to exercise the restored-page handler. No claim of forcing a particular browser BFCache implementation.",
+  "commands": [
+    ".venv/bin/python scripts/run_local.py .venv/bin/python tests/browser_navigation.py",
+    ".venv/bin/python scripts/run_local.py .venv/bin/python tests/run_jury_isolated.py",
+    ".venv/bin/python tests/browser_sessions.py --base-url https://85-137-26-131.sslip.io --out audit/current/sessions-public",
+    ".venv/bin/python tests/browser_jury.py --base-url https://85-137-26-131.sslip.io --runs 2 --out audit/current/jury-public"
+  ],
+  "results": {
+    "jury_local": {
+      "complete_runs": 2,
+      "checks": [
+        "1: history, answers, explanations, failed attempt preserves Junior",
+        "1: history survives availability failure and recovers after network failure",
+        "1: matching, missing HTTP proof, exact code search, anonymous PDF",
+        "1: invitation, scoped consent, disclosed PDF, two-way chat",
+        "1: task consent, answer, 85/100 review, pause/resume, unchanged grade",
+        "1: FSP adds 6 ranking points and does not change grade",
+        "1: hide removes search/PDF/chat; republish requires new invitation and consent",
+        "2: history, answers, explanations, failed attempt preserves Junior",
+        "2: history survives availability failure and recovers after network failure",
+        "2: matching, missing HTTP proof, exact code search, anonymous PDF",
+        "2: invitation, scoped consent, disclosed PDF, two-way chat",
+        "2: task consent, answer, 85/100 review, pause/resume, unchanged grade",
+        "2: FSP adds 6 ranking points and does not change grade",
+        "2: hide removes search/PDF/chat; republish requires new invitation and consent"
+      ],
+      "identical_initial_states": true,
+      "initial_states": [
+        {
+          "grade": "Junior",
+          "published": true,
+          "history_scores": [
+            50.0,
+            100.0
+          ],
+          "question_counts": [
+            8,
+            8
+          ],
+          "invites": 0,
+          "searches": 0,
+          "tasks": 0,
+          "achievements": 0,
+          "contacts": null
+        },
+        {
+          "grade": "Junior",
+          "published": true,
+          "history_scores": [
+            50.0,
+            100.0
+          ],
+          "question_counts": [
+            8,
+            8
+          ],
+          "invites": 0,
+          "searches": 0,
+          "tasks": 0,
+          "achievements": 0,
+          "contacts": null
+        }
+      ],
+      "page_errors": [],
+      "scope": "New isolated synthetic demo runs only; business actions via UI; read-only API/PDF assertions; no external email"
+    },
+    "jury_public": {
+      "complete_runs": 2,
+      "checks": [
+        "1: history, answers, explanations, failed attempt preserves Junior",
+        "1: history survives availability failure and recovers after network failure",
+        "1: matching, missing HTTP proof, exact code search, anonymous PDF",
+        "1: invitation, scoped consent, disclosed PDF, two-way chat",
+        "1: task consent, answer, 85/100 review, pause/resume, unchanged grade",
+        "1: FSP adds 6 ranking points and does not change grade",
+        "1: hide removes search/PDF/chat; republish requires new invitation and consent",
+        "2: history, answers, explanations, failed attempt preserves Junior",
+        "2: history survives availability failure and recovers after network failure",
+        "2: matching, missing HTTP proof, exact code search, anonymous PDF",
+        "2: invitation, scoped consent, disclosed PDF, two-way chat",
+        "2: task consent, answer, 85/100 review, pause/resume, unchanged grade",
+        "2: FSP adds 6 ranking points and does not change grade",
+        "2: hide removes search/PDF/chat; republish requires new invitation and consent"
+      ],
+      "identical_initial_states": true,
+      "initial_states": [
+        {
+          "grade": "Junior",
+          "published": true,
+          "history_scores": [
+            50.0,
+            100.0
+          ],
+          "question_counts": [
+            8,
+            8
+          ],
+          "invites": 0,
+          "searches": 0,
+          "tasks": 0,
+          "achievements": 0,
+          "contacts": null
+        },
+        {
+          "grade": "Junior",
+          "published": true,
+          "history_scores": [
+            50.0,
+            100.0
+          ],
+          "question_counts": [
+            8,
+            8
+          ],
+          "invites": 0,
+          "searches": 0,
+          "tasks": 0,
+          "achievements": 0,
+          "contacts": null
+        }
+      ],
+      "page_errors": [],
+      "scope": "New isolated synthetic demo runs only; business actions via UI; read-only API/PDF assertions; no external email"
+    },
+    "sessions_local": {
+      "checks": [
+        "saved cookie in fresh browser contexts: home, history, result deep link, reload and real retry",
+        "history renders and refreshes while availability request is stalled",
+        "manual history retry cancels a stuck request and starts a new one",
+        "request timeout, network failure and retry preserve loaded history without false empty state",
+        "role change in another tab clears candidate UI and restores the actual employer session",
+        "restored-page event and history retry recover role changes and same-role account changes",
+        "expired session redirects to login, clears private UI, and fresh login restores the original history"
+      ],
+      "page_errors": []
+    },
+    "sessions_public": {
+      "checks": [
+        "saved cookie in fresh browser contexts: home, history, result deep link, reload and real retry",
+        "history renders and refreshes while availability request is stalled",
+        "manual history retry cancels a stuck request and starts a new one",
+        "request timeout, network failure and retry preserve loaded history without false empty state",
+        "role change in another tab clears candidate UI and restores the actual employer session",
+        "restored-page event and history retry recover role changes and same-role account changes",
+        "expired session redirects to login, clears private UI, and fresh login restores the original history"
+      ],
+      "page_errors": []
+    },
+    "navigation": {
+      "checks": [
+        "auth modes, refresh, protected deep link resumes after login",
+        "all candidate sections back/forward, refresh, unknown and wrong-role routes",
+        "unsaved assessment: cancel browser/menu leave, accept, forward, recovery, reload",
+        "completed result deep link/back/reload, no attempt resubmission",
+        "scroll position restored after Back and page reload",
+        "all employer sections, saved search, bank filters, invite modal, no repeated POST",
+        "candidate code search after consent: visible alongside name, refresh, reset and Back",
+        "chat open/back/forward/reload, message sent exactly once",
+        "logout followed by Back does not reopen private workspace",
+        "email hash after mount, consumed token removed, reset without token explained",
+        "mobile menu/back/forward, no horizontal overflow"
+      ],
+      "page_errors": [],
+      "scope": "isolated database, synthetic seed, no external mail"
+    },
+    "shared_candidate": {
+      "candidate_code": "C7D0B82B",
+      "preserved_attempts": 3,
+      "scores": [
+        75.0,
+        100.0,
+        100.0
+      ],
+      "saved_cookie_entry": true,
+      "all_results_opened": true,
+      "reload_passed": true,
+      "refresh_received_http_200": true,
+      "scope": "shared candidate read-only; no history recreated or overwritten"
+    }
+  },
+  "source_hashes": {
+    "apps/web/src/App.tsx": "bcccc23e351e65a13fa38b5cc7ceae03e46c07f4ec26fd11b287a545b0c8446d",
+    "apps/web/src/api.ts": "00043363a74f200aecac721d97e5e8a5cec79f56e0e0ab330f429ff00d8800db",
+    "apps/api/fsp/main.py": "f8b14c3203e7f046f6c2b29d2f371ab47b70e1d7cc14b364ce61f15fee8646f5",
+    "apps/api/fsp/demo.py": "6a2eb8c7b3496ab41d8e0e57b27d35328ed5e5c4e0b3e95e8710c3df0e6e0595",
+    "tests/browser_sessions.py": "6bd76dd69dcac3fa2ae3a2e4e11f982fc017b65964c53ce9c6dfefab40c5b94a",
+    "tests/browser_jury.py": "c7ece55a41d370fc8b689e112f2938f12588eed31be833d3742947461e42ace8"
+  }
+}

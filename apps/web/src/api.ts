@@ -5,32 +5,70 @@ export class ApiError extends Error {
   }
 }
 
+export const sessionChangedEvent = "fsp:session-changed";
+export class SessionChangedError extends ApiError {
+  constructor() { super("Аккаунт изменился в другой вкладке. Обновляем кабинет…", 409); }
+}
+let sessionUserId: string | null = null;
+let sessionRevision = 0;
+export function setApiUser(id: string | null) {
+  sessionUserId = id;
+  sessionRevision++;
+}
+
 export async function api<T>(
   path: string,
   body?: unknown,
   method?: string,
+  options: { signal?: AbortSignal } = {},
 ): Promise<T> {
-  const res = await fetch("/api" + path, {
-    method: method ?? (body === undefined ? "GET" : "POST"),
-    credentials: "same-origin",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Requested-With": "fsp-web",
-    },
-    body: body === undefined ? undefined : JSON.stringify(body),
-  });
-  const data = await res.json().catch(() => null);
-  if (!res.ok) throw new ApiError(
-    typeof data?.detail === "string" ? data.detail : "Не удалось выполнить запрос. Повторите попытку.", res.status,
-  );
-  if (data === null) throw new ApiError("Сервер вернул неполный ответ. Повторите попытку.", res.status);
-  return data as T;
+  const revision = sessionRevision;
+  const authenticated = !path.startsWith("/auth/") && path !== "/catalog";
+  const controller = new AbortController();
+  const abort = () => controller.abort();
+  options.signal?.addEventListener("abort", abort, { once: true });
+  if (options.signal?.aborted) abort();
+  const timeout = window.setTimeout(abort, 15000);
+  try {
+    const res = await fetch("/api" + path, {
+      method: method ?? (body === undefined ? "GET" : "POST"),
+      credentials: "same-origin",
+      cache: "no-store",
+      signal: controller.signal,
+      headers: {
+        "Content-Type": "application/json",
+        "X-Requested-With": "fsp-web",
+        ...(authenticated && sessionUserId ? { "X-FSP-User": sessionUserId } : {}),
+      },
+      body: body === undefined ? undefined : JSON.stringify(body),
+    });
+    const data = await res.json().catch(() => null);
+    if (authenticated && revision !== sessionRevision) throw new SessionChangedError();
+    if (authenticated && (res.status === 401 || res.status === 403 || res.headers.has("X-FSP-Session-Changed"))) {
+      window.dispatchEvent(new Event(sessionChangedEvent));
+      if (res.headers.has("X-FSP-Session-Changed")) throw new SessionChangedError();
+    }
+    if (!res.ok) throw new ApiError(
+      typeof data?.detail === "string" ? data.detail : "Не удалось выполнить запрос. Повторите попытку.", res.status,
+    );
+    if (data === null) throw new ApiError("Сервер вернул неполный ответ. Повторите попытку.", res.status);
+    return data as T;
+  } catch (error) {
+    if (controller.signal.aborted && !options.signal?.aborted)
+      throw new ApiError("Сервер не ответил вовремя. Повторите запрос.", 0);
+    throw error;
+  } finally {
+    window.clearTimeout(timeout);
+    options.signal?.removeEventListener("abort", abort);
+  }
 }
 export type User = {
   id: string;
   role: "candidate" | "employer";
   email: string;
   demo: boolean;
+  demo_run_id?: string | null;
+  demo_candidate_code?: string | null;
 };
 export type AssessmentRubric = {
   question_count: number;

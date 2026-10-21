@@ -26,6 +26,13 @@ class User(Output):
     email: str
     role: Literal["candidate", "employer"]
     demo: bool
+    demo_run_id: str | None = None
+    demo_candidate_code: str | None = None
+
+
+class DemoRun(Output):
+    token: str
+    candidate_code: str
 
 
 class Health(Output):

@@ -143,3 +143,4 @@ class FspLink(Input):
 
 class DemoLogin(Input):
     account: Literal["candidate", "employer", "other_employer"]
+    run_token: str | None = Field(default=None, min_length=32, max_length=64)

@@ -1539,3 +1539,9 @@ button:focus-visible, summary:focus-visible, a:focus-visible { outline: 3px soli
   .actions, .hero-path, .demo-entry > div { gap: 12px; flex-wrap: wrap; }
   .auth-box { padding: 24px 18px; }
 }
+.demo-share, .demo-entry > .demo-share { display: grid; gap: 12px; width: 100%; min-width: 0; }
+.demo-share label { display: grid; gap: 6px; min-width: 0; }
+.demo-share input { min-width: 0; width: 100%; }
+.demo-run-info { margin-bottom: 20px; }
+.demo-run-info summary { cursor: pointer; font-weight: 600; }
+.demo-entry { display: grid; gap: 16px; }

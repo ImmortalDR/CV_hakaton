@@ -25,7 +25,7 @@ from sqlalchemy.orm import Session as DBSession, sessionmaker
 
 from . import bank, schemas as S, outputs as O
 from .assessment import availability, configured_rubric, stored_rubric
-from . import tasks
+from . import tasks, demo as demo_runs
 from .matching import eligible, group_sort, rank_candidate
 from .models import (
     Attempt,
@@ -43,6 +43,7 @@ from .models import (
     User,
     Verification,
     PasswordReset,
+    DemoRun,
     now,
 )
 from .pdf import profile_pdf
@@ -122,6 +123,7 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             "/api/auth/resend-verification",
             "/api/auth/forgot-password",
             "/api/auth/reset-password",
+            "/api/auth/demo-runs",
         ):
             key = request.client.host if request.client else "unknown"
             q = limits[key]
@@ -187,6 +189,10 @@ def create_app(database_url=None, demo=None, rate_limit=True):
         u = db.get(User, s.user_id)
         if not u or not u.verified:
             fail(401, "Подтвердите адрес почты")
+        expected_user = request.headers.get("x-fsp-user")
+        if expected_user and expected_user != u.id:
+            raise HTTPException(409, "Аккаунт изменился в другой вкладке. Обновите кабинет.",
+                                headers={"X-FSP-Session-Changed": "true"})
         return u
 
     AUTH = Annotated[User, Depends(authenticated)]
@@ -270,6 +276,8 @@ def create_app(database_url=None, demo=None, rate_limit=True):
         if not owner and viewer.role != "employer":
             fail(403, "Чужой профиль недоступен")
         u = cache["users"][p.user_id] if cache is not None else db.get(User, p.user_id)
+        if not owner and not demo_runs.visible_to(viewer, u):
+            fail(404, "Профиль недоступен в этом демопроходе")
         if not owner and (not p.processing or not p.published or not u.verified):
             fail(404, "Профиль не опубликован")
         permitted = owner or (
@@ -568,6 +576,18 @@ def create_app(database_url=None, demo=None, rate_limit=True):
         session_cookie(u, db, response)
         return {"id": u.id, "role": u.role, "email": u.email, "demo": u.demo}
 
+    @app.post("/api/auth/demo-runs", response_model=O.DemoRun, status_code=201, tags=["Вход"])
+    def new_demo_run(db: DB):
+        if not is_demo:
+            fail(404, "Недоступно")
+        return demo_runs.create_run(db)
+
+    def demo_candidate_code(user, db):
+        if not user.demo_run_id:
+            return None
+        candidate_id = db.scalar(select(User.id).where(User.demo_run_id == user.demo_run_id, User.role == "candidate"))
+        return digest(candidate_id)[:8].upper()
+
     @app.post(
         "/api/auth/demo",
         response_model=O.User,
@@ -577,15 +597,18 @@ def create_app(database_url=None, demo=None, rate_limit=True):
     def demo_login(data: S.DemoLogin, response: Response, db: DB):
         if not is_demo:
             fail(404, "Недоступно")
-        u = db.scalar(
-            select(User).where(
-                User.email == data.account + "@demo.example.org", User.demo.is_(True)
-            )
-        )
+        if data.run_token:
+            run = db.scalar(select(DemoRun).where(DemoRun.token_hash == digest(data.run_token)))
+            if not run or data.account not in ("candidate", "employer"):
+                fail(404, "Демопроход не найден. Откройте ссылку своего прохода или начните новый.")
+            u = db.scalar(select(User).where(User.demo_run_id == run.id, User.role == data.account, User.demo.is_(True)))
+        else:
+            u = db.scalar(select(User).where(User.email == data.account + "@demo.example.org", User.demo.is_(True)))
         if not u:
             fail(503, "Демонстрационные данные ещё не загружены")
         session_cookie(u, db, response)
-        return {"id": u.id, "role": u.role, "email": u.email, "demo": True}
+        return {"id": u.id, "role": u.role, "email": u.email, "demo": True,
+                "demo_run_id": u.demo_run_id, "demo_candidate_code": demo_candidate_code(u, db)}
 
     @app.get(
         "/api/auth/me",
@@ -593,12 +616,14 @@ def create_app(database_url=None, demo=None, rate_limit=True):
         response_model_exclude_unset=True,
         tags=["Вход"],
     )
-    def me(user: AUTH):
+    def me(user: AUTH, db: DB):
         return {
             "id": user.id,
             "role": user.role,
             "email": user.email,
             "demo": user.demo,
+            "demo_run_id": user.demo_run_id,
+            "demo_candidate_code": demo_candidate_code(user, db),
         }
 
     @app.post(
@@ -878,6 +903,7 @@ def create_app(database_url=None, demo=None, rate_limit=True):
                 Profile.published.is_(True),
                 Profile.processing.is_(True),
                 User.verified.is_(True),
+                demo_runs.scope(user),
             )
         ))
         cache = projection_cache(profiles, db, c.id)
@@ -975,6 +1001,7 @@ def create_app(database_url=None, demo=None, rate_limit=True):
                 Profile.published.is_(True),
                 Profile.processing.is_(True),
                 User.verified.is_(True),
+                demo_runs.scope(user),
             )
         ))
         cache = projection_cache(profiles, db, c.id)
@@ -1230,6 +1257,7 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             "/api/auth/forgot-password",
             "/api/auth/reset-password",
             "/api/auth/demo",
+            "/api/auth/demo-runs",
             "/api/auth/logout",
         }
         for path, methods in schema["paths"].items():

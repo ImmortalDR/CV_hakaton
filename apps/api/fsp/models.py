@@ -29,6 +29,13 @@ class Base(DeclarativeBase):
     pass
 
 
+class DemoRun(Base):
+    __tablename__ = "demo_runs"
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=uid)
+    token_hash: Mapped[str] = mapped_column(String(64), unique=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+
+
 class User(Base):
     __tablename__ = "users"
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=uid)
@@ -37,6 +44,7 @@ class User(Base):
     role: Mapped[str] = mapped_column(String(20))
     verified: Mapped[bool] = mapped_column(Boolean, default=False)
     demo: Mapped[bool] = mapped_column(Boolean, default=False)
+    demo_run_id: Mapped[str | None] = mapped_column(ForeignKey("demo_runs.id"), index=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
     __table_args__ = (CheckConstraint("role IN ('candidate','employer')"),)
 

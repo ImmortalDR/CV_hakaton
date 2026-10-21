@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Eye, EyeOff } from "./icons";
 import { api, type Catalog, type User } from "./api";
 import { type AuthMode as Mode } from "./navigation";
+import { DemoEntry } from "./DemoEntry";
 type Props = { mode: Mode; onModeChange: (mode: Mode) => void; catalog: Catalog; onLogin: (user: User) => void; resetToken: string; onResetDone: () => void; };
 function PasswordField({label,value,onChange,error,id,fresh}: {label:string;value:string;onChange:(v:string)=>void;error?:string;id:string;fresh:boolean}) {
   const [visible,setVisible]=useState(false);
@@ -55,6 +56,6 @@ export function Auth({mode,onModeChange:setMode,catalog,onLogin,resetToken,onRes
     </fieldset></form>
     <div className="auth-help">{mode!=="forgot"&&mode!=="register"&&<button className="text-button" disabled={busy} onClick={()=>changeMode("forgot")}>Забыли пароль?</button>}{mode==="login"&&<button className="text-button" disabled={busy} onClick={()=>changeMode("verify")}>Не пришло письмо подтверждения?</button>}{mode!=="login"&&<button className="text-button" disabled={busy} onClick={()=>changeMode("login")}>Вернуться ко входу</button>}</div>
     {letter&&<div className="demo-letter"><strong>Демонстрационное письмо</strong><p>Реальное письмо не отправлялось. Подтверждение имитируется.</p><button disabled={busy} onClick={()=>void run(async()=>{await api("/auth/verify",{token:letter.split("#verify=")[1]});changeMode("login");setMessage("Почта подтверждена. Войдите с указанным паролем.");})}>Подтвердить почту</button></div>}
-    {catalog.demo&&mode==="login"&&<div className="demo-entry"><span>Посмотреть без регистрации</span><div>{(["candidate","employer"] as const).map(account=><button key={account} className="secondary" disabled={busy} onClick={()=>void run(async()=>onLogin(await api<User>("/auth/demo",{account})))}>{account==="candidate"?"Я кандидат":"Я работодатель"}</button>)}</div><small>Общие демоаккаунты. Не вводите персональные данные.</small></div>}
+    {catalog.demo&&mode==="login"&&<DemoEntry onLogin={onLogin} />}
   </>;
 }

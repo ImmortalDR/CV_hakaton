@@ -31,6 +31,9 @@ import {
 import {
   api,
   ApiError,
+  SessionChangedError,
+  sessionChangedEvent,
+  setApiUser,
   type Attempt,
   type AssessmentAvailability,
   type Catalog,
@@ -52,6 +55,7 @@ import {
 } from "./ui";
 
 import { Auth } from "./Auth";
+import { DemoLink, demoToken } from "./DemoEntry";
 import { useLocation, navigate, restoreInitialScroll, setNavigationGuard, allowedSection, authMode, authPaths, sections, screenUrl } from "./navigation";
 import { Tasks, type TaskInbox } from "./Tasks";
 import { countLabel, evidenceLabels } from "./formatting";
@@ -160,6 +164,9 @@ export function App() {
     [version, setVersion] = useState(0);
   const [resetToken, setResetToken] = useState("");
   const unsavedAssessment = useRef(false);
+  const sessionUser = useRef<User | null>(null);
+  const sessionGeneration = useRef(0);
+  const sessionRequest = useRef<Promise<void> | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const confirmLeave = () => !unsavedAssessment.current || window.confirm("Есть ответы, не сохранённые на сервере. Покинуть тест? Черновик останется в этом браузере; срок теста продолжает идти.");
   const setTab = (value: string) => navigate("/" + value);
@@ -184,6 +191,7 @@ export function App() {
     try {
       await fn();
     } catch (e) {
+      if (e instanceof SessionChangedError) return;
       setError(
         e instanceof Error ? e.message : "Не удалось выполнить действие",
       );
@@ -192,22 +200,54 @@ export function App() {
     }
   }, []);
   const refresh = () => setVersion((v) => v + 1);
+  // Login and browser restoration use the same account transition. Old profile,
+  // forms and in-flight responses must never leak into another account's view.
+  const acceptSession = useCallback((next: User | null) => {
+    if (sessionUser.current?.id === next?.id) return;
+    sessionGeneration.current++;
+    sessionUser.current = next;
+    setApiUser(next?.id ?? null);
+    setProfile(null); setCompany(null); setTaskPending(0);
+    setError(""); setNotice(""); setBusy(false);
+    unsavedAssessment.current = false;
+    setUser(next);
+  }, []);
+  const syncSession = useCallback(() => {
+    if (sessionRequest.current) return sessionRequest.current;
+    const generation = sessionGeneration.current;
+    const request = (async () => {
+      try {
+        const next = await api<User>("/auth/me");
+        if (generation === sessionGeneration.current) acceptSession(next);
+      } catch (error) {
+        if (generation !== sessionGeneration.current) return;
+        if (error instanceof ApiError && error.status === 401) acceptSession(null);
+        else throw error;
+      }
+    })();
+    sessionRequest.current = request;
+    void request.finally(() => {
+      if (sessionRequest.current === request) sessionRequest.current = null;
+    }).catch(() => {});
+    return request;
+  }, [acceptSession]);
+  const announceSession = () => {
+    // No identity or credentials are stored here; other tabs re-read /auth/me.
+    try { localStorage.setItem("fsp-session-change", crypto.randomUUID()); } catch { /* Focus and polling still work. */ }
+  };
   useEffect(() => {
     let resetting = location.hash.startsWith("#reset=");
     Promise.all([
       api<Catalog>("/catalog").then(setCatalog),
-      api<User>("/auth/me")
-        .then(u => {
-          if (resetting) return;
-          setUser(u);
-        })
-        .catch(() => {}),
-    ]).finally(() => setLoading(false));
+      resetting ? Promise.resolve() : syncSession(),
+    ]).catch(error => setError(error instanceof Error ? error.message : "Не удалось загрузить кабинет"))
+      .finally(() => setLoading(false));
     const confirmEmailFromHash = () => {
       if (location.hash.startsWith("#reset=")) {
         resetting = true;
+        sessionGeneration.current++;
         setResetToken(location.hash.slice(7));
-        setUser(null);
+        acceptSession(null);
         navigate("/reset-password", { replace: true, bypass: true });
         return;
       }
@@ -220,9 +260,28 @@ export function App() {
       });
     };
     confirmEmailFromHash();
+    const resume = () => {
+      if (resetting || document.visibilityState === "hidden") return;
+      void syncSession().catch(error => setError(error instanceof Error ? error.message : "Не удалось обновить кабинет"));
+    };
+    const stored = (event: StorageEvent) => { if (event.key === "fsp-session-change") resume(); };
     window.addEventListener("hashchange", confirmEmailFromHash);
-    return () => window.removeEventListener("hashchange", confirmEmailFromHash);
-  }, [act]);
+    window.addEventListener("focus", resume);
+    window.addEventListener("pageshow", resume);
+    document.addEventListener("visibilitychange", resume);
+    window.addEventListener("storage", stored);
+    window.addEventListener(sessionChangedEvent, resume);
+    const timer = window.setInterval(resume, 30000);
+    return () => {
+      window.removeEventListener("hashchange", confirmEmailFromHash);
+      window.removeEventListener("focus", resume);
+      window.removeEventListener("pageshow", resume);
+      document.removeEventListener("visibilitychange", resume);
+      window.removeEventListener("storage", stored);
+      window.removeEventListener(sessionChangedEvent, resume);
+      window.clearInterval(timer);
+    };
+  }, [act, acceptSession, syncSession]);
   useEffect(() => {
     if (!user) return;
     const path = user.role === "candidate" ? "/me/profile" : "/me/company";
@@ -237,9 +296,9 @@ export function App() {
     return () => { disposed = true; };
   }, [user?.id, version, act]);
   const signedIn = (u: User) => {
-    setProfile(null);
-    setCompany(null);
-    setUser(u);
+    sessionGeneration.current++;
+    acceptSession(u);
+    announceSession();
     const next = route.params.get("next") ?? "";
     navigate(allowedSection(next, u.role) ? next : "/overview", { replace: true, bypass: true });
     setNotice("");
@@ -385,9 +444,9 @@ export function App() {
             void act(async () => {
               if (!confirmLeave()) return;
               await api("/auth/logout", {});
-              setUser(null);
-              setProfile(null);
-              setCompany(null);
+              sessionGeneration.current++;
+              acceptSession(null);
+              announceSession();
               navigate("/login", { replace: true, bypass: true });
             })
           }
@@ -427,6 +486,12 @@ export function App() {
             </div>
           )}
           {error && <ErrorState message={error} />}{" "}
+          {user.demo_run_id && <details className="panel demo-run-info">
+            <summary>Отдельный демопроход · кандидат №{user.demo_candidate_code}</summary>
+            <p>Действия в этом проходе не меняют другие демопроходы. Новый проход можно начать на странице входа после выхода.</p>
+            {user.role === "employer" && <button className="secondary" onClick={() => navigate(screenUrl("search", { candidate_code: user.demo_candidate_code }))}>Найти кандидата этого прохода</button>}
+            {demoToken() && <DemoLink token={demoToken()} />}
+          </details>}
           {notice && (
             <div className="notice" role="status">
               {notice}
@@ -962,6 +1027,9 @@ function Assessments({
   const route = useLocation();
   const attemptId = route.params.get("attempt");
   const [loaded, setLoaded] = useState(false);
+  const [historyLoading, setHistoryLoading] = useState(true);
+  const [historyError, setHistoryError] = useState("");
+  const historyRequest = useRef<AbortController | null>(null);
   const [attempts, setAttempts] = useState<Attempt[]>([]),
     [current, setCurrent] = useState<Attempt | null>(null),
     [answers, setAnswers] = useState<Record<string, string>>({}),
@@ -1049,15 +1117,27 @@ function Assessments({
   }, []);
   useEffect(() => { if (visible) flush(); }, [visible]);
   const [availability, setAvailability] = useState<AssessmentAvailability | null>(null);
+  const [availabilityError, setAvailabilityError] = useState("");
+  const availabilityRequest = useRef<AbortController | null>(null);
   const selectedLevel = availability?.levels.find((level) => level.grade === grade);
   const policy = current?.rubric ?? selectedLevel?.rubric;
   const questionCount = current ? current.questions.length : policy?.question_count;
-  const loadAvailability = async () => {
+  const loadAvailability = async (force = false) => {
+    if (availabilityRequest.current && !force) return;
+    availabilityRequest.current?.abort();
+    const controller = new AbortController();
+    availabilityRequest.current = controller;
+    setAvailabilityError("");
     try {
-      setAvailability(await api<AssessmentAvailability>("/me/assessment-availability"));
+      const result = await api<AssessmentAvailability>("/me/assessment-availability", undefined, undefined, { signal: controller.signal });
+      if (!controller.signal.aborted) setAvailability(result);
     } catch (error) {
-      setAvailability(null);
-      throw error;
+      if (!controller.signal.aborted && !(error instanceof SessionChangedError)) {
+        setAvailability(null);
+        setAvailabilityError("Не удалось проверить доступность теста. Повторите запрос.");
+      }
+    } finally {
+      if (availabilityRequest.current === controller) availabilityRequest.current = null;
     }
   };
   const ruleText = policy
@@ -1065,21 +1145,46 @@ function Assessments({
       ? ` и ${policy.core_min_correct} из ${policy.core_total} верных ответов по основному навыку (Python или SQL).`
       : ".")
     : "Правила теста загружаются.";
-  const load = async () => {
-    const [list] = await Promise.all([api<Attempt[]>("/me/attempts"), loadAvailability()]);
-    setAttempts(list);
-    setLoaded(true);
+  const loadHistory = async (force = false) => {
+    if (historyRequest.current && !force) return;
+    historyRequest.current?.abort();
+    const controller = new AbortController();
+    historyRequest.current = controller;
+    setHistoryLoading(true);
+    setHistoryError("");
+    try {
+      const result = await api<Attempt[]>("/me/attempts", undefined, undefined, { signal: controller.signal });
+      if (!controller.signal.aborted) {
+        setAttempts(result); setLoaded(true);
+      }
+    } catch (error) {
+      if (!controller.signal.aborted && !(error instanceof SessionChangedError))
+        setHistoryError("Не удалось загрузить историю. Сохранённые попытки не удалены. Нажмите «Обновить историю».");
+    } finally {
+      if (historyRequest.current === controller) {
+        historyRequest.current = null;
+        setHistoryLoading(false);
+      }
+    }
+  };
+  const load = async (force = false) => {
+    await Promise.all([loadHistory(force), loadAvailability(force)]);
   };
   useEffect(() => {
-    void act(load);
-    const refreshAccess = () => { void loadAvailability().catch(() => {}); };
+    if (!visible) return;
+    void load();
+    const refreshAccess = () => { void load(); };
     const timer = window.setInterval(refreshAccess, 30000);
     window.addEventListener("focus", refreshAccess);
+    window.addEventListener("online", refreshAccess);
     return () => {
       window.clearInterval(timer);
       window.removeEventListener("focus", refreshAccess);
+      window.removeEventListener("online", refreshAccess);
+      historyRequest.current?.abort(); historyRequest.current = null;
+      availabilityRequest.current?.abort(); availabilityRequest.current = null;
     };
-  }, [profile.specialization]);
+  }, [profile.specialization, visible]);
   useEffect(() => {
     if (!visible || !loaded) return;
     const selected = attempts.find(a => a.id === attemptId);
@@ -1245,7 +1350,7 @@ function Assessments({
             </Field>
             <div className="assessment-access" role="status" aria-live="polite">
               {!selectedLevel ? (
-                <><p>Проверяем доступность теста…</p><button className="text-button" disabled={busy} onClick={() => void act(loadAvailability)}>Обновить доступность</button></>
+                <><p>{availabilityError || "Проверяем доступность теста…"}</p><button className="text-button" onClick={() => void loadAvailability(true)}>Обновить доступность</button></>
               ) : selectedLevel.available ? <p>Тест {grade} доступен сейчас.</p> : (
                 <>
                   <strong>Тест {grade} пока недоступен</strong>
@@ -1278,14 +1383,17 @@ function Assessments({
       )}
       <div className="section-heading">
         <h2>История тестирования</h2>
-        <span>{countLabel(attempts.length, "attempt")}</span>
+        <span>{historyLoading ? "Загружаем…" : loaded ? countLabel(attempts.length, "attempt") : "История не загружена"}</span>
+        <button className="text-button" onClick={() => void load(true)}>Обновить историю</button>
       </div>
-      {!attempts.length ? (
+      {historyError && <ErrorState message={historyError} />}
+      {!loaded && historyLoading && <Loading />}
+      {loaded && !attempts.length ? (
         <EmptyState
           title="Первый результат ещё впереди"
           description="После завершения здесь появится история и объяснение оценки."
         />
-      ) : (
+      ) : loaded && (
         <div className="panel history-list">
           {attempts.map((a) => (
             <div key={a.id}>
