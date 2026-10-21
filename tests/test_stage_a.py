@@ -30,3 +30,15 @@ def test_draft_expired(app):
         db.get(Attempt, a['id']).expires_at = now() - timedelta(seconds=1)
         db.commit()
     assert c.put(f"/api/me/attempts/{a['id']}/answers", json={'answers': {'1': '9'}}).status_code == 409
+
+
+def test_anonymous_labels_distinct_and_stable(app):
+    from conftest import confirmed, employer
+    _, a = confirmed(app, 'first@example.org')
+    _, b = confirmed(app, 'second@example.org')
+    e = employer(app)
+    one = {p['id']: p for p in e.get('/api/candidates').json()}
+    two = {p['id']: p for p in e.get('/api/candidates').json()}
+    assert one[a]['display_name'] != one[b]['display_name']
+    assert one[a]['display_name'] == two[a]['display_name']
+    assert one[a]['contacts'] is None and one[b]['contacts'] is None

@@ -244,7 +244,7 @@ def create_app(database_url=None, demo=None, rate_limit=True):
         result = {
             "id": p.user_id,
             "display_name": (
-                p.name if permitted else bank.SPECS[p.specialization] + " · кандидат"
+                p.name if permitted else bank.SPECS[p.specialization] + " · кандидат №" + hashlib.sha256(p.user_id.encode()).hexdigest()[:8].upper()
             ),
             "specialization": p.specialization,
             "verified_grade": p.verified_grade,
@@ -320,7 +320,7 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             "status": i.status,
             "created_at": i.created_at,
             "updated_at": i.updated_at,
-            "candidate_name": bank.SPECS[p.specialization] + " · кандидат",
+            "candidate_name": bank.SPECS[p.specialization] + " · кандидат №" + hashlib.sha256(p.user_id.encode()).hexdigest()[:8].upper(),
             "contacts": None,
             "chat_available": bool(i.status == "accepted" and p.processing and p.published
                                    and db.get(ContactGrant, (p.user_id, i.company_id))),

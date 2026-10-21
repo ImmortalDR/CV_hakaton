@@ -83,9 +83,10 @@
         "U04"
       ],
       "owner": "nikita+timofey",
-      "status": "todo",
+      "status": "done",
       "priority": "P2",
-      "title": "Employer UX: distinct anon, filters, compact need, score breakdown"
+      "title": "Employer UX: distinct anon, filters, compact need, score breakdown",
+      "verification": "Build + 22 API + 3 stage_a tests passed; U01-U04 implemented; browser check queued"
     },
     {
       "id": "Q6",

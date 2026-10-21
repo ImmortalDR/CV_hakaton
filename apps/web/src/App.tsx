@@ -99,17 +99,32 @@ function Skills({
   );
 }
 
+function useSessionState<T>(key: string, initial: T) {
+  const [value, setValue] = useState<T>(() => {
+    try { return JSON.parse(sessionStorage.getItem(key) ?? "null") ?? initial; }
+    catch { return initial; }
+  });
+  useEffect(() => {
+    try { sessionStorage.setItem(key, JSON.stringify(value)); } catch { /* Storage can be disabled. */ }
+  }, [key, value]);
+  return [value, setValue] as const;
+}
+
 export function App() {
   const [catalog, setCatalog] = useState(emptyCatalog),
     [user, setUser] = useState<User | null>(null),
     [loading, setLoading] = useState(true);
-  const [tab, setTab] = useState("overview"),
+  const [tab, setTabState] = useState("overview"),
     [profile, setProfile] = useState<Profile | null>(null),
     [company, setCompany] = useState<Company | null>(null);
   const [error, setError] = useState(""),
     [notice, setNotice] = useState(""),
     [busy, setBusy] = useState(false),
     [version, setVersion] = useState(0);
+  const setTab = (value: string) => {
+    setTabState(value);
+    if (user) try { sessionStorage.setItem(`fsp-tab-${user.id}`, value); } catch { /* Optional UI context. */ }
+  };
   const act: Act = useCallback(async (fn) => {
     setError("");
     setBusy(true);
@@ -131,7 +146,10 @@ export function App() {
     Promise.all([
       api<Catalog>("/catalog").then(setCatalog),
       api<User>("/auth/me")
-        .then(setUser)
+        .then(u => {
+          setUser(u);
+          try { setTabState(sessionStorage.getItem(`fsp-tab-${u.id}`) ?? "overview"); } catch { /* Default overview. */ }
+        })
         .catch(() => {}),
     ]).finally(() => setLoading(false));
     if (location.hash.startsWith("#verify=")) {
@@ -358,7 +376,7 @@ export function App() {
             ) : (
               <Loading />
             ))}
-          {tab === "search" && <SearchPage {...props} />}
+          {tab === "search" && <SearchPage {...props} userId={user.id} />}
           {tab === "invitations" && (
             <Invitations {...props} user={user} version={version} />
           )}
@@ -1336,8 +1354,9 @@ function CompanyForm({
   );
 }
 
-function SearchPage({ catalog, act, busy }: Actions) {
-  const [criteria, setCriteria] = useState<Criteria>({
+function SearchPage({ catalog, act, busy, userId }: Actions & { userId: string }) {
+  const key = `fsp-search-${userId}`;
+  const [criteria, setCriteria] = useSessionState<Criteria>(key + "-criteria", {
     title: "Python-разработчик в команду API",
     description:
       "Разработка и тестирование серверных API для продуктов команды.",
@@ -1355,19 +1374,36 @@ function SearchPage({ catalog, act, busy }: Actions) {
     >([]),
     [snapshot, setSnapshot] = useState<Snapshot | null>(null),
     [selected, setSelected] = useState<Profile | null>(null),
-    [bank, setBank] = useState(true);
-  const [filter, setFilter] = useState({
+    [bank, setBank] = useSessionState(key + "-bank", true);
+  const [snapshotId, setSnapshotId] = useSessionState<string | null>(key + "-snapshot", null);
+  const [filter, setFilter] = useSessionState(key + "-filter", {
       specialization: "",
       grade: "",
       skill: "",
       fsp_only: false,
     }),
     [initialLoading, setInitialLoading] = useState(true);
+  const savedScroll = useRef(Number(sessionStorage.getItem(key + "-scroll") ?? 0));
+  useEffect(() => {
+    if (initialLoading) return;
+    window.scrollTo(0, savedScroll.current);
+    const save = () => { try { sessionStorage.setItem(key + "-scroll", String(window.scrollY)); } catch { /* Optional. */ } };
+    window.addEventListener("scroll", save);
+    return () => window.removeEventListener("scroll", save);
+  }, [initialLoading]);
   const loadHistory = async () => setHistory(await api("/searches"));
   useEffect(() => {
     void act(async () => {
       try {
-        setItems(await api("/candidates"));
+        if (!bank && snapshotId) {
+          const saved = await api<Snapshot>("/searches/" + snapshotId);
+          setSnapshot(saved);
+          setItems(saved.items);
+        } else {
+          const params = new URLSearchParams();
+          Object.entries(filter).forEach(([k, v]) => { if (v) params.set(k, String(v)); });
+          setItems(await api("/candidates?" + params));
+        }
         await loadHistory();
       } finally {
         setInitialLoading(false);
@@ -1377,8 +1413,9 @@ function SearchPage({ catalog, act, busy }: Actions) {
   const search = (e: FormEvent) => {
     e.preventDefault();
     void act(async () => {
-      const s = await api<Snapshot>("/searches", criteria);
+      const s = await api<Snapshot>("/searches", { ...criteria, confirmed: true });
       setSnapshot(s);
+      setSnapshotId(s.id);
       window.scrollTo(0, 0);
       setItems(s.items);
       setBank(false);
@@ -1481,33 +1518,6 @@ function SearchPage({ catalog, act, busy }: Actions) {
             </form>
           ) : (
             <form onSubmit={search}>
-              <Field label="Название потребности">
-                <input
-                  required
-                  minLength={3}
-                  value={criteria.title}
-                  onChange={(e) =>
-                    setCriteria((c) => ({ ...c, title: e.target.value }))
-                  }
-                />
-              </Field>
-              <Field label="Задачи команды">
-                <textarea
-                  required
-                  minLength={10}
-                  rows={3}
-                  value={criteria.description}
-                  onChange={(e) =>
-                    setCriteria((c) => ({ ...c, description: e.target.value }))
-                  }
-                />
-              </Field>
-              <p className="muted">
-                Текст описывает контекст работы. На подбор влияют выбранные
-                ниже требования; автоматического разбора текста пока нет.
-                Docker и React можно указать, но текущий банк тестов их
-                не проверяет — подтверждённых совпадений по ним не будет.
-              </p>
               <Field label="Специализация">
                 <select
                   value={criteria.specialization}
@@ -1551,25 +1561,50 @@ function SearchPage({ catalog, act, busy }: Actions) {
                 </div>
               </div>
               <div className="field">
-                <span>Обязательные навыки</span>
-                <Skills
-                  catalog={catalog}
-                  values={criteria.required_skills}
-                  onChange={(v) =>
-                    setCriteria((c) => ({ ...c, required_skills: v }))
+                <span>Навыки и важность</span>
+                {(criteria.specialization === "data" ? ["sql", "statistics", "transactions"] : ["python", "testing", "http"]).map(skill => (
+                  <Field key={skill} label={catalog.skills[skill]}>
+                    <select value={criteria.required_skills.includes(skill) ? "required" : criteria.desired_skills.includes(skill) ? "desired" : "none"}
+                      onChange={e => setCriteria(c => ({ ...c,
+                        required_skills: [...c.required_skills.filter(s => s !== skill), ...(e.target.value === "required" ? [skill] : [])],
+                        desired_skills: [...c.desired_skills.filter(s => s !== skill), ...(e.target.value === "desired" ? [skill] : [])],
+                      }))}>
+                      <option value="none">Не учитывать</option>
+                      <option value="required">Обязательный</option>
+                      <option value="desired">Желательный</option>
+                    </select>
+                  </Field>
+                ))}
+                <small>Docker и React пока не проверяются тестом.</small>
+              </div>
+              <details><summary>Контекст для обсуждения · не влияет на баллы</summary>
+              <Field label="Название потребности">
+                <input
+                  required
+                  minLength={3}
+                  value={criteria.title}
+                  onChange={(e) =>
+                    setCriteria((c) => ({ ...c, title: e.target.value }))
                   }
                 />
-              </div>
-              <div className="field">
-                <span>Желательные навыки</span>
-                <Skills
-                  catalog={catalog}
-                  values={criteria.desired_skills}
-                  onChange={(v) =>
-                    setCriteria((c) => ({ ...c, desired_skills: v }))
+              </Field>
+              <Field label="Задачи команды">
+                <textarea
+                  required
+                  minLength={10}
+                  rows={3}
+                  value={criteria.description}
+                  onChange={(e) =>
+                    setCriteria((c) => ({ ...c, description: e.target.value }))
                   }
                 />
-              </div>
+              </Field>
+              <p className="muted">
+                Текст описывает контекст работы. На подбор влияют выбранные
+                ниже требования; автоматического разбора текста пока нет.
+                Docker и React можно указать, но текущий банк тестов их
+                не проверяет — подтверждённых совпадений по ним не будет.
+              </p>
               <Field label="Минимальный стаж · необязательно">
                 <input
                   type="number"
@@ -1590,6 +1625,7 @@ function SearchPage({ catalog, act, busy }: Actions) {
                 не подтверждается тестом и не влияет на баллы или фильтрацию.
                 Полное совпадение ниже относится только к обязательным навыкам.
               </p>
+              </details>
               <label className="checkline">
                 <input
                   type="checkbox"
@@ -1599,17 +1635,6 @@ function SearchPage({ catalog, act, busy }: Actions) {
                   }
                 />
                 Только с достижениями ФСП (демо)
-              </label>
-              <label className="checkline">
-                <input
-                  type="checkbox"
-                  required
-                  checked={criteria.confirmed}
-                  onChange={(e) =>
-                    setCriteria((c) => ({ ...c, confirmed: e.target.checked }))
-                  }
-                />
-                Подтверждаю выбранные структурированные требования
               </label>
               <button
                 className="full"
@@ -1630,6 +1655,7 @@ function SearchPage({ catalog, act, busy }: Actions) {
                     void act(async () => {
                       const r = await api<Snapshot>("/searches/" + s.id);
                       setSnapshot(r);
+                      setSnapshotId(r.id);
                       setItems(r.items);
                       setCriteria(r.criteria);
                       setBank(false);
@@ -1650,12 +1676,14 @@ function SearchPage({ catalog, act, busy }: Actions) {
           </div>
           {snapshot && (
             <p className="muted">
-              Сохранено {date(snapshot.created_at)}. Уточнение запроса создаст
+              Сохранённая подборка на {date(snapshot.created_at)}. Уточнение запроса создаст
               новую подборку.
               {snapshot.hidden_count > 0 &&
                 ` ${snapshot.hidden_count} профилей скрыты после отзыва публикации.`}
             </p>
           )}
+          {snapshot && <p className="muted">Применено: {catalog.specializations[snapshot.criteria.specialization]} · {snapshot.criteria.grades.join(", ")} · обязательные: {snapshot.criteria.required_skills.map(s => catalog.skills[s]).join(", ") || "нет"}.</p>}
+          {!bank && snapshot && JSON.stringify(criteria) !== JSON.stringify(snapshot.criteria) && <p role="status">Параметры изменены — сформируйте новую подборку. Ниже сохранённый результат.</p>}
           {initialLoading ? (
             <Loading />
           ) : !items.length ? (
@@ -1828,13 +1856,13 @@ function CandidateCard({
             </div>
           ))}
           <small>
-            Индекс соответствия {p.match.score.toFixed(0)} · ФСП +
-            {p.match.breakdown.fsp ?? 0}. Сравнение только внутри категории.
+            Балл {p.match.score.toFixed(2)} = навыки {((p.match.breakdown.required_skills ?? 0) + (p.match.breakdown.desired_skills ?? 0)).toFixed(2)} + тест {(p.match.breakdown.test ?? 0).toFixed(2)} + ФСП {(p.match.breakdown.fsp ?? 0).toFixed(2)}. Сравнение только внутри категории.
           </small>
         </div>
       )}
       <details>
         <summary>Результаты и источники</summary>
+        {p.match && <p>Формула: {p.match.methodology ?? "версия сохранённой подборки"}. Балл не является вероятностью найма. Без ФСП бонус равен нулю.</p>}
         {p.evidence.map((e) => (
           <p key={e.id}>
             {catalog.skills[e.skill]} · {e.correct}/{e.total} · {date(e.date)} ·

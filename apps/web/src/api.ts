@@ -54,6 +54,7 @@ export type Fact = {
   claimed_years?: number | null;
 };
 export type Match = {
+  methodology?: string;
   score: number;
   facts: Fact[];
   breakdown: Record<string, number>;
