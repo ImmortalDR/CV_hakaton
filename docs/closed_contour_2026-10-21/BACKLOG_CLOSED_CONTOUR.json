@@ -142,7 +142,7 @@
     {
       "id": "CC12",
       "priority": "P1",
-      "status": "todo",
+      "status": "PASS",
       "owner": "astra",
       "title": "Ready-to-deploy onepager for pitch/jury",
       "artifact": "docs/delivery/closed_contour/READY_TO_DEPLOY_ONEPAGER.md"
