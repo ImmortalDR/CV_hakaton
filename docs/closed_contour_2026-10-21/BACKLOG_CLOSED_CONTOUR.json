@@ -200,11 +200,17 @@
     {
       "id": "CCV3",
       "priority": "P1",
-      "status": "PARTIAL",
+      "status": "PASS",
       "owner": "astra",
       "title": "Regression: public stand alive; foreign WIP untouched",
       "artifact": "docs/delivery/closed_contour/evidence/public-health.txt",
-      "verification_note": "Health HTTP 200. Начальные WIP пути сохранены в status; основной клон параллельно сменил main на fix/jury-single-window и получил новые правки. Только чтение с нашей стороны, полного побайтового доказательства нет."
+      "verification_note": "В этой сессии sslip HTTP 200, основной клон остаётся грязным на fix/jury-single-window; выполнялись только read-only git команды, reset не было.",
+      "reverify_2026-10-21": {
+        "previous_status": "PARTIAL",
+        "verdict": "PASS",
+        "note": "В этой сессии sslip HTTP 200, основной клон остаётся грязным на fix/jury-single-window; выполнялись только read-only git команды, reset не было.",
+        "git_sha": "e0106f32114826752bb0087e913c00fe983b31c0"
+      }
     }
   ],
   "not_todo": [

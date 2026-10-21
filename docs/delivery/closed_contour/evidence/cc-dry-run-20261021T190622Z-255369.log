@@ -1,0 +1,257 @@
+UTC=20261021T190622Z project=fsp-cc-dryrun-20261021t190622z-255369
+source_sha=e0106f32114826752bb0087e913c00fe983b31c0
+Docker Compose version 2.40.3+ds1-0ubuntu1~24.04.1
+Docker server=29.1.3
+STEP copy committed source and configure
+Local .env created; credentials are not printed
+isolation verified: local daemon, unique volume/network, no edge, no DB host port, loopback ephemeral web
+STEP build
+time="2026-10-21T21:06:24+02:00" level=warning msg="Docker Compose is configured to build using Bake, but buildx isn't installed"
+#0 building with "default" instance using docker driver
+
+#1 [api internal] load build definition from Dockerfile
+#1 transferring dockerfile: 475B 0.0s done
+#1 DONE 0.0s
+
+#2 [api internal] load metadata for docker.io/library/python:3.12-slim
+#2 DONE 0.0s
+
+#3 [api internal] load .dockerignore
+#3 transferring context: 32B
+#3 transferring context: 64B done
+#3 DONE 0.0s
+
+#4 [api 1/7] FROM docker.io/library/python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f
+#4 resolve docker.io/library/python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f 0.0s done
+#4 DONE 0.0s
+
+#5 [api internal] load build context
+#5 transferring context: 215.68kB 0.0s done
+#5 DONE 0.0s
+
+#6 [api 3/7] RUN apt-get update && apt-get install -y --no-install-recommends fonts-dejavu-core && rm -rf /var/lib/apt/lists/*
+#6 CACHED
+
+#7 [api 4/7] COPY requirements.lock .
+#7 CACHED
+
+#8 [api 5/7] RUN pip install --no-cache-dir -r requirements.lock
+#8 CACHED
+
+#9 [api 6/7] COPY . .
+#9 CACHED
+
+#10 [api 2/7] WORKDIR /app
+#10 CACHED
+
+#11 [api 7/7] RUN useradd -m fsp && chown -R fsp:fsp /app
+#11 CACHED
+
+#12 [api] exporting to image
+#12 exporting layers done
+#12 exporting manifest sha256:6edd54ae64d51aae457f13cd381e42fb277740da3c5e8391087cd63916d375ed 0.0s done
+#12 exporting config sha256:722459bfbf771ba7a76ea53c5391c4828d903a71ad4f79ab2ed30c0113aadd91 done
+#12 exporting attestation manifest sha256:854cf09d7c4fb263ded3b3a6c429d7f0d2de7b950c3cf7343304565eaba67e04 0.0s done
+#12 exporting manifest list sha256:5a3454a6ef09c6c37954566b3e23ee82a37555c3275534d7930ebd7160b8f179 done
+#12 naming to docker.io/library/fsp-cc-dryrun-20261021t190622z-255369-api:latest done
+#12 unpacking to docker.io/library/fsp-cc-dryrun-20261021t190622z-255369-api:latest 0.0s done
+#12 DONE 0.1s
+
+#13 [api] resolving provenance for metadata file
+#13 DONE 0.0s
+
+#14 [task-worker internal] load build definition from Dockerfile
+#14 transferring dockerfile: 475B done
+#14 DONE 0.0s
+
+#2 [task-worker internal] load metadata for docker.io/library/python:3.12-slim
+#2 DONE 0.1s
+
+#15 [task-worker internal] load .dockerignore
+#15 transferring context: 64B done
+#15 DONE 0.0s
+
+#16 [task-worker internal] load build context
+#16 DONE 0.0s
+
+#4 [task-worker 1/7] FROM docker.io/library/python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f
+#4 resolve docker.io/library/python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f 0.0s done
+#4 DONE 0.1s
+
+#16 [task-worker internal] load build context
+#16 transferring context: 1.03kB done
+#16 DONE 0.0s
+
+#17 [task-worker 6/7] COPY . .
+#17 CACHED
+
+#10 [task-worker 2/7] WORKDIR /app
+#10 CACHED
+
+#6 [task-worker 3/7] RUN apt-get update && apt-get install -y --no-install-recommends fonts-dejavu-core && rm -rf /var/lib/apt/lists/*
+#6 CACHED
+
+#18 [task-worker 4/7] COPY requirements.lock .
+#18 CACHED
+
+#19 [task-worker 5/7] RUN pip install --no-cache-dir -r requirements.lock
+#19 CACHED
+
+#20 [task-worker 7/7] RUN useradd -m fsp && chown -R fsp:fsp /app
+#20 CACHED
+
+#21 [task-worker] exporting to image
+#21 exporting layers done
+#21 exporting manifest sha256:dafc1cd24e7848908665da93b97fcf136ec7ae70ceef234176978628342f7415 0.0s done
+#21 exporting config sha256:512c560bd5913eb14788b3e742ded19705220f6c1e196d3018fd77150e79a5dc 0.0s done
+#21 exporting attestation manifest sha256:bbe3d0ee2d7aa9cb836591ffa50de02c417884ce6785f0288dca45ce30675f80 0.0s done
+#21 exporting manifest list sha256:0b7b81333ed275b94b2f1fd19c2175aed182d7fb6bbbfa265fe7ab4e2e558d3e done
+#21 naming to docker.io/library/fsp-cc-dryrun-20261021t190622z-255369-task-worker:latest done
+#21 unpacking to docker.io/library/fsp-cc-dryrun-20261021t190622z-255369-task-worker:latest 0.0s done
+#21 DONE 0.1s
+
+#22 [task-worker] resolving provenance for metadata file
+#22 DONE 0.0s
+
+#23 [web internal] load build definition from Dockerfile
+#23 transferring dockerfile: 261B done
+#23 DONE 0.0s
+
+#24 [web internal] load metadata for docker.io/library/node:22-alpine
+#24 ...
+
+#25 [web internal] load metadata for docker.io/library/nginx:1.28-alpine
+#25 DONE 0.4s
+
+#24 [web internal] load metadata for docker.io/library/node:22-alpine
+#24 DONE 0.5s
+
+#26 [web internal] load .dockerignore
+#26 transferring context: 78B done
+#26 DONE 0.0s
+
+#27 [web internal] load build context
+#27 DONE 0.0s
+
+#28 [web stage-1 1/3] FROM docker.io/library/nginx:1.28-alpine@sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236
+#28 resolve docker.io/library/nginx:1.28-alpine@sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236 0.1s done
+#28 DONE 0.1s
+
+#29 [web build 1/6] FROM docker.io/library/node:22-alpine@sha256:ce8d97f7cfc7c5386421eb932df20a29df99b1a7f469f6157d5c9956702ffadc
+#29 resolve docker.io/library/node:22-alpine@sha256:ce8d97f7cfc7c5386421eb932df20a29df99b1a7f469f6157d5c9956702ffadc 0.1s done
+#29 DONE 0.1s
+
+#27 [web internal] load build context
+#27 transferring context: 217.91kB 0.0s done
+#27 DONE 0.0s
+
+#30 [web build 6/6] RUN npm run build
+#30 CACHED
+
+#31 [web build 2/6] WORKDIR /app
+#31 CACHED
+
+#32 [web build 5/6] COPY . .
+#32 CACHED
+
+#33 [web stage-1 2/3] COPY nginx.conf /etc/nginx/conf.d/default.conf
+#33 CACHED
+
+#34 [web build 3/6] COPY package*.json ./
+#34 CACHED
+
+#35 [web build 4/6] RUN npm ci
+#35 CACHED
+
+#36 [web stage-1 3/3] COPY --from=build /app/dist /usr/share/nginx/html
+#36 CACHED
+
+#37 [web] exporting to image
+#37 exporting layers 0.0s done
+#37 exporting manifest sha256:04ef36e73c2dcb0097c8bf1123f696cd7fb19004ede7360a1bacb0fe62cb9028 0.0s done
+#37 exporting config sha256:72b0802e208138f9d728756436fa631365da368fcdc55437be0d3df7ee5e8869
+#37 exporting config sha256:72b0802e208138f9d728756436fa631365da368fcdc55437be0d3df7ee5e8869 0.0s done
+#37 exporting attestation manifest sha256:ffee3f110428ae62d86ce6f005a404821fc1646699951a0dacefce799b393095 0.0s done
+#37 exporting manifest list sha256:53281dc3797daa059a726e6190f0f31594d7baae5fb97e1bb0ccf8e6e2bce65b 0.0s done
+#37 naming to docker.io/library/fsp-cc-dryrun-20261021t190622z-255369-web:latest done
+#37 unpacking to docker.io/library/fsp-cc-dryrun-20261021t190622z-255369-web:latest 0.0s done
+#37 DONE 0.3s
+
+#38 [web] resolving provenance for metadata file
+#38 DONE 0.0s
+ api  Built
+ task-worker  Built
+ web  Built
+STEP up
+ Network fsp-cc-dryrun-20261021t190622z-255369_default  Creating
+ Network fsp-cc-dryrun-20261021t190622z-255369_default  Created
+ Volume fsp-cc-dryrun-20261021t190622z-255369_fsp_db  Creating
+ Volume fsp-cc-dryrun-20261021t190622z-255369_fsp_db  Created
+ Container fsp-cc-dryrun-20261021t190622z-255369-db-1  Creating
+ Container fsp-cc-dryrun-20261021t190622z-255369-db-1  Created
+ Container fsp-cc-dryrun-20261021t190622z-255369-api-1  Creating
+ Container fsp-cc-dryrun-20261021t190622z-255369-api-1  Created
+ Container fsp-cc-dryrun-20261021t190622z-255369-task-worker-1  Creating
+ Container fsp-cc-dryrun-20261021t190622z-255369-web-1  Creating
+ Container fsp-cc-dryrun-20261021t190622z-255369-web-1  Created
+ Container fsp-cc-dryrun-20261021t190622z-255369-task-worker-1  Created
+ Container fsp-cc-dryrun-20261021t190622z-255369-db-1  Starting
+ Container fsp-cc-dryrun-20261021t190622z-255369-db-1  Started
+ Container fsp-cc-dryrun-20261021t190622z-255369-db-1  Waiting
+ Container fsp-cc-dryrun-20261021t190622z-255369-db-1  Healthy
+ Container fsp-cc-dryrun-20261021t190622z-255369-api-1  Starting
+ Container fsp-cc-dryrun-20261021t190622z-255369-api-1  Started
+ Container fsp-cc-dryrun-20261021t190622z-255369-api-1  Waiting
+ Container fsp-cc-dryrun-20261021t190622z-255369-api-1  Waiting
+ Container fsp-cc-dryrun-20261021t190622z-255369-api-1  Healthy
+ Container fsp-cc-dryrun-20261021t190622z-255369-web-1  Starting
+ Container fsp-cc-dryrun-20261021t190622z-255369-api-1  Healthy
+ Container fsp-cc-dryrun-20261021t190622z-255369-task-worker-1  Starting
+ Container fsp-cc-dryrun-20261021t190622z-255369-web-1  Started
+ Container fsp-cc-dryrun-20261021t190622z-255369-task-worker-1  Started
+ Container fsp-cc-dryrun-20261021t190622z-255369-api-1  Waiting
+ Container fsp-cc-dryrun-20261021t190622z-255369-db-1  Waiting
+ Container fsp-cc-dryrun-20261021t190622z-255369-task-worker-1  Waiting
+ Container fsp-cc-dryrun-20261021t190622z-255369-web-1  Waiting
+ Container fsp-cc-dryrun-20261021t190622z-255369-db-1  Healthy
+ Container fsp-cc-dryrun-20261021t190622z-255369-task-worker-1  Healthy
+ Container fsp-cc-dryrun-20261021t190622z-255369-api-1  Healthy
+ Container fsp-cc-dryrun-20261021t190622z-255369-web-1  Healthy
+NAME                                                  IMAGE                                                                                        COMMAND                  SERVICE       CREATED          STATUS                    PORTS
+fsp-cc-dryrun-20261021t190622z-255369-api-1           fsp-cc-dryrun-20261021t190622z-255369-api                                                    "sh -c 'alembic upgr…"   api           24 seconds ago   Up 17 seconds (healthy)   
+fsp-cc-dryrun-20261021t190622z-255369-db-1            postgres:16-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea   "docker-entrypoint.s…"   db            24 seconds ago   Up 24 seconds (healthy)   5432/tcp
+fsp-cc-dryrun-20261021t190622z-255369-task-worker-1   fsp-cc-dryrun-20261021t190622z-255369-task-worker                                            "python -m fsp.task_…"   task-worker   24 seconds ago   Up 6 seconds              
+fsp-cc-dryrun-20261021t190622z-255369-web-1           fsp-cc-dryrun-20261021t190622z-255369-web                                                    "/docker-entrypoint.…"   web           24 seconds ago   Up 6 seconds (healthy)    127.0.0.1:32769->80/tcp
+API /api/health HTTP 200 expected=200
+health ok; demo=false
+API /api/catalog HTTP 200 expected=200
+API /api/openapi.json HTTP 200 expected=200
+API /api/me/profile HTTP 401 expected=401
+API /api/auth/demo HTTP 404 expected=404
+API /api/auth/demo HTTP 403 expected=403
+minimum API and negative access checks passed
+STEP verify worker process
+worker process ok
+STEP down disposable project (including its disposable volume)
+ Container fsp-cc-dryrun-20261021t190622z-255369-task-worker-1  Stopping
+ Container fsp-cc-dryrun-20261021t190622z-255369-web-1  Stopping
+ Container fsp-cc-dryrun-20261021t190622z-255369-web-1  Stopped
+ Container fsp-cc-dryrun-20261021t190622z-255369-web-1  Removing
+ Container fsp-cc-dryrun-20261021t190622z-255369-web-1  Removed
+ Container fsp-cc-dryrun-20261021t190622z-255369-task-worker-1  Stopped
+ Container fsp-cc-dryrun-20261021t190622z-255369-task-worker-1  Removing
+ Container fsp-cc-dryrun-20261021t190622z-255369-task-worker-1  Removed
+ Container fsp-cc-dryrun-20261021t190622z-255369-api-1  Stopping
+ Container fsp-cc-dryrun-20261021t190622z-255369-api-1  Stopped
+ Container fsp-cc-dryrun-20261021t190622z-255369-api-1  Removing
+ Container fsp-cc-dryrun-20261021t190622z-255369-api-1  Removed
+ Container fsp-cc-dryrun-20261021t190622z-255369-db-1  Stopping
+ Container fsp-cc-dryrun-20261021t190622z-255369-db-1  Stopped
+ Container fsp-cc-dryrun-20261021t190622z-255369-db-1  Removing
+ Container fsp-cc-dryrun-20261021t190622z-255369-db-1  Removed
+ Volume fsp-cc-dryrun-20261021t190622z-255369_fsp_db  Removing
+ Network fsp-cc-dryrun-20261021t190622z-255369_default  Removing
+ Volume fsp-cc-dryrun-20261021t190622z-255369_fsp_db  Removed
+ Network fsp-cc-dryrun-20261021t190622z-255369_default  Removed
+cleanup verified: no project containers or volumes
+EXIT_CODE=0
