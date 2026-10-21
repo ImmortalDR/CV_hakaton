@@ -1,0 +1,159 @@
+{
+  "verified_at": "2026-10-21T19:02:26.449459+00:00",
+  "git_sha": "af30c063dae26ef01c3e40bdf9276f27f1aae23a",
+  "verifier": "cursor_independent_r1",
+  "must_for_pitch_claim": [
+    "CC1",
+    "CC2",
+    "CC3",
+    "CC4",
+    "CC5",
+    "CC6",
+    "CC8",
+    "CC9",
+    "CC12",
+    "CCV1"
+  ],
+  "results": [
+    {
+      "id": "CC0",
+      "verdict": "PASS",
+      "notes": "NOT TODO anchors present",
+      "evidence": []
+    },
+    {
+      "id": "CC1",
+      "verdict": "PASS",
+      "notes": "services_in_compose=['db', 'api', 'task-worker', 'web', 'edge']; missing_in_inv=[]; bind_ok=True",
+      "evidence": [
+        "/root/hakaton-contour/docs/delivery/closed_contour/01_INVENTORY.md"
+      ]
+    },
+    {
+      "id": "CC2",
+      "verdict": "PASS",
+      "notes": "code_refs=14",
+      "evidence": []
+    },
+    {
+      "id": "CC3",
+      "verdict": "PASS",
+      "notes": "deps_and_variants=True",
+      "evidence": []
+    },
+    {
+      "id": "CC4",
+      "verdict": "PASS",
+      "notes": "log=cc-dry-run-20261021T185211Z-233571.log; strong=True; isolated=True; size=20544",
+      "evidence": [
+        "/root/hakaton-contour/docs/delivery/closed_contour/evidence/cc-dry-run-20261021T185211Z-233571.log",
+        "/root/hakaton-contour/scripts/closed_contour_dry_run.sh"
+      ]
+    },
+    {
+      "id": "CC5",
+      "verdict": "PASS",
+      "notes": "env_tracked=False; placeholder_ok=True",
+      "evidence": []
+    },
+    {
+      "id": "CC6",
+      "verdict": "PASS",
+      "notes": "threat_signal=12; owner_ok=True",
+      "evidence": []
+    },
+    {
+      "id": "CC7",
+      "verdict": "PASS",
+      "notes": "honest=True",
+      "evidence": []
+    },
+    {
+      "id": "CC8",
+      "verdict": "PASS",
+      "notes": "checklist_items~16",
+      "evidence": []
+    },
+    {
+      "id": "CC9",
+      "verdict": "PASS",
+      "notes": "bad_claim=False; LEGAL_REVIEW=True; code_refs=True",
+      "evidence": []
+    },
+    {
+      "id": "CC10",
+      "verdict": "PASS",
+      "notes": "boundary doc",
+      "evidence": []
+    },
+    {
+      "id": "CC11",
+      "verdict": "PASS",
+      "notes": "demo_in_pdn=True",
+      "evidence": []
+    },
+    {
+      "id": "CC12",
+      "verdict": "PASS",
+      "notes": "words=223",
+      "evidence": []
+    },
+    {
+      "id": "CC13",
+      "verdict": "PASS",
+      "notes": "pointer_in_for_jury_or_changelog=True",
+      "evidence": []
+    },
+    {
+      "id": "CC14",
+      "verdict": "PASS",
+      "notes": "words=162",
+      "evidence": []
+    },
+    {
+      "id": "CCV1",
+      "verdict": "PASS",
+      "notes": "entries=18; sample_ids=['CC0', 'CC1', 'CC2', 'CC3', 'CC4']",
+      "evidence": []
+    },
+    {
+      "id": "CCV2",
+      "verdict": "HUMAN_ONLY",
+      "notes": "agent_filled_boxes=False",
+      "evidence": []
+    },
+    {
+      "id": "CCV3",
+      "verdict": "PARTIAL",
+      "notes": "live_health=(200, '{\"status\":\"ok\",\"demo\":true,\"version\":\"1.0.0\"}'); recorded='$ curl --silent --show-error --fail --max-time 20 --write-out \\nHTTP=%{http_code}\\n https://85-137-26-131.sslip.io/api/hea'; main_branch=fix/jury-single-window; main_status_lines=139",
+      "evidence": []
+    }
+  ],
+  "must_gaps": [],
+  "backlog_statuses": {
+    "CC0": "PASS",
+    "CC1": "PASS",
+    "CC2": "PASS",
+    "CC3": "PASS",
+    "CC4": "PASS",
+    "CC5": "PASS",
+    "CC6": "PASS",
+    "CC7": "PASS",
+    "CC8": "PASS",
+    "CC9": "PASS",
+    "CC10": "PASS",
+    "CC11": "PASS",
+    "CC12": "PASS",
+    "CC13": "PASS",
+    "CC14": "PASS",
+    "CCV1": "PASS",
+    "CCV2": "HUMAN_ONLY",
+    "CCV3": "PARTIAL"
+  },
+  "live_public_health": {
+    "status": 200,
+    "body": "{\"status\":\"ok\",\"demo\":true,\"version\":\"1.0.0\"}"
+  },
+  "pitch_claim_allowed_by_agent_artifacts": true,
+  "pitch_claim_allowed_after_human_stars": false
+}
