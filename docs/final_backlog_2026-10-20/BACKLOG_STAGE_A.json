@@ -54,13 +54,21 @@
       "id": "Q3",
       "audit": "B03",
       "owner": "nikita+danila",
-      "status": "done",
+      "status": "failed_verification",
       "priority": "P1",
       "title": "Confirm before submit with blank answers",
       "dod": [
         "modal with skip count; no silent empty submit"
       ],
-      "verification": "Frontend build passed; native confirm before submit; browser accept/dismiss queued for Pck4; live browser smoke passed 2026-10-21"
+      "verification": "FAIL: Прямой POST submit с одним ответом и без confirm возвращает 200/completed. UI отмена работает; это невыполнение серверного пункта B.2, не потеря при UI отмене.",
+      "verification_history": [
+        {
+          "recorded_at": "2026-10-21T08:50:21.295611+00:00",
+          "previous_status": "done",
+          "previous_verification": "Frontend build passed; native confirm before submit; browser accept/dismiss queued for Pck4; live browser smoke passed 2026-10-21",
+          "reason": "Independent adversarial verification; historical claim preserved"
+        }
+      ]
     },
     {
       "id": "Q4",
@@ -69,10 +77,18 @@
         "B06"
       ],
       "owner": "nikita",
-      "status": "done",
+      "status": "failed_verification",
       "priority": "P2",
       "title": "Hints match profile/dialog state after hide/revoke",
-      "verification": "22 API tests passed (privacy and revoked chat); frontend build passed"
+      "verification": "FAIL: B05 воспроизведён: опубликованному подтверждённому Junior при 0 приглашений показывается «Подтвердите навыки и опубликуйте профиль».",
+      "verification_history": [
+        {
+          "recorded_at": "2026-10-21T08:50:21.295611+00:00",
+          "previous_status": "done",
+          "previous_verification": "22 API tests passed (privacy and revoked chat); frontend build passed",
+          "reason": "Independent adversarial verification; historical claim preserved"
+        }
+      ]
     },
     {
       "id": "Q5",
@@ -83,19 +99,35 @@
         "U04"
       ],
       "owner": "nikita+timofey",
-      "status": "done",
+      "status": "partial",
       "priority": "P2",
       "title": "Employer UX: distinct anon, filters, compact need, score breakdown",
-      "verification": "Build + 22 API + 3 stage_a tests passed; U01-U04 implemented; browser check queued; live browser smoke passed 2026-10-21"
+      "verification": "PARTIAL: Smoke не проверяет одинаковость ярлыка в приглашении/PDF, статус приглашения на карточке, scroll restoration, баннер изменённых параметров и арифметику видимой строки двух карточек. Форму прочитали, но не оценили глазами.",
+      "verification_history": [
+        {
+          "recorded_at": "2026-10-21T08:50:21.295611+00:00",
+          "previous_status": "done",
+          "previous_verification": "Build + 22 API + 3 stage_a tests passed; U01-U04 implemented; browser check queued; live browser smoke passed 2026-10-21",
+          "reason": "Independent adversarial verification; historical claim preserved"
+        }
+      ]
     },
     {
       "id": "Q6",
       "audit": "B04",
       "owner": "danila",
-      "status": "done",
+      "status": "partial",
       "priority": "P2",
       "title": "Task schedule: pause/resume must not spawn early duplicate",
-      "verification": "96 tests passed; 6 scheduler tests after close hardening; build and 55 numeral assertions passed; production runtime preserved from b769e03"
+      "verification": "PARTIAL: Живая API дата и число выдач проверены; текст даты в UI отдельно не сопоставлен. Реальные 7 календарных дней не ожидались.",
+      "verification_history": [
+        {
+          "recorded_at": "2026-10-21T08:50:21.295611+00:00",
+          "previous_status": "done",
+          "previous_verification": "96 tests passed; 6 scheduler tests after close hardening; build and 55 numeral assertions passed; production runtime preserved from b769e03",
+          "reason": "Independent adversarial verification; historical claim preserved"
+        }
+      ]
     },
     {
       "id": "Q7",
@@ -129,9 +161,17 @@
     {
       "id": "Pck2",
       "owner": "nikita",
-      "status": "done",
+      "status": "partial",
       "title": "For-jury / README path 10-15 min",
-      "verification": "CHANGELOG_STAGE_A, FOR_JURY, OpenAPI, Stage A PDF/DOCX prepared; deployment smoke pending"
+      "verification": "PARTIAL: Remote ещё на 2e6d6da, новых документов/кода этапа A там нет; push не выполнен. Маршрут общих аккаунтов может упираться в cooldown.",
+      "verification_history": [
+        {
+          "recorded_at": "2026-10-21T08:50:21.295611+00:00",
+          "previous_status": "done",
+          "previous_verification": "CHANGELOG_STAGE_A, FOR_JURY, OpenAPI, Stage A PDF/DOCX prepared; deployment smoke pending",
+          "reason": "Independent adversarial verification; historical claim preserved"
+        }
+      ]
     },
     {
       "id": "Pck3",
@@ -143,9 +183,17 @@
     {
       "id": "Pck4",
       "owner": "any",
-      "status": "done",
+      "status": "failed_verification",
       "title": "Smoke: Q1-Q3 + invite consent + isolation regression",
-      "verification": "Live HTTPS Chromium smoke pass: 13 groups, no JS errors; docs/delivery/stage-a-smoke.json"
+      "verification": "FAIL: Скрипт зелёный (13 групп), но не проверяет серверный confirm. По правилу Pck4.D при Q3 FAIL итог Pck4 не может быть PASS.",
+      "verification_history": [
+        {
+          "recorded_at": "2026-10-21T08:50:21.295611+00:00",
+          "previous_status": "done",
+          "previous_verification": "Live HTTPS Chromium smoke pass: 13 groups, no JS errors; docs/delivery/stage-a-smoke.json",
+          "reason": "Independent adversarial verification; historical claim preserved"
+        }
+      ]
     },
     {
       "id": "Pck5",
@@ -175,5 +223,17 @@
     "deployment": "complete",
     "git_push": "blocked_no_https_or_ssh_credentials",
     "external_form": "not_sent"
+  },
+  "adversarial_verification": {
+    "checked_at": "2026-10-21T08:50:21.295611+00:00",
+    "git_sha": "84e697abeeac3cca21ae225fb1746ea02b1a46ff",
+    "matrix": "../delivery/VERIFY_STAGE_A_MATRIX.json",
+    "submission_allowed": false,
+    "counts": {
+      "PASS": 9,
+      "FAIL": 3,
+      "PARTIAL": 3,
+      "HUMAN_ONLY": 1
+    }
   }
 }
