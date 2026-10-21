@@ -110,7 +110,7 @@
     {
       "id": "CC8",
       "priority": "P1",
-      "status": "todo",
+      "status": "PASS",
       "owner": "astra",
       "title": "Hardening checklist for internal contour",
       "artifact": "docs/delivery/closed_contour/07_HARDENING_CHECKLIST.md"
