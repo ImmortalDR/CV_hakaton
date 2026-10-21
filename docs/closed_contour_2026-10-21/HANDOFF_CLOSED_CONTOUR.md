@@ -2,7 +2,8 @@
 
 **Дата снимка:** 2026-10-21 19:12 UTC  
 **Ветка:** `codex/closed-contour-readiness`  
-**Worktree на сервере:** `/root/hakaton-contour`  
+**Worktree сборки:** `/root/hakaton-contour`  
+**Влито в сдачу:** `/root/hakaton-fsp-mvp` (`codex/fsp-mvp`) · на GitHub  
 **Актуальный SHA:** `git -C /root/hakaton-contour rev-parse --short HEAD` (якорь создания handoff: `41c5f9b`)
 **Публичный демо-стенд (не ломать):** https://85-137-26-131.sslip.io/
 
@@ -201,7 +202,8 @@ curl -fsS https://85-137-26-131.sslip.io/api/health
 - Вся работа трека — ветка `codex/closed-contour-readiness` в worktree.  
 - Откат агентских коммитов: смотреть `git log` на этой ветке; **не** `reset --hard` на `main` и не на чужих ветках основного клона.  
 - Не использовать `stash` как откат чужого WIP.  
-- Push на GitHub этой ветки — только по явной просьбе человека (на момент снимка push мог быть не сделан).
+- GitHub: ветки `codex/closed-contour-readiness` и `codex/fsp-mvp` (с merge пакета) запушены в `ImmortalDR/CV_hakaton` 21.10.2026; ключ `/root/.ssh/id_ed25519_cvorganisation`.
+- Актуальный tip сдачи смотри: `git -C /root/hakaton-fsp-mvp rev-parse --short HEAD` и https://github.com/ImmortalDR/CV_hakaton/tree/codex/fsp-mvp
 
 ---
 
