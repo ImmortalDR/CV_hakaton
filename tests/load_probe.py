@@ -86,14 +86,19 @@ async def main():
                     ("pdf", "/api/profiles/" + cid + "/pdf"),
                 ]:
                     start = time.perf_counter()
-                    r = await client.get(path)
+                    try:
+                        r = await client.get(path)
+                        status, error_type = r.status_code, None
+                    except httpx.HTTPError as exc:
+                        status, error_type = 0, type(exc).__name__
                     records.append(
                         {
                             "operation": name,
                             "milliseconds": round_float(
                                 (time.perf_counter() - start) * 1000
                             ),
-                            "status": r.status_code,
+                            "status": status,
+                            "error_type": error_type,
                         }
                     )
 
@@ -118,6 +123,7 @@ async def main():
         "duration_seconds": round_float(duration),
         "throughput_rps": round_float(len(records) / duration),
         "all": summarize(records),
+        "failures": [r for r in records if r["status"] != 200],
         "by_operation": {
             name: summarize([r for r in records if r["operation"] == name])
             for name in ("bank", "profile", "pdf")
@@ -133,7 +139,7 @@ async def main():
         },
         "limitations": "270 read requests; 30 synthetic sessions; no login/write load, no long soak, small candidate bank; no claim of production capacity",
     }
-    Path("docs/delivery/load-results.json").write_text(
+    Path(os.getenv("LOAD_OUTPUT", "docs/delivery/load-results.json")).write_text(
         json.dumps(result, ensure_ascii=False, indent=2) + "\n"
     )
     print(json.dumps(result, ensure_ascii=False, indent=2))

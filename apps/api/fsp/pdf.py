@@ -1,5 +1,6 @@
 from io import BytesIO
 from pathlib import Path
+from threading import Lock
 from xml.sax.saxutils import escape
 from reportlab.lib import colors
 from reportlab.lib.styles import ParagraphStyle
@@ -10,7 +11,18 @@ from .bank import SPECS, SKILLS
 from .formatting import readable_date
 
 
+_PDF_LOCK = Lock()
+
+
 def profile_pdf(profile):
+    # ReportLab's shared TrueType font/subset state raced under concurrent cold
+    # renders (KeyError in makeSubset). Keep each document's render atomic within
+    # this process; profiles/permissions remain request-local, never cached here.
+    with _PDF_LOCK:
+        return _render_profile(profile)
+
+
+def _render_profile(profile):
     if "DejaVu" not in pdfmetrics.getRegisteredFontNames():
         font = Path("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf")
         pdfmetrics.registerFont(TTFont("DejaVu", str(font)))
