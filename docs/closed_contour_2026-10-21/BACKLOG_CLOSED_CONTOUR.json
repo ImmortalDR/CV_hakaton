@@ -94,7 +94,7 @@
     {
       "id": "CC6",
       "priority": "P1",
-      "status": "todo",
+      "status": "PASS",
       "owner": "astra",
       "title": "Lightweight threat model (assets, zones, gaps, owner)",
       "artifact": "docs/delivery/closed_contour/05_THREAT_MODEL.md"
