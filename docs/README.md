@@ -12,7 +12,7 @@
 
 ## Проверить и представить
 
-- [Маршрут жюри](delivery/FOR_JURY.md), [матрица требований](delivery/REQUIREMENTS_STATUS.md), [результаты проверок](delivery/VALIDATION.md).
+- [Возможный сценарий проверки для жюри](delivery/FOR_JURY.md), [матрица требований](delivery/REQUIREMENTS_STATUS.md), [результаты проверок](delivery/VALIDATION.md).
 - [Презентация PDF](../demo/FSP_FINAL_2026-10-21.pdf) / [PPTX](../demo/FSP_FINAL_2026-10-21.pptx), [сценарий показа](../demo/SCENARIO.md).
 - [Руководство PDF](delivery/FSP_MVP.pdf) / [DOCX](delivery/FSP_MVP.docx).
 - [Итоговый отчёт PDF](delivery/FINAL_REPORT_2026-10-21.pdf) / [DOCX](delivery/FINAL_REPORT_2026-10-21.docx).
