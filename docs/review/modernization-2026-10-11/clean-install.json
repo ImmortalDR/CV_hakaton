@@ -1,0 +1,83 @@
+{
+  "status": "pass",
+  "checked_at": "2026-10-11T19:07:30.922158+00:00",
+  "project": "fsp-verify-release-20261011-r2",
+  "port": 3084,
+  "fresh_volume": true,
+  "tables": 16,
+  "users": 15,
+  "additive_seed": true,
+  "schema_drift": false,
+  "backup_restore_identical": true,
+  "restart_preserved": true,
+  "table_hashes": {
+    "attempts": {
+      "rows": 12,
+      "sha256": "b5bd63b24825eddf2b22a59fa2386ad204aafe1c6b8bfe7cdf4869a994a234bb"
+    },
+    "companies": {
+      "rows": 2,
+      "sha256": "535fbb0a3fe6fd5f14d062b87e405c6c092289a36e41f9a67ec88b8e2935fcf0"
+    },
+    "company_members": {
+      "rows": 2,
+      "sha256": "112b505309db7a9bc7e778216da370bd5f9045c73d40ccfd29ed1505c5b4e86f"
+    },
+    "consents": {
+      "rows": 15,
+      "sha256": "5619ad7c4110a5c3b56f13f63f11cf770d6cc185e8a5cbe5150982cd6f4576b3"
+    },
+    "contact_grants": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "email_verifications": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "employer_needs": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "invitations": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "messages": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "profiles": {
+      "rows": 13,
+      "sha256": "30eee86411b7b0892718f2de8898ed303aeab2277170f018a576e10038d5c65a"
+    },
+    "search_snapshots": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "sessions": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "skill_evidence": {
+      "rows": 24,
+      "sha256": "bcf64e4baf463d1fd17e2dee827a0cea9ff652a0647c234a33909991ff15b16a"
+    },
+    "task_assignments": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "task_plans": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "users": {
+      "rows": 15,
+      "sha256": "c662ba8a6ac2f4e2424cbbabbf75e743429eed91bb7e1849ede6f447e79b013a"
+    }
+  },
+  "dump_sha256": "18e4d4e25d65e188f5e854e8caac31171299f2362d6db417006a4263441198e8",
+  "scope": "New isolated Docker project; new PostgreSQL volume; full metadata tables compared by ordered row hashes; synthetic seed only",
+  "revision": "edc9a7d2f8e2b4a2d75f592c92beee12313640e2",
+  "working_tree_changes": true
+}

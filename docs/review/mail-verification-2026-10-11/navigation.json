@@ -1,0 +1,9 @@
+{
+  "status": "pass",
+  "checks": [
+    "same_document_hash_verifies",
+    "token_removed",
+    "reused_hash_rejected"
+  ],
+  "scope": "Isolated synthetic account and simulated delivery; no external mail"
+}

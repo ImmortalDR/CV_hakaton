@@ -1,0 +1,55 @@
+{
+  "status": "pass",
+  "checked_at": "2026-10-11T20:33:13.974968+00:00",
+  "base_url": "https://85-137-26-131.sslip.io",
+  "scope": "Real SMTP registration and IMAP receipt in one authorized Gmail mailbox; UI verification/login for both roles",
+  "roles": [
+    {
+      "role": "candidate",
+      "status": "pass",
+      "checks": [
+        "smtp_response_without_token",
+        "no_demo_letter",
+        "unverified_login_denied",
+        "imap_receipt",
+        "ui_link_verification",
+        "url_token_removed",
+        "single_use_link",
+        "ui_login",
+        "role_correct",
+        "no_js_errors"
+      ],
+      "authentication_headers": {
+        "spf": "not_observed",
+        "dkim": "not_observed",
+        "dmarc": "not_observed"
+      },
+      "receipt_and_login_seconds": 4.36
+    },
+    {
+      "role": "employer",
+      "status": "pass",
+      "checks": [
+        "smtp_response_without_token",
+        "no_demo_letter",
+        "unverified_login_denied",
+        "imap_receipt",
+        "ui_link_verification",
+        "url_token_removed",
+        "single_use_link",
+        "ui_login",
+        "role_correct",
+        "no_js_errors"
+      ],
+      "authentication_headers": {
+        "spf": "not_observed",
+        "dkim": "not_observed",
+        "dmarc": "not_observed"
+      },
+      "receipt_and_login_seconds": 4.22
+    }
+  ],
+  "messages_sent": 2,
+  "messages_received": 2,
+  "secrets_recorded": false
+}

@@ -1,0 +1,42 @@
+{
+  "status": "pass",
+  "checked_at": "2026-10-11T20:34:53.416701+00:00",
+  "base_url": "https://85-137-26-131.sslip.io",
+  "scope": "Read-only smoke; no registration, mail or business mutations",
+  "steps": [
+    {
+      "name": "numerals",
+      "command": [
+        "node",
+        "apps/web/tests/formatting.test.mjs"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "seconds": 1.64
+    },
+    {
+      "name": "live_smoke",
+      "command": [
+        "/root/hakaton-fixes-20261011/.venv/bin/python",
+        "tests/browser_live_smoke.py",
+        "--base-url",
+        "https://85-137-26-131.sslip.io",
+        "--out",
+        "/root/hakaton-fixes-20261011/audit/mail-review/public/live-smoke"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "seconds": 3.84
+    },
+    {
+      "name": "published_openapi",
+      "status": "pass"
+    }
+  ],
+  "backend": "not_run",
+  "external_gates": {
+    "real_email": "not_run_separate_explicit_check",
+    "human_pilot": "not_run_requires_people",
+    "independent_ranking_labels": "not_run_requires_labels"
+  }
+}

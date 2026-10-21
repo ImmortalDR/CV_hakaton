@@ -1,0 +1,19 @@
+{
+  "kind": "unlabelled vacancies; not candidate relevance labels",
+  "rows": 29998,
+  "limit": 30000,
+  "unique_eligible_texts_before_sample": 148289,
+  "near_heldout_copies_removed": 2,
+  "counts": {
+    "input_versions": 296885,
+    "heldout_job_versions": 190,
+    "after_corpus_cutoff": 4562
+  },
+  "cutoff_exclusive": "2021-10-29",
+  "cutoff_meaning": "last training application; grouped evaluation, NOT temporal forecasting",
+  "heldout_job_versions_excluded": true,
+  "corpus_sha256": "0851c1771f8e8830c1bed628e2776d8314f162602e29f7385f792a29d429d119",
+  "pairs_sha256": "d6db3a955e51015c4cf86b9cfc554f550c8667431183c716ba011985e4852a6d",
+  "index_sha256": "4365c43d48a89916e18a3bfee109c7bd1bd279d1caf87596baab4fcebd0a36d3",
+  "code_sha256": "0dcd2a406be3b43cbb8c7542d900622c3bfe8a0b66a32653150380c87b853c65"
+}

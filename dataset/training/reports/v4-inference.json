@@ -1,0 +1,36 @@
+{
+  "checks": {
+    "word_cosine": {
+      "rows": 77,
+      "max_abs_error": 0.0,
+      "load_and_77_single_candidate_calls_seconds": 1.9892212060512975,
+      "encoder_loaded": false
+    },
+    "char_cosine": {
+      "rows": 77,
+      "max_abs_error": 0.0,
+      "load_and_77_single_candidate_calls_seconds": 2.7459025039570406,
+      "encoder_loaded": false
+    },
+    "broad_cosine": {
+      "rows": 77,
+      "max_abs_error": 0.0,
+      "load_and_77_single_candidate_calls_seconds": 1.6618082830682397,
+      "encoder_loaded": false
+    },
+    "word_pair": {
+      "rows": 77,
+      "max_abs_error": 0.0,
+      "load_and_77_single_candidate_calls_seconds": 1.8728493269300088,
+      "encoder_loaded": false
+    },
+    "broad_pair": {
+      "rows": 77,
+      "max_abs_error": 0.0,
+      "load_and_77_single_candidate_calls_seconds": 1.76434708700981,
+      "encoder_loaded": false
+    }
+  },
+  "max_rss_kib": 225928,
+  "benchmark_scope": "object load and scoring in an already imported Python process; not HTTP load test"
+}

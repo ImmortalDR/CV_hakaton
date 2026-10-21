@@ -1,0 +1,60 @@
+{
+  "independent_retrieval_recalculation_equal": true,
+  "retrieval_scores": {
+    "e5": 0.37916666666666665,
+    "word_tfidf": 0.275
+  },
+  "random_tie_expected_recall_at100": 0.07742583863600662,
+  "fresh_encoder_documents": 5,
+  "fresh_encoder_max_abs_error": 0.0,
+  "fresh_encoder_seconds": 2.5950714889913797,
+  "descriptive_test_slices_not_used_for_selection": {
+    "python": {
+      "word_cosine": {
+        "rows": 0,
+        "positives": 0,
+        "mixed_jobs": 0,
+        "primary_jobs_min10": 0,
+        "ndcg_at_10_primary": null,
+        "ndcg_at_min10n_small_pools": null,
+        "within_job_auc": null,
+        "average_precision": null
+      },
+      "e5_cosine": {
+        "rows": 0,
+        "positives": 0,
+        "mixed_jobs": 0,
+        "primary_jobs_min10": 0,
+        "ndcg_at_10_primary": null,
+        "ndcg_at_min10n_small_pools": null,
+        "within_job_auc": null,
+        "average_precision": null
+      }
+    },
+    "sql": {
+      "word_cosine": {
+        "rows": 4,
+        "positives": 0,
+        "mixed_jobs": 0,
+        "primary_jobs_min10": 0,
+        "ndcg_at_10_primary": null,
+        "ndcg_at_min10n_small_pools": null,
+        "within_job_auc": null,
+        "average_precision": null
+      },
+      "e5_cosine": {
+        "rows": 4,
+        "positives": 0,
+        "mixed_jobs": 0,
+        "primary_jobs_min10": 0,
+        "ndcg_at_10_primary": null,
+        "ndcg_at_min10n_small_pools": null,
+        "within_job_auc": null,
+        "average_precision": null
+      }
+    }
+  },
+  "encoder_weights_finetuned": false,
+  "production_promotion_allowed": false,
+  "code_sha256": "f31aad6a143a585bf808dff9b10cd227d00142dea1e1f915f700c6a315b67379"
+}
