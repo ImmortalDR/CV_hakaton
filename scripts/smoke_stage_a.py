@@ -82,6 +82,48 @@ try:
         assert call(c,'/me/attempts')[0]['expires_at']==started['expires_at']
         assert outsider.request.put('/api/me/attempts/'+started['id']+'/answers',data={'answers':{'1':'999'}}).status==404
         checks+=['Q1_navigation_reload_server_draft_owner_expiry','Q2_live_bank_2_1_rounding_hint']
+        # B01 negative acceptance: actual failed PUT, leave cancel/accept,
+        # reload and tab recreation while offline, then automatic queue flush.
+        c.route('**/api/me/attempts/*/answers', lambda route: route.abort())
+        answer.fill('UNSAVED-123')
+        expect(page.get_by_role('status')).to_contain_text('Не удалось сохранить на сервере')
+        assert call(c,'/me/attempts')[0]['answers']['1']=='90,63'
+        leave=[]
+        def cancel_leave(d): leave.append(d.type); d.dismiss()
+        page.once('dialog',cancel_leave)
+        nav(page,'Обзор')
+        expect(answer).to_be_visible()
+        assert leave==['confirm']
+        page.once('dialog',lambda d:d.accept())
+        nav(page,'Обзор');nav(page,'Подтверждение навыков')
+        expect(answer).to_have_value('UNSAVED-123')
+        expect(page.get_by_role('status')).to_contain_text('Не удалось сохранить на сервере')
+        unload=[]
+        def accept_unload(d): unload.append(d.type);d.accept()
+        page.once('dialog',accept_unload);page.reload()
+        expect(answer).to_have_value('UNSAVED-123')
+        expect(page.get_by_role('status')).to_contain_text('Не удалось сохранить на сервере')
+        assert unload==['beforeunload']
+        answer.click()  # browser requires interaction before its unload dialog
+        page.once('dialog',accept_unload)
+        page.close(run_before_unload=True)
+        page=c.new_page();page.on('pageerror',lambda e:errors.append(str(e)))
+        page.goto(a.base_url);nav(page,'Подтверждение навыков')
+        answer=page.get_by_label('Ответ на задание 1',exact=True)
+        expect(answer).to_have_value('UNSAVED-123')
+        expect(page.get_by_role('status')).to_contain_text('Не удалось сохранить на сервере')
+        assert unload==['beforeunload','beforeunload']
+        c.unroute('**/api/me/attempts/*/answers')
+        page.once('dialog',lambda d:d.accept())
+        nav(page,'Обзор');nav(page,'Подтверждение навыков')
+        expect(page.get_by_role('status')).to_have_text('Ответы сохранены')
+        recovered=call(c,'/me/attempts')[0]
+        assert recovered['answers']['1']=='UNSAVED-123'
+        assert recovered['id']==started['id'] and recovered['expires_at']==started['expires_at']
+        assert page.evaluate('(id) => localStorage.getItem("fsp-attempt-"+id)',started['id']) is None
+        page.reload();expect(answer).to_have_value('UNSAVED-123')
+        answer.fill('90,63');expect(page.get_by_role('status')).to_have_text('Ответы сохранены')
+        checks.append('Q1_failed_PUT_leave_cancel_accept_reload_close_reopen_retry_server_ack')
         rejected=c.request.post('/api/me/attempts/'+started['id']+'/submit',data={'answers':{'1':'90,63'}})
         assert rejected.status==409 and 'Подтвердите' in rejected.json()['detail']
         unchanged=call(c,'/me/attempts')[0]

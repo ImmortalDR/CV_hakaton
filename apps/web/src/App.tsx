@@ -125,7 +125,10 @@ export function App() {
     [notice, setNotice] = useState(""),
     [busy, setBusy] = useState(false),
     [version, setVersion] = useState(0);
+  const unsavedAssessment = useRef(false);
+  const confirmLeave = () => !unsavedAssessment.current || window.confirm("Есть ответы, не сохранённые на сервере. Покинуть тест? Черновик останется в этом браузере; срок теста продолжает идти.");
   const setTab = (value: string) => {
+    if (value !== tab && !confirmLeave()) return;
     setTabState(value);
     if (user) try { sessionStorage.setItem(`fsp-tab-${user.id}`, value); } catch { /* Optional UI context. */ }
   };
@@ -318,6 +321,7 @@ export function App() {
           className="logout"
           onClick={() =>
             void act(async () => {
+              if (!confirmLeave()) return;
               await api("/auth/logout", {});
               setUser(null);
               setProfile(null);
@@ -389,12 +393,11 @@ export function App() {
             ) : (
               <Loading />
             ))}
-          {tab === "assessment" &&
-            (profile ? (
-              <Assessments {...props} profile={profile} />
-            ) : (
-              <Loading />
-            ))}
+          {profile && user.role === "candidate" && (
+            <div hidden={tab !== "assessment"}>
+              <Assessments {...props} profile={profile} visible={tab === "assessment"} dirtyRef={unsavedAssessment} />
+            </div>
+          )}
           {tab === "tasks" && <Tasks user={user} {...props} />}
           {tab === "search" && <SearchPage {...props} userId={user.id} openInvitations={() => setTab("invitations")} />}
           {tab === "invitations" && (
@@ -1062,31 +1065,95 @@ function Assessments({
   busy,
   catalog,
   refresh,
-}: Actions & { profile: Profile }) {
+  visible,
+  dirtyRef,
+}: Actions & { profile: Profile; visible: boolean; dirtyRef: { current: boolean } }) {
   const [attempts, setAttempts] = useState<Attempt[]>([]),
     [current, setCurrent] = useState<Attempt | null>(null),
     [answers, setAnswers] = useState<Record<string, string>>({}),
     [grade, setGrade] = useState(profile.claimed_grade ?? "Junior");
   const [saveStatus, setSaveStatus] = useState("");
   const saveQueue = useRef(Promise.resolve());
+  const inFlight = useRef(false);
+  const draft = useRef<Record<string, string>>({});
+  const confirmed = useRef<Record<string, string>>({});
+  const activeId = useRef<string | null>(null);
   const draftKey = (id: string) => `fsp-attempt-${id}`;
+  const pending = () => Object.fromEntries(Object.entries(draft.current)
+    .filter(([id, value]) => value !== (confirmed.current[id] ?? "")));
+  const persist = () => {
+    const changes = pending();
+    dirtyRef.current = inFlight.current || Object.keys(changes).length > 0;
+    if (!activeId.current) return;
+    try {
+      if (dirtyRef.current) localStorage.setItem(draftKey(activeId.current), JSON.stringify(draft.current));
+      else localStorage.removeItem(draftKey(activeId.current));
+      sessionStorage.removeItem(draftKey(activeId.current));
+    } catch {
+      setSaveStatus("Ответы не сохранены в браузере. Не закрывайте вкладку до подтверждения сервера.");
+    }
+  };
+  const flush = () => {
+    const attemptId = activeId.current;
+    if (!attemptId || !dirtyRef.current) return;
+    setSaveStatus("Есть несохранённые ответы. Сохраняем…");
+    saveQueue.current = saveQueue.current.then(async () => {
+      if (activeId.current !== attemptId) return;
+      const changes = pending();
+      if (!Object.keys(changes).length) return;
+      try {
+        inFlight.current = true;
+        await api(`/me/attempts/${attemptId}/answers`, { answers: changes }, "PUT");
+        if (activeId.current !== attemptId) return;
+        inFlight.current = false;
+        confirmed.current = { ...confirmed.current, ...changes };
+        persist();
+        setSaveStatus(dirtyRef.current ? "Есть несохранённые ответы. Сохраняем…" : "Ответы сохранены");
+      } catch {
+        inFlight.current = false;
+        persist();
+        setSaveStatus("Не удалось сохранить на сервере. Есть несохранённые ответы. При возврате в тест повторим сохранение; можно повторить сейчас.");
+      }
+    });
+  };
   const restore = (a: Attempt) => {
-    let local = {};
-    try { local = JSON.parse(sessionStorage.getItem(draftKey(a.id)) ?? "{}"); } catch { /* Server copy remains available. */ }
-    setAnswers({ ...a.answers, ...local });
+    let local: Record<string, string> = {};
+    try {
+      const stored = JSON.parse(localStorage.getItem(draftKey(a.id)) ?? sessionStorage.getItem(draftKey(a.id)) ?? "{}");
+      local = Object.fromEntries(Object.entries(stored).filter(([id, value]) =>
+        typeof value === "string" && a.questions.some(q => q.id === id))) as Record<string, string>;
+    } catch { /* Server copy remains available. */ }
+    activeId.current = a.id;
+    confirmed.current = { ...a.answers };
+    draft.current = { ...a.answers, ...local };
+    setAnswers(draft.current);
+    persist();
+    if (dirtyRef.current) flush();
+    else setSaveStatus("Ответы сохранены");
   };
   const saveAnswer = (id: string, value: string) => {
     if (!current) return;
-    const next = { ...answers, [id]: value };
-    setAnswers(next);
-    try { sessionStorage.setItem(draftKey(current.id), JSON.stringify(next)); } catch { /* Report server persistence below. */ }
-    setSaveStatus("Сохраняем ответы…");
-    const attemptId = current.id;
-    saveQueue.current = saveQueue.current.then(async () => {
-      await api(`/me/attempts/${attemptId}/answers`, { answers: { [id]: value } }, "PUT");
-      setSaveStatus("Ответы сохранены");
-    }).catch(() => setSaveStatus("Не удалось сохранить на сервере. Не закрывайте вкладку; повторите ввод при восстановлении связи."));
+    draft.current = { ...draft.current, [id]: value };
+    setAnswers(draft.current);
+    persist();
+    flush();
   };
+  useEffect(() => {
+    const beforeUnload = (event: BeforeUnloadEvent) => {
+      if (!dirtyRef.current) return;
+      event.preventDefault();
+      event.returnValue = "";
+    };
+    window.addEventListener("beforeunload", beforeUnload);
+    const online = () => flush();
+    window.addEventListener("online", online);
+    return () => {
+      window.removeEventListener("beforeunload", beforeUnload);
+      window.removeEventListener("online", online);
+      dirtyRef.current = false;
+    };
+  }, []);
+  useEffect(() => { if (visible) flush(); }, [visible]);
   const [availability, setAvailability] = useState<AssessmentAvailability | null>(null);
   const selectedLevel = availability?.levels.find((level) => level.grade === grade);
   const policy = current?.rubric ?? selectedLevel?.rubric;
@@ -1173,6 +1240,7 @@ function Assessments({
             </div>
           )}
           <p role="status">{saveStatus}</p>
+          {dirtyRef.current && <button type="button" className="secondary" onClick={flush}>Повторить сохранение</button>}
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -1186,7 +1254,10 @@ function Assessments({
                   `/me/attempts/${current.id}/submit`,
                   { answers, confirm_incomplete: empty > 0 },
                 );
-                sessionStorage.removeItem(draftKey(current.id));
+                confirmed.current = { ...draft.current };
+                persist();
+                activeId.current = null;
+                setSaveStatus("Ответы сданы");
                 setCurrent(result);
                 await load();
                 refresh();
