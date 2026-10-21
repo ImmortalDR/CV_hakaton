@@ -55,7 +55,6 @@ import {
 } from "./ui";
 
 import { Auth } from "./Auth";
-import { DemoLink, demoToken } from "./DemoEntry";
 import { useLocation, navigate, restoreInitialScroll, setNavigationGuard, allowedSection, authMode, authPaths, sections, screenUrl } from "./navigation";
 import { Tasks, type TaskInbox } from "./Tasks";
 import { countLabel, evidenceLabels } from "./formatting";
@@ -486,12 +485,6 @@ export function App() {
             </div>
           )}
           {error && <ErrorState message={error} />}{" "}
-          {user.demo_run_id && <details className="panel demo-run-info">
-            <summary>Отдельный демопроход · кандидат №{user.demo_candidate_code}</summary>
-            <p>Действия в этом проходе не меняют другие демопроходы. Новый проход можно начать на странице входа после выхода.</p>
-            {user.role === "employer" && <button className="secondary" onClick={() => navigate(screenUrl("search", { candidate_code: user.demo_candidate_code }))}>Найти кандидата этого прохода</button>}
-            {demoToken() && <DemoLink token={demoToken()} />}
-          </details>}
           {notice && (
             <div className="notice" role="status">
               {notice}
@@ -2029,6 +2022,27 @@ function InviteModal({
   const dialogRef = useRef<HTMLElement>(null);
   const [company, setCompany] = useState<Company | null>(null);
   const [companyError, setCompanyError] = useState("");
+  const [companyLoading, setCompanyLoading] = useState(true);
+  const companyRequest = useRef<AbortController | null>(null);
+  const loadCompany = useCallback(async () => {
+    companyRequest.current?.abort();
+    const controller = new AbortController();
+    companyRequest.current = controller;
+    setCompanyError(""); setCompanyLoading(true);
+    try {
+      const value = await api<Company>("/me/company", undefined, undefined, { signal: controller.signal });
+      if (!controller.signal.aborted) setCompany(value);
+    } catch (error) {
+      if (!controller.signal.aborted && !(error instanceof SessionChangedError))
+        setCompanyError("Не удалось загрузить компанию. Повторите загрузку — текст предложения и зарплата сохранятся.");
+    } finally {
+      if (!controller.signal.aborted) setCompanyLoading(false);
+    }
+  }, []);
+  useEffect(() => {
+    void loadCompany();
+    return () => companyRequest.current?.abort();
+  }, [loadCompany]);
   const dirty = description !== "Приглашаем обсудить работу в нашей команде. Задачи — развитие и поддержка продукта." || min !== 100000 || max !== 160000;
   const canLeave = useRef<() => boolean>(() => true);
   canLeave.current = () => !busy && (sent || !dirty || window.confirm("Закрыть приглашение? Изменения предложения и зарплаты не будут сохранены."));
@@ -2063,10 +2077,7 @@ function InviteModal({
       }
     };
     document.addEventListener("keydown", keydown);
-    let cancelled = false;
-    api<Company>("/me/company").then(value => { if (!cancelled) setCompany(value); }).catch(() => { if (!cancelled) setCompanyError("Не удалось загрузить компанию. Закройте приглашение и повторите попытку."); });
     return () => {
-      cancelled = true;
       document.removeEventListener("keydown", keydown);
       backgrounds.forEach(({node, inert}) => { node.inert = inert; });
       if (trigger?.isConnected) trigger.focus();
@@ -2107,6 +2118,7 @@ function InviteModal({
           <form noValidate
             onSubmit={(e) => {
               e.preventDefault();
+              if (busy || !company) return;
               setSalaryError("");
               if (!Number.isInteger(min) || !Number.isInteger(max) || min > max || min <= 0 || max <= 0 || min > 10000000 || max > 10000000) {
                 setSalaryError("Укажите зарплату от 1 до 10 000 000 ₽. Нижняя граница не должна превышать верхнюю.");
@@ -2172,6 +2184,12 @@ function InviteModal({
             </div>
             {company && minText && maxText && <p className="invitation-preview">{company.name} · {min === max ? currency(min) : `${currency(min)} — ${currency(max)}`} / месяц до вычета налогов. Связь: {company.contact}.</p>}
             {companyError && <ErrorState message={companyError} />}
+            {!company && <div className="company-retry">
+              {companyLoading && <p role="status">Загружаем компанию…</p>}
+              <button type="button" className="secondary" onClick={() => void loadCompany()}>
+                {companyLoading ? "Повторить загрузку компании" : "Загрузить компанию повторно"}
+              </button>
+            </div>}
             {salaryError && <p id="salary-error" className="field-error" role="alert">{salaryError}</p>}
             <button className="full" disabled={busy || !company}>
               Отправить приглашение

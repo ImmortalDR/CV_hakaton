@@ -47,7 +47,7 @@ try:
         time.sleep(.1)
     if '--sessions-only' not in sys.argv:
         subprocess.run(['.venv/bin/python','tests/browser_jury.py','--base-url',os.environ['PUBLIC_URL'],
-            '--runs','2','--out','audit/current/jury-local'], check=True)
+            '--runs','2','--out','audit/current/jury-replay-local'], check=True)
     subprocess.run(['.venv/bin/python','tests/browser_sessions.py','--base-url',os.environ['PUBLIC_URL'],
         '--out','audit/current/sessions-local'], check=True)
 finally:

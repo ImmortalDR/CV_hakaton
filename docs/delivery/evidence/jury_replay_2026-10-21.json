@@ -1,0 +1,184 @@
+{
+  "checked_at_utc": "2026-10-21T19:18:12.428959+00:00",
+  "base_commit": "ffd9e05",
+  "backend": {
+    "passed": 132,
+    "warnings": 1,
+    "command": "COOKIE_SECURE=false .venv/bin/python scripts/run_local.py .venv/bin/pytest -q tests"
+  },
+  "build": {
+    "typescript_vite": "passed",
+    "docker_api_web_worker": "passed"
+  },
+  "local_jury": {
+    "complete_runs": 2,
+    "same_accounts": true,
+    "separate_sessions": true,
+    "runs": [
+      {
+        "candidate_id": "cd6e6e29-fd42-4c1c-af4e-80c72feca8f4",
+        "code": "7BC01464",
+        "employer_id": "b389b78a-3413-4745-8a28-27898810e95e",
+        "history_ids": [
+          "76612dd3-acd0-4b2a-a0d6-276ec482fc7d",
+          "dec29945-b35b-4fa2-824b-4ffbde49f5cf"
+        ],
+        "invitations": 2,
+        "task_plans": 1
+      },
+      {
+        "candidate_id": "cd6e6e29-fd42-4c1c-af4e-80c72feca8f4",
+        "code": "7BC01464",
+        "employer_id": "b389b78a-3413-4745-8a28-27898810e95e",
+        "history_ids": [
+          "76612dd3-acd0-4b2a-a0d6-276ec482fc7d",
+          "dec29945-b35b-4fa2-824b-4ffbde49f5cf"
+        ],
+        "invitations": 4,
+        "task_plans": 2
+      }
+    ],
+    "checks": [
+      "1: retained login, original history and result after closing the tab",
+      "1: matching, missing HTTP proof, exact identifier search and PDF follows current consent",
+      "1: company retry preserves draft; sent invite survives interruption; task recipients refresh after acceptance",
+      "1: consent, disclosed PDF, two-way chat and retained messages after interruption",
+      "1: task consent, saved answer, review, pause/resume across tab closure; no duplicate assignment",
+      "1: existing or newly linked FSP achievements preserve grade",
+      "1: hide, interrupt, resume, republish, new invitation restores consent explicitly",
+      "2: retained login, original history and result after closing the tab",
+      "2: matching, missing HTTP proof, exact identifier search and PDF follows current consent",
+      "2: company retry preserves draft; sent invite survives interruption; task recipients refresh after acceptance",
+      "2: consent, disclosed PDF, two-way chat and retained messages after interruption",
+      "2: task consent, saved answer, review, pause/resume across tab closure; no duplicate assignment",
+      "2: existing or newly linked FSP achievements preserve grade",
+      "2: hide, interrupt, resume, republish, new invitation restores consent explicitly"
+    ],
+    "page_errors": [],
+    "scope": "Common demo accounts; existing history preserved; synthetic records added through UI; no reset or email"
+  },
+  "public_jury": {
+    "complete_runs": 2,
+    "same_accounts": true,
+    "separate_sessions": true,
+    "runs": [
+      {
+        "candidate_id": "204be6ad-80be-4392-be00-005a540ad5f2",
+        "code": "C7D0B82B",
+        "employer_id": "735bbcbf-d1f3-45da-872a-e64260d830a4",
+        "history_ids": [
+          "7e553c58-e109-487a-a36a-fbe1e937e4ab",
+          "99fab7b6-0ddb-4045-8305-998c3d886255",
+          "9d85e87f-fb7a-46ce-873c-37c326a4c907"
+        ],
+        "invitations": 9,
+        "task_plans": 2
+      },
+      {
+        "candidate_id": "204be6ad-80be-4392-be00-005a540ad5f2",
+        "code": "C7D0B82B",
+        "employer_id": "735bbcbf-d1f3-45da-872a-e64260d830a4",
+        "history_ids": [
+          "7e553c58-e109-487a-a36a-fbe1e937e4ab",
+          "99fab7b6-0ddb-4045-8305-998c3d886255",
+          "9d85e87f-fb7a-46ce-873c-37c326a4c907"
+        ],
+        "invitations": 11,
+        "task_plans": 3
+      }
+    ],
+    "checks": [
+      "1: retained login, original history and result after closing the tab",
+      "1: matching, missing HTTP proof, exact identifier search and PDF follows current consent",
+      "1: company retry preserves draft; sent invite survives interruption; task recipients refresh after acceptance",
+      "1: consent, disclosed PDF, two-way chat and retained messages after interruption",
+      "1: task consent, saved answer, review, pause/resume across tab closure; no duplicate assignment",
+      "1: existing or newly linked FSP achievements preserve grade",
+      "1: hide, interrupt, resume, republish, new invitation restores consent explicitly",
+      "2: retained login, original history and result after closing the tab",
+      "2: matching, missing HTTP proof, exact identifier search and PDF follows current consent",
+      "2: company retry preserves draft; sent invite survives interruption; task recipients refresh after acceptance",
+      "2: consent, disclosed PDF, two-way chat and retained messages after interruption",
+      "2: task consent, saved answer, review, pause/resume across tab closure; no duplicate assignment",
+      "2: existing or newly linked FSP achievements preserve grade",
+      "2: hide, interrupt, resume, republish, new invitation restores consent explicitly"
+    ],
+    "page_errors": [],
+    "scope": "Common demo accounts; existing history preserved; synthetic records added through UI; no reset or email"
+  },
+  "local_sessions": {
+    "checks": [
+      "saved cookie without sessionStorage: home/history/result, reload and retry all restore the same candidate",
+      "history renders and refreshes while availability request is stalled",
+      "manual history retry cancels a stuck request and starts a new one",
+      "request timeout, network failure and retry preserve loaded history without false empty state",
+      "role change in another tab clears candidate UI and restores the actual employer session",
+      "restored-page event recovers the actual candidate session",
+      "expired session redirects to login, clears private UI, and fresh login restores the original history",
+      "stalled company request replaced from the open modal without sending an invitation",
+      "initial task load failure recovers through visible refresh button",
+      "candidate and employer remain independent across simultaneous windows and restored employer login"
+    ],
+    "page_errors": []
+  },
+  "public_sessions": {
+    "checks": [
+      "saved cookie without sessionStorage: home/history/result, reload and retry all restore the same candidate",
+      "history renders and refreshes while availability request is stalled",
+      "manual history retry cancels a stuck request and starts a new one",
+      "request timeout, network failure and retry preserve loaded history without false empty state",
+      "role change in another tab clears candidate UI and restores the actual employer session",
+      "restored-page event recovers the actual candidate session",
+      "expired session redirects to login, clears private UI, and fresh login restores the original history",
+      "stalled company request replaced from the open modal without sending an invitation",
+      "initial task load failure recovers through visible refresh button",
+      "candidate and employer remain independent across simultaneous windows and restored employer login"
+    ],
+    "page_errors": []
+  },
+  "navigation": {
+    "checks": [
+      "auth modes, refresh, protected deep link resumes after login",
+      "all candidate sections back/forward, refresh, unknown and wrong-role routes",
+      "unsaved assessment: cancel browser/menu leave, accept, forward, recovery, reload",
+      "completed result deep link/back/reload, no attempt resubmission",
+      "scroll position restored after Back and page reload",
+      "all employer sections, saved search, bank filters, invite modal, no repeated POST",
+      "candidate code search after consent: visible alongside name, refresh, reset and Back",
+      "chat open/back/forward/reload, message sent exactly once",
+      "logout followed by Back does not reopen private workspace",
+      "email hash after mount, consumed token removed, reset without token explained",
+      "mobile menu/back/forward, no horizontal overflow"
+    ],
+    "page_errors": [],
+    "scope": "isolated database, synthetic seed, no external mail"
+  },
+  "deployment": {
+    "health": {
+      "status": "ok",
+      "demo": true,
+      "version": "1.0.0"
+    },
+    "asset": "/assets/index-CkYCkRf-.js",
+    "openapi_matches": true,
+    "simple_login": true,
+    "role_toggle_absent": true
+  },
+  "source_sha256": {
+    "apps/web/src/App.tsx": "28b57c190eba27b6a88554d2276abfff5d8b0dbc9919a23f1f0bf2e2d1ed057c",
+    "apps/web/src/DemoEntry.tsx": "1241afabc8d737316ccc700e9525e1101ca1c0ef60305470bd3829202d497ec2",
+    "apps/web/src/Tasks.tsx": "e465956f48f6098f427b979de0ca96dee61efad9c9c98535786d991188e21a1a",
+    "apps/web/src/style.css": "ed90705afd556edabc8c99c99134bce7ee81c6cb3fee5fbc5fadf0514bdc1a20",
+    "tests/browser_jury.py": "2ea0c66679e0504d8bb1e34ed50ddbb4521696e1fd213cd5b630af1be3071b95",
+    "tests/browser_sessions.py": "76ffcecc989fdd00146593d9f986f2e0fce7cbcc6d45801a6c5c55ec1b140e35",
+    "tests/browser_navigation.py": "2a8530d984b07dba426a2c70fa3aa8a430817c4bf122500b961a927aca2ca684",
+    "tests/run_jury_isolated.py": "f8b733119400a9e7b6b2b22fbd7580372d0671dc991ed371507cf88e74f39a88"
+  },
+  "limits": [
+    "Synthetic common demo users; earlier records preserved, new labelled invitations and tasks added.",
+    "Closing/reopening checks cover saved actions. Unsaved form text and running assessment deadlines are not paused.",
+    "Shared demo users are not isolated from simultaneous visitors. Use real separate accounts for independent concurrent work.",
+    "No independent human pilot or SMTP delivery check in this run.",
+    "The exact network cause of the original company-loading screenshot is unknown. Recovery from injected HTTP 503 and a stalled request was verified."
+  ]
+}

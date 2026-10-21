@@ -1,6 +1,6 @@
 """Saved-cookie entry, cross-tab identity, history retry and stalled requests.
 
-Only a new synthetic demo run is used. No email or existing business data changes.
+Common demo accounts; read-only business checks and synthetic network failures.
 Run against an isolated fixture or the public demo with --base-url.
 """
 import argparse
@@ -33,17 +33,19 @@ def main():
         def retry(page):
             with page.expect_response(lambda r: r.url.endswith('/api/me/attempts') and r.status == 200):
                 click(page, 'Обновить историю')
-            expect(page.locator('.history-list > div')).to_have_count(2)
+            expect(page.locator('.history-list > div')).to_have_count(count)
         ctx = context()
         page = ctx.new_page()
         try:
-            page.goto('/login'); click(page, 'Начать новый демопроход')
-            link = page.get_by_label('Ссылка на этот демопроход', exact=True).input_value()
+            page.goto('/login')
             click(page, 'Я кандидат'); expect(page.locator('.feature-banner')).to_contain_text('Junior')
             candidate = ctx.request.get('/api/auth/me').json()
+            history = ctx.request.get('/api/me/attempts').json()
+            count = len(history)
+            assert count > 0
             state = ctx.storage_state()
             nav(page, 'Подтверждение навыков')
-            expect(page.locator('.history-list > div')).to_have_count(2)
+            expect(page.locator('.history-list > div')).to_have_count(count)
             attempt = ctx.request.get('/api/me/attempts').json()[0]['id']
 
             for path in ['/', '/assessment', '/assessment?attempt=' + attempt]:
@@ -54,17 +56,18 @@ def main():
                 restored.goto(path)
                 expect(restored.locator('.account')).to_contain_text(candidate['email'])
                 if path == '/': nav(restored, 'Подтверждение навыков')
-                expect(restored.locator('.history-list > div')).to_have_count(2)
-                if '?attempt=' in path: expect(restored.locator('.result')).to_contain_text('50%')
+                expect(restored.locator('.history-list > div')).to_have_count(count)
+                if '?attempt=' in path: expect(restored.locator('.result')).to_contain_text(format(history[0]['result']['score'], 'g')+'%')
                 retry(restored)
-                restored.reload(); expect(restored.locator('.history-list > div')).to_have_count(2)
+                restored.reload(); expect(restored.locator('.history-list > div')).to_have_count(count)
                 assert not logins, logins
+                assert saved.request.get('/api/auth/me').json()['id'] == candidate['id']
                 saved.close()
-            checked('saved cookie in fresh browser contexts: home, history, result deep link, reload and real retry')
+            checked('saved cookie without sessionStorage: home/history/result, reload and retry all restore the same candidate')
 
             pending = []
             page.route('**/api/me/assessment-availability', lambda route: pending.append(route))
-            page.reload(); expect(page.locator('.history-list > div')).to_have_count(2)
+            page.reload(); expect(page.locator('.history-list > div')).to_have_count(count)
             expect(page.locator('.assessment-access')).to_contain_text('Проверяем доступность теста')
             assert pending
             retry(page)
@@ -99,13 +102,13 @@ def main():
             page.route('**/api/me/attempts', lambda route: route.abort())
             click(page, 'Обновить историю')
             expect(page.get_by_text('Не удалось загрузить историю.', exact=False)).to_be_visible()
-            expect(page.locator('.history-list > div')).to_have_count(2)
+            expect(page.locator('.history-list > div')).to_have_count(count)
             page.unroute('**/api/me/attempts'); retry(page)
             checked('request timeout, network failure and retry preserve loaded history without false empty state')
 
             # Same browser: changing role in tab B must update tab A as well.
             other = ctx.new_page(); other.goto('/')
-            click(other, 'Выйти'); other.goto(link); click(other, 'Я работодатель')
+            click(other, 'Выйти'); other.goto('/login'); click(other, 'Я работодатель')
             expect(other.locator('.workspace-label')).to_have_text('КАБИНЕТ РАБОТОДАТЕЛЯ')
             page.bring_to_front(); page.evaluate("window.dispatchEvent(new Event('focus'))")
             expect(page.locator('.workspace-label')).to_have_text('КАБИНЕТ РАБОТОДАТЕЛЯ')
@@ -115,33 +118,67 @@ def main():
 
             # Replace the cookie without storage/focus events (e.g. restored tab).
             response = ctx.request.post('/api/auth/demo', headers={'X-Requested-With':'fsp-web'},
-                data={'account':'candidate', 'run_token':link.split('#demo=')[1]})
+                data={'account':'candidate'})
             assert response.ok
             page.evaluate("window.dispatchEvent(new PageTransitionEvent('pageshow', {persisted:true}))")
             expect(page.locator('.account')).to_contain_text(candidate['email'])
-            nav(page, 'Подтверждение навыков'); expect(page.locator('.history-list > div')).to_have_count(2)
-            # New identity of the SAME role; the old header must stop an old tab's request.
-            run = ctx.request.post('/api/auth/demo-runs', headers={'X-Requested-With':'fsp-web'}, data={}).json()
-            replacement = ctx.request.post('/api/auth/demo', headers={'X-Requested-With':'fsp-web'},
-                data={'account':'candidate', 'run_token':run['token']}).json()
-            click(page, 'Обновить историю')
-            expect(page.locator('.account')).to_contain_text(replacement['email'])
-            expect(page.locator('.history-list > div')).to_have_count(2)
-            expect(page.locator('.demo-run-info')).to_contain_text(run['candidate_code'])
-            checked('restored-page event and history retry recover role changes and same-role account changes')
+            nav(page, 'Подтверждение навыков'); expect(page.locator('.history-list > div')).to_have_count(count)
+            checked('restored-page event recovers the actual candidate session')
 
             ctx.clear_cookies()
             click(page, 'Обновить историю')
             expect(page.get_by_role('heading', name='Добро пожаловать', exact=True)).to_be_visible()
             expect(page.locator('.history-list')).to_have_count(0)
             # Expired sessions can log in again and reach the requested section.
-            page.goto(link); click(page, 'Я кандидат')
-            nav(page, 'Подтверждение навыков'); expect(page.locator('.history-list > div')).to_have_count(2)
+            page.goto('/login'); click(page, 'Я кандидат')
+            nav(page, 'Подтверждение навыков'); expect(page.locator('.history-list > div')).to_have_count(count)
             checked('expired session redirects to login, clears private UI, and fresh login restores the original history')
+            fresh = context(); starter = fresh.new_page(); starter.goto('/login')
+            click(starter, 'Я работодатель')
+            expect(starter.locator('.workspace-label')).to_have_text('КАБИНЕТ РАБОТОДАТЕЛЯ')
+            employer = fresh.request.get('/api/auth/me').json()
+            own = ctx.request.get('/api/me/profile').json()
+            count_before = len(fresh.request.get('/api/invitations').json())
+            starter.goto('/search?candidate_code='+own['candidate_code'])
+            expect(starter.locator('.candidate-card')).to_have_count(1)
+            hung = []
+            def stall_company_once(route):
+                if not hung: hung.append(route)
+                else: route.continue_()
+            starter.route('**/api/me/company', stall_company_once)
+            click(starter, 'Пригласить')
+            expect(starter.get_by_text('Загружаем компанию…', exact=True)).to_be_visible()
+            expect(starter.get_by_role('button', name='Отправить приглашение', exact=True)).to_be_disabled()
+            click(starter, 'Повторить загрузку компании')
+            expect(starter.locator('.invitation-preview')).to_contain_text('Вымышленная компания')
+            for route in hung: route.abort()
+            starter.unroute('**/api/me/company')
+            click(starter, 'Закрыть приглашение')
+            assert len(fresh.request.get('/api/invitations').json()) == count_before
+            checked('stalled company request replaced from the open modal without sending an invitation')
+            starter.route('**/api/tasks', lambda route: route.abort())
+            starter.goto('/tasks')
+            expect(starter.get_by_text('Не удалось обновить задания или получателей.', exact=False)).to_be_visible()
+            starter.unroute('**/api/tasks'); click(starter, 'Обновить задания')
+            expect(starter.get_by_role('heading', name='Задания от компаний', exact=True)).to_be_visible()
+            checked('initial task load failure recovers through visible refresh button')
+            assert ctx.request.get('/api/auth/me').json()['id'] == candidate['id']
+            assert fresh.request.get('/api/auth/me').json()['id'] == employer['id']
+            estate = fresh.storage_state(); fresh.close()
+            fresh = context(storage_state=estate); starter = fresh.new_page(); starter.goto('/company')
+            expect(starter.get_by_label('Название компании', exact=True)).to_have_value('Вымышленная компания')
+            starter.reload()
+            expect(starter.get_by_label('Название компании', exact=True)).to_have_value('Вымышленная компания')
+            assert ctx.request.get('/api/auth/me').json()['id'] == candidate['id']
+            checked('candidate and employer remain independent across simultaneous windows and restored employer login')
+            fresh.close()
             assert not errors, errors
             page.screenshot(path=str(args.out / 'restored-history.png'), full_page=True)
         except Exception:
             page.screenshot(path=str(args.out / 'failure.png'), full_page=True)
+            if 'starter' in locals() and not starter.is_closed():
+                starter.screenshot(path=str(args.out / 'failure-controls.png'), full_page=True)
+                (args.out / 'failure-controls.txt').write_text(starter.locator('body').inner_text())
             raise
         finally:
             (args.out / 'result.json').write_text(json.dumps({'checks':checks, 'page_errors':errors}, ensure_ascii=False, indent=2))

@@ -1545,3 +1545,5 @@ button:focus-visible, summary:focus-visible, a:focus-visible { outline: 3px soli
 .demo-run-info { margin-bottom: 20px; }
 .demo-run-info summary { cursor: pointer; font-weight: 600; }
 .demo-entry { display: grid; gap: 16px; }
+
+.company-retry { display: grid; gap: 10px; margin: 16px 0; }

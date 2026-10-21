@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { api, type Invitation, type User } from "./api";
 import { date, EmptyState, Loading } from "./ui";
 type Act = (fn: () => Promise<void>) => Promise<void>;
@@ -73,20 +73,36 @@ export function Tasks({
     [rubric, setRubric] = useState("");
   const [interval, setIntervalDays] = useState(7),
     [responseDays, setResponseDays] = useState(3);
-  const load = async () => {
-    setInbox(await api<TaskInbox>("/tasks"));
-  };
+  const [loadError, setLoadError] = useState("");
+  const request = useRef<AbortController | null>(null);
+  const load = useCallback(async () => {
+    request.current?.abort();
+    const controller = new AbortController();
+    request.current = controller;
+    setLoadError("");
+    const options = { signal: controller.signal };
+    const results = await Promise.allSettled([
+      api<TaskInbox>("/tasks", undefined, undefined, options).then(value => {
+        if (!controller.signal.aborted) setInbox(value);
+      }),
+      ...(user.role === "employer" ? [api<Invitation[]>("/invitations", undefined, undefined, options).then(value => {
+        if (!controller.signal.aborted) setInvitations(value);
+      })] : []),
+    ]);
+    if (!controller.signal.aborted && results.some(result => result.status === "rejected"))
+      setLoadError("Не удалось обновить задания или получателей. Повторите загрузку; сохранённые данные не удалены.");
+  }, [user.id, user.role]);
   useEffect(() => {
-    void act(async () => {
-      await load();
-      if (user.role === "employer")
-        setInvitations(await api<Invitation[]>("/invitations"));
-    });
-    const timer = window.setInterval(() => {
-      void load().catch(() => {});
-    }, 30000);
-    return () => window.clearInterval(timer);
-  }, [user.id]);
+    const reload = () => { void load(); };
+    reload();
+    const timer = window.setInterval(reload, 30000);
+    window.addEventListener("focus", reload);
+    return () => {
+      window.clearInterval(timer);
+      window.removeEventListener("focus", reload);
+      request.current?.abort();
+    };
+  }, [load]);
   const update = async (fn: () => Promise<unknown>) => {
     await fn();
     await load();
@@ -99,7 +115,10 @@ export function Tasks({
         .map((i) => [i.candidate_id, i]),
     ).values(),
   ];
-  if (!inbox) return <Loading />;
+  if (!inbox) return <>
+    {loadError ? <p role="alert" className="field-error">{loadError}</p> : <Loading />}
+    <button type="button" className="text-button" onClick={() => void load()}>Обновить задания</button>
+  </>;
   return (
     <>
       <div className="page-title">
@@ -121,6 +140,7 @@ export function Tasks({
       >
         Обновить задания
       </button>
+      {loadError && <p role="alert" className="field-error">{loadError}</p>}
       {user.role === "employer" && (
         <section className="panel task-create">
           <h2>Предложить регулярные задания</h2>
