@@ -1,0 +1,202 @@
+{
+  "track": "closed_contour_readiness",
+  "verified_at": "2026-10-21",
+  "source_base": "cf91823219e76974a688e8c74f8d3f15dce54e84",
+  "scope": "Технический комплект пилота; PASS документов не означает промышленную/юридическую приёмку",
+  "human_approval": "PENDING",
+  "legal_review": "NEEDED",
+  "customer_acceptance": "NOT_RUN",
+  "tasks": [
+    {
+      "id": "CC0",
+      "status": "PASS",
+      "must": false,
+      "artifact": "docs/delivery/closed_contour/README.md",
+      "evidence": [
+        "docs/closed_contour_2026-10-21/COMPREHENSIVE_CLOSED_CONTOUR_2026-10-21.md",
+        "docs/delivery/closed_contour/README.md"
+      ],
+      "finding": "Два контура и NOT TODO зафиксированы. Нет изменений публичного деплоя."
+    },
+    {
+      "id": "CC1",
+      "status": "PASS",
+      "must": true,
+      "artifact": "docs/delivery/closed_contour/01_INVENTORY.md",
+      "evidence": [
+        "docs/delivery/closed_contour/evidence/inventory-crosscheck.txt"
+      ],
+      "finding": "Содержательное чтение compose/env/configure/Dockerfiles и сверка bind/DEMO/profile/volume."
+    },
+    {
+      "id": "CC2",
+      "status": "PASS",
+      "must": true,
+      "artifact": "docs/delivery/closed_contour/02_DATA_MAP.md",
+      "evidence": [
+        "apps/api/fsp/models.py",
+        "apps/api/fsp/schemas.py",
+        "apps/api/fsp/main.py",
+        "apps/api/fsp/pdf.py",
+        "apps/api/fsp/tasks.py"
+      ],
+      "finding": "Группы данных связаны с моделями, маршрутами, PDF, логами. Retention и удаление обозначены отсутствующими."
+    },
+    {
+      "id": "CC3",
+      "status": "PASS",
+      "must": true,
+      "artifact": "docs/delivery/closed_contour/03_INSTALL_RUNBOOK.md",
+      "evidence": [
+        "docs/delivery/closed_contour/evidence/cc-dry-run-20261021T185211Z-233571.log"
+      ],
+      "finding": "configure/build/up/API/down проверены CC4; ОС/Docker уже были установлены. A/B, customer TLS/SMTP и restore NOT_RUN."
+    },
+    {
+      "id": "CC4",
+      "status": "PASS",
+      "must": true,
+      "artifact": "scripts/closed_contour_dry_run.sh",
+      "evidence": [
+        "docs/delivery/closed_contour/evidence/cc-dry-run-20261021T185211Z-233571.log"
+      ],
+      "finding": "exit 0, unique project/copy/volume/network, ephemeral loopback port, health ok demo=false, API 401/403/404, down подтверждён."
+    },
+    {
+      "id": "CC5",
+      "status": "PASS",
+      "must": true,
+      "artifact": "docs/delivery/closed_contour/04_SECRETS_AND_CONFIG.md",
+      "evidence": [
+        "docs/delivery/closed_contour/evidence/config-hygiene.txt",
+        "docs/delivery/closed_contour/evidence/config-negative-controls.txt"
+      ],
+      "finding": "Индекс/ignore/example, configure mode 0600 и сохранение секрета; два отрицательных контроля пройдены. Не скан всей истории."
+    },
+    {
+      "id": "CC6",
+      "status": "PASS",
+      "must": true,
+      "artifact": "docs/delivery/closed_contour/05_THREAT_MODEL.md",
+      "evidence": [
+        "docs/delivery/closed_contour/05_THREAT_MODEL.md"
+      ],
+      "finding": "10 угроз с механизмом/дырой/владельцем; чтение, не пентест."
+    },
+    {
+      "id": "CC7",
+      "status": "PASS",
+      "must": false,
+      "artifact": "docs/delivery/closed_contour/06_EDGE_AND_DDOS.md",
+      "evidence": [
+        "docs/delivery/closed_contour/06_EDGE_AND_DDOS.md"
+      ],
+      "finding": "20/min auth описан с границами IP/process, not_implemented и edge владельцы."
+    },
+    {
+      "id": "CC8",
+      "status": "PASS",
+      "must": true,
+      "artifact": "docs/delivery/closed_contour/07_HARDENING_CHECKLIST.md",
+      "evidence": [
+        "docs/delivery/closed_contour/evidence/config-negative-controls.txt",
+        "docs/delivery/closed_contour/evidence/cc-dry-run-20261021T185211Z-233571.log"
+      ],
+      "finding": "15 пунктов auto/human; минимум два автосвидетельства выполнены. Приёмка customer среды не поставлена."
+    },
+    {
+      "id": "CC9",
+      "status": "PASS",
+      "must": true,
+      "artifact": "docs/delivery/closed_contour/08_PDN_152_NOTES.md",
+      "evidence": [
+        "docs/delivery/closed_contour/08_PDN_152_NOTES.md"
+      ],
+      "finding": "Технические факты имеют источники; правовые решения LEGAL_REVIEW_NEEDED. Актуальность правовой редакции на пилот не заверена."
+    },
+    {
+      "id": "CC10",
+      "status": "PASS",
+      "must": false,
+      "artifact": "docs/delivery/closed_contour/09_LABOR_BOUNDARY.md",
+      "evidence": [
+        "docs/delivery/closed_contour/09_LABOR_BOUNDARY.md"
+      ],
+      "finding": "Нет обещаний HRIS/1С/ЗУП/юридического заключения договора; трудовые решения LEGAL_REVIEW_NEEDED."
+    },
+    {
+      "id": "CC11",
+      "status": "PASS",
+      "must": false,
+      "artifact": "docs/delivery/closed_contour/08_PDN_152_NOTES.md#demo",
+      "evidence": [
+        "docs/delivery/closed_contour/08_PDN_152_NOTES.md#demo",
+        "docs/delivery/FOR_JURY.md"
+      ],
+      "finding": "DEMO_MODE и общие review accounts явно синтетические; нет реальных ПДн. Проверена согласованность с FOR_JURY."
+    },
+    {
+      "id": "CC12",
+      "status": "PASS",
+      "must": true,
+      "artifact": "docs/delivery/closed_contour/READY_TO_DEPLOY_ONEPAGER.md",
+      "evidence": [
+        "docs/delivery/closed_contour/READY_TO_DEPLOY_ONEPAGER.md"
+      ],
+      "finding": "Краткий onepager с CC3/CC6/CC9 и not_run; одобрение Данилой/Никитой HUMAN_ONLY."
+    },
+    {
+      "id": "CC13",
+      "status": "PASS",
+      "must": false,
+      "artifact": "docs/delivery/FOR_JURY.md",
+      "evidence": [
+        "docs/delivery/FOR_JURY.md"
+      ],
+      "finding": "Один добавленный абзац-ссылка; Stage A требования не расширены."
+    },
+    {
+      "id": "CC14",
+      "status": "PASS",
+      "must": false,
+      "artifact": "docs/delivery/closed_contour/PITCH_CLOSED_CONTOUR_90S.md",
+      "evidence": [
+        "docs/delivery/closed_contour/PITCH_CLOSED_CONTOUR_90S.md"
+      ],
+      "finding": "Текст <=190 слов; чтение вслух/хронометраж HUMAN_ONLY."
+    },
+    {
+      "id": "CCV1",
+      "status": "PASS",
+      "must": true,
+      "artifact": "docs/delivery/closed_contour/VERIFY_CLOSED_CONTOUR_MATRIX.json",
+      "evidence": [
+        "docs/delivery/closed_contour/VERIFY_CLOSED_CONTOUR_PROTOCOL.md",
+        "docs/delivery/closed_contour/evidence/artifact-checks.txt"
+      ],
+      "finding": "Матрица охватывает все 18 ID; must без FAIL, доказательства и границы в протоколе."
+    },
+    {
+      "id": "CCV2",
+      "status": "HUMAN_ONLY",
+      "must": false,
+      "artifact": "docs/delivery/closed_contour/HUMAN_VERIFY_PROTOCOL_CLOSED_CONTOUR.md",
+      "evidence": [
+        "docs/delivery/closed_contour/HUMAN_VERIFY_PROTOCOL_CLOSED_CONTOUR.md"
+      ],
+      "finding": "Шаблон подготовлен с датой/путями; все человеческие клетки пусты."
+    },
+    {
+      "id": "CCV3",
+      "status": "PARTIAL",
+      "must": false,
+      "artifact": "docs/delivery/closed_contour/evidence/public-health.txt",
+      "evidence": [
+        "docs/delivery/closed_contour/evidence/public-health.txt",
+        "docs/delivery/closed_contour/evidence/main-final-state.txt",
+        "docs/delivery/closed_contour/evidence/main-concurrent-diff.txt"
+      ],
+      "finding": "Health HTTP 200. Начальные WIP пути сохранены в status; основной клон параллельно сменил main на fix/jury-single-window и получил новые правки. Только чтение с нашей стороны, полного побайтового доказательства нет."
+    }
+  ]
+}

@@ -49,7 +49,9 @@
       "dod": [
         "canon files present",
         "no air-gap/FSTEC promises"
-      ]
+      ],
+      "artifact": "docs/delivery/closed_contour/README.md",
+      "verification_note": "Два контура и NOT TODO зафиксированы. Нет изменений публичного деплоя."
     },
     {
       "id": "CC1",
@@ -57,7 +59,8 @@
       "status": "PASS",
       "owner": "astra",
       "title": "Inventory deploy surface (compose, env, configure, binds, volumes, health)",
-      "artifact": "docs/delivery/closed_contour/01_INVENTORY.md"
+      "artifact": "docs/delivery/closed_contour/01_INVENTORY.md",
+      "verification_note": "Содержательное чтение compose/env/configure/Dockerfiles и сверка bind/DEMO/profile/volume."
     },
     {
       "id": "CC2",
@@ -65,7 +68,8 @@
       "status": "PASS",
       "owner": "astra",
       "title": "Inventory personal/labor-adjacent data fields",
-      "artifact": "docs/delivery/closed_contour/02_DATA_MAP.md"
+      "artifact": "docs/delivery/closed_contour/02_DATA_MAP.md",
+      "verification_note": "Группы данных связаны с моделями, маршрутами, PDF, логами. Retention и удаление обозначены отсутствующими."
     },
     {
       "id": "CC3",
@@ -73,7 +77,8 @@
       "status": "PASS",
       "owner": "astra",
       "title": "Install runbook for customer Linux VM (deps download allowed)",
-      "artifact": "docs/delivery/closed_contour/03_INSTALL_RUNBOOK.md"
+      "artifact": "docs/delivery/closed_contour/03_INSTALL_RUNBOOK.md",
+      "verification_note": "configure/build/up/API/down проверены CC4; ОС/Docker уже были установлены. A/B, customer TLS/SMTP и restore NOT_RUN."
     },
     {
       "id": "CC4",
@@ -81,7 +86,8 @@
       "status": "PASS",
       "owner": "astra",
       "title": "Isolated dry-run install script with evidence log",
-      "artifact": "scripts/closed_contour_dry_run.sh"
+      "artifact": "scripts/closed_contour_dry_run.sh",
+      "verification_note": "exit 0, unique project/copy/volume/network, ephemeral loopback port, health ok demo=false, API 401/403/404, down подтверждён."
     },
     {
       "id": "CC5",
@@ -89,7 +95,8 @@
       "status": "PASS",
       "owner": "astra",
       "title": "Secrets and config hygiene checklist + proof .env not committed",
-      "artifact": "docs/delivery/closed_contour/04_SECRETS_AND_CONFIG.md"
+      "artifact": "docs/delivery/closed_contour/04_SECRETS_AND_CONFIG.md",
+      "verification_note": "Индекс/ignore/example, configure mode 0600 и сохранение секрета; два отрицательных контроля пройдены. Не скан всей истории."
     },
     {
       "id": "CC6",
@@ -97,7 +104,8 @@
       "status": "PASS",
       "owner": "astra",
       "title": "Lightweight threat model (assets, zones, gaps, owner)",
-      "artifact": "docs/delivery/closed_contour/05_THREAT_MODEL.md"
+      "artifact": "docs/delivery/closed_contour/05_THREAT_MODEL.md",
+      "verification_note": "10 угроз с механизмом/дырой/владельцем; чтение, не пентест."
     },
     {
       "id": "CC7",
@@ -105,7 +113,8 @@
       "status": "PASS",
       "owner": "astra",
       "title": "Anti-DDoS / edge posture (honest not_implemented)",
-      "artifact": "docs/delivery/closed_contour/06_EDGE_AND_DDOS.md"
+      "artifact": "docs/delivery/closed_contour/06_EDGE_AND_DDOS.md",
+      "verification_note": "20/min auth описан с границами IP/process, not_implemented и edge владельцы."
     },
     {
       "id": "CC8",
@@ -113,7 +122,8 @@
       "status": "PASS",
       "owner": "astra",
       "title": "Hardening checklist for internal contour",
-      "artifact": "docs/delivery/closed_contour/07_HARDENING_CHECKLIST.md"
+      "artifact": "docs/delivery/closed_contour/07_HARDENING_CHECKLIST.md",
+      "verification_note": "15 пунктов auto/human; минимум два автосвидетельства выполнены. Приёмка customer среды не поставлена."
     },
     {
       "id": "CC9",
@@ -121,7 +131,8 @@
       "status": "PASS",
       "owner": "astra",
       "title": "152-FZ PD notes grounded in code; LEGAL_REVIEW_NEEDED where needed",
-      "artifact": "docs/delivery/closed_contour/08_PDN_152_NOTES.md"
+      "artifact": "docs/delivery/closed_contour/08_PDN_152_NOTES.md",
+      "verification_note": "Технические факты имеют источники; правовые решения LEGAL_REVIEW_NEEDED. Актуальность правовой редакции на пилот не заверена."
     },
     {
       "id": "CC10",
@@ -129,7 +140,8 @@
       "status": "PASS",
       "owner": "astra",
       "title": "Labor-law boundary: not HRIS / not full employment dossier",
-      "artifact": "docs/delivery/closed_contour/09_LABOR_BOUNDARY.md"
+      "artifact": "docs/delivery/closed_contour/09_LABOR_BOUNDARY.md",
+      "verification_note": "Нет обещаний HRIS/1С/ЗУП/юридического заключения договора; трудовые решения LEGAL_REVIEW_NEEDED."
     },
     {
       "id": "CC11",
@@ -137,7 +149,8 @@
       "status": "PASS",
       "owner": "astra",
       "title": "Demo policy: DEMO_MODE, no real PD on public stand",
-      "artifact": "docs/delivery/closed_contour/08_PDN_152_NOTES.md#demo"
+      "artifact": "docs/delivery/closed_contour/08_PDN_152_NOTES.md#demo",
+      "verification_note": "DEMO_MODE и общие review accounts явно синтетические; нет реальных ПДн. Проверена согласованность с FOR_JURY."
     },
     {
       "id": "CC12",
@@ -145,7 +158,8 @@
       "status": "PASS",
       "owner": "astra",
       "title": "Ready-to-deploy onepager for pitch/jury",
-      "artifact": "docs/delivery/closed_contour/READY_TO_DEPLOY_ONEPAGER.md"
+      "artifact": "docs/delivery/closed_contour/READY_TO_DEPLOY_ONEPAGER.md",
+      "verification_note": "Краткий onepager с CC3/CC6/CC9 и not_run; одобрение Данилой/Никитой HUMAN_ONLY."
     },
     {
       "id": "CC13",
@@ -153,7 +167,8 @@
       "status": "PASS",
       "owner": "astra",
       "title": "Short pointer from FOR_JURY/CHANGELOG without bloating Stage A",
-      "artifact": "docs/delivery/FOR_JURY.md"
+      "artifact": "docs/delivery/FOR_JURY.md",
+      "verification_note": "Один добавленный абзац-ссылка; Stage A требования не расширены."
     },
     {
       "id": "CC14",
@@ -161,28 +176,35 @@
       "status": "PASS",
       "owner": "astra",
       "title": "90s pitch text for Stage B",
-      "artifact": "docs/delivery/closed_contour/PITCH_CLOSED_CONTOUR_90S.md"
+      "artifact": "docs/delivery/closed_contour/PITCH_CLOSED_CONTOUR_90S.md",
+      "verification_note": "Текст <=190 слов; чтение вслух/хронометраж HUMAN_ONLY."
     },
     {
       "id": "CCV1",
       "priority": "P1",
-      "status": "todo",
+      "status": "PASS",
       "owner": "astra",
-      "title": "Adversarial matrix + agent protocol"
+      "title": "Adversarial matrix + agent protocol",
+      "artifact": "docs/delivery/closed_contour/VERIFY_CLOSED_CONTOUR_MATRIX.json",
+      "verification_note": "Матрица охватывает все 18 ID; must без FAIL, доказательства и границы в протоколе."
     },
     {
       "id": "CCV2",
       "priority": "P1",
-      "status": "todo",
+      "status": "HUMAN_ONLY",
       "owner": "astra+human",
-      "title": "Human verify protocol"
+      "title": "Human verify protocol",
+      "artifact": "docs/delivery/closed_contour/HUMAN_VERIFY_PROTOCOL_CLOSED_CONTOUR.md",
+      "verification_note": "Шаблон подготовлен с датой/путями; все человеческие клетки пусты."
     },
     {
       "id": "CCV3",
       "priority": "P1",
-      "status": "todo",
+      "status": "PARTIAL",
       "owner": "astra",
-      "title": "Regression: public stand alive; foreign WIP untouched"
+      "title": "Regression: public stand alive; foreign WIP untouched",
+      "artifact": "docs/delivery/closed_contour/evidence/public-health.txt",
+      "verification_note": "Health HTTP 200. Начальные WIP пути сохранены в status; основной клон параллельно сменил main на fix/jury-single-window и получил новые правки. Только чтение с нашей стороны, полного побайтового доказательства нет."
     }
   ],
   "not_todo": [

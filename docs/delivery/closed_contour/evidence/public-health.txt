@@ -1,0 +1,7 @@
+$ curl --silent --show-error --fail --max-time 20 --write-out 
+HTTP=%{http_code}
+ https://85-137-26-131.sslip.io/api/health
+{"status":"ok","demo":true,"version":"1.0.0"}
+HTTP=200
+
+exit=0

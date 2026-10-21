@@ -1,0 +1,36 @@
+--- W0 main clone
++++ W6 main clone
+@@ -4,7 +4,7 @@
+ exit=0
+ 
+ /root/hakaton $ git branch --show-current
+-main
++fix/jury-single-window
+ exit=0
+ 
+ /root/hakaton $ git rev-parse HEAD
+@@ -12,8 +12,23 @@
+ exit=0
+ 
+ /root/hakaton $ git status -sb
+-## main...origin/main
++## fix/jury-single-window
++ M README.md
++ M apps/api/fsp/main.py
++ M apps/api/fsp/schemas.py
++ M apps/web/src/App.tsx
++ M apps/web/src/DemoEntry.tsx
++ M apps/web/src/navigation.ts
++ M apps/web/src/style.css
++ M docs/delivery/API.md
++ M docs/delivery/FOR_JURY.md
++ M docs/delivery/openapi.json
+  M docs/final_backlog_2026-10-20/COMPREHENSIVE_STAGE_A_2026-10-21.md
++ M tests/browser_jury.py
++ M tests/browser_navigation.py
++ M tests/browser_sessions.py
++ M tests/run_jury_isolated.py
++ M tests/test_demo_runs.py
+ ?? docs/00_START_HERE_TEAM_AND_AGENTS.md
+ ?? docs/ASTRA_CODEX_RUNBOOK_STAGE_A.md
+ ?? docs/BACKLOG_TASK2.md

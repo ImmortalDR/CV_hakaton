@@ -6,6 +6,18 @@ DoD: Linux → configure → build → up → health → API → откат. Д�
 
 Ubuntu 24.04 LTS или совместимый Debian/Linux с systemd. План пилота: 4 vCPU, 8 GiB RAM, 30 GiB свободного SSD; это исходная оценка, не измеренный SLA. Администратор устанавливает Git, Python 3, curl, tar, Docker Engine и Compose v2 из одобренного репозитория; проверяет `docker version`, `docker compose version` (на прогоне 2.40.3). Членство в docker-группе эквивалентно высоким привилегиям. Не устанавливать рядом с боевым демо без выделения ресурсов.
 
+Пример установки инструментов для чистой Ubuntu 24.04 через её одобренное apt-зеркало (на VM заказчика, не на публичном стенде):
+
+```bash
+sudo apt-get update
+sudo apt-get install -y git python3 curl tar docker.io docker-compose-v2
+sudo systemctl enable --now docker
+sudo docker version
+sudo docker compose version
+```
+
+Дальнейшие Docker-команды выполняет уполномоченный администратор с доступом к socket (либо с `sudo`). Настройка доверенного зеркала/CA зависит от политики заказчика; установка ОС и Docker в этом прогоне NOT_RUN — использовался существующий Docker хоста.
+
 Разрешить исходящие DNS/HTTPS к выбранным Git/registry/apt/pip/npm зеркалам; runtime нужен SMTP заказчика (обычно STARTTLS 587). Образы берутся из Docker Hub, API ставит apt/pip, web выполняет npm ci. Proxy/CA/зеркала согласует ИТ заказчика; скачивание зависимостей само по себе не требует отправки резюме. Не отключать проверку TLS ради зеркала.
 
 Вход: HTTPS 443 к прокси; 3080 только из доверенной LAN/от прокси; SSH только админам. БД :5547 только loopback базового compose; API :8000 только сеть Docker. Запретить доступ к 5547 извне и от непривилегированных локальных пользователей. Учесть Docker firewall, проверить фактические listeners, не полагаться только на UFW.
@@ -51,7 +63,17 @@ curl --fail --max-time 10 http://127.0.0.1:3080/api/catalog
 
 ## 5. Backup, обновление, откат
 
-Перед обновлением: зафиксировать текущий SHA и образы, остановить записи (web/API/worker в окно обслуживания), снять `pg_dump -Fc -U fsp fsp` через `docker compose ... exec -T db`; сохранить stdout в защищённый файл вне git, проверить восстановление в отдельную БД. Команда `...` здесь означает тот же набор `--env-file .env -p fsp-customer -f compose.yaml`; не использовать имя публичного проекта. Согласовать RPO/RTO и срок копий. Не копировать работающий каталог PGDATA как полноценный backup.
+Перед обновлением: зафиксировать текущий SHA и образы, остановить записи в окно обслуживания. Пример снятия dump (файл содержит рабочие данные, хранить зашифрованным по политике заказчика):
+
+```bash
+umask 077
+mkdir -p local-backups
+docker compose --env-file .env -p fsp-customer -f compose.yaml stop web api task-worker
+docker compose --env-file .env -p fsp-customer -f compose.yaml exec -T db pg_dump -Fc -U fsp fsp > local-backups/pre-upgrade.dump
+docker compose --env-file .env -p fsp-customer -f compose.yaml exec -T db pg_restore --list < local-backups/pre-upgrade.dump > local-backups/pre-upgrade.list
+```
+
+Проверка списка не доказывает восстановление: до приёмки отдельно создать тестовую БД, загрузить dump командой `pg_restore --exit-on-error --no-owner` и проверить данные/ACL. Точное назначение тестовой БД и доступ к копии определяет администратор; в рабочую БД пробное восстановление не выполнять. Согласовать RPO/RTO и срок копий. Не копировать работающий каталог PGDATA как полноценный backup.
 
 Остановить только свою установку:
 
