@@ -1,6 +1,6 @@
 {
   "status": "pass",
-  "checked_at": "2026-10-21T08:15:44.863911+00:00",
+  "checked_at": "2026-10-21T09:06:35.443189+00:00",
   "base_url": "https://85-137-26-131.sslip.io",
   "checks": [
     "https_health_ok",
@@ -8,12 +8,16 @@
     "three_review_logins_ok",
     "Q1_navigation_reload_server_draft_owner_expiry",
     "Q2_live_bank_2_1_rounding_hint",
+    "Q3_direct_API_without_confirm_409_active_draft_unchanged",
     "Q3_cancel_keeps_active_accept_completes",
+    "Q4_verified_published_hidden_empty_invitations_and_overview_CTA",
+    "Q5_anonymous_label_selection_invitation_PDF_UI",
     "invite_accept_addressed_contacts_PDF_isolation",
     "FSP_does_not_change_grade_zero_without_FSP",
     "old_snapshot_preserved",
+    "Q5_two_visible_score_sums_unique_labels_changed_banner_scroll",
     "Q5_filters_snapshot_and_score_UI",
-    "Q6_live_7day_resume_no_duplicate",
+    "Q6_live_7day_resume_no_duplicate_UI_date_equals_API",
     "Q4_hidden_overview_revoked_chat_snapshot_PDF",
     "mobile_no_horizontal_overflow"
   ],

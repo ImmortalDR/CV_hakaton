@@ -1,5 +1,9 @@
 # Этап A — деплой и фактический smoke, 21.10.2026
 
+Актуальный повторный контроль: **8af82c4**, 97 pytest passed; 17 live smoke групп, page_errors=[]; Q3 API и Q4 empty-state проверены. Два цикла деплоя, БД сохранена. Статусы: 14 PASS, Pck2 PARTIAL только из-за push auth, Pck5 HUMAN_ONLY. См. [новый протокол](VERIFY_STAGE_A_PROTOCOL.md), [матрицу](VERIFY_STAGE_A_MATRIX.json), [хеши деплоя](stage-a-loop-deploy.json).
+
+## Исторический первоначальный прогон (ниже)
+
 Ветка `codex/fsp-mvp`. Прикладной код: `555d69d`, упаковка перед деплоем: `ba34108`.
 Обновлены **api, web, task-worker** на https://85-137-26-131.sslip.io/.
 БД/том сохранены; перед деплоем сделан локальный pg_dump. Секреты не коммитились.

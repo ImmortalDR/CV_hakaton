@@ -158,7 +158,7 @@ try:
         expect(hr.get_by_text('Сохранённая подборка на',exact=False)).to_be_visible()
         lines=hr.locator('.candidate-card .evidence > small')
         expect(lines.first).to_be_visible()
-        expect(hr.get_by_label('SQL',exact=True)).to_have_count(1)
+        expect(hr.locator('.search-form label.field').filter(has=hr.get_by_text('SQL',exact=True)).locator('select')).to_have_count(1)
         context=hr.locator('details').filter(has=hr.get_by_text('Контекст для обсуждения · не влияет на баллы',exact=True))
         expect(context).not_to_have_attribute('open','')
         expect(hr.locator('.candidate-card').filter(has=hr.get_by_role('heading',name=before['name'],exact=True)).locator('.invitation-status')).to_contain_text('Принято')

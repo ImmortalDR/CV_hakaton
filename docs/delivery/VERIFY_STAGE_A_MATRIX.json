@@ -9,18 +9,13 @@
     "agent_evidence": [
       {
         "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
-        "excerpt": "Q1_navigation_reload_server_draft_owner_expiry"
-      },
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-q3",
-        "excerpt": "same_attempt: true; same_expiry: true; answers_after_cancel: {\"1\":\"90,63\"}"
-      },
-      {
-        "kind": "command",
         "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-tests",
-        "excerpt": "96 passed; test_draft_answers_owner_lifecycle входит в прогон"
+        "excerpt": "........................................................................ [ 74%]\n.........................                                                [100%]\n=============================== warnings summary ===============================\n.venv/lib/python3.12/site-packages/fastapi/testclient.py:1\n  /root/hakaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n.venv/lib/python3.12/site-packages/starlette/testclient.py:53\n  /root/hakaton/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n97 passed, 2 warnings in 29.20s"
+      },
+      {
+        "kind": "command",
+        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
+        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:06:35.443189+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
       }
     ],
     "gaps": [],
@@ -28,8 +23,8 @@
       "H-Q1"
     ],
     "regression_risk": "med",
-    "checked_at": "2026-10-21T08:54:10.006191+00:00",
-    "git_sha": "84e697abeeac3cca21ae225fb1746ea02b1a46ff"
+    "checked_at": "2026-10-21T09:07:51.003704+00:00",
+    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
   },
   {
     "id": "Q2",
@@ -41,23 +36,18 @@
     "agent_evidence": [
       {
         "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
-        "excerpt": "Q2_live_bank_2_1_rounding_hint"
+        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-tests",
+        "excerpt": "........................................................................ [ 74%]\n.........................                                                [100%]\n=============================== warnings summary ===============================\n.venv/lib/python3.12/site-packages/fastapi/testclient.py:1\n  /root/hakaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n.venv/lib/python3.12/site-packages/starlette/testclient.py:53\n  /root/hakaton/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n97 passed, 2 warnings in 29.20s"
       },
       {
         "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-tests",
-        "excerpt": "96 passed; test_half_up_exact_boundaries и test_conditional_rounding_new_and_historical_versions"
+        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
+        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:06:35.443189+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
       },
       {
         "kind": "command",
         "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-docs",
-        "excerpt": "Банк 2.1.0; старые попытки сохраняют исходные версии; массового пересчёта не было."
-      },
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-bank",
-        "excerpt": "oracle_checks: 36000; oracle_mismatches: []"
+        "excerpt": "{\n  \"changelog\": {\n    \"Q1\": true,\n    \"Q2\": true,\n    \"Q3\": true,\n    \"Q4\": true,\n    \"Q5\": true,\n    \"Q6\": true,\n    \"Q7\": true\n  },\n  \"for_jury\": {\n    \"https://85-137-26-131.sslip.io/\": true,\n    \"codex/fsp-mvp\": true,\n    \"review.candidate\": true,\n    \"review.employer\": true,\n    \"0,80\": true,\n    \"36 000\": true,\n    \"not_run\": true,\n    \"findings.json\": true,\n    \"CHANGELOG_STAGE_A.md\": true\n  },\n  \"old_attempt_policy\": \"- Q2: банк 2.1.0 использует явное округление половины вверх: 90,625 → 90,63. Старые попытки сохраняют исходные версии; массового пересчёта не было.\",\n  \"presentation_changed\": \"\"\n}"
       }
     ],
     "gaps": [],
@@ -65,8 +55,8 @@
       "H-Q2"
     ],
     "regression_risk": "med",
-    "checked_at": "2026-10-21T08:54:10.006191+00:00",
-    "git_sha": "84e697abeeac3cca21ae225fb1746ea02b1a46ff"
+    "checked_at": "2026-10-21T09:07:51.003704+00:00",
+    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
   },
   {
     "id": "Q3",
@@ -78,8 +68,13 @@
     "agent_evidence": [
       {
         "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#iteration-1",
-        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:02:17.804910+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
+        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-tests",
+        "excerpt": "........................................................................ [ 74%]\n.........................                                                [100%]\n=============================== warnings summary ===============================\n.venv/lib/python3.12/site-packages/fastapi/testclient.py:1\n  /root/hakaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n.venv/lib/python3.12/site-packages/starlette/testclient.py:53\n  /root/hakaton/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n97 passed, 2 warnings in 29.20s"
+      },
+      {
+        "kind": "command",
+        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
+        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:06:35.443189+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
       }
     ],
     "gaps": [],
@@ -87,8 +82,8 @@
       "H-Q3"
     ],
     "regression_risk": "high",
-    "checked_at": "2026-10-21T09:03:26.858420+00:00",
-    "git_sha": "839930f"
+    "checked_at": "2026-10-21T09:07:51.003704+00:00",
+    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
   },
   {
     "id": "Q4",
@@ -101,8 +96,13 @@
     "agent_evidence": [
       {
         "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#iteration-1",
-        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:02:17.804910+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
+        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-tests",
+        "excerpt": "........................................................................ [ 74%]\n.........................                                                [100%]\n=============================== warnings summary ===============================\n.venv/lib/python3.12/site-packages/fastapi/testclient.py:1\n  /root/hakaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n.venv/lib/python3.12/site-packages/starlette/testclient.py:53\n  /root/hakaton/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n97 passed, 2 warnings in 29.20s"
+      },
+      {
+        "kind": "command",
+        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
+        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:06:35.443189+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
       }
     ],
     "gaps": [],
@@ -111,12 +111,12 @@
       "H-Q4b"
     ],
     "regression_risk": "med",
-    "checked_at": "2026-10-21T09:03:26.858420+00:00",
-    "git_sha": "839930f"
+    "checked_at": "2026-10-21T09:07:51.003704+00:00",
+    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
   },
   {
     "id": "Q5",
-    "verdict": "FAIL",
+    "verdict": "PASS",
     "dod_from_canon": "U01–U04: различимые анонимы, контекст фильтров, компактная форма, видимые вклады.",
     "audit_refs": [
       "U01",
@@ -128,17 +128,10 @@
       {
         "kind": "command",
         "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
-        "excerpt": "Q5_filters_snapshot_and_score_UI"
-      },
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-tests",
-        "excerpt": "96 passed; test_anonymous_labels_distinct_and_stable; test_production_matches_selected_weights_on_frozen_sample"
+        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:06:35.443189+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
       }
     ],
-    "gaps": [
-      "U01: отсутствует статус приглашения на карточке; исправление во второй итерации."
-    ],
+    "gaps": [],
     "human_checks_required": [
       "H-Q5a",
       "H-Q5b",
@@ -146,8 +139,8 @@
       "H-REG-OLD"
     ],
     "regression_risk": "med",
-    "checked_at": "2026-10-21T08:54:10.006191+00:00",
-    "git_sha": "84e697abeeac3cca21ae225fb1746ea02b1a46ff"
+    "checked_at": "2026-10-21T09:07:51.003704+00:00",
+    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
   },
   {
     "id": "Q6",
@@ -159,8 +152,13 @@
     "agent_evidence": [
       {
         "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#iteration-1",
-        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:02:17.804910+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
+        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-tests",
+        "excerpt": "........................................................................ [ 74%]\n.........................                                                [100%]\n=============================== warnings summary ===============================\n.venv/lib/python3.12/site-packages/fastapi/testclient.py:1\n  /root/hakaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n.venv/lib/python3.12/site-packages/starlette/testclient.py:53\n  /root/hakaton/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n97 passed, 2 warnings in 29.20s"
+      },
+      {
+        "kind": "command",
+        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
+        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:06:35.443189+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
       }
     ],
     "gaps": [],
@@ -168,8 +166,8 @@
       "H-Q6-calendar"
     ],
     "regression_risk": "med",
-    "checked_at": "2026-10-21T09:03:26.858420+00:00",
-    "git_sha": "839930f"
+    "checked_at": "2026-10-21T09:07:51.003704+00:00",
+    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
   },
   {
     "id": "Q7",
@@ -182,23 +180,18 @@
     "agent_evidence": [
       {
         "kind": "command",
+        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-tests",
+        "excerpt": "........................................................................ [ 74%]\n.........................                                                [100%]\n=============================== warnings summary ===============================\n.venv/lib/python3.12/site-packages/fastapi/testclient.py:1\n  /root/hakaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n.venv/lib/python3.12/site-packages/starlette/testclient.py:53\n  /root/hakaton/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n97 passed, 2 warnings in 29.20s"
+      },
+      {
+        "kind": "command",
         "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-matching",
         "excerpt": "{\"old_weights\": [60, 15, 20, 5], \"selected_weights\": [30, 15, 45, 10], \"selection\": \"max dev P@5; tie: minimum L1 distance to old weights, then tuple order\"}\ndev 1.0 -> 1.0\ntest 0.8 -> 0.8"
       },
       {
         "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-docs",
-        "excerpt": "matching-1.1.0 → matching-1.2.0"
-      },
-      {
-        "kind": "command",
         "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
-        "excerpt": "Live methodology == matching-1.2.0; FSP bonus +6, grade unchanged"
-      },
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-tests",
-        "excerpt": "96 passed; production scores checked on frozen sample"
+        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:06:35.443189+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
       }
     ],
     "gaps": [],
@@ -206,8 +199,8 @@
       "H-Q7"
     ],
     "regression_risk": "med",
-    "checked_at": "2026-10-21T08:54:10.006191+00:00",
-    "git_sha": "84e697abeeac3cca21ae225fb1746ea02b1a46ff"
+    "checked_at": "2026-10-21T09:07:51.003704+00:00",
+    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
   },
   {
     "id": "Pck1",
@@ -218,7 +211,7 @@
       {
         "kind": "command",
         "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-docs",
-        "excerpt": "CHANGELOG Q1..Q7: all True; FOR_JURY links CHANGELOG_STAGE_A.md"
+        "excerpt": "{\n  \"changelog\": {\n    \"Q1\": true,\n    \"Q2\": true,\n    \"Q3\": true,\n    \"Q4\": true,\n    \"Q5\": true,\n    \"Q6\": true,\n    \"Q7\": true\n  },\n  \"for_jury\": {\n    \"https://85-137-26-131.sslip.io/\": true,\n    \"codex/fsp-mvp\": true,\n    \"review.candidate\": true,\n    \"review.employer\": true,\n    \"0,80\": true,\n    \"36 000\": true,\n    \"not_run\": true,\n    \"findings.json\": true,\n    \"CHANGELOG_STAGE_A.md\": true\n  },\n  \"old_attempt_policy\": \"- Q2: банк 2.1.0 использует явное округление половины вверх: 90,625 → 90,63. Старые попытки сохраняют исходные версии; массового пересчёта не было.\",\n  \"presentation_changed\": \"\"\n}"
       }
     ],
     "gaps": [],
@@ -226,8 +219,8 @@
       "H-Pck1"
     ],
     "regression_risk": "med",
-    "checked_at": "2026-10-21T08:54:10.006191+00:00",
-    "git_sha": "84e697abeeac3cca21ae225fb1746ea02b1a46ff"
+    "checked_at": "2026-10-21T09:07:51.003704+00:00",
+    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
   },
   {
     "id": "Pck2",
@@ -238,29 +231,29 @@
       {
         "kind": "command",
         "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-docs",
-        "excerpt": "FOR_JURY required fields: all True"
+        "excerpt": "{\n  \"changelog\": {\n    \"Q1\": true,\n    \"Q2\": true,\n    \"Q3\": true,\n    \"Q4\": true,\n    \"Q5\": true,\n    \"Q6\": true,\n    \"Q7\": true\n  },\n  \"for_jury\": {\n    \"https://85-137-26-131.sslip.io/\": true,\n    \"codex/fsp-mvp\": true,\n    \"review.candidate\": true,\n    \"review.employer\": true,\n    \"0,80\": true,\n    \"36 000\": true,\n    \"not_run\": true,\n    \"findings.json\": true,\n    \"CHANGELOG_STAGE_A.md\": true\n  },\n  \"old_attempt_policy\": \"- Q2: банк 2.1.0 использует явное округление половины вверх: 90,625 → 90,63. Старые попытки сохраняют исходные версии; массового пересчёта не было.\",\n  \"presentation_changed\": \"\"\n}"
       },
       {
         "kind": "command",
         "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
-        "excerpt": "three_review_logins_ok"
+        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:06:35.443189+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
       },
       {
         "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-remote",
-        "excerpt": "2e6d6daa5bfb59f6d5a7e7317aa41093c8f05980\trefs/heads/codex/fsp-mvp"
+        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-push",
+        "excerpt": "fatal: could not read Username for 'https://github.com': terminal prompts disabled\n2e6d6daa5bfb59f6d5a7e7317aa41093c8f05980\trefs/heads/codex/fsp-mvp"
       }
     ],
     "gaps": [
-      "Remote ещё на 2e6d6da, новых документов/кода этапа A там нет; push не выполнен. Маршрут общих аккаунтов может упираться в cooldown."
+      "HUMAN_ONLY: push невозможен без GitHub auth: fatal: could not read Username for 'https://github.com': terminal prompts disabled. Remote 2e6d6da; нужен push из авторизованного окружения и проверка ссылок."
     ],
     "human_checks_required": [
       "H-Pck2-walk",
       "H-PUSH"
     ],
     "regression_risk": "high",
-    "checked_at": "2026-10-21T08:54:10.006191+00:00",
-    "git_sha": "84e697abeeac3cca21ae225fb1746ea02b1a46ff"
+    "checked_at": "2026-10-21T09:07:51.003704+00:00",
+    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
   },
   {
     "id": "Pck3",
@@ -270,13 +263,13 @@
     "agent_evidence": [
       {
         "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-deploy",
-        "excerpt": "health ok; api/task-worker workspace_equal=head_equal=true; web_all_equal=true; source_diff_from_head=\"\""
+        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-build",
+        "excerpt": "85TwcNR.css   19.36 kB │ gzip:  5.15 kB\n#34 12.04 dist/assets/index-B9FXyoib.js   261.54 kB │ gzip: 79.29 kB\n#34 12.04 ✓ built in 3.21s\n#34 12.08 npm notice\n#34 12.08 npm notice New major version of npm available! 10.9.9 -> 12.2.0\n#34 12.08 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0\n#34 12.08 npm notice To update run: npm install -g npm@12.2.0\n#34 12.08 npm notice\n#34 DONE 12.1s\n\n#35 [web stage-1 2/3] COPY nginx.conf /etc/nginx/conf.d/default.conf\n#35 CACHED\n\n#36 [web stage-1 3/3] COPY --from=build /app/dist /usr/share/nginx/html\n#36 DONE 0.0s\n\n#37 [web] exporting to image\n#37 exporting layers 0.1s done\n#37 exporting manifest sha256:dc618cbb2541983754cbdc8ed014743aa522617d2a1ca8e8cc1f46377bf84ff4 done\n#37 exporting config sha256:a0258125d9be4d9c0c40f5dc492c3b9047792847faf748bdd8ca630aa83424d5 done\n#37 exporting attestation manifest sha256:221229026d2c81ba1f0f3972bca6bfb7fdaff6f7900b56103b6b50ee1877be5a 0.0s done\n#37 exporting manifest list sha256:e58da9ae8ec03d7463c9905dadf622f0268d95e410ca23c5dc88f1ea11c1da53 done\n#37 naming to docker.io/library/fsp-mvp-web:latest done\n#37 unpacking to docker.io/library/fsp-mvp-web:latest 0.0s done\n#37 DONE 0.2s\n\n#38 [web] resolving provenance for metadata file\n#38 DONE 0.0s\n api  Built\n task-worker  Built\n web  Built\n\n Container fsp-mvp-api-1  Recreate\n Container fsp-mvp-api-1  Recreated\n Container fsp-mvp-web-1  Recreate\n Container fsp-mvp-task-worker-1  Recreate\n Container fsp-mvp-web-1  Recreated\n Container fsp-mvp-task-worker-1  Recreated\n Container fsp-mvp-api-1  Starting\n Container fsp-mvp-api-1  Started\n Container fsp-mvp-api-1  Waiting\n Container fsp-mvp-api-1  Waiting\n Container fsp-mvp-api-1  Healthy\n Container fsp-mvp-api-1  Healthy\n Container fsp-mvp-web-1  Starting\n Container fsp-mvp-task-worker-1  Starting\n Container fsp-mvp-web-1  Started\n Container fsp-mvp-task-worker-1  Started\n Container fsp-mvp-api-1  Waiting\n Container fsp-mvp-task-worker-1  Waiting\n Container fsp-mvp-web-1  Waiting\n Container fsp-mvp-api-1  Healthy\n Container fsp-mvp-task-worker-1  Healthy\n Container fsp-mvp-web-1  Healthy"
       },
       {
         "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-compose",
-        "excerpt": "NAME                    IMAGE                                                                                         COMMAND                  SERVICE       CREATED          STATUS                    PORTS\nfsp-mvp-api-1           fsp-mvp-api                                                                                   \"sh -c 'alembic upgr…\"   api           35 minutes ago   Up 34 minutes (healthy)   \nfsp-mvp-db-1            postgres:16-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea    \"docker-entrypoint.s…\"   db            13 days ago      Up 9 days (healthy)       127.0.0.1:5547->5432/tcp\nfsp-mvp-edge-1          caddy:2.11.7-alpine@sha256:d8542f48d34a9cf4e4c11a478865229840e87e4c96ea3f439101f31a5d35f75f   \"caddy run --config …\"   edge          9 days ago       Up 9 days (healthy)       \nfsp-mvp-task-worker-1   fsp-mvp-task-worker                                                                           \"python -m fsp.task_…\"   task-worker   35 minutes ago   Up 34 minutes             \nfsp-mvp-web-1           fsp-mvp-web                                                                                   \"/docker-entrypoint.…\"   web           35 minutes ago   Up 34 minutes (healthy)   127.0.0.1:3080->80/tcp"
+        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-deploy",
+        "excerpt": "{\"checked_at\": \"2026-10-21T09:04:44.697489+00:00\", \"git_sha\": \"8af82c45184c4c5821137ebc02b2b2f7f12e24b4\", \"api\": {\"module_count\": 14, \"workspace_equal\": true, \"head_equal\": true}, \"task-worker\": {\"module_count\": 14, \"workspace_equal\": true, \"head_equal\": true}, \"web\": {\"file_count\": 3, \"all_equal\": true}, \"health\": {\"status\": \"ok\", \"demo\": true, \"version\": \"1.0.0\"}, \"services\": [{\"Service\": \"api\", \"ID\": \"94514e7c9bac\", \"State\": \"running\", \"Health\": \"healthy\", \"Mounts\": \"\", \"CreatedAt\": \"2026-10-21 11:03:54 +0200 CEST\"}, {\"Service\": \"db\", \"ID\": \"59f21df183b7\", \"State\": \"running\", \"Health\": \"healthy\", \"Mounts\": \"fsp-mvp_fsp_db\", \"CreatedAt\": \"2026-10-07 22:42:58 +0200 CEST\"}, {\"Service\": \"edge\", \"ID\": \"8051e4bdd372\", \"State\": \"running\", \"Health\": \"healthy\", \"Mounts\": \"fsp-mvp_fsp_tl…,/root/hakaton-…,fsp-mvp_fsp_tl…\", \"CreatedAt\": \"2026-10-11 21:17:18 +0200 CEST\"}, {\"Service\": \"task-worker\", \"ID\": \"f281e32de7a7\", \"State\": \"running\", \"Health\": \"\", \"Mounts\": \"\", \"CreatedAt\": \"2026-10-21 11:04:04 +0200 CEST\"}, {\"Service\": \"web\", \"ID\": \"8dc983d594a0\", \"State\": \"running\", \"Health\": \"healthy\", \"Mounts\": \"\", \"CreatedAt\": \"2026-10-21 11:04:04 +0200 CEST\"}], \"presentation_unchanged\": true, \"source_diff_from_head\": \"\"}"
       }
     ],
     "gaps": [],
@@ -285,8 +278,8 @@
       "H-ACC"
     ],
     "regression_risk": "med",
-    "checked_at": "2026-10-21T08:54:10.006191+00:00",
-    "git_sha": "84e697abeeac3cca21ae225fb1746ea02b1a46ff"
+    "checked_at": "2026-10-21T09:07:51.003704+00:00",
+    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
   },
   {
     "id": "Pck4",
@@ -296,8 +289,13 @@
     "agent_evidence": [
       {
         "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#iteration-1",
-        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:02:17.804910+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
+        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-tests",
+        "excerpt": "........................................................................ [ 74%]\n.........................                                                [100%]\n=============================== warnings summary ===============================\n.venv/lib/python3.12/site-packages/fastapi/testclient.py:1\n  /root/hakaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n.venv/lib/python3.12/site-packages/starlette/testclient.py:53\n  /root/hakaton/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n97 passed, 2 warnings in 29.20s"
+      },
+      {
+        "kind": "command",
+        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
+        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:06:35.443189+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
       }
     ],
     "gaps": [],
@@ -305,8 +303,8 @@
       "H-Pck4-spot"
     ],
     "regression_risk": "high",
-    "checked_at": "2026-10-21T09:03:26.858420+00:00",
-    "git_sha": "839930f"
+    "checked_at": "2026-10-21T09:07:51.003704+00:00",
+    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
   },
   {
     "id": "Pck5",
@@ -316,19 +314,19 @@
     "agent_evidence": [
       {
         "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-docs",
-        "excerpt": "SUBMISSION_LINKS.md: Pck5 — текст для человека (не отправлено)"
+        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-push",
+        "excerpt": "fatal: could not read Username for 'https://github.com': terminal prompts disabled\n2e6d6daa5bfb59f6d5a7e7317aa41093c8f05980\trefs/heads/codex/fsp-mvp"
       }
     ],
     "gaps": [
-      "Факт отправки отсутствует. До исправления must-блокера отправлять нельзя."
+      "Отправку ссылок выполняет человек после push и проверки; агент ничего на площадку не отправлял."
     ],
     "human_checks_required": [
       "H-Pck5"
     ],
     "regression_risk": "high",
-    "checked_at": "2026-10-21T08:54:10.006191+00:00",
-    "git_sha": "84e697abeeac3cca21ae225fb1746ea02b1a46ff"
+    "checked_at": "2026-10-21T09:07:51.003704+00:00",
+    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
   },
   {
     "id": "REG_FSP",
@@ -338,13 +336,13 @@
     "agent_evidence": [
       {
         "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
-        "excerpt": "FSP_does_not_change_grade_zero_without_FSP"
+        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-tests",
+        "excerpt": "........................................................................ [ 74%]\n.........................                                                [100%]\n=============================== warnings summary ===============================\n.venv/lib/python3.12/site-packages/fastapi/testclient.py:1\n  /root/hakaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n.venv/lib/python3.12/site-packages/starlette/testclient.py:53\n  /root/hakaton/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n97 passed, 2 warnings in 29.20s"
       },
       {
         "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-tests",
-        "excerpt": "96 passed; test_unknown_never_becomes_proof_and_sport_does_not_change_category"
+        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
+        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:06:35.443189+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
       }
     ],
     "gaps": [],
@@ -352,8 +350,8 @@
       "H-REG-FSP"
     ],
     "regression_risk": "med",
-    "checked_at": "2026-10-21T08:54:10.006191+00:00",
-    "git_sha": "84e697abeeac3cca21ae225fb1746ea02b1a46ff"
+    "checked_at": "2026-10-21T09:07:51.003704+00:00",
+    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
   },
   {
     "id": "REG_ISO",
@@ -363,8 +361,13 @@
     "agent_evidence": [
       {
         "kind": "command",
+        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-tests",
+        "excerpt": "........................................................................ [ 74%]\n.........................                                                [100%]\n=============================== warnings summary ===============================\n.venv/lib/python3.12/site-packages/fastapi/testclient.py:1\n  /root/hakaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n.venv/lib/python3.12/site-packages/starlette/testclient.py:53\n  /root/hakaton/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n97 passed, 2 warnings in 29.20s"
+      },
+      {
+        "kind": "command",
         "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
-        "excerpt": "invite_accept_addressed_contacts_PDF_isolation; чужой кандидат 403; другая компания PDF без email"
+        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:06:35.443189+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
       }
     ],
     "gaps": [],
@@ -372,8 +375,8 @@
       "H-REG-ISO"
     ],
     "regression_risk": "high",
-    "checked_at": "2026-10-21T08:54:10.006191+00:00",
-    "git_sha": "84e697abeeac3cca21ae225fb1746ea02b1a46ff"
+    "checked_at": "2026-10-21T09:07:51.003704+00:00",
+    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
   },
   {
     "id": "REG_OLD_SEL",
@@ -384,7 +387,7 @@
       {
         "kind": "command",
         "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
-        "excerpt": "old_snapshot_preserved; Q4_hidden_overview_revoked_chat_snapshot_PDF"
+        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:06:35.443189+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
       }
     ],
     "gaps": [],
@@ -392,8 +395,8 @@
       "H-REG-OLD"
     ],
     "regression_risk": "med",
-    "checked_at": "2026-10-21T08:54:10.006191+00:00",
-    "git_sha": "84e697abeeac3cca21ae225fb1746ea02b1a46ff"
+    "checked_at": "2026-10-21T09:07:51.003704+00:00",
+    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
   },
   {
     "id": "NOTTODO",
@@ -404,7 +407,12 @@
       {
         "kind": "command",
         "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-docs",
-        "excerpt": "CHANGELOG Q1..Q7: {'Q1': True, 'Q2': True, 'Q3': True, 'Q4': True, 'Q5': True, 'Q6': True, 'Q7': True}\nFOR_JURY required fields: {'https://85-137-26-131.sslip.io/': True, 'codex/fsp-mvp': True, 'review.candidate': True, 'review.employer': True, '0,80': True, '36 000': True, 'not_run': True, 'findings.json': True, 'CHANGELOG_STAGE_A.md': True}\nOld attempts policy: - Q2: банк 2.1.0 использует явное округление половины вверх: 90,625 → 90,63. Старые попытки сохраняют исходные версии; массового пересчёта не было.\nNOT TODO presentation diff bytes: 0\ndemo/FSP_NIKITA_SUBMISSION.pptx 41e86f5eb8cc809facb6240f87c81fdb83f8d000a67cb80a4735eaa164e930f8 base_equal True\ndemo/FSP_MVP.pptx 8a88789e4e89e44c49bcf50c49086ac63d40301c025aa6ec5c6e216c6472cf9e base_equal True\nNew code files in Stage A:\napps/api/fsp/assessment.py\napps/api/fsp/formatting.py\napps/api/fsp/task_worker.py\napps/api/fsp/tasks.py\napps/api/migrations/versions/b9e1c4d7a201_employer_tasks.py\napps/web/src/Tasks.tsx\napps/web/src/formatting.ts\napps/web/tests/formatting.test.mjs\nevaluation/stage_a_matching.py\nevaluation/stage_a_matching_results.json\n\nMatching formula diff:\ndiff --git a/apps/api/fsp/matching.py b/apps/api/fsp/matching.py\nindex 818a4ac..9d15d62 100644\n--- a/apps/api/fsp/matching.py\n+++ b/apps/api/fsp/matching.py\n@@ -2,7 +2,7 @@\n \n from .bank import GRADES\n \n-VERSION = \"matching-1.1.0\"\n+VERSION = \"matching-1.2.0\"\n \n \n def skill_coverage(facts):\n@@ -31,7 +31,7 @@ def rank_candidate(candidate, criteria):\n     facts = []\n     evidence = {e[\"skill\"]: e for e in candidate.get(\"evidence\", [])}\n     points = {}\n-    for kind, weight in [(\"required_skills\", 60), (\"desired_skills\", 15)]:\n+    for kind, weight in [(\"required_skills\", 30), (\"desired_skills\", 15)]:\n         skills = criteria.get(kind, [])\n         met = 0\n         for s in skills:\n@@ -72,8 +72,8 @@ def rank_candidate(candidate, criteria):\n                 \"evidence\": None,\n             }\n         )\n-    test = 0.2 * candidate.get(\"test_score\", 0)\n-    fsp = min(\n+    test = 0.45 * candidate.get(\"test_score\", 0)\n+    fsp = 2 * min(\n         5,\n         sum(\n             a.get(\"points\", 0)\n\nRuntime modified files vs HEAD: (none)"
+        "excerpt": "{\n  \"changelog\": {\n    \"Q1\": true,\n    \"Q2\": true,\n    \"Q3\": true,\n    \"Q4\": true,\n    \"Q5\": true,\n    \"Q6\": true,\n    \"Q7\": true\n  },\n  \"for_jury\": {\n    \"https://85-137-26-131.sslip.io/\": true,\n    \"codex/fsp-mvp\": true,\n    \"review.candidate\": true,\n    \"review.employer\": true,\n    \"0,80\": true,\n    \"36 000\": true,\n    \"not_run\": true,\n    \"findings.json\": true,\n    \"CHANGELOG_STAGE_A.md\": true\n  },\n  \"old_attempt_policy\": \"- Q2: банк 2.1.0 использует явное округление половины вверх: 90,625 → 90,63. Старые попытки сохраняют исходные версии; массового пересчёта не было.\",\n  \"presentation_changed\": \"\"\n}"
+      },
+      {
+        "kind": "command",
+        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-deploy",
+        "excerpt": "{\"checked_at\": \"2026-10-21T09:04:44.697489+00:00\", \"git_sha\": \"8af82c45184c4c5821137ebc02b2b2f7f12e24b4\", \"api\": {\"module_count\": 14, \"workspace_equal\": true, \"head_equal\": true}, \"task-worker\": {\"module_count\": 14, \"workspace_equal\": true, \"head_equal\": true}, \"web\": {\"file_count\": 3, \"all_equal\": true}, \"health\": {\"status\": \"ok\", \"demo\": true, \"version\": \"1.0.0\"}, \"services\": [{\"Service\": \"api\", \"ID\": \"94514e7c9bac\", \"State\": \"running\", \"Health\": \"healthy\", \"Mounts\": \"\", \"CreatedAt\": \"2026-10-21 11:03:54 +0200 CEST\"}, {\"Service\": \"db\", \"ID\": \"59f21df183b7\", \"State\": \"running\", \"Health\": \"healthy\", \"Mounts\": \"fsp-mvp_fsp_db\", \"CreatedAt\": \"2026-10-07 22:42:58 +0200 CEST\"}, {\"Service\": \"edge\", \"ID\": \"8051e4bdd372\", \"State\": \"running\", \"Health\": \"healthy\", \"Mounts\": \"fsp-mvp_fsp_tl…,/root/hakaton-…,fsp-mvp_fsp_tl…\", \"CreatedAt\": \"2026-10-11 21:17:18 +0200 CEST\"}, {\"Service\": \"task-worker\", \"ID\": \"f281e32de7a7\", \"State\": \"running\", \"Health\": \"\", \"Mounts\": \"\", \"CreatedAt\": \"2026-10-21 11:04:04 +0200 CEST\"}, {\"Service\": \"web\", \"ID\": \"8dc983d594a0\", \"State\": \"running\", \"Health\": \"healthy\", \"Mounts\": \"\", \"CreatedAt\": \"2026-10-21 11:04:04 +0200 CEST\"}], \"presentation_unchanged\": true, \"source_diff_from_head\": \"\"}"
       }
     ],
     "gaps": [],
@@ -413,7 +421,7 @@
       "H-SMTP"
     ],
     "regression_risk": "low",
-    "checked_at": "2026-10-21T08:54:10.006191+00:00",
-    "git_sha": "84e697abeeac3cca21ae225fb1746ea02b1a46ff"
+    "checked_at": "2026-10-21T09:07:51.003704+00:00",
+    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
   }
 ]

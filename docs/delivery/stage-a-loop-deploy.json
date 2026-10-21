@@ -1,0 +1,67 @@
+{
+  "checked_at": "2026-10-21T09:04:44.697489+00:00",
+  "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4",
+  "api": {
+    "module_count": 14,
+    "workspace_equal": true,
+    "head_equal": true
+  },
+  "task-worker": {
+    "module_count": 14,
+    "workspace_equal": true,
+    "head_equal": true
+  },
+  "web": {
+    "file_count": 3,
+    "all_equal": true
+  },
+  "health": {
+    "status": "ok",
+    "demo": true,
+    "version": "1.0.0"
+  },
+  "services": [
+    {
+      "Service": "api",
+      "ID": "94514e7c9bac",
+      "State": "running",
+      "Health": "healthy",
+      "Mounts": "",
+      "CreatedAt": "2026-10-21 11:03:54 +0200 CEST"
+    },
+    {
+      "Service": "db",
+      "ID": "59f21df183b7",
+      "State": "running",
+      "Health": "healthy",
+      "Mounts": "fsp-mvp_fsp_db",
+      "CreatedAt": "2026-10-07 22:42:58 +0200 CEST"
+    },
+    {
+      "Service": "edge",
+      "ID": "8051e4bdd372",
+      "State": "running",
+      "Health": "healthy",
+      "Mounts": "fsp-mvp_fsp_tl…,/root/hakaton-…,fsp-mvp_fsp_tl…",
+      "CreatedAt": "2026-10-11 21:17:18 +0200 CEST"
+    },
+    {
+      "Service": "task-worker",
+      "ID": "f281e32de7a7",
+      "State": "running",
+      "Health": "",
+      "Mounts": "",
+      "CreatedAt": "2026-10-21 11:04:04 +0200 CEST"
+    },
+    {
+      "Service": "web",
+      "ID": "8dc983d594a0",
+      "State": "running",
+      "Health": "healthy",
+      "Mounts": "",
+      "CreatedAt": "2026-10-21 11:04:04 +0200 CEST"
+    }
+  ],
+  "presentation_unchanged": true,
+  "source_diff_from_head": ""
+}
