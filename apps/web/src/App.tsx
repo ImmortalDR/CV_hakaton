@@ -771,9 +771,11 @@ function Overview({
         <div className="orb">
           <ShieldCheck size={78} />
           <span>
-            навыки
-            <br />
-            подтверждены
+            {candidate
+              ? p?.verified_grade
+                ? <>навыки<br />подтверждены</>
+                : <>навыки<br />к проверке</>
+              : <>навыки<br />в основе</>}
           </span>
         </div>
       </div>
