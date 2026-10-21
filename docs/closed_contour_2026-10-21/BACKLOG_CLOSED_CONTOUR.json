@@ -70,7 +70,7 @@
     {
       "id": "CC3",
       "priority": "P1",
-      "status": "todo",
+      "status": "PARTIAL",
       "owner": "astra",
       "title": "Install runbook for customer Linux VM (deps download allowed)",
       "artifact": "docs/delivery/closed_contour/03_INSTALL_RUNBOOK.md"
