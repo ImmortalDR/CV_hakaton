@@ -1,14 +1,16 @@
-# Closed contour readiness — не потерять (сервер)
+# Closed contour readiness — не потерять
 
 **Запрос Данилы (21.10.2026):** показать готовность внедрить у заказчика (инфбез / типовой контур / ПДн·ТД), не превращая демо в VPN-only.
 
-## Где в git на этом сервере
+## Где лежит (согласовано)
 
-| Место | Путь / ветка |
+| Место | Значение |
 |---|---|
-| **Влито в сдачу** | ветка `codex/fsp-mvp` · worktree `/root/hakaton-fsp-mvp` · tip `83f1f70` |
-| Ветка сборки | `codex/closed-contour-readiness` · `/root/hakaton-contour` |
-| Ярлык в /root | `/root/CLOSED_CONTOUR_WHERE.md` |
+| Ветка сдачи | `codex/fsp-mvp` · tip `792b024` · worktree `/root/hakaton-fsp-mvp` |
+| Ветка сборки | `codex/closed-contour-readiness` · `/root/hakaton-contour` · tip `d146b9e` |
+| GitHub | https://github.com/ImmortalDR/CV_hakaton/tree/codex/fsp-mvp |
+| Handoff на GitHub | https://github.com/ImmortalDR/CV_hakaton/blob/codex/fsp-mvp/docs/delivery/closed_contour/HANDOFF_CLOSED_CONTOUR.md |
+| Ярлык на сервере | `/root/CLOSED_CONTOUR_WHERE.md` |
 
 ## Читать сразу
 
@@ -19,13 +21,11 @@
 ## Бэкапы на диске сервера
 
 - `/root/backups/closed-contour-readiness-full.bundle`
-- `/root/backups/fsp-mvp-with-closed-contour.bundle`
+- `/root/backups/fsp-mvp-with-closed-contour.bundle` (может отставать на 1–2 docs-коммита; истина — ветка `codex/fsp-mvp`)
 - `/root/backups/closed-contour-docs-20261021.tgz`
 
-Восстановить:
-```bash
-git clone /root/backups/closed-contour-readiness-full.bundle /tmp/cc-restore
-cd /tmp/cc-restore && git checkout codex/closed-contour-readiness
-```
+## Статус проверки (на момент push)
 
-**GitHub:** push с VPS без логина не настроен — на сервере пакет уже в `codex/fsp-mvp`.
+- Агентские must: PASS (`must_gaps=[]`)
+- `CCV2` / human ★: ещё **HUMAN_ONLY / PENDING**
+- Безусловное «готовы внедрить» до human ★ — **нельзя**
