@@ -31,7 +31,7 @@ with Session(engine) as db:
         u=User(email=f'stage-a-{run}-{len(accounts)}@example.org',password_hash=PASSWORDS.hash(password),role=role,verified=True,demo=True)
         db.add(u);db.flush();db.add(Consent(user_id=u.id,processing=True,publication=role=='candidate'))
         if role=='candidate':
-            db.add(Profile(user_id=u.id,name='Проверка этапа A · демо',processing=True,published=True,specialization='data',claimed_grade='Middle',skills=['sql','statistics'],phone='+7 000 000-00-00'))
+            db.add(Profile(user_id=u.id,name='' if len(accounts)==3 else 'Проверка этапа A · демо',processing=True,published=True,specialization='data',claimed_grade='Middle',skills=['sql','statistics'],phone='+7 000 000-00-00'))
         else:
             co=Company(name='Этап A · демо '+str(len(accounts)),description='Вымышленная компания для smoke этапа A',sector='ИТ',contact='smoke@example.org')
             db.add(co);db.flush();db.add(CompanyMember(user_id=u.id,company_id=co.id))
@@ -50,7 +50,7 @@ try:
             ctx=browser.new_context(base_url=a.base_url,locale='ru-RU',viewport={'width':1365,'height':1000},extra_http_headers={'X-Requested-With':'fsp-web'})
             r=ctx.request.post('/api/auth/login',data={k:creds[k] for k in ['email','password']});assert r.status==200
             page=ctx.new_page();page.on('pageerror',lambda e:errors.append(str(e)));actors.append((ctx,page))
-        (c,page),(e,hr),(other,_),(outsider,_)=actors
+        (c,page),(e,hr),(other,_),(outsider,new_page)=actors
         def call(ctx,path,data=None,method=None):
             r=ctx.request.fetch('/api'+path,method=method or ('GET' if data is None else 'POST'),data=data)
             assert r.ok, (path,r.status,r.text()[:250])
@@ -64,6 +64,9 @@ try:
         for email,password in [('review.candidate.fsp@example.org','Review-Cand-2026!'),('review.employer.fsp@example.org','Review-Emp-2026!'),('review.employer2.fsp@example.org','Review-Emp2-2026!')]:
             r=review.request.post('/api/auth/login',data=dict(email=email,password=password));assert r.status==200
         review.close();checks.append('three_review_logins_ok')
+        new_page.goto(a.base_url);nav(new_page,'Приглашения')
+        expect(new_page.get_by_text('Заполните профиль, чтобы начать путь',exact=False)).to_be_visible()
+        nav(new_page,'Обзор');expect(new_page.get_by_role('button',name='Заполнить профиль',exact=True)).to_be_visible()
         page.goto(a.base_url);nav(page,'Приглашения')
         expect(page.get_by_text('Подтвердите навыки тестом',exact=False)).to_be_visible()
         nav(page,'Подтверждение навыков')
@@ -107,7 +110,12 @@ try:
             expect(page.get_by_text('Подтвердите навыки и опубликуйте профиль',exact=False)).to_have_count(0)
             nav(page,'Обзор')
             expect(page.get_by_role('button',name='Посмотреть приглашения' if published else 'Настроить видимость',exact=True)).to_be_visible()
-        call(c,'/me/profile',{k:before[k] for k in fields},'PUT')
+        nav(page,'Мой профиль')
+        page.get_by_label('Публиковать профиль в банке кандидатов').check()
+        page.get_by_role('button',name='Сохранить профиль',exact=True).click()
+        expect(page.get_by_text('Профиль сохранён',exact=True)).to_be_visible()
+        nav(page,'Обзор');expect(page.get_by_role('button',name='Посмотреть приглашения',exact=True)).to_be_visible()
+        nav(page,'Приглашения');expect(page.get_by_text('Ваш профиль опубликован, уровень подтверждён.',exact=False)).to_be_visible()
         checks.append('Q4_verified_published_hidden_empty_invitations_and_overview_CTA')
         need=dict(title='Проверка аналитика',description='Вымышленные задачи аналитики для проверки',specialization='data',grades=['Junior'],required_skills=['sql'],desired_skills=['statistics'],min_years=None,fsp_only=False,confirmed=True)
         snap=call(e,'/searches',need)
@@ -126,6 +134,11 @@ try:
         hr.goto(a.base_url);nav(hr,'Приглашения')
         expect(hr.get_by_role('heading',name=base_item['display_name'],exact=True)).to_be_visible()
         checks.append('Q5_anonymous_label_selection_invitation_PDF_UI')
+        nav(hr,'Подбор кандидатов')
+        card=hr.locator('.candidate-card').filter(has=hr.get_by_role('heading',name=base_item['display_name'],exact=True))
+        expect(card.locator('.invitation-status')).to_contain_text('Отправлено')
+        card.get_by_role('button',name='Открыть приглашения',exact=True).click()
+        expect(hr.get_by_role('heading',name=base_item['display_name'],exact=True)).to_be_visible()
         call(c,'/invitations/'+inv['id'],{'status':'accepted'},'PATCH')
         assert call(e,'/candidates/'+cid)['contacts']['email']==accounts[0]['email']
         assert call(other,'/candidates/'+cid)['contacts'] is None
@@ -145,6 +158,10 @@ try:
         expect(hr.get_by_text('Сохранённая подборка на',exact=False)).to_be_visible()
         lines=hr.locator('.candidate-card .evidence > small')
         expect(lines.first).to_be_visible()
+        expect(hr.get_by_label('SQL',exact=True)).to_have_count(1)
+        context=hr.locator('details').filter(has=hr.get_by_text('Контекст для обсуждения · не влияет на баллы',exact=True))
+        expect(context).not_to_have_attribute('open','')
+        expect(hr.locator('.candidate-card').filter(has=hr.get_by_role('heading',name=before['name'],exact=True)).locator('.invitation-status')).to_contain_text('Принято')
         assert lines.count()>=2
         for line in lines.all_text_contents()[:2]:
             values=[float(x) for x in re.findall(r'\d+\.\d{2}',line)]
@@ -172,7 +189,7 @@ try:
         page.reload();nav(page,'Задания от компаний')
         expected_date=page.evaluate('(value) => new Date(value).toLocaleString("ru-RU", {timeZone:"Europe/Moscow", dateStyle:"medium", timeStyle:"short"})',resumed['next_issue_at'])
         date_line=page.get_by_text('Следующая выдача не ранее',exact=False)
-        expect(date_line).to_contain_text(expected_date)
+        expect(date_line).to_contain_text(expected_date+' МСК (UTC+03:00)')
         call(c,'/tasks/plans/'+plan['id'],{'status':'closed'},'PATCH');checks.append('Q6_live_7day_resume_no_duplicate_UI_date_equals_API')
         # Q4 hide with an open employer chat: poll must close input.
         nav(hr,'Приглашения');hr.get_by_role('button',name='Открыть диалог').click();expect(hr.get_by_label('Сообщение',exact=True)).to_be_visible()

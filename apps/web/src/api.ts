@@ -133,6 +133,7 @@ export type Company = {
 };
 export type Invitation = {
   id: string;
+  created_at: string;
   candidate_id: string;
   candidate_name: string;
   chat_available: boolean;

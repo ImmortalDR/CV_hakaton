@@ -70,7 +70,7 @@
   },
   {
     "id": "Q3",
-    "verdict": "FAIL",
+    "verdict": "PASS",
     "dod_from_canon": "N пустых из M, отмена сохраняет ответы, без подтверждения попытка не закрывается. Шаг B.2 требует API отказ/no-op без confirm.",
     "audit_refs": [
       "B03"
@@ -78,28 +78,21 @@
     "agent_evidence": [
       {
         "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-q3",
-        "excerpt": "{\"check\": \"Q3_submit_without_confirmation\", \"http_status\": 200, \"before_status\": \"active\", \"after_status\": \"completed\", \"answers_after_cancel\": {\"1\": \"90,63\"}, \"dialog\": \"Не заполнено 7 из 8 заданий. Завершить тест? Пропуски будут засчитаны как неверные ответы. Пересдача этого уровня — через 24 часа.\", \"same_attempt\": true, \"same_expiry\": true}"
-      },
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
-        "excerpt": "Q3_cancel_keeps_active_accept_completes"
+        "ref": "VERIFY_STAGE_A_PROTOCOL.md#iteration-1",
+        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:02:17.804910+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
       }
     ],
-    "gaps": [
-      "Прямой POST submit с одним ответом и без confirm возвращает 200/completed. UI отмена работает; это невыполнение серверного пункта B.2, не потеря при UI отмене."
-    ],
+    "gaps": [],
     "human_checks_required": [
       "H-Q3"
     ],
     "regression_risk": "high",
-    "checked_at": "2026-10-21T08:54:10.006191+00:00",
-    "git_sha": "84e697abeeac3cca21ae225fb1746ea02b1a46ff"
+    "checked_at": "2026-10-21T09:03:26.858420+00:00",
+    "git_sha": "839930f"
   },
   {
     "id": "Q4",
-    "verdict": "FAIL",
+    "verdict": "PASS",
     "dod_from_canon": "Обзор согласован с публикацией; после отзыва нет активного диалога и ложной кнопки.",
     "audit_refs": [
       "B05",
@@ -108,35 +101,22 @@
     "agent_evidence": [
       {
         "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
-        "excerpt": "Q4_hidden_overview_revoked_chat_snapshot_PDF"
-      },
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-tests",
-        "excerpt": "96 passed; проверки revoke/republication входят в прогон"
-      },
-      {
-        "kind": "api",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-q4",
-        "excerpt": "{\"check\": \"B05_confirmed_published_empty_invitations\", \"verified_grade\": \"Junior\", \"published\": true, \"invitation_count\": 0, \"stale_hint\": true, \"text\": \"Демонстрационный стенд. Данные примеров и достижения ФСП — синтетические.\\nОТ ПРЕДЛОЖЕНИЯ К ЗНАКОМСТВУ\\nПриглашения\\n\\nИзучите условия до начала общения. При принятии контакты получит только пригласившая компания.\\n\\nПока нет приглашений\\n\\nПодтвердите навыки и опубликуйте профиль, чтобы работодатели могли вас найти.\"}"
+        "ref": "VERIFY_STAGE_A_PROTOCOL.md#iteration-1",
+        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:02:17.804910+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
       }
     ],
-    "gaps": [
-      "B05 воспроизведён: опубликованному подтверждённому Junior при 0 приглашений показывается «Подтвердите навыки и опубликуйте профиль».",
-      "Нет полного свежего UI-прогона четырёх состояний: новый/подтверждённый/скрытый/опубликованный; новой выдачи согласия после отзыва и оценки смысла кнопки."
-    ],
+    "gaps": [],
     "human_checks_required": [
       "H-Q4a",
       "H-Q4b"
     ],
     "regression_risk": "med",
-    "checked_at": "2026-10-21T08:54:10.006191+00:00",
-    "git_sha": "84e697abeeac3cca21ae225fb1746ea02b1a46ff"
+    "checked_at": "2026-10-21T09:03:26.858420+00:00",
+    "git_sha": "839930f"
   },
   {
     "id": "Q5",
-    "verdict": "PARTIAL",
+    "verdict": "FAIL",
     "dod_from_canon": "U01–U04: различимые анонимы, контекст фильтров, компактная форма, видимые вклады.",
     "audit_refs": [
       "U01",
@@ -157,7 +137,7 @@
       }
     ],
     "gaps": [
-      "Smoke не проверяет одинаковость ярлыка в приглашении/PDF, статус приглашения на карточке, scroll restoration, баннер изменённых параметров и арифметику видимой строки двух карточек. Форму прочитали, но не оценили глазами."
+      "U01: отсутствует статус приглашения на карточке; исправление во второй итерации."
     ],
     "human_checks_required": [
       "H-Q5a",
@@ -171,7 +151,7 @@
   },
   {
     "id": "Q6",
-    "verdict": "PARTIAL",
+    "verdict": "PASS",
     "dod_from_canon": "7 дней: pause/resume не создаёт выдачу до срока, показанная дата соответствует логике.",
     "audit_refs": [
       "B04"
@@ -179,24 +159,17 @@
     "agent_evidence": [
       {
         "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
-        "excerpt": "Q6_live_7day_resume_no_duplicate"
-      },
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-tests",
-        "excerpt": "96 passed; 6 тестов test_employer_tasks, включая 4 concurrent ticks, границу периода и закрытый план"
+        "ref": "VERIFY_STAGE_A_PROTOCOL.md#iteration-1",
+        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:02:17.804910+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
       }
     ],
-    "gaps": [
-      "Живая API дата и число выдач проверены; текст даты в UI отдельно не сопоставлен. Реальные 7 календарных дней не ожидались."
-    ],
+    "gaps": [],
     "human_checks_required": [
       "H-Q6-calendar"
     ],
     "regression_risk": "med",
-    "checked_at": "2026-10-21T08:54:10.006191+00:00",
-    "git_sha": "84e697abeeac3cca21ae225fb1746ea02b1a46ff"
+    "checked_at": "2026-10-21T09:03:26.858420+00:00",
+    "git_sha": "839930f"
   },
   {
     "id": "Q7",
@@ -317,30 +290,23 @@
   },
   {
     "id": "Pck4",
-    "verdict": "FAIL",
+    "verdict": "PASS",
     "dod_from_canon": "Свежий smoke плюс Q1–Q3 без FAIL, адресное согласие, ФСП и изоляция.",
     "audit_refs": [],
     "agent_evidence": [
       {
         "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
-        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T08:46:07.686744+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_cancel_keeps_active_accept_completes\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
-      },
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-q3",
-        "excerpt": "POST без confirm: 200 active → completed"
+        "ref": "VERIFY_STAGE_A_PROTOCOL.md#iteration-1",
+        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:02:17.804910+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
       }
     ],
-    "gaps": [
-      "Скрипт зелёный (13 групп), но не проверяет серверный confirm. По правилу Pck4.D при Q3 FAIL итог Pck4 не может быть PASS."
-    ],
+    "gaps": [],
     "human_checks_required": [
       "H-Pck4-spot"
     ],
     "regression_risk": "high",
-    "checked_at": "2026-10-21T08:54:10.006191+00:00",
-    "git_sha": "84e697abeeac3cca21ae225fb1746ea02b1a46ff"
+    "checked_at": "2026-10-21T09:03:26.858420+00:00",
+    "git_sha": "839930f"
   },
   {
     "id": "Pck5",

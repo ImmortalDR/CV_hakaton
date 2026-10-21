@@ -396,7 +396,7 @@ export function App() {
               <Loading />
             ))}
           {tab === "tasks" && <Tasks user={user} {...props} />}
-          {tab === "search" && <SearchPage {...props} userId={user.id} />}
+          {tab === "search" && <SearchPage {...props} userId={user.id} openInvitations={() => setTab("invitations")} />}
           {tab === "invitations" && (
             <Invitations {...props} user={user} profile={profile} version={version} />
           )}
@@ -743,7 +743,9 @@ function Overview({
           </h2>
           <p>
             {candidate
-              ? p?.verified_grade
+              ? !p?.name
+                ? "Заполните профиль, чтобы выбрать специализацию и подтвердить навыки."
+                : p.verified_grade
                 ? p.published && p.processing
                   ? "Ваш уровень подтверждён тестом. Работодатели могут найти вас в соответствующей категории."
                   : "Ваш уровень подтверждён, но профиль скрыт. Включите публикацию и согласие в профиле, чтобы попасть в подбор."
@@ -1409,8 +1411,11 @@ function CompanyForm({
   );
 }
 
-function SearchPage({ catalog, act, busy, userId }: Actions & { userId: string }) {
+function SearchPage({ catalog, act, busy, userId, openInvitations }: Actions & { userId: string; openInvitations: () => void }) {
   const key = `fsp-search-${userId}`;
+  const [invitations, setInvitations] = useState<Invitation[]>([]);
+  const loadInvitations = async () => setInvitations(await api<Invitation[]>("/invitations"));
+  const latestInvitation = (id: string) => invitations.filter(i => i.candidate_id === id).sort((a, b) => b.created_at.localeCompare(a.created_at))[0];
   const [criteria, setCriteria] = useSessionState<Criteria>(key + "-criteria", {
     title: "Python-разработчик в команду API",
     description:
@@ -1460,6 +1465,7 @@ function SearchPage({ catalog, act, busy, userId }: Actions & { userId: string }
           setItems(await api("/candidates?" + params));
         }
         await loadHistory();
+        await loadInvitations();
       } finally {
         setInitialLoading(false);
       }
@@ -1774,6 +1780,8 @@ function SearchPage({ catalog, act, busy, userId }: Actions & { userId: string }
                       profile={p}
                       catalog={catalog}
                       onInvite={() => setSelected(p)}
+                      invitation={latestInvitation(p.id)}
+                      openInvitations={openInvitations}
                     />
                   </div>
                 ));
@@ -1823,6 +1831,8 @@ function SearchPage({ catalog, act, busy, userId }: Actions & { userId: string }
                   profile={p}
                   catalog={catalog}
                   onInvite={() => setSelected(p)}
+                      invitation={latestInvitation(p.id)}
+                      openInvitations={openInvitations}
                 />
               </div>
             ))
@@ -1834,7 +1844,7 @@ function SearchPage({ catalog, act, busy, userId }: Actions & { userId: string }
           profile={selected}
           act={act}
           busy={busy}
-          close={() => setSelected(null)}
+          close={() => { setSelected(null); void act(loadInvitations); }}
         />
       )}
     </>
@@ -1845,10 +1855,14 @@ function CandidateCard({
   profile: p,
   catalog,
   onInvite,
+  invitation,
+  openInvitations,
 }: {
   profile: Profile;
   catalog: Catalog;
   onInvite: () => void;
+  invitation?: Invitation;
+  openInvitations: () => void;
 }) {
   return (
     <article className="candidate-card">
@@ -1931,6 +1945,7 @@ function CandidateCard({
           </p>
         )}
       </details>
+      {invitation && <p className="invitation-status">Приглашение: {statusLabels[invitation.status]} · {date(invitation.created_at)} <button className="text-button" onClick={openInvitations}>Открыть приглашения</button></p>}
       <div className="candidate-footer">
         <span>
           <LockKeyhole size={14} />
@@ -2144,6 +2159,7 @@ function Invitations({
               {currency(i.salary_min)} — {currency(i.salary_max)} ₽
               <small>в месяц · до вычета налогов</small>
             </div>
+            <p className="muted">Отправлено: {date(i.created_at)}</p>
             <p className="preserve">{i.description}</p>
             <p className="muted">Связь с работодателем: {i.employer_contact}</p>
             {i.contacts && (
