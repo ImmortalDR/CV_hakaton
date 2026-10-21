@@ -1,4 +1,4 @@
-# Closed contour readiness
+**Handoff (что сделано / как проверять):** [HANDOFF_CLOSED_CONTOUR.md](HANDOFF_CLOSED_CONTOUR.md)\n\n# Closed contour readiness
 
 [Канон](../../closed_contour_2026-10-21/COMPREHENSIVE_CLOSED_CONTOUR_2026-10-21.md) · [Статусы](../../closed_contour_2026-10-21/BACKLOG_CLOSED_CONTOUR.json) · [Протокол](VERIFY_CLOSED_CONTOUR_PROTOCOL.md).
 
