@@ -56,6 +56,14 @@ class Verification(Base):
     used: Mapped[bool] = mapped_column(Boolean, default=False)
 
 
+class PasswordReset(Base):
+    __tablename__ = "password_resets"
+    token_hash: Mapped[str] = mapped_column(String(64), primary_key=True)
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), index=True)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    used: Mapped[bool] = mapped_column(Boolean, default=False)
+
+
 class Company(Base):
     __tablename__ = "companies"
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=uid)

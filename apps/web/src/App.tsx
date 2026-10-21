@@ -51,6 +51,7 @@ import {
   statusLabels,
 } from "./ui";
 
+import { Auth } from "./Auth";
 import { Tasks, type TaskInbox } from "./Tasks";
 import { countLabel, evidenceLabels } from "./formatting";
 
@@ -155,6 +156,8 @@ export function App() {
     [notice, setNotice] = useState(""),
     [busy, setBusy] = useState(false),
     [version, setVersion] = useState(0);
+  const [resetToken, setResetToken] = useState("");
+  const [verificationVersion, setVerificationVersion] = useState(0);
   const unsavedAssessment = useRef(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const confirmLeave = () => !unsavedAssessment.current || window.confirm("Есть ответы, не сохранённые на сервере. Покинуть тест? Черновик останется в этом браузере; срок теста продолжает идти.");
@@ -181,22 +184,31 @@ export function App() {
     window.scrollTo(0, 0);
   }, [tab]);
   useEffect(() => {
+    const resetting = location.hash.startsWith("#reset=");
     Promise.all([
       api<Catalog>("/catalog").then(setCatalog),
       api<User>("/auth/me")
         .then(u => {
+          if (resetting) return;
           setUser(u);
           try { setTabState(sessionStorage.getItem(`fsp-tab-${u.id}`) ?? "overview"); } catch { /* Default overview. */ }
         })
         .catch(() => {}),
     ]).finally(() => setLoading(false));
     const confirmEmailFromHash = () => {
+      if (location.hash.startsWith("#reset=")) {
+        setResetToken(location.hash.slice(7));
+        setUser(null);
+        history.replaceState(null, "", location.pathname);
+        return;
+      }
       if (!location.hash.startsWith("#verify=")) return;
       const token = location.hash.slice(8);
       history.replaceState(null, "", location.pathname);
       void act(async () => {
         await api("/auth/verify", { token });
         setNotice("Почта подтверждена. Войдите в кабинет.");
+        setVerificationVersion(n => n + 1);
       });
     };
     confirmEmailFromHash();
@@ -244,7 +256,7 @@ export function App() {
             <h1>
               Пусть ваши
               <br />
-              <em>навыки</em>
+              <em>навыки</em>{" "}
               <br />
               говорят за вас.
             </h1>
@@ -285,7 +297,7 @@ export function App() {
                 {notice}
               </p>
             )}
-            <Auth {...props} onLogin={signedIn} />
+            <Auth {...props} verificationVersion={verificationVersion} onLogin={signedIn} resetToken={resetToken} onResetDone={() => setResetToken("")} />
           </section>
         </main>
         <footer>
@@ -558,179 +570,6 @@ function PageTitle({
       <h1>{title}</h1>
       <p>{description}</p>
     </div>
-  );
-}
-
-function Auth({
-  act,
-  busy,
-  catalog,
-  onLogin,
-}: Actions & { onLogin: (u: User) => void }) {
-  const [register, setRegister] = useState(false),
-    [email, setEmail] = useState(""),
-    [password, setPassword] = useState(""),
-    [role, setRole] = useState("candidate"),
-    [consent, setConsent] = useState(false),
-    [letter, setLetter] = useState(""),
-    [message, setMessage] = useState("");
-  const submit = (e: FormEvent) => {
-    e.preventDefault();
-    void act(async () => {
-      if (register) {
-        const r = await api<{
-          demo_verification_url: string | null;
-          message: string;
-        }>("/auth/register", { email, password, role, processing: consent });
-        setLetter(r.demo_verification_url ?? "");
-        setMessage(r.message);
-      } else onLogin(await api<User>("/auth/login", { email, password }));
-    });
-  };
-  return (
-    <>
-      <div className="eyebrow">Начните с одного шага</div>
-      <h2>{register ? "Создать аккаунт" : "Добро пожаловать"}</h2>
-      <div className="segmented">
-        <button
-          className={!register ? "selected" : ""}
-          onClick={() => {
-            setRegister(false);
-            setMessage("");
-          }}
-        >
-          Вход
-        </button>
-        <button
-          className={register ? "selected" : ""}
-          onClick={() => {
-            setRegister(true);
-            setMessage("");
-          }}
-        >
-          Регистрация
-        </button>
-      </div>
-      <form onSubmit={submit}>
-        {register && (
-          <Field label="Я на платформе как">
-            <select value={role} onChange={(e) => setRole(e.target.value)}>
-              <option value="candidate">Кандидат</option>
-              <option value="employer">Работодатель</option>
-            </select>
-          </Field>
-        )}
-        <Field label="Электронная почта">
-          <input
-            type="email"
-            autoComplete="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@example.org"
-          />
-        </Field>
-        <Field label="Пароль">
-          <input
-            type="password"
-            autoComplete={register ? "new-password" : "current-password"}
-            required
-            minLength={register ? 10 : 1}
-            maxLength={128}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder={register ? "Не менее 10 символов" : "Ваш пароль"}
-          />
-        </Field>
-        {register && (
-          <label className="checkline">
-            <input
-              type="checkbox"
-              required
-              checked={consent}
-              onChange={(e) => setConsent(e.target.checked)}
-            />
-            <span>
-              Согласен на обработку данных для профиля, тестирования и
-              приглашений. Публикацию включу отдельно. В демо использую
-              вымышленные данные.
-            </span>
-          </label>
-        )}
-        <button disabled={busy} className="full">
-          {busy
-            ? "Подождите…"
-            : register
-              ? "Создать аккаунт"
-              : "Войти в кабинет"}
-          <ArrowRight size={17} />
-        </button>
-      </form>
-      {message && (
-        <p className="notice" role="status">
-          {message}
-        </p>
-      )}
-      {letter && (
-        <div className="demo-letter">
-          <strong>Демонстрационное письмо</strong>
-          <p>
-            Реальное письмо не отправлялось. На этом стенде подтверждение адреса
-            имитируется.
-          </p>
-          <button
-            className="secondary"
-            disabled={busy}
-            onClick={() =>
-              void act(async () => {
-                await api("/auth/verify", {
-                  token: letter.split("#verify=")[1],
-                });
-                setLetter("");
-                setMessage("Почта подтверждена. Войдите с указанным паролем.");
-                setRegister(false);
-              })
-            }
-          >
-            Подтвердить почту
-          </button>
-        </div>
-      )}
-      {catalog.demo && (
-        <div className="demo-entry">
-          <span>Посмотреть без регистрации</span>
-          <div>
-            <button
-              className="secondary"
-              disabled={busy}
-              onClick={() =>
-                void act(async () =>
-                  onLogin(
-                    await api<User>("/auth/demo", { account: "candidate" }),
-                  ),
-                )
-              }
-            >
-              Я кандидат
-            </button>
-            <button
-              className="secondary"
-              disabled={busy}
-              onClick={() =>
-                void act(async () =>
-                  onLogin(
-                    await api<User>("/auth/demo", { account: "employer" }),
-                  ),
-                )
-              }
-            >
-              Я работодатель
-            </button>
-          </div>
-          <small>Общие демоаккаунты. Не вводите персональные данные.</small>
-        </div>
-      )}
-    </>
   );
 }
 
@@ -1277,7 +1116,7 @@ function Assessments({
           {current.result && current.specialization === "data" && !["2.1.0", "2.1.1"].includes(current.version) && (
             <p className="notice subtle">Историческая попытка: результат сохранён по методике {current.version}. В старых дробных заданиях правило округления половины не было явно указано, поэтому 90,625 могло оцениваться как 90,62. Новые попытки используют явное округление половины вверх; прежний результат автоматически не пересчитывался.</p>
           )}
-          <p role="status">{saveStatus}</p>
+          <p role={saveStatus.startsWith("Не удалось") ? "alert" : "status"} className={saveStatus.startsWith("Не удалось") ? "save-failure" : undefined}>{saveStatus}</p>
           {dirtyRef.current && <button type="button" className="secondary" onClick={flush}>Повторить сохранение</button>}
           <form
             onSubmit={(e) => {
@@ -2055,11 +1894,12 @@ function InviteModal({
   const [description, setDescription] = useState(
       "Приглашаем обсудить работу в нашей команде. Задачи — развитие и поддержка продукта.",
     ),
-    [min, setMin] = useState(100000),
-    [max, setMax] = useState(160000),
+    [minText, setMin] = useState("100000"),
+    [maxText, setMax] = useState("160000"),
     [sent, setSent] = useState(false),
     [salaryError, setSalaryError] = useState(""),
     [requestId] = useState(() => crypto.randomUUID());
+  const min = Number(minText), max = Number(maxText);
   const dialogRef = useRef<HTMLElement>(null);
   const [company, setCompany] = useState<Company | null>(null);
   const [companyError, setCompanyError] = useState("");
@@ -2181,10 +2021,9 @@ function InviteModal({
                   type="number"
                   min={1}
                   max={10000000}
-                  value={min}
+                  value={minText}
                   onChange={(e) => {
-                    const next = Number(e.target.value);
-                    setMin(next);
+                    setMin(e.target.value);
                     setSalaryError("");
                   }}
                   aria-invalid={!!salaryError}
@@ -2197,14 +2036,14 @@ function InviteModal({
                   type="number"
                   min={1}
                   max={10000000}
-                  value={max}
-                  onChange={(e) => { setMax(Number(e.target.value)); setSalaryError(""); }}
+                  value={maxText}
+                  onChange={(e) => { setMax(e.target.value); setSalaryError(""); }}
                   aria-invalid={!!salaryError}
                   aria-describedby={salaryError ? "salary-error" : undefined}
                 />
               </Field>
             </div>
-            {company && <p className="invitation-preview">{company.name} · {min === max ? currency(min) : `${currency(min)} — ${currency(max)}`} / месяц до вычета налогов. Связь: {company.contact}.</p>}
+            {company && minText && maxText && <p className="invitation-preview">{company.name} · {min === max ? currency(min) : `${currency(min)} — ${currency(max)}`} / месяц до вычета налогов. Связь: {company.contact}.</p>}
             {companyError && <ErrorState message={companyError} />}
             {salaryError && <p id="salary-error" className="field-error" role="alert">{salaryError}</p>}
             <button className="full" disabled={busy || !company}>
@@ -2239,6 +2078,20 @@ function Invitations({
       }
     });
   }, [version]);
+  useEffect(() => {
+    let stopped = false;
+    let pending = false;
+    const reload = async () => {
+      if (pending || stopped) return;
+      pending = true;
+      try { const result = await api<Invitation[]>("/invitations"); if (!stopped) setItems(result); }
+      catch { /* Keep the existing UI on transient network failure. Server still enforces access. */ }
+      finally { pending = false; }
+    };
+    const timer = window.setInterval(reload, 15000);
+    window.addEventListener("focus", reload);
+    return () => { stopped = true; window.clearInterval(timer); window.removeEventListener("focus", reload); };
+  }, [user.id]);
   return (
     <>
       <PageTitle

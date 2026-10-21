@@ -16,3 +16,6 @@ export { default as Search } from "lucide-react/dist/esm/icons/search.js";
 export { default as ShieldCheck } from "lucide-react/dist/esm/icons/shield-check.js";
 export { default as Sparkles } from "lucide-react/dist/esm/icons/sparkles.js";
 export { default as Users } from "lucide-react/dist/esm/icons/users.js";
+
+export { default as Eye } from "lucide-react/dist/esm/icons/eye.js";
+export { default as EyeOff } from "lucide-react/dist/esm/icons/eye-off.js";

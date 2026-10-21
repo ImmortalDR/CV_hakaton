@@ -1,3 +1,4 @@
+import logging
 import hashlib
 import copy
 import os
@@ -40,6 +41,7 @@ from .models import (
     Snapshot,
     User,
     Verification,
+    PasswordReset,
     now,
 )
 from .pdf import profile_pdf
@@ -116,6 +118,9 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             "/api/auth/login",
             "/api/auth/register",
             "/api/auth/verify",
+            "/api/auth/resend-verification",
+            "/api/auth/forgot-password",
+            "/api/auth/reset-password",
         ):
             key = request.client.host if request.client else "unknown"
             q = limits[key]
@@ -395,6 +400,35 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             "demo": is_demo,
         }
 
+    def send_auth_mail(email, link, subject, instructions, allow_simulated=False):
+        smtp_host = (os.getenv("SMTP_HOST") or "").strip()
+        use_smtp = bool(smtp_host)
+        if use_smtp:
+            try:
+                msg = EmailMessage()
+                msg["To"] = email
+                msg["From"] = os.getenv("SMTP_FROM", "noreply@example.org")
+                msg["Subject"] = subject
+                msg["Date"] = formatdate(localtime=False, usegmt=True)
+                msg["Message-ID"] = make_msgid(domain="fsp.local")
+                msg.set_content(instructions + "\nЕсли вы не запрашивали это письмо, проигнорируйте его.\n\n" + link)
+                with smtplib.SMTP(
+                    smtp_host, int(os.getenv("SMTP_PORT", "587")), timeout=10
+                ) as smtp:
+                    smtp.ehlo()
+                    if os.getenv("SMTP_TLS", "true").lower() == "true":
+                        smtp.starttls(context=ssl.create_default_context())
+                        smtp.ehlo()
+                    if os.getenv("SMTP_USER"):
+                        smtp.login(os.environ["SMTP_USER"], os.environ["SMTP_PASSWORD"])
+                    smtp.send_message(msg)
+            except (OSError, smtplib.SMTPException, ValueError, KeyError) as exc:
+                logging.getLogger("fsp.mail").warning("SMTP delivery failed: %s", type(exc).__name__)
+                fail(503, "Не удалось отправить письмо. Повторите действие через минуту.")
+        elif not (is_demo and allow_simulated):
+            fail(503, "Доставка почты пока не настроена. Обратитесь к оператору.")
+        return use_smtp
+
     @app.post(
         "/api/auth/register",
         response_model=O.Registration,
@@ -435,32 +469,8 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             + "/#verify="
             + token
         )
-        # Real SMTP when host is set — even if DEMO_MODE stays on for demo buttons / FSP mock.
-        smtp_host = (os.getenv("SMTP_HOST") or "").strip()
-        use_smtp = bool(smtp_host)
-        if use_smtp:
-            try:
-                msg = EmailMessage()
-                msg["To"] = email
-                msg["From"] = os.getenv("SMTP_FROM", "noreply@example.org")
-                msg["Subject"] = "Подтвердите почту — ФСП"
-                msg["Date"] = formatdate(localtime=False, usegmt=True)
-                msg["Message-ID"] = make_msgid(domain="fsp.local")
-                msg.set_content("Подтвердите адрес в течение часа: " + link)
-                with smtplib.SMTP(
-                    smtp_host, int(os.getenv("SMTP_PORT", "587")), timeout=10
-                ) as smtp:
-                    smtp.ehlo()
-                    if os.getenv("SMTP_TLS", "true").lower() == "true":
-                        smtp.starttls(context=ssl.create_default_context())
-                        smtp.ehlo()
-                    if os.getenv("SMTP_USER"):
-                        smtp.login(os.environ["SMTP_USER"], os.environ["SMTP_PASSWORD"])
-                    smtp.send_message(msg)
-            except (OSError, smtplib.SMTPException, ValueError, KeyError):
-                fail(503, "Письмо не отправлено. Повторите регистрацию позже.")
-        elif not is_demo:
-            fail(503, "Доставка почты пока не настроена. Обратитесь к оператору.")
+        use_smtp = send_auth_mail(email, link, "Подтвердите почту — ФСП",
+                                  "Подтвердите адрес в течение часа:", allow_simulated=True)
         return {
             "message": ("Письмо отправлено. Откройте ссылку в течение часа; проверьте также папку «Спам»."
                         if use_smtp else "Подтвердите адрес почты"),
@@ -475,16 +485,68 @@ def create_app(database_url=None, demo=None, rate_limit=True):
         tags=["Вход"],
     )
     def verify(data: S.Verify, db: DB):
-        v = db.scalar(
-            select(Verification)
-            .where(Verification.token_hash == digest(data.token))
-            .with_for_update()
-        )
-        if not v or v.used or v.expires_at <= now():
+        v = db.get(Verification, digest(data.token))
+        if not v:
+            fail(400, "Ссылка недействительна или уже использована")
+        u = db.scalar(select(User).where(User.id == v.user_id).with_for_update())
+        db.refresh(v)
+        if v.used or v.expires_at <= now():
             fail(400, "Ссылка недействительна или уже использована")
         v.used = True
-        db.get(User, v.user_id).verified = True
+        u.verified = True
         return {"message": "Почта подтверждена. Теперь войдите в кабинет."}
+
+    @app.post("/api/auth/resend-verification", response_model=O.Notice, tags=["Вход"])
+    def resend_verification(data: S.RecoveryEmail, db: DB):
+        message = "Если адрес зарегистрирован и ещё не подтверждён, письмо отправлено. Проверьте входящие и спам; повторный запрос доступен через минуту."
+        u = db.scalar(select(User).where(User.email == str(data.email).lower()).with_for_update())
+        if u and not u.verified:
+            recent = db.scalar(select(Verification).where(
+                Verification.user_id == u.id,
+                Verification.expires_at > now() + timedelta(minutes=59)))
+            if not recent:
+                token = secrets.token_urlsafe(32)
+                db.add(Verification(token_hash=digest(token), user_id=u.id,
+                                    expires_at=now() + timedelta(hours=1)))
+                link = os.getenv("PUBLIC_URL", "http://localhost:3080").rstrip("/") + "/#verify=" + token
+                send_auth_mail(u.email, link, "Подтвердите почту — ФСП", "Подтвердите адрес в течение часа:")
+        return {"message": message}
+
+    @app.post("/api/auth/forgot-password", response_model=O.Notice, tags=["Вход"])
+    def forgot_password(data: S.RecoveryEmail, db: DB):
+        message = "Если адрес зарегистрирован, письмо для смены пароля отправлено. Проверьте входящие и спам; повторный запрос доступен через минуту."
+        u = db.scalar(select(User).where(User.email == str(data.email).lower()).with_for_update())
+        if u:
+            recent = db.scalar(select(PasswordReset).where(
+                PasswordReset.user_id == u.id,
+                PasswordReset.expires_at > now() + timedelta(minutes=29)))
+            if not recent:
+                token = secrets.token_urlsafe(32)
+                db.add(PasswordReset(token_hash=digest(token), user_id=u.id,
+                                     expires_at=now() + timedelta(minutes=30)))
+                link = os.getenv("PUBLIC_URL", "http://localhost:3080").rstrip("/") + "/#reset=" + token
+                send_auth_mail(u.email, link, "Смена пароля — ФСП", "Задайте новый пароль по ссылке в течение 30 минут:")
+        return {"message": message}
+
+    @app.post("/api/auth/reset-password", response_model=O.Notice, tags=["Вход"])
+    def reset_password(data: S.ResetPassword, db: DB):
+        # Lock the account before consuming a link: concurrent links cannot both win.
+        candidate_link = db.get(PasswordReset, digest(data.token))
+        if not candidate_link:
+            fail(400, "Ссылка недействительна или уже использована. Запросите новое письмо.")
+        u = db.scalar(select(User).where(User.id == candidate_link.user_id).with_for_update())
+        db.refresh(candidate_link)
+        if candidate_link.used or candidate_link.expires_at <= now():
+            fail(400, "Ссылка недействительна или уже использована. Запросите новое письмо.")
+        u.password_hash = PASSWORDS.hash(data.password)
+        # Possession of the emailed link also confirms the address.
+        u.verified = True
+        for link in db.scalars(select(PasswordReset).where(PasswordReset.user_id == u.id)):
+            link.used = True
+        for link in db.scalars(select(Verification).where(Verification.user_id == u.id)):
+            link.used = True
+        db.execute(delete(Session).where(Session.user_id == u.id))
+        return {"message": "Пароль изменён. Войдите с новым паролем. Прежние сеансы завершены."}
 
     @app.post(
         "/api/auth/login",
@@ -493,7 +555,7 @@ def create_app(database_url=None, demo=None, rate_limit=True):
         tags=["Вход"],
     )
     def login(data: S.Login, response: Response, db: DB):
-        u = db.scalar(select(User).where(User.email == str(data.email).lower()))
+        u = db.scalar(select(User).where(User.email == str(data.email).lower()).with_for_update())
         try:
             if not u or not PASSWORDS.verify(u.password_hash, data.password):
                 fail(401, "Неверная почта или пароль")
@@ -1156,6 +1218,9 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             "/api/auth/register",
             "/api/auth/login",
             "/api/auth/verify",
+            "/api/auth/resend-verification",
+            "/api/auth/forgot-password",
+            "/api/auth/reset-password",
             "/api/auth/demo",
             "/api/auth/logout",
         }

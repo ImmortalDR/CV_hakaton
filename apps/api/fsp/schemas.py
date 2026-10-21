@@ -34,6 +34,14 @@ class Verify(Input):
     token: str = Field(min_length=20, max_length=100)
 
 
+class RecoveryEmail(Input):
+    email: EmailStr
+
+
+class ResetPassword(Verify):
+    password: str = Field(min_length=10, max_length=128)
+
+
 class ProfileInput(Input):
     name: str = Field(min_length=2, max_length=160)
     phone: str = Field(default="", max_length=80)

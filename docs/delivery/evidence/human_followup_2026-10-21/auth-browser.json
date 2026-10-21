@@ -1,0 +1,15 @@
+{
+  "checks": [
+    "required_fields_and_mismatch_block_requests",
+    "password_visibility_toggle",
+    "smtp_failure_visible_fields_preserved",
+    "registration_email_link_verify_login",
+    "unconfirmed_grade_not_claimed",
+    "mobile_recovery_email_reset_login",
+    "old_session_revoked",
+    "mobile_no_horizontal_overflow"
+  ],
+  "page_errors": [],
+  "database": "fsp_authui_b6a9461b",
+  "mail": "in-memory SMTP, no real delivery"
+}

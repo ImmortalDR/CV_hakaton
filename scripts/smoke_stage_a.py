@@ -91,7 +91,7 @@ try:
         # reload and tab recreation while offline, then automatic queue flush.
         c.route('**/api/me/attempts/*/answers', lambda route: route.abort())
         answer.fill('UNSAVED-123')
-        expect(page.get_by_role('status')).to_contain_text('Не удалось сохранить на сервере')
+        expect(page.get_by_role('alert')).to_contain_text('Не удалось сохранить на сервере')
         assert call(c,'/me/attempts')[0]['answers']['1']=='90,63'
         leave=[]
         def cancel_leave(d): leave.append(d.type); d.dismiss()
@@ -102,12 +102,12 @@ try:
         page.once('dialog',lambda d:d.accept())
         nav(page,'Обзор');nav(page,'Подтверждение навыков')
         expect(answer).to_have_value('UNSAVED-123')
-        expect(page.get_by_role('status')).to_contain_text('Не удалось сохранить на сервере')
+        expect(page.get_by_role('alert')).to_contain_text('Не удалось сохранить на сервере')
         unload=[]
         def accept_unload(d): unload.append(d.type);d.accept()
         page.once('dialog',accept_unload);page.reload()
         expect(answer).to_have_value('UNSAVED-123')
-        expect(page.get_by_role('status')).to_contain_text('Не удалось сохранить на сервере')
+        expect(page.get_by_role('alert')).to_contain_text('Не удалось сохранить на сервере')
         assert unload==['beforeunload']
         answer.click()  # browser requires interaction before its unload dialog
         page.once('dialog',accept_unload)
@@ -116,7 +116,7 @@ try:
         page.goto(a.base_url);nav(page,'Подтверждение навыков')
         answer=page.get_by_label('Ответ на задание 1',exact=True)
         expect(answer).to_have_value('UNSAVED-123')
-        expect(page.get_by_role('status')).to_contain_text('Не удалось сохранить на сервере')
+        expect(page.get_by_role('alert')).to_contain_text('Не удалось сохранить на сервере')
         assert unload==['beforeunload','beforeunload']
         c.unroute('**/api/me/attempts/*/answers')
         page.once('dialog',lambda d:d.accept())
@@ -237,7 +237,12 @@ try:
         plan=call(e,'/tasks/plans',dict(candidate_id=cid,request_id=str(uuid4()),title='Проверка периода',prompt='Опишите безопасный повтор операции при сбое соединения.',rubric='Проверить идемпотентность и ограничение повторов.',interval_days=7,response_days=3))
         active=call(c,'/tasks/plans/'+plan['id'],{'status':'active'},'PATCH');task=active['assignments'][0]
         call(c,'/tasks/assignments/'+task['id']+'/answer',{'answer':'Ключ идемпотентности и ограничение повторов.'})
+        nav(hr,'Задания от компаний')
+        grade=hr.get_by_label('Оценка от 0 до 100',exact=True)
+        expect(grade).to_be_visible();grade.fill('0');grade.fill('');expect(grade).to_have_value('')
+        grade.fill('85')
         call(e,'/tasks/assignments/'+task['id']+'/review',{'score':85,'feedback':'Проверены ключ и ограничение числа попыток.'})
+        checks.append('numeric_grade_can_clear_zero')
         call(c,'/tasks/plans/'+plan['id'],{'status':'paused'},'PATCH')
         resumed=call(c,'/tasks/plans/'+plan['id'],{'status':'active'},'PATCH')
         assert len(resumed['assignments'])==1 and resumed['next_issue_at']==active['next_issue_at']
@@ -266,6 +271,8 @@ try:
         expect(modal.get_by_label('Предложение и задачи')).to_be_focused()
         lower=modal.get_by_label('Зарплата от, ₽ / месяц',exact=True)
         upper=modal.get_by_label('Зарплата до, ₽ / месяц',exact=True)
+        lower.fill('');expect(lower).to_have_value('')
+        lower.fill('0');lower.fill('');expect(lower).to_have_value('')
         lower.fill('200000')
         expect(upper).to_have_value('160000')
         modal.get_by_role('button',name='Отправить приглашение',exact=True).click()
@@ -320,6 +327,8 @@ try:
         payload={k:own[k] for k in fields};payload['published']=False
         call(c,'/me/profile',payload,'PUT')
         expect(hr.get_by_label('Сообщение',exact=True)).to_have_count(0,timeout=20000)
+        expect(hr.get_by_text(accounts[0]['email'],exact=False)).to_have_count(0,timeout=20000)
+        checks.append('revoked_contacts_disappear_without_reload')
         assert e.request.get('/api/profiles/'+cid+'/pdf').status==404
         assert not next(i for i in call(e,'/invitations') if i['id']==inv['id'])['chat_available']
         assert cid not in [p['id'] for p in call(e,'/searches/'+snap['id'])['items']]

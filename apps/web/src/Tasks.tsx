@@ -364,7 +364,7 @@ function AssignmentCard({
   update: (fn: () => Promise<unknown>) => Promise<void>;
 }) {
   const [answer, setAnswer] = useState(""),
-    [score, setScore] = useState(75),
+    [score, setScore] = useState("75"),
     [feedback, setFeedback] = useState("");
   return (
     <article className="task-assignment">
@@ -423,7 +423,7 @@ function AssignmentCard({
             e.preventDefault();
             void act(() =>
               update(() =>
-                api(`/tasks/assignments/${a.id}/review`, { score, feedback }),
+                api(`/tasks/assignments/${a.id}/review`, { score: Number(score), feedback }),
               ),
             );
           }}
@@ -435,7 +435,7 @@ function AssignmentCard({
               min={0}
               max={100}
               value={score}
-              onChange={(e) => setScore(Number(e.target.value))}
+              onChange={(e) => setScore(e.target.value)}
             />
           </Field>
           <Field label="Обоснование оценки">
