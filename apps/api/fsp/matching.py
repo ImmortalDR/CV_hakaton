@@ -2,7 +2,7 @@
 
 from .bank import GRADES
 
-VERSION = "matching-1.1.0"
+VERSION = "matching-1.2.0"
 
 
 def skill_coverage(facts):
@@ -31,7 +31,7 @@ def rank_candidate(candidate, criteria):
     facts = []
     evidence = {e["skill"]: e for e in candidate.get("evidence", [])}
     points = {}
-    for kind, weight in [("required_skills", 60), ("desired_skills", 15)]:
+    for kind, weight in [("required_skills", 30), ("desired_skills", 15)]:
         skills = criteria.get(kind, [])
         met = 0
         for s in skills:
@@ -72,8 +72,8 @@ def rank_candidate(candidate, criteria):
                 "evidence": None,
             }
         )
-    test = 0.2 * candidate.get("test_score", 0)
-    fsp = min(
+    test = 0.45 * candidate.get("test_score", 0)
+    fsp = 2 * min(
         5,
         sum(
             a.get("points", 0)

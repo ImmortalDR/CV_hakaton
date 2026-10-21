@@ -5,8 +5,8 @@
   "sha256": {
     "evaluation/BANK_V2_PROTOCOL.md": "0f5ac38cb59b1ad3e47c87119201f1bb8afa62f0721c3cee9efd7135a923b33a",
     "evaluation/bank_v2_audit.py": "b71c536a311c1165c8518c6cd1b47fe09250c0ec6ee80c733a3e41bd0c9c4061",
-    "evaluation/oracles.py": "921a67d8dd59c7554631e4f2e06d6413e4be832361ea138a09a249b353cc5aae",
-    "apps/api/fsp/bank.py": "fb428ee2da89a679940e04f0451ffc31cf4256f14bc694fff042df3f40eba8bb"
+    "evaluation/oracles.py": "5de86d54c39f36284dec05ac5c5e943f8c1d44b9d69052f0733ef93b3556b76d",
+    "apps/api/fsp/bank.py": "d4bd2697d15a30f742be50d07faa1e4124fc2fec584337939105ebb90c5a5d16"
   },
   "rows": [
     {
@@ -949,7 +949,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "python",
       "grade": "Junior",
       "strategy": "weak",
@@ -970,7 +970,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "python",
       "grade": "Junior",
       "strategy": "core_only",
@@ -991,7 +991,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "python",
       "grade": "Junior",
       "strategy": "old_families_only",
@@ -1012,7 +1012,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "python",
       "grade": "Junior",
       "strategy": "strong",
@@ -1033,7 +1033,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "python",
       "grade": "Junior",
       "strategy": "noise_10",
@@ -1058,7 +1058,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "python",
       "grade": "Junior",
       "strategy": "noise_20",
@@ -1084,7 +1084,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "python",
       "grade": "Junior",
       "strategy": "frequent_guess",
@@ -1110,7 +1110,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "python",
       "grade": "Middle",
       "strategy": "weak",
@@ -1131,7 +1131,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "python",
       "grade": "Middle",
       "strategy": "core_only",
@@ -1152,7 +1152,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "python",
       "grade": "Middle",
       "strategy": "old_families_only",
@@ -1173,7 +1173,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "python",
       "grade": "Middle",
       "strategy": "strong",
@@ -1194,7 +1194,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "python",
       "grade": "Middle",
       "strategy": "noise_10",
@@ -1219,7 +1219,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "python",
       "grade": "Middle",
       "strategy": "noise_20",
@@ -1246,7 +1246,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "python",
       "grade": "Middle",
       "strategy": "frequent_guess",
@@ -1271,7 +1271,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "python",
       "grade": "Senior",
       "strategy": "weak",
@@ -1292,7 +1292,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "python",
       "grade": "Senior",
       "strategy": "core_only",
@@ -1313,7 +1313,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "python",
       "grade": "Senior",
       "strategy": "old_families_only",
@@ -1334,7 +1334,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "python",
       "grade": "Senior",
       "strategy": "strong",
@@ -1355,7 +1355,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "python",
       "grade": "Senior",
       "strategy": "noise_10",
@@ -1380,7 +1380,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "python",
       "grade": "Senior",
       "strategy": "noise_20",
@@ -1407,7 +1407,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "python",
       "grade": "Senior",
       "strategy": "frequent_guess",
@@ -1431,7 +1431,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "data",
       "grade": "Junior",
       "strategy": "weak",
@@ -1452,7 +1452,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "data",
       "grade": "Junior",
       "strategy": "core_only",
@@ -1473,7 +1473,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "data",
       "grade": "Junior",
       "strategy": "old_families_only",
@@ -1494,7 +1494,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "data",
       "grade": "Junior",
       "strategy": "strong",
@@ -1515,7 +1515,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "data",
       "grade": "Junior",
       "strategy": "noise_10",
@@ -1540,7 +1540,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "data",
       "grade": "Junior",
       "strategy": "noise_20",
@@ -1567,7 +1567,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "data",
       "grade": "Junior",
       "strategy": "frequent_guess",
@@ -1591,7 +1591,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "data",
       "grade": "Middle",
       "strategy": "weak",
@@ -1612,7 +1612,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "data",
       "grade": "Middle",
       "strategy": "core_only",
@@ -1633,7 +1633,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "data",
       "grade": "Middle",
       "strategy": "old_families_only",
@@ -1654,7 +1654,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "data",
       "grade": "Middle",
       "strategy": "strong",
@@ -1675,7 +1675,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "data",
       "grade": "Middle",
       "strategy": "noise_10",
@@ -1700,7 +1700,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "data",
       "grade": "Middle",
       "strategy": "noise_20",
@@ -1726,7 +1726,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "data",
       "grade": "Middle",
       "strategy": "frequent_guess",
@@ -1751,7 +1751,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "data",
       "grade": "Senior",
       "strategy": "weak",
@@ -1772,7 +1772,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "data",
       "grade": "Senior",
       "strategy": "core_only",
@@ -1793,7 +1793,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "data",
       "grade": "Senior",
       "strategy": "old_families_only",
@@ -1814,7 +1814,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "data",
       "grade": "Senior",
       "strategy": "strong",
@@ -1835,7 +1835,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "data",
       "grade": "Senior",
       "strategy": "noise_10",
@@ -1859,7 +1859,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "data",
       "grade": "Senior",
       "strategy": "noise_20",
@@ -1885,7 +1885,7 @@
       }
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "specialization": "data",
       "grade": "Senior",
       "strategy": "frequent_guess",
@@ -2007,7 +2007,7 @@
       "observations_per_strategy": 1000
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "family": "http_backoff",
       "strong_minus_weak": 1,
       "mode_guess_correct_fraction": 0.041,
@@ -2015,7 +2015,7 @@
       "observations_per_strategy": 1000
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "family": "http_keys",
       "strong_minus_weak": 1,
       "mode_guess_correct_fraction": 0.12,
@@ -2023,7 +2023,7 @@
       "observations_per_strategy": 1000
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "family": "http_quota",
       "strong_minus_weak": 1,
       "mode_guess_correct_fraction": 0.635,
@@ -2031,7 +2031,7 @@
       "observations_per_strategy": 1000
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "family": "http_retry_budget",
       "strong_minus_weak": 1,
       "mode_guess_correct_fraction": 0.069,
@@ -2039,7 +2039,7 @@
       "observations_per_strategy": 1000
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "family": "py_accumulate",
       "strong_minus_weak": 1,
       "mode_guess_correct_fraction": 0.03,
@@ -2047,7 +2047,7 @@
       "observations_per_strategy": 1000
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "family": "py_alias",
       "strong_minus_weak": 1,
       "mode_guess_correct_fraction": 0.031,
@@ -2055,7 +2055,7 @@
       "observations_per_strategy": 1000
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "family": "py_boundary",
       "strong_minus_weak": 1,
       "mode_guess_correct_fraction": 0.352,
@@ -2063,7 +2063,7 @@
       "observations_per_strategy": 1000
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "family": "py_dag",
       "strong_minus_weak": 1,
       "mode_guess_correct_fraction": 0.062,
@@ -2071,7 +2071,7 @@
       "observations_per_strategy": 1000
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "family": "py_default",
       "strong_minus_weak": 1,
       "mode_guess_correct_fraction": 0.015,
@@ -2079,7 +2079,7 @@
       "observations_per_strategy": 1000
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "family": "py_filter",
       "strong_minus_weak": 1,
       "mode_guess_correct_fraction": 0.293,
@@ -2087,7 +2087,7 @@
       "observations_per_strategy": 1000
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "family": "py_lru",
       "strong_minus_weak": 1,
       "mode_guess_correct_fraction": 0.058,
@@ -2095,7 +2095,7 @@
       "observations_per_strategy": 1000
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "family": "sql_group",
       "strong_minus_weak": 1,
       "mode_guess_correct_fraction": 0.005,
@@ -2103,7 +2103,7 @@
       "observations_per_strategy": 1000
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "family": "sql_join",
       "strong_minus_weak": 1,
       "mode_guess_correct_fraction": 0.544,
@@ -2111,7 +2111,7 @@
       "observations_per_strategy": 1000
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "family": "sql_null_sum",
       "strong_minus_weak": 1,
       "mode_guess_correct_fraction": 0.024,
@@ -2119,7 +2119,7 @@
       "observations_per_strategy": 1000
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "family": "sql_rank",
       "strong_minus_weak": 1,
       "mode_guess_correct_fraction": 0.16,
@@ -2127,7 +2127,7 @@
       "observations_per_strategy": 1000
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "family": "sql_where",
       "strong_minus_weak": 1,
       "mode_guess_correct_fraction": 0.018,
@@ -2135,7 +2135,7 @@
       "observations_per_strategy": 1000
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "family": "sql_window",
       "strong_minus_weak": 1,
       "mode_guess_correct_fraction": 0.011,
@@ -2143,7 +2143,7 @@
       "observations_per_strategy": 1000
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "family": "stats_conditional",
       "strong_minus_weak": 1,
       "mode_guess_correct_fraction": 0.004,
@@ -2151,7 +2151,7 @@
       "observations_per_strategy": 1000
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "family": "stats_mean_drop",
       "strong_minus_weak": 1,
       "mode_guess_correct_fraction": 0.029,
@@ -2159,7 +2159,7 @@
       "observations_per_strategy": 1000
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "family": "stats_median",
       "strong_minus_weak": 1,
       "mode_guess_correct_fraction": 0.096,
@@ -2167,7 +2167,7 @@
       "observations_per_strategy": 1000
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "family": "stats_weighted",
       "strong_minus_weak": 1,
       "mode_guess_correct_fraction": 0.131,
@@ -2175,7 +2175,7 @@
       "observations_per_strategy": 1000
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "family": "testing_mutation",
       "strong_minus_weak": 1,
       "mode_guess_correct_fraction": 0.287,
@@ -2183,7 +2183,7 @@
       "observations_per_strategy": 1000
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "family": "tx_optimistic",
       "strong_minus_weak": 1,
       "mode_guess_correct_fraction": 0.012,
@@ -2191,7 +2191,7 @@
       "observations_per_strategy": 1000
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "family": "tx_snapshot",
       "strong_minus_weak": 1,
       "mode_guess_correct_fraction": 0.121,
@@ -2214,12 +2214,12 @@
       "pass_probability": 0.8019000000000001
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "probability_correct": 0.8,
       "pass_probability": 0.7340032000000002
     },
     {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "probability_correct": 0.9,
       "pass_probability": 0.9300217499999999
     }

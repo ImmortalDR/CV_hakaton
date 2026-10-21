@@ -98,7 +98,7 @@
       "id": "Q7",
       "audit": "expert_call+weights",
       "owner": "timofey",
-      "status": "todo",
+      "status": "done",
       "priority": "P1",
       "title": "Reweight ranking + validate on labeled sample (not arbitrary coeffs)",
       "path": "apps/api/fsp/matching.py",
@@ -113,7 +113,8 @@
         "labeled sample metrics before/after",
         "test+FSP move rank more than skill checkboxes",
         "update VALIDATION"
-      ]
+      ],
+      "verification": "matching-1.2.0; dev P@5 1→1 (16/2); test 0.8→0.8 (48/8); 44 tests passed; synthetic only; VALIDATION updated"
     },
     {
       "id": "Pck1",

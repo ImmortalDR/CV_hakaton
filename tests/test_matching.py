@@ -22,7 +22,7 @@ def test_unknown_never_becomes_proof_and_sport_does_not_change_category():
         "min_years": 5,
     }
     result = rank_candidate(candidate, criteria)
-    assert result["score"] == 3
+    assert result["score"] == 6
     assert all(f["state"] == "unknown" for f in result["facts"])
     assert not eligible(candidate, criteria | {"grades": ["Senior"]})
     junior = candidate | {"match": {"score": 100}}
@@ -45,7 +45,7 @@ def test_explicit_evidence_and_zero_experience_remain_distinct():
             "min_years": 0,
         },
     )
-    assert result["score"] == 45
+    assert result["score"] == 48.75
     assert [f["state"] for f in result["facts"]] == [
         "met",
         "unknown",
@@ -78,3 +78,28 @@ def test_untrusted_achievement_does_not_satisfy_fsp_filter():
     assert not eligible(p, criteria)
     p["achievements"].append({"provider": "demo_fsp", "points": 2})
     assert eligible(p, criteria)
+
+
+def test_stage_a_test_and_sport_change_within_category_order():
+    criteria = {"required_skills": ["python", "testing"]}
+    full = {"test_score": 75, "evidence": [{"skill": s, "state": "met"} for s in ["python", "testing"]]}
+    strong = {"test_score": 100, "evidence": [{"skill": "python", "state": "met"}],
+              "achievements": [{"provider": "demo_fsp", "points": 3}]}
+    assert rank_candidate(strong, criteria)["score"] > rank_candidate(full, criteria)["score"]
+    assert not rank_candidate(strong, criteria)["required_skills_met"]
+    # Self-declared checkboxes still carry no points.
+    assert rank_candidate(strong | {"skills": ["python", "testing"]}, criteria)["score"] == rank_candidate(strong, criteria)["score"]
+    no_sport = rank_candidate(strong | {"achievements": []}, criteria)
+    assert no_sport["score"] == 60
+    assert sum(no_sport["breakdown"].values()) == no_sport["score"]
+
+
+def test_production_matches_selected_weights_on_frozen_sample():
+    import json
+    from pathlib import Path
+    from evaluation.stage_a_matching import score
+    d = json.loads(Path("evaluation/matching_fixtures.json").read_text())
+    for split in ["dev", "test"]:
+        for q in d[split]["queries"]:
+            for p in d[split]["candidates"]:
+                assert rank_candidate(p, q["criteria"])["score"] == round(score(p, q["criteria"], (30,15,45,10)), 2)
