@@ -118,7 +118,7 @@
     {
       "id": "CC9",
       "priority": "P1",
-      "status": "todo",
+      "status": "PASS",
       "owner": "astra",
       "title": "152-FZ PD notes grounded in code; LEGAL_REVIEW_NEEDED where needed",
       "artifact": "docs/delivery/closed_contour/08_PDN_152_NOTES.md"
@@ -134,7 +134,7 @@
     {
       "id": "CC11",
       "priority": "P2",
-      "status": "todo",
+      "status": "PASS",
       "owner": "astra",
       "title": "Demo policy: DEMO_MODE, no real PD on public stand",
       "artifact": "docs/delivery/closed_contour/08_PDN_152_NOTES.md#demo"
