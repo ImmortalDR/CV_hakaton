@@ -3,7 +3,7 @@
 **Дата снимка:** 2026-10-21 19:12 UTC  
 **Ветка:** `codex/closed-contour-readiness`  
 **Worktree на сервере:** `/root/hakaton-contour`  
-**SHA снимка:** `4b4a00f` (`4b4a00fed89245a450a146069018262a34c3214c`) · обновляйте при новом раунде
+**Актуальный SHA:** `git -C /root/hakaton-contour rev-parse --short HEAD` (якорь создания handoff: `41c5f9b`)
 **Публичный демо-стенд (не ломать):** https://85-137-26-131.sslip.io/
 
 Этот файл — **входная точка**. Сначала его, потом канон и проверки.
