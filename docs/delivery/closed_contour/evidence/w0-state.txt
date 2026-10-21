@@ -1,0 +1,154 @@
+
+/root/hakaton $ pwd
+/root/hakaton
+exit=0
+
+/root/hakaton $ git branch --show-current
+main
+exit=0
+
+/root/hakaton $ git rev-parse HEAD
+ffd9e05806a727dc7c6706582b375a1021e6ec83
+exit=0
+
+/root/hakaton $ git status -sb
+## main...origin/main
+ M docs/final_backlog_2026-10-20/COMPREHENSIVE_STAGE_A_2026-10-21.md
+?? docs/00_START_HERE_TEAM_AND_AGENTS.md
+?? docs/ASTRA_CODEX_RUNBOOK_STAGE_A.md
+?? docs/BACKLOG_TASK2.md
+?? docs/COMPREHENSIVE_STAGE_A_2026-10-21.md
+?? docs/CONTROL_CHECKLIST.md
+?? docs/FINALIST_PREP_PACK_2026-10-20.tgz
+?? docs/FSP-audit-2026-10-20.zip
+?? docs/FSP-audit-2026-10-20/
+?? docs/FSP_ORG_EXPLAINER_2026-10-20.md
+?? docs/HUMAN_UNDERSTAND_PITCH_2026-10-20.md
+?? docs/METRICS_LOCK.md
+?? docs/ONBOARDING_NIKITA_FULL_MAP_2026-10-20.md
+?? docs/PITCH_CHECKLIST.md
+?? docs/PITCH_THEORY_100_2026-10-20.md
+?? docs/REMAINING_NOW.md
+?? docs/RUNBOOK_PITCH.md
+?? docs/STATUS.md
+?? docs/SUBMISSION_LINKS.md
+?? docs/TASK2.md
+?? docs/TASK2_CLOSURE.md
+?? docs/VERIFY_NOW.md
+?? docs/assets/
+?? docs/call_organizers_2026-10-20.tgz
+?? docs/call_organizers_2026-10-20/
+?? docs/closed_contour_2026-10-21/
+?? docs/delivery/HANDOFF_SNAPSHOT_README.md
+?? docs/final_backlog_2026-10-20/00_START_HERE_TEAM_AND_AGENTS.md
+?? docs/final_backlog_2026-10-20/ASTRA_CODEX_RUNBOOK_STAGE_A.md
+?? docs/final_backlog_2026-10-20/ASTRA_MASTER_PROMPT_STAGE_A.txt
+?? docs/final_backlog_2026-10-20/CALL_NOTES_2026-10-20.md
+?? docs/final_backlog_2026-10-20/FINAL_INSTRUCTIONS_AND_BACKLOG_2026-10-20.md
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20.zip
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/01-home.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/02-profile.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/03-candidate-overview.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/04-test-in-progress.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/05-answer-lost.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/06-test-borderline.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/06-test-borderline.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/07-fsp-before.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/08-without-fsp.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/09-blank-message.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/10-profile-validation.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/11-bank-without-fsp.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/12-empty-react.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/13-old-selection-before.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/14-current-selection.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/14-current-selection.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/15-old-selection-after.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/16-sql-selection.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/17-partial-selection.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/18-task-plan-offered.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/19-employer-dialogue.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/20-salary-validation.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/21-task-answer.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/22-invitation-rejected.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/23-fsp-restored.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/24-task-evaluated.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/25-task-resume-duplicate.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/25-task-resume-duplicate.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/26-task-closed.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/27-profile-hidden.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/28-contact-revoked.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/29-old-selection-privacy.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/30-revoked-dialogue.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/31-mobile-profile.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/32-mobile-test.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/33-mobile-matching.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/34-salary-auto-adjust.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/35-consent-restored.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/36-final-demo-01-profile.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/37-first-test-questions.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/38-first-test-passed.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/38-first-test-passed.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/39-employer07-empty-invites.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/40-isolation-candidate01.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/41-isolation-candidate02.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/42-middle-questions.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/43-incomplete-test-submit.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/44-candidate-cross-pdf-denied.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/45-company07-contacts.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/46-company08-empty-invites.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/47-company08-hidden-contacts.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/48-python-senior-questions.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/49-python-senior-result.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/50-sql-junior-questions.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/51-sql-junior-result.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/52-sql-middle-questions.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/53-sql-middle-result.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/54-rounding-error.jpg
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/55-sql-senior-questions.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/56-sql-senior-result.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/57-company09-profile.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/58-company10-profile.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/59-modal-keyboard.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/60-logged-out-pdf-denied.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/README.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/candidate-hidden.pdf
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/candidate-own.pdf
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/candidate01-before-consent.pdf
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/candidate01-company07-consented.pdf
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/candidate01-company08-hidden.pdf
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/coverage.json
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/pdf-consented-preview.png
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/pdf-hidden-preview.png
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/pdf-text-check.txt
+?? docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/report.html
+?? docs/final_backlog_2026-10-20/FSP_ORG_EXPLAINER_2026-10-20.md
+?? docs/final_backlog_2026-10-20/HUMAN_UNDERSTAND_PITCH_2026-10-20.md
+?? docs/final_backlog_2026-10-20/ONBOARDING_NIKITA_FULL_MAP_2026-10-20.md
+?? docs/final_backlog_2026-10-20/README.md
+?? docs/final_backlog_2026-10-20/TEAM_BACKLOG_ONEPAGER_2026-10-20.md
+?? docs/final_backlog_2026-10-20/assets/
+?? docs/final_backlog_2026-10-20/prompts/
+?? docs/final_backlog_2026-10-20/templates/
+?? docs/finalist_prep_pack_2026-10-20/
+?? docs/presentation/FSP_NIKITA_SUBMISSION.pptx
+?? docs/presentation/LESSONS_LCT_2026-10-09.md
+?? logs/
+exit=0
+
+/root/hakaton-contour $ pwd
+/root/hakaton-contour
+exit=0
+
+/root/hakaton-contour $ git branch --show-current
+codex/closed-contour-readiness
+exit=0
+
+/root/hakaton-contour $ git rev-parse HEAD
+cf91823219e76974a688e8c74f8d3f15dce54e84
+exit=0
+
+/root/hakaton-contour $ git status -sb
+## codex/closed-contour-readiness
+?? docs/closed_contour_2026-10-21/
+?? docs/delivery/closed_contour/
+exit=0

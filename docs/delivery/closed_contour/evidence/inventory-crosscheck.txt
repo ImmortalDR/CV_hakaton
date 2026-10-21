@@ -1,0 +1,12 @@
+$ selected source lines: compose.yaml (read + three field cross-check)
+compose.yaml:10:       - fsp_db:/var/lib/postgresql/data
+compose.yaml:12:       - "127.0.0.1:5547:5432"
+compose.yaml:13:     healthcheck:
+compose.yaml:23:       DEMO_MODE: ${DEMO_MODE:-true}
+compose.yaml:35:     healthcheck:
+compose.yaml:52:     healthcheck:
+compose.yaml:58:       - "${BIND_ADDRESS:-127.0.0.1}:3080:80"
+compose.yaml:66:     profiles: [https]
+compose.yaml:68:     network_mode: host
+compose.yaml:80:     healthcheck:
+compose.yaml:88:   fsp_db:
