@@ -36,7 +36,7 @@
       "dod": [
         "answers survive Overview round-trip or explicit warn before loss"
       ],
-      "verification": "2 API tests passed; frontend build passed; browser round-trip queued for Pck4"
+      "verification": "2 API tests passed; frontend build passed; browser round-trip queued for Pck4; live browser smoke passed 2026-10-21"
     },
     {
       "id": "Q2",
@@ -60,7 +60,7 @@
       "dod": [
         "modal with skip count; no silent empty submit"
       ],
-      "verification": "Frontend build passed; native confirm before submit; browser accept/dismiss queued for Pck4"
+      "verification": "Frontend build passed; native confirm before submit; browser accept/dismiss queued for Pck4; live browser smoke passed 2026-10-21"
     },
     {
       "id": "Q4",
@@ -86,7 +86,7 @@
       "status": "done",
       "priority": "P2",
       "title": "Employer UX: distinct anon, filters, compact need, score breakdown",
-      "verification": "Build + 22 API + 3 stage_a tests passed; U01-U04 implemented; browser check queued"
+      "verification": "Build + 22 API + 3 stage_a tests passed; U01-U04 implemented; browser check queued; live browser smoke passed 2026-10-21"
     },
     {
       "id": "Q6",
@@ -143,8 +143,9 @@
     {
       "id": "Pck4",
       "owner": "any",
-      "status": "todo",
-      "title": "Smoke: Q1-Q3 + invite consent + isolation regression"
+      "status": "done",
+      "title": "Smoke: Q1-Q3 + invite consent + isolation regression",
+      "verification": "Live HTTPS Chromium smoke pass: 13 groups, no JS errors; docs/delivery/stage-a-smoke.json"
     },
     {
       "id": "Pck5",
