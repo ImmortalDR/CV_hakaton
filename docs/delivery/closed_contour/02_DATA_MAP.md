@@ -1,0 +1,23 @@
+# CC2 · Карта данных
+
+DoD: сущности → поля → назначение → хранение → удаление. Источник всех таблиц БД — [models.py](../../../apps/api/fsp/models.py); ограничения входа — [schemas.py](../../../apps/api/fsp/schemas.py), выходы — [outputs.py](../../../apps/api/fsp/outputs.py). Это перечень технических фактов, не юридическая классификация.
+
+| Сущность / группа | Поля и назначение | Хранение: факт / предложение | Удаление: факт |
+|---|---|---|---|
+| User, ПДн/аутентификация | email, password_hash Argon2, role, verified, demo, created_at; вход | PostgreSQL, бессрочно до админоперации; предложено утвердить срок у оператора | API удаления аккаунта нет |
+| Session, Verification, PasswordReset, технические | token_hash, user_id, expires_at, used; доступ и восстановление | Валидность 1 день / 1 час / 30 минут в [main](../../../apps/api/fsp/main.py), это не срок удаления строк | logout удаляет текущую session; reset все sessions; TTL cleanup нет |
+| Profile, ПДн/профессиональные | name, phone, about, roles, soft_skills, skills, experience_years, industry, specialization; самодекларация; claimed/verified_grade, verified_attempt_id, grade_changed_at | БД, общего retention нет; предложено хранить по цели найма и согласованному сроку | редактирование/снятие публикации есть, физического удаления нет |
+| Profile, ФСП | fsp_identity, achievements JSON | DemoProvider, симуляция, [provider](../../../apps/api/fsp/fsp_provider.py) | unlink очищает эти поля; не весь профиль |
+| Consent, ContactGrant | processing/publication/version/time; candidate/company/invitation; история согласий и адресный доступ | consent история без TTL; grant до отзыва | снятие processing/publication удаляет grants; историю Consent сохраняет, [main update_profile/decide](../../../apps/api/fsp/main.py) |
+| Company, CompanyMember | name/description/sector/contact; user/company; реквизиты общения, могут быть ПДн представителя | БД без TTL | правка компании есть; удаление через API отсутствует |
+| Attempt, Evidence | seed/version/questions с эталонами, answers/result/status/dates; skill/correct/total; подтверждение компетенций | БД без TTL, expires_at закрывает попытку, не удаляет | удаления через API нет; эталоны не передаются до результата |
+| Need, Snapshot | criteria JSON, items JSON (оценки, доказательства, ID); история подбора работодателя | БД без TTL; контактные поля не копируются в items, выдача перепроецируется | endpoint удаления нет; снятый профиль скрывается при чтении истории, [main snapshot_view](../../../apps/api/fsp/main.py) |
+| Invitation, Message | description, salary_min/max RUB (предложение работодателя, не ожидания кандидата), company_name/contact, status; text/author/time | БД без TTL; свободный текст способен содержать ПДн | отзыв блокирует доступ к чату, не стирает историю |
+| TaskPlan, TaskAssignment | prompt/rubric/title, расписание/consent_at; answer/score/feedback/dates | БД без TTL; [tasks.py](../../../apps/api/fsp/tasks.py) | отзыв приостанавливает планы/отменяет неотвеченные задания, не удаляет ответы |
+| PDF, выгрузка | имя/псевдоним, уровень, навыки, контакты только по текущим правам, свободный текст при доступе, доказательства | [pdf.py](../../../apps/api/fsp/pdf.py): BytesIO на запрос, файловое хранилище не настроено; копии у получателя вне контроля API | отозвать скачанный PDF технически нельзя |
+| Логи и почта | nginx URI/IP/status; API исключения; worker counts; SMTP email и ссылка подтверждения | [nginx](../../../apps/web/nginx.conf), [Dockerfile](../../../apps/api/Dockerfile), [main](../../../apps/api/fsp/main.py), [worker](../../../apps/api/fsp/task_worker.py); Docker rotation/TTL не задан | процедуры удаления логов/SMTP у оператора; нужен срок и фильтрация query strings |
+| Backup | копия всех перечисленных таблиц | в compose backup нет; предложено отдельное зашифрованное хранилище, срок утверждает оператор | нужен согласованный цикл истечения копий и учёт удалений после restore |
+
+DEMO_MODE не фильтрует текст, не анонимизирует введённые данные. [seed.py](../../../apps/api/fsp/seed.py) аддитивно создаёт синтетику только при true; false на старой БД не очищает её. В demo без SMTP регистрационная ссылка может возвращаться прямо в API. Реальные данные на публичном стенде запрещены политикой поставки. Review-аккаунты предназначены только для синтетических проверок; их пароли в пакет не входят.
+
+Нет upload резюме, object storage, полного экспорта всех данных субъекта и API стирания аккаунта в прочитанных маршрутах main/tasks. API собственного профиля и PDF — ограниченный доступ/выгрузка, не полный субъектный экспорт. Отзыв согласия ≠ физическое удаление. Предлагаемые сроки и порядок удаления: LEGAL_REVIEW_NEEDED до обработки рабочих ПДн.

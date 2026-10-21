@@ -1,0 +1,3 @@
+PASS: runtime .env files absent from git index
+PASS: .env ignored
+PASS: example contains only approved placeholders and loopback defaults

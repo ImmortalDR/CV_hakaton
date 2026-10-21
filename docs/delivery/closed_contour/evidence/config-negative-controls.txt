@@ -1,0 +1,3 @@
+PASS configure: generated .env mode 0600; repeat preserves bytes (secret not logged)
+PASS hygiene negative control: force-tracked generated .env rejected (temporary repo deleted)
+PASS hygiene negative control: nonempty SMTP_PASSWORD example rejected
