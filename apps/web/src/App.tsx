@@ -1112,6 +1112,10 @@ function Assessments({
           <form
             onSubmit={(e) => {
               e.preventDefault();
+              const empty = current.questions.filter(q => !(answers[q.id] ?? "").trim()).length;
+              if (empty && !window.confirm(
+                `Не заполнено ${empty} из ${current.questions.length} заданий. Завершить тест? Пропуски будут засчитаны как неверные ответы. Пересдача этого уровня — через 24 часа.`,
+              )) return;
               void act(async () => {
                 await saveQueue.current;
                 const result = await api<Attempt>(

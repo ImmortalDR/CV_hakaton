@@ -54,12 +54,13 @@
       "id": "Q3",
       "audit": "B03",
       "owner": "nikita+danila",
-      "status": "todo",
+      "status": "done",
       "priority": "P1",
       "title": "Confirm before submit with blank answers",
       "dod": [
         "modal with skip count; no silent empty submit"
-      ]
+      ],
+      "verification": "Frontend build passed; native confirm before submit; browser accept/dismiss queued for Pck4"
     },
     {
       "id": "Q4",
