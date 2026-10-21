@@ -30,3 +30,25 @@ Compose: PostgreSQL, API, worker, nginx; edge opt-in https с host network. Се
 ## W1 → W2
 
 CC0–CC2: артефакты созданы, отдельные коммиты. CC3 первоначально PARTIAL: runbook написан, ожидает CC4 install smoke. В исходном каноне `git diff --check` сообщает Markdown hard-break пробелы; канон сохранён без нормализации. Новые файлы проверяются отдельно.
+
+## W2 завершение
+
+CC4: `bash scripts/closed_contour_dry_run.sh`, exit 0. Полный лог: [cc-dry-run-20261021T185211Z-233571.log](evidence/cc-dry-run-20261021T185211Z-233571.log).
+SHA256 исполненного скрипта: `d4d7ba393a71ffc3e9cb57c19b6ea946843315ace202154e9761498eb3d90168`. Source HEAD в логе b0a4c77; исходники приложения с базы cf91823 не менялись.
+
+```text
+API /api/health HTTP 200 expected=200
+health ok; demo=false
+API /api/catalog HTTP 200 expected=200
+API /api/openapi.json HTTP 200 expected=200
+API /api/me/profile HTTP 401 expected=401
+API /api/auth/demo HTTP 404 expected=404
+API /api/auth/demo HTTP 403 expected=403
+minimum API and negative access checks passed
+worker process ok
+cleanup verified: no project containers or volumes
+EXIT_CODE=0
+```
+
+CC3 PARTIAL → PASS: configure/build/up/health/API/down прошли в изолированной копии. Customer TLS/SMTP, backup/restore и сетевые A/B остаются NOT_RUN, указаны в runbook. Контейнеры/том удалены; build cache и уникальные images оставлены (без runtime .env), глобальный prune не выполнялся.
+CC5: [hygiene](evidence/config-hygiene.txt), [отрицательные контроли и mode 0600](evidence/config-negative-controls.txt). CC1: [сверка bind/DEMO/profile/тома](evidence/inventory-crosscheck.txt).

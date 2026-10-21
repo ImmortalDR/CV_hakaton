@@ -70,7 +70,7 @@
     {
       "id": "CC3",
       "priority": "P1",
-      "status": "PARTIAL",
+      "status": "PASS",
       "owner": "astra",
       "title": "Install runbook for customer Linux VM (deps download allowed)",
       "artifact": "docs/delivery/closed_contour/03_INSTALL_RUNBOOK.md"
@@ -78,7 +78,7 @@
     {
       "id": "CC4",
       "priority": "P1",
-      "status": "todo",
+      "status": "PASS",
       "owner": "astra",
       "title": "Isolated dry-run install script with evidence log",
       "artifact": "scripts/closed_contour_dry_run.sh"
