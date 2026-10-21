@@ -47,7 +47,7 @@ def seed(db):
             )
         else:
             c = Company(
-                name="Орбита · демо" if account == "employer" else "Вектор · демо",
+                name="Вымышленная компания" if account == "employer" else "Вектор · демо",
                 description="Создаём сервисы обработки данных и надёжные API. Демонстрационная компания.",
                 sector="Разработка программного обеспечения",
                 contact="team@demo.example.org",
