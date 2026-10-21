@@ -1,6 +1,6 @@
 {
   "status": "pass",
-  "checked_at": "2026-10-21T16:05:11.413923+00:00",
+  "checked_at": "2026-10-21T16:14:21.280918+00:00",
   "scope": "Documentation structure, local links, PDF bounds/nonempty pages, DOCX rendering and existing evidence consistency. No new functional test run or external publication.",
   "visual_review": "Representative pages inspected; automated bounds/nonempty checks cover all exported and DOCX-rendered pages.",
   "openapi_operations": 37,
@@ -36,14 +36,14 @@
       "rendered_pages": 27
     },
     "docs/delivery/STAGE_A.pdf": {
-      "bytes": 37463,
-      "sha256": "edae33f3172f6a69e68c78cb6eabdb93ecc298060e705522d0abd3c69b89facd",
-      "pages": 4
+      "bytes": 41148,
+      "sha256": "1c2442ef15b8ba33c31561e954bc14b27f74388cfef6f4019154ae10991a9a4b",
+      "pages": 5
     },
     "docs/delivery/STAGE_A.docx": {
-      "bytes": 41847,
-      "sha256": "8624199751bf55527d283d8a14876c8fb1b9503cbee67cec7dd99151c9d52960",
-      "rendered_pages": 4
+      "bytes": 42965,
+      "sha256": "deb4a515d06815dda77a176738056ce7c2de4397a362b062e64579a52ea467b2",
+      "rendered_pages": 5
     }
   }
 }
