@@ -121,6 +121,7 @@ class Contacts(Output):
 
 class Profile(Output):
     id: str
+    candidate_code: str
     display_name: str
     specialization: Spec
     verified_grade: Grade | None

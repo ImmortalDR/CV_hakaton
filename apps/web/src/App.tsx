@@ -797,6 +797,7 @@ function ProfileForm({
         title="Расскажите о себе"
         description="Эти сведения указаны вами. Подтверждённые результаты тестирования работодатель увидит отдельно."
       />
+      {p.candidate_code && <p className="notice subtle">Ваш номер кандидата: <strong>{p.candidate_code}</strong>. Работодатель может найти опубликованный профиль по этому номеру.</p>}
       <form
         className="panel"
         onSubmit={(e) => {
@@ -1410,6 +1411,7 @@ function SearchPage({ catalog, act, busy, userId, openInvitations }: Actions & {
     [snapshot, setSnapshot] = useState<Snapshot | null>(null);
   const selected = items.find(p => p.id === inviteId) ?? null;
   const [filter, setFilter] = useSessionState(key + "-filter", {
+      candidate_code: "",
       specialization: "",
       grade: "",
       skill: "",
@@ -1422,6 +1424,7 @@ function SearchPage({ catalog, act, busy, userId, openInvitations }: Actions & {
     if (window.innerWidth <= 850) resultsRef.current?.scrollIntoView({behavior: "smooth", block: "start"});
   });
   const bankUrl = () => screenUrl("search", {
+    candidate_code: (filter.candidate_code ?? "").trim().replace(/^№\s*/, "").toUpperCase(),
     specialization: filter.specialization, grade: filter.grade, skill: filter.skill,
     fsp_only: filter.fsp_only ? "true" : null,
   });
@@ -1441,6 +1444,7 @@ function SearchPage({ catalog, act, busy, userId, openInvitations }: Actions & {
           setSnapshot(saved); setItems(saved.items); setCriteria(saved.criteria);
         } else if (bank) {
           const applied = {
+            candidate_code: route.params.get("candidate_code") ?? "",
             specialization: route.params.get("specialization") ?? "",
             grade: route.params.get("grade") ?? "",
             skill: route.params.get("skill") ?? "",
@@ -1504,6 +1508,11 @@ function SearchPage({ catalog, act, busy, userId, openInvitations }: Actions & {
                 showResults();
               }}
             >
+              <Field label="Номер кандидата">
+                <input value={filter.candidate_code ?? ""} maxLength={32}
+                  onChange={e => setFilter(f => ({ ...f, candidate_code: e.target.value }))}
+                  placeholder="Например, C7D0B82B" autoCapitalize="characters" spellCheck={false} />
+              </Field>
               <Field label="Специализация">
                 <select
                   value={filter.specialization}
@@ -1560,6 +1569,10 @@ function SearchPage({ catalog, act, busy, userId, openInvitations }: Actions & {
               <button className="full" disabled={busy}>
                 Применить фильтры
               </button>
+              <button type="button" className="text-button" disabled={busy} onClick={() => {
+                setFilter({ candidate_code: "", specialization: "", grade: "", skill: "", fsp_only: false });
+                if (route.href === "/search") setReload(n => n + 1); else navigate("/search");
+              }}>Сбросить фильтры</button>
             </form>
           ) : (
             <form onSubmit={search}>
@@ -1788,6 +1801,7 @@ function CandidateCard({
         </div>
         <div className="candidate-name">
           <h3>{p.display_name}</h3>
+          {p.candidate_code && !p.display_name.includes(p.candidate_code) && <small>Кандидат №{p.candidate_code}</small>}
           <p>
             {p.experience_years === null
               ? "Стаж не указан"

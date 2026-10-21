@@ -2780,6 +2780,23 @@
               "default": false,
               "title": "Fsp Only"
             }
+          },
+          {
+            "name": "candidate_code",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 32
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Candidate Code"
+            }
           }
         ],
         "responses": {
@@ -6307,6 +6324,10 @@
             "type": "string",
             "title": "Id"
           },
+          "candidate_code": {
+            "type": "string",
+            "title": "Candidate Code"
+          },
           "display_name": {
             "type": "string",
             "title": "Display Name"
@@ -6567,6 +6588,7 @@
         "type": "object",
         "required": [
           "id",
+          "candidate_code",
           "display_name",
           "specialization",
           "verified_grade",

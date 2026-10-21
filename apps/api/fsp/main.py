@@ -1,4 +1,5 @@
 import logging
+import re
 import hashlib
 import copy
 import os
@@ -14,7 +15,7 @@ from typing import Annotated
 
 from argon2 import PasswordHasher
 from argon2.exceptions import VerificationError
-from fastapi import Depends, FastAPI, HTTPException, Request, Response
+from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.openapi.utils import get_openapi
@@ -279,8 +280,9 @@ def create_app(database_url=None, demo=None, rate_limit=True):
         )
         result = {
             "id": p.user_id,
+            "candidate_code": digest(p.user_id)[:8].upper(),
             "display_name": (
-                p.name if permitted else bank.SPECS[p.specialization] + " · кандидат №" + hashlib.sha256(p.user_id.encode()).hexdigest()[:8].upper()
+                p.name if permitted else bank.SPECS[p.specialization] + " · кандидат №" + digest(p.user_id)[:8].upper()
             ),
             "specialization": p.specialization,
             "verified_grade": p.verified_grade,
@@ -861,8 +863,12 @@ def create_app(database_url=None, demo=None, rate_limit=True):
         grade: S.Grade | None = None,
         skill: str | None = None,
         fsp_only: bool = False,
+        candidate_code: str | None = Query(default=None, max_length=32),
     ):
         c = company(user, db)
+        code = (candidate_code or "").strip().removeprefix("№").strip().upper()
+        if code and not re.fullmatch(r"[0-9A-F]{8}", code):
+            fail(422, "Номер кандидата должен содержать 8 букв A–F и цифр, например C7D0B82B")
         if skill and skill not in bank.SKILLS:
             fail(422, "Неизвестный навык")
         profiles = list(db.scalars(
@@ -877,6 +883,8 @@ def create_app(database_url=None, demo=None, rate_limit=True):
         cache = projection_cache(profiles, db, c.id)
         results = []
         for p in profiles:
+            if code and digest(p.user_id)[:8].upper() != code:
+                continue
             if (
                 specialization
                 and p.specialization != specialization

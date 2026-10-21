@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-21",
+  "change": "Stable candidate number remains visible after contact consent; exact bank search by number and reset filters; jury instructions corrected.",
+  "root_cause": "Contact consent replaced anonymous display_name with personal name, removing the only visible occurrence of the candidate number. No dedicated number search existed.",
+  "verification": {
+    "api": {
+      "command": "COOKIE_SECURE=false .venv/bin/python scripts/run_local.py .venv/bin/pytest -q tests",
+      "result": "126 passed",
+      "scope": "isolated fsp_test database; SMTP disabled"
+    },
+    "build": {
+      "command": "docker compose build api web",
+      "result": "passed; TypeScript and Vite build included"
+    },
+    "browser": {
+      "command": ".venv/bin/python scripts/run_local.py .venv/bin/python tests/browser_navigation.py",
+      "result": {
+        "checks": [
+          "auth modes, refresh, protected deep link resumes after login",
+          "all candidate sections back/forward, refresh, unknown and wrong-role routes",
+          "unsaved assessment: cancel browser/menu leave, accept, forward, recovery, reload",
+          "completed result deep link/back/reload, no attempt resubmission",
+          "scroll position restored after Back and page reload",
+          "all employer sections, saved search, bank filters, invite modal, no repeated POST",
+          "candidate code search after consent: visible alongside name, refresh, reset and Back",
+          "chat open/back/forward/reload, message sent exactly once",
+          "logout followed by Back does not reopen private workspace",
+          "email hash after mount, consumed token removed, reset without token explained",
+          "mobile menu/back/forward, no horizontal overflow"
+        ],
+        "page_errors": [],
+        "scope": "isolated database, synthetic seed, no external mail"
+      },
+      "note": "First run passed candidate search but timed out waiting for a chat message after Forward. Unchanged complete rerun passed all 11 groups; transient chat timeout not reproduced."
+    },
+    "public": {
+      "status": "passed",
+      "url": "https://85-137-26-131.sslip.io",
+      "candidate_code": "C7D0B82B",
+      "checks": [
+        "Public C7D0B82B found by protected deep link; number visible alongside disclosed name",
+        "Manual search accepts lowercase and number prefix; reload, reset and Back preserve correct results",
+        "Mobile search has no horizontal overflow",
+        "Demo candidate sees own number in My profile"
+      ],
+      "page_errors": [],
+      "scope": "demo authentication and read-only search; no invitations, messages or profile changes"
+    },
+    "documentation": "OpenAPI regenerated; STAGE_A PDF and DOCX regenerated and checked for updated number-search instructions."
+  },
+  "deployment": {
+    "command": "docker compose up -d --no-deps --wait api web",
+    "result": "both services healthy",
+    "database_migration_added": false
+  }
+}

@@ -520,3 +520,34 @@ def test_v2_fractional_score_rubric_and_foreign_question_rejection(app):
         stored.questions = bank.generate('python','Junior',stored.seed,version='1.2.0')
     r = other.post('/api/me/attempts/'+a['id']+'/submit',json={'answers':{'5':'0'}})
     assert r.status_code == 422 and 'нет в этой попытке' in r.json()['detail']
+
+
+def test_candidate_code_search_survives_contact_grant_and_respects_privacy(app):
+    c, cid = confirmed(app)
+    e = employer(app)
+    other = employer(app, "other-code@example.org")
+    code = digest(cid)[:8].upper()
+    assert c.get("/api/me/profile").json()["candidate_code"] == code
+    url = "/api/candidates"
+    before = e.get(url, params={"candidate_code": code})
+    assert [p["id"] for p in before.json()] == [cid]
+    assert_no_contact(before)
+    saved = e.post("/api/searches", json=need()).json()
+    invitation, _ = invite(e, cid)
+    assert c.patch("/api/invitations/" + invitation.json()["id"], json={"status": "accepted"}).status_code == 200
+    found = e.get(url, params={"candidate_code": " № " + code.lower() + " "}).json()
+    assert len(found) == 1
+    assert found[0]["candidate_code"] == code
+    assert found[0]["display_name"] == "Ирина Тестовая"
+    assert found[0]["contacts"] is not None
+    assert e.get("/api/searches/" + saved["id"]).json()["items"][0]["candidate_code"] == code
+    assert_no_contact(other.get(url, params={"candidate_code": code}))
+    assert e.get(url, params={"candidate_code": code, "specialization": "data"}).json() == []
+    assert e.get(url, params={"candidate_code": "not-a-number"}).status_code == 422
+    assert e.get(url, params={"candidate_code": "A" * 100}).status_code == 422
+    assert c.get(url, params={"candidate_code": code}).status_code == 403
+    profile(c, published=False)
+    assert e.get(url, params={"candidate_code": code}).json() == []
+    assert other.get(url, params={"candidate_code": code}).json() == []
+    profile(c, published=False, processing=False)
+    assert e.get(url, params={"candidate_code": code}).json() == []

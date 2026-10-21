@@ -86,6 +86,7 @@ export type Match = {
 };
 export type Profile = {
   id: string;
+  candidate_code: string;
   display_name: string;
   name?: string;
   phone?: string;
