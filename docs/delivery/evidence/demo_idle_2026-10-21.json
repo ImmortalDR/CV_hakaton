@@ -33,5 +33,12 @@
   },
   "jury_replay": "Two consecutive complete runs and 10 session/recovery groups passed on isolated PostgreSQL",
   "public_reset": "Not forced; first-hour grace period on activation",
-  "scope": "Only two shared demo accounts; ordinary independent histories preserved; transaction rollback and concurrent schedulers tested"
+  "scope": "Only two shared demo accounts; ordinary independent histories preserved; transaction rollback and concurrent schedulers tested",
+  "public_verification": {
+    "notice": true,
+    "baseline_attempts": 3,
+    "generation": 0,
+    "javascript_errors": [],
+    "forced_reset": false
+  }
 }
