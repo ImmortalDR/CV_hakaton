@@ -1,3 +1,4 @@
+from . import demo_idle
 import logging
 import re
 import hashlib
@@ -193,6 +194,14 @@ def create_app(database_url=None, demo=None, rate_limit=True):
         if expected_user and expected_user != u.id:
             raise HTTPException(409, "Аккаунт изменился в другой вкладке. Обновите кабинет.",
                                 headers={"X-FSP-Session-Changed": "true"})
+        if is_demo and demo_idle.shared(u):
+            state = demo_idle.workspace(db)
+            expected = request.headers.get("x-fsp-demo-version")
+            if state and expected is not None and expected != str(state.generation):
+                raise HTTPException(409, "Демоаккаунты восстановлены после часа без активности.",
+                                    headers={"X-FSP-Session-Changed": "true"})
+            if state and request.method not in ("GET", "HEAD", "OPTIONS"):
+                state.last_activity = now()
         return u
 
     AUTH = Annotated[User, Depends(authenticated)]
@@ -213,6 +222,12 @@ def create_app(database_url=None, demo=None, rate_limit=True):
         return db.scalar(stmt.with_for_update() if lock else stmt)
 
     def session_cookie(user, db, response):
+        if is_demo and demo_idle.shared(user):
+            state = demo_idle.workspace(db)
+            if state:
+                if now() - state.last_activity >= demo_idle.IDLE:
+                    demo_idle.restore(db, state, now())
+                state.last_activity = now()
         token = secrets.token_urlsafe(32)
         db.add(
             Session(
@@ -608,7 +623,19 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             fail(503, "Демонстрационные данные ещё не загружены")
         session_cookie(u, db, response)
         return {"id": u.id, "role": u.role, "email": u.email, "demo": True,
-                "demo_run_id": u.demo_run_id, "demo_candidate_code": demo_candidate_code(u, db)}
+                "demo_run_id": u.demo_run_id, "demo_candidate_code": demo_candidate_code(u, db),
+                "demo_reset_version": demo_version(u, db)}
+
+    def demo_version(user, db):
+        if is_demo and demo_idle.shared(user):
+            state = demo_idle.workspace(db)
+            return state.generation if state else None
+        return None
+
+    @app.post("/api/me/demo-activity", tags=["Вход"])
+    def demo_activity(user: AUTH):
+        # Authentication records only explicit user activity, never background GET polls.
+        return {"ok": True}
 
     @app.get(
         "/api/auth/me",
@@ -624,6 +651,7 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             "demo": user.demo,
             "demo_run_id": user.demo_run_id,
             "demo_candidate_code": demo_candidate_code(user, db),
+            "demo_reset_version": demo_version(user, db),
         }
 
     @app.post(

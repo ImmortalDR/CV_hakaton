@@ -264,3 +264,12 @@ class TaskAssignment(Base):
         CheckConstraint("score IS NULL OR score BETWEEN 0 AND 100"),
         CheckConstraint("status IN ('issued','viewed','submitted','reviewed','expired','cancelled')"),
     )
+
+
+class DemoWorkspace(Base):
+    __tablename__ = 'demo_workspace'
+    id: Mapped[str] = mapped_column(String(20), primary_key=True)
+    baseline: Mapped[dict] = mapped_column(JSON)
+    last_activity: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    last_reset: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    generation: Mapped[int] = mapped_column(Integer, default=0)

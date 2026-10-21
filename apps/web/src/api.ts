@@ -11,8 +11,10 @@ export class SessionChangedError extends ApiError {
 }
 let sessionUserId: string | null = null;
 let sessionRevision = 0;
-export function setApiUser(id: string | null) {
+let demoVersion: number | null = null;
+export function setApiUser(id: string | null, version: number | null = null) {
   sessionUserId = id;
+  demoVersion = version;
   sessionRevision++;
 }
 
@@ -38,6 +40,7 @@ export async function api<T>(
       headers: {
         "Content-Type": "application/json",
         "X-Requested-With": "fsp-web",
+        ...(authenticated && demoVersion !== null ? { "X-FSP-Demo-Version": String(demoVersion) } : {}),
         ...(authenticated && sessionUserId ? { "X-FSP-User": sessionUserId } : {}),
       },
       body: body === undefined ? undefined : JSON.stringify(body),
@@ -69,6 +72,7 @@ export type User = {
   demo: boolean;
   demo_run_id?: string | null;
   demo_candidate_code?: string | null;
+  demo_reset_version?: number | null;
 };
 export type AssessmentRubric = {
   question_count: number;

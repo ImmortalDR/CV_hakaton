@@ -129,9 +129,12 @@ def run_due(factory, at=None):
         ids = list(db.execute(select(TaskPlan.id, TaskPlan.candidate_id).where(TaskPlan.status == "active")).all())
     for pid, cid in ids:
         with factory.begin() as db:
+            from .demo_idle import lock
+            lock(db)
             profile = db.scalar(select(Profile).where(Profile.user_id == cid).with_for_update())
             plan = db.scalar(select(TaskPlan).where(TaskPlan.id == pid).with_for_update())
-            tick_plan(db, plan, profile, at)
+            if plan is not None:
+                tick_plan(db, plan, profile, at)
     return len(ids)
 
 

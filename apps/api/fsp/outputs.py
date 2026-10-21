@@ -28,6 +28,7 @@ class User(Output):
     demo: bool
     demo_run_id: str | None = None
     demo_candidate_code: str | None = None
+    demo_reset_version: int | None = None
 
 
 class DemoRun(Output):

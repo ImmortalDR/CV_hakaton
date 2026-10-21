@@ -6,6 +6,7 @@ import time
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from .tasks import run_due
+from .demo_idle import reset_due
 
 
 def main():
@@ -19,6 +20,8 @@ def main():
     try:
         while True:
             try:
+                if os.getenv("DEMO_MODE", "false").lower() == "true":
+                    reset_due(factory)
                 count = run_due(factory)
                 logging.warning('Task scheduler tick complete: %d plans', count)
             except Exception:

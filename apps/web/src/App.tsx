@@ -202,15 +202,31 @@ export function App() {
   // Login and browser restoration use the same account transition. Old profile,
   // forms and in-flight responses must never leak into another account's view.
   const acceptSession = useCallback((next: User | null) => {
-    if (sessionUser.current?.id === next?.id) return;
+    if (sessionUser.current?.id === next?.id && sessionUser.current?.demo_reset_version === next?.demo_reset_version) return;
+    const wasReset = sessionUser.current?.id === next?.id && sessionUser.current?.demo_reset_version != null;
+    if (wasReset) navigate("/overview", { replace: true, bypass: true });
     sessionGeneration.current++;
     sessionUser.current = next;
-    setApiUser(next?.id ?? null);
+    setApiUser(next?.id ?? null, next?.demo_reset_version ?? null);
     setProfile(null); setCompany(null); setTaskPending(0);
     setError(""); setNotice(""); setBusy(false);
     unsavedAssessment.current = false;
     setUser(next);
   }, []);
+  useEffect(() => {
+    if (user?.demo_reset_version == null) return;
+    let lastSent = 0;
+    const activity = (event?: Event) => {
+      if (document.visibilityState !== "visible" || (event && !event.isTrusted)) return;
+      if (Date.now() - lastSent < 15000) return;
+      lastSent = Date.now();
+      void api("/me/demo-activity", {}).catch(() => { lastSent = 0; });
+    };
+    activity();
+    const events = ["pointerdown", "keydown", "scroll", "focus", "visibilitychange"];
+    events.forEach(name => window.addEventListener(name, activity, { capture: true, passive: true }));
+    return () => events.forEach(name => window.removeEventListener(name, activity, true));
+  }, [user?.id, user?.demo_reset_version]);
   const syncSession = useCallback(() => {
     if (sessionRequest.current) return sessionRequest.current;
     const generation = sessionGeneration.current;
@@ -293,7 +309,7 @@ export function App() {
       }
     });
     return () => { disposed = true; };
-  }, [user?.id, version, act]);
+  }, [user?.id, user?.demo_reset_version, version, act]);
   const signedIn = (u: User) => {
     sessionGeneration.current++;
     acceptSession(u);
@@ -310,7 +326,7 @@ export function App() {
     const poll = () => { void api<TaskInbox>("/tasks").then(x => { if (!disposed) setTaskPending(x.pending); }).catch(() => {}); };
     poll(); const timer = window.setInterval(poll, 30000);
     return () => { disposed = true; window.clearInterval(timer); };
-  }, [user?.id, version]);
+  }, [user?.id, user?.demo_reset_version, version]);
   useEffect(() => { if (!loading) restoreInitialScroll(); }, [loading]);
   const props = { act, busy, catalog, refresh };
   if (loading) return <Loading />;
@@ -364,7 +380,7 @@ export function App() {
             </div>
           </section>
           <section className="auth-box">
-            {error && <ErrorState message={error} />}{" "}
+          {error && <ErrorState message={error} />}{" "}
             {notice && (
               <p role="status" className="notice">
                 {notice}
@@ -401,7 +417,7 @@ export function App() {
           ["company", "Моя компания", BriefcaseBusiness],
         ] as const);
   return (
-    <div className="shell" key={user.id}>
+    <div className="shell" key={`${user.id}:${user.demo_reset_version ?? "regular"}`}>
       <aside className="sidebar">
         <Brand />
         <div className="workspace-label">
@@ -484,6 +500,10 @@ export function App() {
               </span>
             </div>
           )}
+          {user.demo_reset_version != null && <div className="notice">
+            Общие демоаккаунты: после часа без действий в обоих аккаунтах пробная переписка,
+            приглашения и задания очищаются, профили и примеры тестов возвращаются в исходное состояние.
+          </div>}
           {error && <ErrorState message={error} />}{" "}
           {notice && (
             <div className="notice" role="status">
