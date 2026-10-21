@@ -52,6 +52,7 @@ import {
 } from "./ui";
 
 import { Auth } from "./Auth";
+import { useLocation, navigate, restoreInitialScroll, setNavigationGuard, allowedSection, authMode, authPaths, sections, screenUrl } from "./navigation";
 import { Tasks, type TaskInbox } from "./Tasks";
 import { countLabel, evidenceLabels } from "./formatting";
 
@@ -149,23 +150,34 @@ export function App() {
   const [catalog, setCatalog] = useState(emptyCatalog),
     [user, setUser] = useState<User | null>(null),
     [loading, setLoading] = useState(true);
-  const [tab, setTabState] = useState("overview"),
-    [profile, setProfile] = useState<Profile | null>(null),
+  const route = useLocation();
+  const tab = route.path.slice(1);
+  const [profile, setProfile] = useState<Profile | null>(null),
     [company, setCompany] = useState<Company | null>(null);
   const [error, setError] = useState(""),
     [notice, setNotice] = useState(""),
     [busy, setBusy] = useState(false),
     [version, setVersion] = useState(0);
   const [resetToken, setResetToken] = useState("");
-  const [verificationVersion, setVerificationVersion] = useState(0);
   const unsavedAssessment = useRef(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const confirmLeave = () => !unsavedAssessment.current || window.confirm("Есть ответы, не сохранённые на сервере. Покинуть тест? Черновик останется в этом браузере; срок теста продолжает идти.");
-  const setTab = (value: string) => {
-    if (tab === "assessment" && value !== tab && !confirmLeave()) return;
-    setTabState(value);
-    if (user) try { sessionStorage.setItem(`fsp-tab-${user.id}`, value); } catch { /* Optional UI context. */ }
-  };
+  const setTab = (value: string) => navigate("/" + value);
+  useEffect(() => setNavigationGuard((from, to) =>
+    from === to || !from.startsWith("/assessment?") || !new URL(from, location.origin).searchParams.has("attempt") || confirmLeave()), []);
+  useEffect(() => {
+    setMenuOpen(false); setError(""); setNotice("");
+  }, [route.href]);
+  useEffect(() => {
+    if (loading) return;
+    const isAuth = Object.values(authPaths).includes(route.path);
+    if (user) {
+      if (!allowedSection(route.path, user.role)) navigate("/overview", { replace: true, bypass: true });
+    } else if (!isAuth) {
+      const next = sections.includes(tab) ? route.href : "";
+      navigate(screenUrl("login", { next }), { replace: true, bypass: true });
+    }
+  }, [loading, user, route.href]);
   const act: Act = useCallback(async (fn) => {
     setError("");
     setBusy(true);
@@ -181,34 +193,30 @@ export function App() {
   }, []);
   const refresh = () => setVersion((v) => v + 1);
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [tab]);
-  useEffect(() => {
-    const resetting = location.hash.startsWith("#reset=");
+    let resetting = location.hash.startsWith("#reset=");
     Promise.all([
       api<Catalog>("/catalog").then(setCatalog),
       api<User>("/auth/me")
         .then(u => {
           if (resetting) return;
           setUser(u);
-          try { setTabState(sessionStorage.getItem(`fsp-tab-${u.id}`) ?? "overview"); } catch { /* Default overview. */ }
         })
         .catch(() => {}),
     ]).finally(() => setLoading(false));
     const confirmEmailFromHash = () => {
       if (location.hash.startsWith("#reset=")) {
+        resetting = true;
         setResetToken(location.hash.slice(7));
         setUser(null);
-        history.replaceState(null, "", location.pathname);
+        navigate("/reset-password", { replace: true, bypass: true });
         return;
       }
       if (!location.hash.startsWith("#verify=")) return;
       const token = location.hash.slice(8);
-      history.replaceState(null, "", location.pathname);
+      navigate("/login", { replace: true, bypass: true });
       void act(async () => {
         await api("/auth/verify", { token });
         setNotice("Почта подтверждена. Войдите в кабинет.");
-        setVerificationVersion(n => n + 1);
       });
     };
     confirmEmailFromHash();
@@ -218,16 +226,22 @@ export function App() {
   useEffect(() => {
     if (!user) return;
     const path = user.role === "candidate" ? "/me/profile" : "/me/company";
+    let disposed = false;
     void act(async () => {
-      if (user.role === "candidate") setProfile(await api<Profile>(path));
-      else setCompany(await api<Company>(path));
+      if (user.role === "candidate") {
+        const result = await api<Profile>(path); if (!disposed) setProfile(result);
+      } else {
+        const result = await api<Company>(path); if (!disposed) setCompany(result);
+      }
     });
+    return () => { disposed = true; };
   }, [user?.id, version, act]);
   const signedIn = (u: User) => {
     setProfile(null);
     setCompany(null);
     setUser(u);
-    setTab("overview");
+    const next = route.params.get("next") ?? "";
+    navigate(allowedSection(next, u.role) ? next : "/overview", { replace: true, bypass: true });
     setNotice("");
   };
   const [taskPending, setTaskPending] = useState(0);
@@ -239,6 +253,7 @@ export function App() {
     poll(); const timer = window.setInterval(poll, 30000);
     return () => { disposed = true; window.clearInterval(timer); };
   }, [user?.id, version]);
+  useEffect(() => { if (!loading) restoreInitialScroll(); }, [loading]);
   const props = { act, busy, catalog, refresh };
   if (loading) return <Loading />;
   if (!user)
@@ -297,7 +312,7 @@ export function App() {
                 {notice}
               </p>
             )}
-            <Auth {...props} verificationVersion={verificationVersion} onLogin={signedIn} resetToken={resetToken} onResetDone={() => setResetToken("")} />
+            <Auth mode={authMode(route.path)} onModeChange={mode => navigate(screenUrl(authPaths[mode].slice(1), { next: route.params.get("next") }))} {...props} onLogin={signedIn} resetToken={resetToken} onResetDone={() => setResetToken("")} />
           </section>
         </main>
         <footer>
@@ -328,7 +343,7 @@ export function App() {
           ["company", "Моя компания", BriefcaseBusiness],
         ] as const);
   return (
-    <div className="shell">
+    <div className="shell" key={user.id}>
       <aside className="sidebar">
         <Brand />
         <div className="workspace-label">
@@ -373,6 +388,7 @@ export function App() {
               setUser(null);
               setProfile(null);
               setCompany(null);
+              navigate("/login", { replace: true, bypass: true });
             })
           }
         >
@@ -942,6 +958,9 @@ function Assessments({
   visible,
   dirtyRef,
 }: Actions & { profile: Profile; visible: boolean; dirtyRef: { current: boolean } }) {
+  const route = useLocation();
+  const attemptId = route.params.get("attempt");
+  const [loaded, setLoaded] = useState(false);
   const [attempts, setAttempts] = useState<Attempt[]>([]),
     [current, setCurrent] = useState<Attempt | null>(null),
     [answers, setAnswers] = useState<Record<string, string>>({}),
@@ -1048,16 +1067,7 @@ function Assessments({
   const load = async () => {
     const [list] = await Promise.all([api<Attempt[]>("/me/attempts"), loadAvailability()]);
     setAttempts(list);
-    const active = list.find(x => x.status === "active" && new Date(x.expires_at) > new Date());
-    if (!current && active) restore(active);
-    setCurrent(
-      (a) =>
-        (a ? list.find((x) => x.id === a.id) : null) ??
-        list.find(
-          (x) => x.status === "active" && new Date(x.expires_at) > new Date(),
-        ) ??
-        null,
-    );
+    setLoaded(true);
   };
   useEffect(() => {
     void act(load);
@@ -1069,6 +1079,12 @@ function Assessments({
       window.removeEventListener("focus", refreshAccess);
     };
   }, [profile.specialization]);
+  useEffect(() => {
+    if (!visible || !loaded) return;
+    const selected = attempts.find(a => a.id === attemptId);
+    setCurrent(selected ?? null);
+    if (selected?.status === "active" && activeId.current !== selected.id) restore(selected);
+  }, [visible, attemptId, attempts, loaded]);
   return (
     <>
       <PageTitle
@@ -1084,6 +1100,10 @@ function Assessments({
           того же — через 24 часа.
         </span>
       </div>
+      {!attemptId && attempts.filter(a => a.status === "active" && new Date(a.expires_at) > new Date()).map(a =>
+        <p key={a.id} className="notice"><button onClick={() => navigate(screenUrl("assessment", { attempt: a.id }))}>Продолжить тест {a.grade}</button> Срок попытки: {date(a.expires_at)}</p>)}
+      {visible && loaded && attemptId && !attempts.some(a => a.id === attemptId) &&
+        <ErrorState message="Попытка не найдена или недоступна этому аккаунту. Выберите попытку из своей истории." />}
       {current ? (
         <div className="panel">
           <div className="section-heading">
@@ -1189,8 +1209,7 @@ function Assessments({
             <button
               className="secondary"
               onClick={() => {
-                setCurrent(null);
-                setAnswers({});
+                navigate("/assessment");
               }}
             >
               К выбору уровня
@@ -1240,8 +1259,9 @@ function Assessments({
                 void act(async () => {
                   try {
                     const started = await api<Attempt>("/me/attempts", { grade });
-                    setCurrent(started);
+                    setAttempts(list => [started, ...list.filter(a => a.id !== started.id)]);
                     restore(started);
+                    navigate(screenUrl("assessment", { attempt: started.id }));
                   } finally {
                     await load();
                   }
@@ -1278,8 +1298,7 @@ function Assessments({
               <button
                 className="text-button"
                 onClick={() => {
-                  setCurrent(a);
-                  setAnswers({});
+                  navigate(screenUrl("assessment", { attempt: a.id }));
                 }}
               >
                 Посмотреть
@@ -1362,6 +1381,12 @@ function CompanyForm({
 }
 
 function SearchPage({ catalog, act, busy, userId, openInvitations }: Actions & { userId: string; openInvitations: () => void }) {
+  const route = useLocation();
+  const bank = route.params.get("mode") !== "need";
+  const snapshotId = route.params.get("snapshot");
+  const inviteId = route.params.get("invite");
+  const dataParams = new URLSearchParams(route.params); dataParams.delete("invite");
+  const dataKey = dataParams.toString();
   const key = `fsp-search-${userId}`;
   const [invitations, setInvitations] = useState<Invitation[]>([]);
   const loadInvitations = async () => setInvitations(await api<Invitation[]>("/invitations"));
@@ -1382,10 +1407,8 @@ function SearchPage({ catalog, act, busy, userId, openInvitations }: Actions & {
     [history, setHistory] = useState<
       { id: string; title: string; created_at: string }[]
     >([]),
-    [snapshot, setSnapshot] = useState<Snapshot | null>(null),
-    [selected, setSelected] = useState<Profile | null>(null),
-    [bank, setBank] = useSessionState(key + "-bank", true);
-  const [snapshotId, setSnapshotId] = useSessionState<string | null>(key + "-snapshot", null);
+    [snapshot, setSnapshot] = useState<Snapshot | null>(null);
+  const selected = items.find(p => p.id === inviteId) ?? null;
   const [filter, setFilter] = useSessionState(key + "-filter", {
       specialization: "",
       grade: "",
@@ -1393,62 +1416,58 @@ function SearchPage({ catalog, act, busy, userId, openInvitations }: Actions & {
       fsp_only: false,
     }),
     [initialLoading, setInitialLoading] = useState(true);
-  const savedScroll = useRef(Number(sessionStorage.getItem(key + "-scroll") ?? 0));
-  useEffect(() => {
-    if (initialLoading) return;
-    window.scrollTo(0, savedScroll.current);
-    const save = () => { try { sessionStorage.setItem(key + "-scroll", String(window.scrollY)); } catch { /* Optional. */ } };
-    window.addEventListener("scroll", save);
-    return () => window.removeEventListener("scroll", save);
-  }, [initialLoading]);
+  const [reload, setReload] = useState(0);
   const resultsRef = useRef<HTMLElement>(null);
   const showResults = () => window.requestAnimationFrame(() => {
     if (window.innerWidth <= 850) resultsRef.current?.scrollIntoView({behavior: "smooth", block: "start"});
   });
+  const bankUrl = () => screenUrl("search", {
+    specialization: filter.specialization, grade: filter.grade, skill: filter.skill,
+    fsp_only: filter.fsp_only ? "true" : null,
+  });
   const switchMode = (toBank: boolean) => {
     if (bank === toBank) return;
-    void act(async () => {
-      if (toBank) {
-        const params = new URLSearchParams();
-        Object.entries(filter).forEach(([k, v]) => { if (v) params.set(k, String(v)); });
-        const rows = await api<Profile[]>("/candidates?" + params);
-        setItems(rows); setSnapshot(null);
-      } else if (snapshotId) {
-        const saved = await api<Snapshot>("/searches/" + snapshotId);
-        setSnapshot(saved); setItems(saved.items);
-      } else { setSnapshot(null); setItems([]); }
-      setBank(toBank);
-    });
+    navigate(toBank ? bankUrl() : screenUrl("search", { mode: "need" }));
   };
   const loadHistory = async () => setHistory(await api("/searches"));
   useEffect(() => {
+    let disposed = false;
+    setInitialLoading(true); setItems([]); setSnapshot(null);
     void act(async () => {
       try {
         if (!bank && snapshotId) {
-          const saved = await api<Snapshot>("/searches/" + snapshotId);
-          setSnapshot(saved);
-          setItems(saved.items);
-        } else {
+          const saved = await api<Snapshot>("/searches/" + encodeURIComponent(snapshotId));
+          if (disposed) return;
+          setSnapshot(saved); setItems(saved.items); setCriteria(saved.criteria);
+        } else if (bank) {
+          const applied = {
+            specialization: route.params.get("specialization") ?? "",
+            grade: route.params.get("grade") ?? "",
+            skill: route.params.get("skill") ?? "",
+            fsp_only: route.params.get("fsp_only") === "true",
+          };
           const params = new URLSearchParams();
-          Object.entries(filter).forEach(([k, v]) => { if (v) params.set(k, String(v)); });
-          setItems(await api("/candidates?" + params));
+          Object.entries(applied).forEach(([k, v]) => { if (v) params.set(k, String(v)); });
+          setFilter(applied);
+          const rows = await api<Profile[]>("/candidates?" + params);
+          if (disposed) return;
+          setItems(rows);
         }
-        await loadHistory();
-        await loadInvitations();
-      } finally {
-        setInitialLoading(false);
-      }
+        const [savedHistory, invites] = await Promise.all([
+          api<{id: string; title: string; created_at: string}[]>("/searches"), api<Invitation[]>("/invitations"),
+        ]);
+        if (!disposed) { setHistory(savedHistory); setInvitations(invites); }
+      } catch (error) { if (!disposed) throw error; }
+      finally { if (!disposed) setInitialLoading(false); }
     });
-  }, []);
+    return () => { disposed = true; };
+  }, [dataKey, reload]);
   const search = (e: FormEvent) => {
     e.preventDefault();
     void act(async () => {
       const s = await api<Snapshot>("/searches", { ...criteria, confirmed: true });
-      setSnapshot(s);
-      setSnapshotId(s.id);
-      window.scrollTo(0, 0);
-      setItems(s.items);
-      setBank(false);
+      if (location.pathname + location.search !== route.href) return;
+      navigate(screenUrl("search", { mode: "need", snapshot: s.id }));
       showResults();
       await loadHistory();
     });
@@ -1480,15 +1499,9 @@ function SearchPage({ catalog, act, busy, userId, openInvitations }: Actions & {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                void act(async () => {
-                  const params = new URLSearchParams();
-                  Object.entries(filter).forEach(([k, v]) => {
-                    if (v) params.set(k, String(v));
-                  });
-                  setItems(await api("/candidates?" + params.toString()));
-                  setSnapshot(null);
-                  showResults();
-                });
+                if (route.href === bankUrl()) setReload(n => n + 1);
+                else navigate(bankUrl());
+                showResults();
               }}
             >
               <Field label="Специализация">
@@ -1683,16 +1696,7 @@ function SearchPage({ catalog, act, busy, userId, openInvitations }: Actions & {
               {history.map((s) => (
                 <button
                   key={s.id}
-                  onClick={() =>
-                    void act(async () => {
-                      const r = await api<Snapshot>("/searches/" + s.id);
-                      setSnapshot(r);
-                      setSnapshotId(r.id);
-                      setItems(r.items);
-                      setCriteria(r.criteria);
-                      setBank(false);
-                    })
-                  }
+                  onClick={() => navigate(screenUrl("search", { mode: "need", snapshot: s.id }))}
                 >
                   {s.title}
                   <small>{date(s.created_at)}</small>
@@ -1742,7 +1746,7 @@ function SearchPage({ catalog, act, busy, userId, openInvitations }: Actions & {
                 <CandidateCard
                   profile={p}
                   catalog={catalog}
-                  onInvite={() => setSelected(p)}
+                  onInvite={() => navigate(screenUrl("search", { ...Object.fromEntries(route.params), invite: p.id }))}
                       invitation={latestInvitation(p.id)}
                       openInvitations={openInvitations}
                 />
@@ -1756,7 +1760,7 @@ function SearchPage({ catalog, act, busy, userId, openInvitations }: Actions & {
           profile={selected}
           act={act}
           busy={busy}
-          close={() => { setSelected(null); void act(loadInvitations); }}
+          close={() => { navigate(screenUrl("search", Object.fromEntries(dataParams))); void act(loadInvitations); }}
         />
       )}
     </>
@@ -1904,9 +1908,10 @@ function InviteModal({
   const [company, setCompany] = useState<Company | null>(null);
   const [companyError, setCompanyError] = useState("");
   const dirty = description !== "Приглашаем обсудить работу в нашей команде. Задачи — развитие и поддержка продукта." || min !== 100000 || max !== 160000;
-  const dismiss = () => {
-    if (!busy && (sent || !dirty || window.confirm("Закрыть приглашение? Изменения предложения и зарплаты не будут сохранены."))) close();
-  };
+  const canLeave = useRef<() => boolean>(() => true);
+  canLeave.current = () => !busy && (sent || !dirty || window.confirm("Закрыть приглашение? Изменения предложения и зарплаты не будут сохранены."));
+  useEffect(() => setNavigationGuard((from, to) => from === to || canLeave.current()), []);
+  const dismiss = () => { if (!busy) close(); };
   const dismissRef = useRef(dismiss);
   dismissRef.current = dismiss;
   useEffect(() => {
@@ -2065,8 +2070,10 @@ function Invitations({
   busy,
   refresh,
 }: Actions & { user: User; profile: Profile | null; version: number }) {
+  const route = useLocation();
+  const chat = route.params.get("chat");
+  const setChat = (id: string | null) => navigate(screenUrl("invitations", { chat: id }));
   const [items, setItems] = useState<Invitation[]>([]),
-    [chat, setChat] = useState<string | null>(null),
     [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(true);
@@ -2103,6 +2110,8 @@ function Invitations({
             : "Отслеживайте ответы кандидатов. После принятия откроются контакты и внутренний диалог."
         }
       />
+      {!loading && chat && !items.some(i => i.id === chat && i.chat_available) &&
+        <ErrorState message="Диалог не найден или доступ закрыт. Проверьте статус приглашения." />}
       {loading ? (
         <EmptyState
           title="Загружаем приглашения"
@@ -2207,7 +2216,7 @@ function Invitations({
                   className="secondary"
                   onClick={() => setChat(chat === i.id ? null : i.id)}
                 >
-                  Открыть диалог
+                  {chat === i.id ? "Свернуть диалог" : "Открыть диалог"}
                   <Mail size={16} />
                 </button>
               )}

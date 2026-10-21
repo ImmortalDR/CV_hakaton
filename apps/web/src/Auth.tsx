@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Eye, EyeOff } from "./icons";
 import { api, type Catalog, type User } from "./api";
-type Mode = "login" | "register" | "forgot" | "reset" | "verify";
-type Props = { verificationVersion: number; catalog: Catalog; onLogin: (user: User) => void; resetToken: string; onResetDone: () => void; };
+import { type AuthMode as Mode } from "./navigation";
+type Props = { mode: Mode; onModeChange: (mode: Mode) => void; catalog: Catalog; onLogin: (user: User) => void; resetToken: string; onResetDone: () => void; };
 function PasswordField({label,value,onChange,error,id,fresh}: {label:string;value:string;onChange:(v:string)=>void;error?:string;id:string;fresh:boolean}) {
   const [visible,setVisible]=useState(false);
   return <div className="field"><label htmlFor={id}>{label}</label><div className="password-control">
@@ -10,15 +10,15 @@ function PasswordField({label,value,onChange,error,id,fresh}: {label:string;valu
     <button type="button" className="password-toggle" onClick={()=>setVisible(!visible)} aria-label={`${visible?"Скрыть":"Показать"} ${label.toLowerCase()}`} aria-pressed={visible}>{visible?<EyeOff size={20}/>:<Eye size={20}/>}</button>
   </div>{error&&<small className="field-error" id={`${id}-error`}>{error}</small>}</div>;
 }
-export function Auth({verificationVersion,catalog,onLogin,resetToken,onResetDone}:Props) {
-  const [mode,setMode]=useState<Mode>(resetToken?"reset":"login"),[email,setEmail]=useState(""),[password,setPassword]=useState(""),[repeat,setRepeat]=useState(""),[role,setRole]=useState("candidate"),[consent,setConsent]=useState(false),[busy,setBusy]=useState(false),[error,setError]=useState(""),[fields,setFields]=useState<Record<string,string>>({}),[message,setMessage]=useState(""),[letter,setLetter]=useState(""),[cooldown,setCooldown]=useState(0);
+export function Auth({mode,onModeChange:setMode,catalog,onLogin,resetToken,onResetDone}:Props) {
+  const [email,setEmail]=useState(""),[password,setPassword]=useState(""),[repeat,setRepeat]=useState(""),[role,setRole]=useState("candidate"),[consent,setConsent]=useState(false),[busy,setBusy]=useState(false),[error,setError]=useState(""),[fields,setFields]=useState<Record<string,string>>({}),[message,setMessage]=useState(""),[letter,setLetter]=useState(""),[cooldown,setCooldown]=useState(0);
   const form=useRef<HTMLFormElement>(null),pending=useRef(false);
-  useEffect(()=>{if(resetToken){setMode("reset");setMessage("");setError("");}},[resetToken]);
+  useEffect(()=>{setPassword("");setRepeat("");setFields({});setError("");},[mode]);
   useEffect(()=>{if(!cooldown)return;const timer=window.setTimeout(()=>setCooldown(n=>Math.max(0,n-1)),1000);return()=>window.clearTimeout(timer);},[cooldown]);
   const changeMode=(next:Mode)=>{setMode(next);setError("");setFields({});setMessage("");setPassword("");setRepeat("");setLetter("");};
   const run=async(fn:()=>Promise<void>)=>{if(pending.current)return;pending.current=true;setBusy(true);setError("");try{await fn();}catch(e){setError(e instanceof TypeError?"Нет связи с сервером. Проверьте интернет и повторите. Введённые поля сохранены на этой странице.":e instanceof Error?e.message:"Не удалось выполнить действие. Повторите попытку.");}finally{pending.current=false;setBusy(false);}};
   const submit=(e:FormEvent)=>{
-    e.preventDefault();const errors:Record<string,string>={};const fresh=mode==="register"||mode==="reset";
+    e.preventDefault();if(mode==="reset"&&!resetToken){setError("Откройте ссылку из письма или запросите новую через «Забыли пароль?».");return;}const errors:Record<string,string>={};const fresh=mode==="register"||mode==="reset";
     if(mode!=="reset"&&(!email.trim()||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())))errors.email="Введите полный адрес почты, например name@example.org.";
     if(["register","reset","login"].includes(mode)&&!password)errors.password="Введите пароль.";
     if(fresh&&password.trim().length<10)errors.password="Не менее 10 символов без крайних пробелов.";
@@ -36,12 +36,12 @@ export function Auth({verificationVersion,catalog,onLogin,resetToken,onResetDone
       }else{const r=await api<{message:string}>(mode==="forgot"?"/auth/forgot-password":"/auth/resend-verification",{email:email.trim()});setMessage(r.message);setCooldown(60);}
     });
   };
-  useEffect(()=>{if(verificationVersion){changeMode("login");}},[verificationVersion]);
   const fresh=mode==="register"||mode==="reset";
   const titles={login:"Добро пожаловать",register:"Создать аккаунт",forgot:"Восстановить доступ",reset:"Задайте новый пароль",verify:"Подтвердите почту"};
   return <><div className="eyebrow">Начните с одного шага</div><h2>{titles[mode]}</h2>
     <div className="segmented"><button disabled={busy} className={mode==="login"?"selected":""} onClick={()=>changeMode("login")}>Вход</button><button disabled={busy} className={mode==="register"?"selected":""} onClick={()=>changeMode("register")}>Регистрация</button></div>
     {mode==="register"&&<p>Создайте аккаунт → подтвердите почту → войдите. Профиль появится в подборе только после вашей публикации.</p>}
+    {mode==="reset"&&!resetToken&&<p role="alert">Ссылка для смены пароля отсутствует. Запросите новую через «Забыли пароль?».</p>}
     {mode==="forgot"&&<p>Укажите почту аккаунта. Мы отправим ссылку для смены пароля; она действует 30 минут.</p>}
     {mode==="verify"&&<p>Проверьте входящие и папку «Спам». Ссылка подтверждения действует один час. Если в адресе опечатка, исправьте его и вернитесь к регистрации.</p>}
     {message&&<p className="notice" role="status">{message}</p>}{error&&<p className="auth-error" role="alert">{error}</p>}

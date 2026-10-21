@@ -9,7 +9,7 @@ from playwright.sync_api import sync_playwright, expect
 import uvicorn
 from fsp import main
 
-out=Path('docs/delivery/evidence/human_followup_2026-10-21');out.mkdir(parents=True,exist_ok=True)
+out=Path(os.environ.get('FSP_AUTH_EVIDENCE', 'docs/delivery/evidence/human_followup_2026-10-21'));out.mkdir(parents=True,exist_ok=True)
 name='fsp_authui_'+secrets.token_hex(4)
 base=os.environ['DATABASE_URL'].rsplit('/',1)[0]
 admin=create_engine(base+'/postgres',isolation_level='AUTOCOMMIT')

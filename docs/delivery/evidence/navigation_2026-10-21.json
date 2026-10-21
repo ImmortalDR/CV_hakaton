@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-21",
+  "status": "passed",
+  "frontend_build": "tsc -b && vite build: passed",
+  "navigation": {
+    "checks": [
+      "auth modes, refresh, protected deep link resumes after login",
+      "all candidate sections back/forward, refresh, unknown and wrong-role routes",
+      "unsaved assessment: cancel browser/menu leave, accept, forward, recovery, reload",
+      "completed result deep link/back/reload, no attempt resubmission",
+      "scroll position restored after Back and page reload",
+      "all employer sections, saved search, bank filters, invite modal, no repeated POST",
+      "chat open/back/forward/reload, message sent exactly once",
+      "logout followed by Back does not reopen private workspace",
+      "email hash after mount, consumed token removed, reset without token explained",
+      "mobile menu/back/forward, no horizontal overflow"
+    ],
+    "page_errors": [],
+    "scope": "isolated database, synthetic seed, no external mail"
+  },
+  "auth_regression": {
+    "checks": [
+      "required_fields_and_mismatch_block_requests",
+      "password_visibility_toggle",
+      "smtp_failure_visible_fields_preserved",
+      "registration_email_link_verify_login",
+      "unconfirmed_grade_not_claimed",
+      "mobile_recovery_email_reset_login",
+      "old_session_revoked",
+      "mobile_no_horizontal_overflow"
+    ],
+    "page_errors": [],
+    "mail": "in-memory SMTP, no real delivery"
+  },
+  "public_smoke": {
+    "status": "passed",
+    "base_url": "https://85-137-26-131.sslip.io",
+    "checks": [
+      "candidate: protected deep link, sections, back/forward, reload, logout",
+      "employer: protected deep link, sections, back/forward, reload, logout"
+    ],
+    "page_errors": [],
+    "scope": "demo login and read-only navigation; no business actions or mail"
+  }
+}
