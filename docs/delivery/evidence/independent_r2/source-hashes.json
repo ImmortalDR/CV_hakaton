@@ -1,0 +1,17 @@
+{
+  "scripts/smoke_stage_a.py": "a259927278c66cb79c0591e4176e0c3aff4ff87690874224e8e13162b6b44910",
+  "scripts/probe_stage_a_q1.py": "9d3f77a2dd8d196d802576f168a5a57576822c88f3f9aa0f300013efceff7453",
+  "tests/conftest.py": "58399fe7ec05ea7ae9ea5e9ecbe977052af8827a4a7840e1d7db63c66a441a91",
+  "tests/test_stage_a.py": "0992778a8ccdab84f43660923934ecee6297ce700f9ffb81201f65b47143fb19",
+  "tests/test_employer_tasks.py": "89956bfbfe713fee39a21406f0834d5d71fa109e3e5dd91e0925c5f9cf1776a3",
+  "tests/test_matching.py": "052292efaa2d5c86035362c54104e2cb8d21cd5a0d0523dcc447107e2f9ff9ab",
+  "tests/test_bank.py": "411a996e390d70c7233d0a191dca8e68cef63bdaf61e47f66c529c1af810e1d7",
+  "tests/test_api.py": "76e1c36b3f99ee1c8ccd0c98ba18318e9adbf23ae9400411a6a6d6249164a152",
+  "evaluation/stage_a_matching.py": "fdff5ee7ff84ffbdb712a317ff399df3771880334db56e943a47f0f36662e5b8",
+  "evaluation/matching_fixtures.json": "0f4bb52e97a78d1326e6da2031303315dc6105461f59860fc3581402b3e50850",
+  "evaluation/bank_v2_audit.py": "b71c536a311c1165c8518c6cd1b47fe09250c0ec6ee80c733a3e41bd0c9c4061",
+  "docs/delivery/CHANGELOG_STAGE_A.md": "29a004adbc52bdd60c14cfbe477203c572e30f0ece967b9441bc68ee7667adb2",
+  "docs/delivery/FOR_JURY.md": "e16b8fa66caece077c32cd1edb8cbd6a0f63e6182a0141ddafe306b8e440698a",
+  "docs/delivery/VALIDATION.md": "5a2ef420b1ddfc31491034ff4a1afaabbf9a774b6cc31ff18e52d9215d724d94",
+  "docs/delivery/SUBMISSION_LINKS.md": "08cf21d1a30a6cfc0130b3d0ec5cc646a5ace5d075fa4bd0a83b2ae6439ca188"
+}

@@ -1,0 +1,424 @@
+{
+  "kind": "synthetic_author_labels_not_expert_validation",
+  "fixture_sha256": "0f4bb52e97a78d1326e6da2031303315dc6105461f59860fc3581402b3e50850",
+  "selection": "max dev P@5; tie: minimum L1 distance to old weights, then tuple order",
+  "grid": [
+    {
+      "weights": [
+        25,
+        5,
+        60,
+        10
+      ],
+      "dev_p_at_5": 1.0
+    },
+    {
+      "weights": [
+        25,
+        10,
+        55,
+        10
+      ],
+      "dev_p_at_5": 1.0
+    },
+    {
+      "weights": [
+        25,
+        10,
+        60,
+        5
+      ],
+      "dev_p_at_5": 1.0
+    },
+    {
+      "weights": [
+        25,
+        15,
+        50,
+        10
+      ],
+      "dev_p_at_5": 1.0
+    },
+    {
+      "weights": [
+        25,
+        15,
+        55,
+        5
+      ],
+      "dev_p_at_5": 1.0
+    },
+    {
+      "weights": [
+        30,
+        5,
+        55,
+        10
+      ],
+      "dev_p_at_5": 1.0
+    },
+    {
+      "weights": [
+        30,
+        5,
+        60,
+        5
+      ],
+      "dev_p_at_5": 1.0
+    },
+    {
+      "weights": [
+        30,
+        10,
+        50,
+        10
+      ],
+      "dev_p_at_5": 1.0
+    },
+    {
+      "weights": [
+        30,
+        10,
+        55,
+        5
+      ],
+      "dev_p_at_5": 1.0
+    },
+    {
+      "weights": [
+        30,
+        15,
+        45,
+        10
+      ],
+      "dev_p_at_5": 1.0
+    },
+    {
+      "weights": [
+        30,
+        15,
+        50,
+        5
+      ],
+      "dev_p_at_5": 1.0
+    },
+    {
+      "weights": [
+        35,
+        5,
+        50,
+        10
+      ],
+      "dev_p_at_5": 1.0
+    },
+    {
+      "weights": [
+        35,
+        5,
+        55,
+        5
+      ],
+      "dev_p_at_5": 1.0
+    },
+    {
+      "weights": [
+        35,
+        10,
+        45,
+        10
+      ],
+      "dev_p_at_5": 1.0
+    },
+    {
+      "weights": [
+        35,
+        10,
+        50,
+        5
+      ],
+      "dev_p_at_5": 1.0
+    },
+    {
+      "weights": [
+        40,
+        5,
+        45,
+        10
+      ],
+      "dev_p_at_5": 1.0
+    },
+    {
+      "weights": [
+        40,
+        5,
+        50,
+        5
+      ],
+      "dev_p_at_5": 1.0
+    }
+  ],
+  "old_weights": [
+    60,
+    15,
+    20,
+    5
+  ],
+  "selected_weights": [
+    30,
+    15,
+    45,
+    10
+  ],
+  "before": {
+    "dev": {
+      "candidates": 16,
+      "queries": 2,
+      "p_at_5": 1.0,
+      "rows": [
+        {
+          "query": "dev-0-query",
+          "top5": [
+            "dev-0-g",
+            "dev-0-a",
+            "dev-0-h",
+            "dev-0-b",
+            "dev-0-c"
+          ],
+          "p_at_5": 1.0
+        },
+        {
+          "query": "dev-1-query",
+          "top5": [
+            "dev-1-g",
+            "dev-1-a",
+            "dev-1-h",
+            "dev-1-b",
+            "dev-1-c"
+          ],
+          "p_at_5": 1.0
+        }
+      ]
+    },
+    "test": {
+      "candidates": 48,
+      "queries": 8,
+      "p_at_5": 0.8,
+      "rows": [
+        {
+          "query": "test-0-query",
+          "top5": [
+            "test-0-g",
+            "test-0-a",
+            "test-0-h",
+            "test-0-b",
+            "test-0-c"
+          ],
+          "p_at_5": 1.0
+        },
+        {
+          "query": "test-1-query",
+          "top5": [
+            "test-1-g",
+            "test-1-a",
+            "test-1-h",
+            "test-1-b",
+            "test-1-c"
+          ],
+          "p_at_5": 1.0
+        },
+        {
+          "query": "test-2-query",
+          "top5": [
+            "test-2-g",
+            "test-2-a",
+            "test-2-h",
+            "test-2-b",
+            "test-2-c"
+          ],
+          "p_at_5": 1.0
+        },
+        {
+          "query": "test-3-query",
+          "top5": [
+            "test-3-g",
+            "test-3-a",
+            "test-3-h",
+            "test-3-b",
+            "test-3-c"
+          ],
+          "p_at_5": 1.0
+        },
+        {
+          "query": "test-4-query",
+          "top5": [
+            "test-4-g",
+            "test-4-a",
+            "test-4-h",
+            "test-4-b",
+            "test-4-c"
+          ],
+          "p_at_5": 1.0
+        },
+        {
+          "query": "test-5-query",
+          "top5": [
+            "test-5-g",
+            "test-5-a",
+            "test-5-h",
+            "test-5-b",
+            "test-5-c"
+          ],
+          "p_at_5": 1.0
+        },
+        {
+          "query": "test-uncovered-react",
+          "top5": [
+            "test-0-g",
+            "test-0-a",
+            "test-0-d",
+            "test-0-h",
+            "test-0-b"
+          ],
+          "p_at_5": 0.0
+        },
+        {
+          "query": "test-both-required",
+          "top5": [
+            "test-0-g",
+            "test-0-a",
+            "test-0-d",
+            "test-0-h",
+            "test-0-b"
+          ],
+          "p_at_5": 0.4
+        }
+      ]
+    }
+  },
+  "after": {
+    "dev": {
+      "candidates": 16,
+      "queries": 2,
+      "p_at_5": 1.0,
+      "rows": [
+        {
+          "query": "dev-0-query",
+          "top5": [
+            "dev-0-g",
+            "dev-0-a",
+            "dev-0-h",
+            "dev-0-b",
+            "dev-0-c"
+          ],
+          "p_at_5": 1.0
+        },
+        {
+          "query": "dev-1-query",
+          "top5": [
+            "dev-1-g",
+            "dev-1-a",
+            "dev-1-h",
+            "dev-1-b",
+            "dev-1-c"
+          ],
+          "p_at_5": 1.0
+        }
+      ]
+    },
+    "test": {
+      "candidates": 48,
+      "queries": 8,
+      "p_at_5": 0.8,
+      "rows": [
+        {
+          "query": "test-0-query",
+          "top5": [
+            "test-0-g",
+            "test-0-a",
+            "test-0-h",
+            "test-0-b",
+            "test-0-c"
+          ],
+          "p_at_5": 1.0
+        },
+        {
+          "query": "test-1-query",
+          "top5": [
+            "test-1-g",
+            "test-1-a",
+            "test-1-h",
+            "test-1-b",
+            "test-1-c"
+          ],
+          "p_at_5": 1.0
+        },
+        {
+          "query": "test-2-query",
+          "top5": [
+            "test-2-g",
+            "test-2-a",
+            "test-2-h",
+            "test-2-b",
+            "test-2-c"
+          ],
+          "p_at_5": 1.0
+        },
+        {
+          "query": "test-3-query",
+          "top5": [
+            "test-3-g",
+            "test-3-a",
+            "test-3-h",
+            "test-3-b",
+            "test-3-c"
+          ],
+          "p_at_5": 1.0
+        },
+        {
+          "query": "test-4-query",
+          "top5": [
+            "test-4-g",
+            "test-4-a",
+            "test-4-h",
+            "test-4-b",
+            "test-4-c"
+          ],
+          "p_at_5": 1.0
+        },
+        {
+          "query": "test-5-query",
+          "top5": [
+            "test-5-g",
+            "test-5-a",
+            "test-5-h",
+            "test-5-b",
+            "test-5-c"
+          ],
+          "p_at_5": 1.0
+        },
+        {
+          "query": "test-uncovered-react",
+          "top5": [
+            "test-0-g",
+            "test-0-a",
+            "test-0-d",
+            "test-0-h",
+            "test-0-b"
+          ],
+          "p_at_5": 0.0
+        },
+        {
+          "query": "test-both-required",
+          "top5": [
+            "test-0-g",
+            "test-0-a",
+            "test-0-d",
+            "test-0-h",
+            "test-0-b"
+          ],
+          "p_at_5": 0.4
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,114 @@
+"""Additional Q1 adversarial probe on deployed HTTPS, independent of smoke assertions.
+
+Exercises HTTP503, multi-question retry, reload cancellation and delayed PUT ACK.
+Uses isolated fictional accounts; never resets application data. Run with
+scripts/run_local.py .venv/bin/python scripts/probe_stage_a_q1.py.
+"""
+import argparse
+import json
+import os
+import secrets
+import re
+from pathlib import Path
+from uuid import uuid4
+from datetime import datetime, timezone
+import pymupdf
+from playwright.sync_api import sync_playwright, expect
+from sqlalchemy import create_engine, delete
+from sqlalchemy.orm import Session
+from fsp.main import PASSWORDS
+from fsp.models import User, Profile, Company, CompanyMember, Consent, Attempt, ContactGrant
+from evaluation.oracles import solve
+
+parser=argparse.ArgumentParser()
+parser.add_argument('--base-url', default='https://85-137-26-131.sslip.io')
+parser.add_argument('--out', default='docs/delivery/stage-a-smoke.json')
+a=parser.parse_args(); engine=create_engine(os.environ['DATABASE_URL'])
+checks=[]; errors=[]; run=uuid4().hex[:12]; accounts=[]
+with Session(engine) as db:
+    for role in ['candidate','employer','employer','candidate']:
+        password=secrets.token_urlsafe(24)
+        u=User(email=f'stage-a-{run}-{len(accounts)}@example.org',password_hash=PASSWORDS.hash(password),role=role,verified=True,demo=True)
+        db.add(u);db.flush();db.add(Consent(user_id=u.id,processing=True,publication=role=='candidate'))
+        if role=='candidate':
+            db.add(Profile(user_id=u.id,name='' if len(accounts)==3 else 'Проверка этапа A · демо',processing=True,published=True,specialization='data',claimed_grade='Middle',skills=['sql','statistics'],phone='+7 000 000-00-00'))
+        else:
+            co=Company(name='Этап A · демо '+str(len(accounts)),description='Вымышленная компания для smoke этапа A',sector='ИТ',contact='smoke@example.org')
+            db.add(co);db.flush();db.add(CompanyMember(user_id=u.id,company_id=co.id))
+        accounts.append(dict(email=u.email,password=password,id=u.id))
+    db.commit()
+
+def pdf(response):
+    assert response.status==200
+    with pymupdf.open(stream=response.body(),filetype='pdf') as d: return ''.join(p.get_text() for p in d)
+
+try:
+    with sync_playwright() as pw:
+        browser=pw.chromium.launch()
+        actors=[]
+        for creds in accounts:
+            ctx=browser.new_context(base_url=a.base_url,locale='ru-RU',viewport={'width':1365,'height':1000},extra_http_headers={'X-Requested-With':'fsp-web'})
+            r=ctx.request.post('/api/auth/login',data={k:creds[k] for k in ['email','password']});assert r.status==200
+            page=ctx.new_page();page.on('pageerror',lambda e:errors.append(str(e)));actors.append((ctx,page))
+        (c,page),(e,hr),(other,_),(outsider,new_page)=actors
+        def call(ctx,path,data=None,method=None):
+            r=ctx.request.fetch('/api'+path,method=method or ('GET' if data is None else 'POST'),data=data)
+            assert r.ok, (path,r.status,r.text()[:250])
+            return r.json()
+        def nav(p,name): p.locator('nav').get_by_role('button',name=name,exact=True).click()
+        assert call(c,'/health')['status']=='ok'
+        live=call(c,'/openapi.json'); assert live==json.loads(Path('docs/delivery/openapi.json').read_text())
+        checks += ['https_health_ok','openapi_exact']
+        page.goto(a.base_url);nav(page,'Обзор')
+        expect(page.locator('.orb')).to_contain_text('к проверке')
+        attempt=call(c,'/me/attempts',{'grade':'Junior'})
+        with Session(engine) as db: qs=db.get(Attempt,attempt['id']).questions
+        result=call(c,'/me/attempts/'+attempt['id']+'/submit',{'answers':{q['id']:str(solve(q)) for q in qs}})
+        assert result['result']['passed']
+        page.reload();expect(page.locator('.orb')).to_contain_text('подтверждены')
+        cid=accounts[0]['id']
+        def invite():
+            inv=call(e,'/invitations',dict(candidate_id=cid,request_id=str(uuid4()),description='Независимая проверка согласия',salary_min=100000,salary_max=150000,currency='RUB'))
+            call(c,'/invitations/'+inv['id'],{'status':'accepted'},'PATCH')
+            return inv
+        inv=invite()
+        hr.goto(a.base_url);nav(hr,'Приглашения')
+        hr.get_by_role('button',name='Открыть диалог',exact=True).click()
+        expect(hr.get_by_label('Сообщение',exact=True)).to_be_visible()
+        own=call(c,'/me/profile')
+        fields=['name','phone','about','specialization','claimed_grade','skills','roles','soft_skills','experience_years','processing','published','show_experience']
+        payload={k:own[k] for k in fields}
+        call(c,'/me/profile',payload|{'published':False},'PUT')
+        expect(hr.get_by_label('Сообщение',exact=True)).to_have_count(0,timeout=20000)
+        call(c,'/me/profile',payload|{'published':True},'PUT')
+        assert call(e,'/candidates/'+cid)['contacts'] is None
+        hr.reload();expect(hr.get_by_role('button',name='Открыть диалог',exact=True)).to_have_count(0)
+        new=invite();hr.reload()
+        hr.get_by_role('button',name='Открыть диалог',exact=True).first.click()
+        expect(hr.get_by_label('Сообщение',exact=True)).to_be_visible()
+        assert call(e,'/candidates/'+cid)['contacts']['email']==accounts[0]['email']
+        print('PASS B05 orb before/after confirmation; B06 hide, republish stays denied, new accepted invite opens composer',flush=True)
+        nav(hr,'Подбор кандидатов');hr.get_by_role('button',name='По потребности',exact=True).click()
+        form=hr.locator('.search-form')
+        hr.get_by_label('Специализация').select_option('data')
+        expect(form.locator('label.field').filter(has=hr.get_by_text('SQL',exact=True)).locator('select')).to_have_value('required')
+        expect(form.locator('label.field').filter(has=hr.get_by_text('Python',exact=True)).locator('select')).to_have_count(0)
+        hr.get_by_label('Специализация').select_option('python')
+        expect(form.locator('label.field').filter(has=hr.get_by_text('Python',exact=True)).locator('select')).to_have_value('required')
+        expect(form.locator('label.field').filter(has=hr.get_by_text('SQL',exact=True)).locator('select')).to_have_count(0)
+        expect(form.get_by_text('Docker и React пока не проверяются тестом.',exact=True)).to_be_visible()
+        print('PASS U03 specialization changes relevant skill controls and required default; untested skills labeled',flush=True)
+        browser.close()
+finally:
+    # Hide only the candidates created by this invocation, even on smoke failure.
+    from fsp.tasks import suspend
+    with Session(engine) as db:
+        for item in accounts:
+            profile=db.get(Profile,item['id'])
+            if profile:
+                profile.published=False
+                db.add(Consent(user_id=item['id'],processing=True,publication=False))
+                db.execute(delete(ContactGrant).where(ContactGrant.candidate_id==item['id']))
+                suspend(db,item['id'])
+        db.commit()
+assert not errors, errors

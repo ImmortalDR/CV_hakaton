@@ -1,361 +1,160 @@
-# Свежая проверка этапа A по канону после исправления Q1
+# Независимая проверка этапа A — round 2
 
-Дата: 2026-10-21T10:35:44.229363+00:00. Ветка `codex/fsp-mvp`. Проверенный код стенда: `7f3dde4cbe5b17b0f16154e4ede90a91673428f8`.
-Критерии: `COMPREHENSIVE_STAGE_A_2026-10-21.md`, путь и SHA источников — в [матрице](VERIFY_STAGE_A_MATRIX.json); B01–B06/U01–U04 accept из findings. Не использован PROMPT_ASTRA.md.
+Сессия: **independent_r2**. Дата: 2026-10-21T10:48:31.092494+00:00. Ветка `codex/fsp-mvp`, проверенный HEAD `ab915af6eb771c9688d60f08dcf1bd9211f59d25`.
+Стенд: https://85-137-26-131.sslip.io/.
+Канон: `docs/final_backlog_2026-10-20/COMPREHENSIVE_STAGE_A_2026-10-21.md`; затем accept B01–B06/U01–U04 в findings.json, BACKLOG_STAGE_A.json и три ASTRA_VERIFY методики. Старый PROMPT_ASTRA.md не читался.
 
-Проверка выполнена после фикса и деплоя заново. Предыдущие PASS не перенесены как доказательства. Независимость здесь — от старых вердиктов и от happy-path smoke: отдельная контрпроба использует HTTP503 и задержку ACK. Исправление и проверку выполнял один агент; независимый человек/второй агент не участвовал. Человеческие отметки не подделаны.
+**Сейчас отправку закрывать нельзя.** Технических FAIL не найдено; 14 PASS, 1 PARTIAL (Pck2), 1 HUMAN_ONLY (Pck5). После успешного push, проверки актуальных ссылок и всех человеческих must — можно отправлять. Факт отправки закрывает Pck5, а не зелёный smoke.
 
-## E0. Окружение и два цикла
+## Независимость и границы
 
-На старте HEAD `d4501b9`; пользовательские untracked материалы и изменение COMPREHENSIVE сохранены без включения в коммиты. Исходная E3 доступна через `git show d4501b9:docs/delivery/VERIFY_STAGE_A_PROTOCOL.md`.
+Предыдущие матрицы, «0 FAIL», ab915af и старые smoke не использованы как доказательства. Существующие скрипты прочитаны, их assertions сопоставлены с accept, затем заново исполнены на новых вымышленных аккаунтах. Независимость здесь означает новые исполнения и самостоятельные вердикты; тестовый код частично существующий, не независимая человеческая экспертиза.
 
-1. `e5f78dd`: persistent draft, сравнение с серверным снимком, guard, retry и negative smoke. Build/deploy выполнены. 97 pytest PASS. Smoke **FAIL**: guard также блокировал возврат из Обзора; [сырой лог](evidence/q1-recovery/loop1-smoke-failure.log). Это новый дефект первого исправления, не закрытый PASS.
-2. `7f3dde4`: guard только на уход из теста. Повторно build/up api web; повторно 97 pytest; 18 smoke групп PASS; отдельная контрпроба PASS; 20 целевых PASS. На этом условие пользователя 0 FAIL выполнено.
+Содержательное чтение: канон и accept, методики, релевантные ветки App.tsx (черновик/confirm/overview/форма), smoke/probe, tests/conftest.py, test_stage_a.py, matching, scheduler и privacy lifecycle тесты; скрипты метрик и текущие CHANGELOG/FOR_JURY/VALIDATION/SUBMISSION_LINKS. Три прохода в объёме этого аудита: критерии → связи UI/API/проверок → отрицательные сценарии и сверка вердиктов с упаковкой. Это не новый полный трёхпроходный аудит исходного архива.
 
-Команды деплоя (два запуска, без down/volume removal):
+Автоматика: pytest, HTTPS Chromium, API/PDF assertions, build, SHA256 и метрики перечислены ниже. Бинарные PDF проверены извлечением текста внутри smoke; новый визуальный рендер PDF/PPTX человеком не выполнен. Презентация проверена diff, не заявлена прочитанной. Оригинальное ТЗ/встреча и весь сторонний архив повторно не читались: объём ограничен исходными критериями этапа A. SMTP, реальный ФСП, люди/эксперты, нагрузка, полный ACL и комплект исходников — не закрываются этим отчётом.
 
-```bash
-docker compose build api web
-docker compose up -d --no-deps api web
-```
-Worker не менялся, но его исходники также сверены. БД не сбрасывалась; тестовый pytest использует отдельную fsp_test, guard в conftest запрещает другое имя. Live smoke/probe добавляют только собственные вымышленные профили и скрывают их в finally. Исходные профили и сохранённые подборки не удаляются.
+На входе канон имел пользовательское изменение карты файлов и множество untracked материалов. Они не включаются в коммит проверки. SHA256 использованного канона сохранён в environment.json. BACKLOG не переписан: свежие вердикты задач не меняют его done/partial/human_pending; его старые verification остаются историческими утверждениями. Поле Q7.matching_now=1.1.0 — исходный baseline, live=1.2.0.
 
-Вывод второго запуска up:
+## Окружение и воспроизводимость
 
-```text
- Container fsp-mvp-api-1  Recreate
- Container fsp-mvp-api-1  Recreated
- Container fsp-mvp-web-1  Recreate
- Container fsp-mvp-web-1  Recreated
- Container fsp-mvp-api-1  Starting
- Container fsp-mvp-api-1  Started
- Container fsp-mvp-api-1  Waiting
- Container fsp-mvp-api-1  Healthy
- Container fsp-mvp-web-1  Starting
- Container fsp-mvp-web-1  Started
-```
+`git branch --show-current` → codex/fsp-mvp; `git rev-parse HEAD` → ab915af6eb771c9688d60f08dcf1bd9211f59d25.
+`curl -fsS https://85-137-26-131.sslip.io/api/health` → `{"status":"ok","demo":true,"version":"1.0.0"}`.
+`docker compose ps --format json` → [compose.json](evidence/independent_r2/compose.json).
+API/db/web/edge healthy; worker running. DB mount `fsp-mvp_fsp_db` сохранён. Ни down -v, ни reset/rebuild/deploy, ни destructive reset не выполнялись.
 
-```text
-SERVICE       STATUS
-api           Up 4 minutes (healthy)
-db            Up 9 days (healthy)
-edge          Up 9 days (healthy)
-task-worker   Up 2 hours
-web           Up 4 minutes (healthy)
-```
+[Хеши](evidence/independent_r2/hashes.json): для каждого `apps/api/fsp/*.py` сравнили SHA256 bytes workspace, `git show HEAD:path`, `docker compose exec -T api|task-worker cat /app/fsp/name`. Все 14+14 совпали. После fresh build для всех 3 файлов dist сравнили bytes с `/usr/share/nginx/html/relative_path` контейнера web и HTTPS URL. Все совпали. Это доказательство содержимого, не git-метка образа.
 
-## E1. Полный свежий pytest
+pytest очищает только отдельную `fsp_test` через штатную fixture; `fsp` не очищалась. Live smoke/probe создают свои demo users, скрывают только свои профили и закрывают/приостанавливают свои задания. Existing review accounts использованы только для login. Проверки не являются нулевой записью в БД: вымышленные записи сохраняются.
 
-```bash
-COOKIE_SECURE=false python3 scripts/run_local.py .venv/bin/pytest -q tests
-```
+## Команды и свежие результаты
 
-```text
-........................................................................ [ 74%]
-.........................                                                [100%]
-=============================== warnings summary ===============================
-.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
-  /root/hakaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
-    from starlette.testclient import TestClient as TestClient  # noqa
+Все команды из `/root/hakaton`; exit codes завершившихся процессов проверены.
 
-.venv/lib/python3.12/site-packages/starlette/testclient.py:53
-  /root/hakaton/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
-    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+| Команда | Результат | Сырой вывод |
+|---|---|---|
+| `COOKIE_SECURE=false python3 scripts/run_local.py .venv/bin/pytest -q tests` | exit0, 97 passed, 2 warnings, 47.49s | [pytest.log](evidence/independent_r2/pytest.log) |
+| `python3 scripts/run_local.py .venv/bin/python scripts/smoke_stage_a.py --out docs/delivery/evidence/independent_r2/smoke.json` | exit0, 18 групп, page_errors=[] | [smoke.log](evidence/independent_r2/smoke.log) |
+| `python3 scripts/run_local.py .venv/bin/python scripts/probe_stage_a_q1.py` | exit0, оба PASS | [q1-probe.log](evidence/independent_r2/q1-probe.log) |
+| `npm --prefix apps/web run build` | exit0, tsc и vite | [build.log](evidence/independent_r2/build.log) |
+| `PYTHONPATH=apps/api:. .venv/bin/python` → stage_a_matching.main(), bank_v2_audit.main() | exit0; вывод ниже | [metrics.log](evidence/independent_r2/metrics.log) |
+| `git ls-remote origin refs/heads/codex/fsp-mvp` | remote 2e6d6da, не HEAD | [remote.log](evidence/independent_r2/remote.log) |
 
--- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-97 passed, 2 warnings in 38.46s
-```
+COOKIE_SECURE=false задан только процессу тестов: TestClient работает с HTTP, production .env и secure-cookie не менялись. Метрики запускались с перенаправлением `Path.write_text` в evidence/independent_r2 (unittest.mock.patch), чтобы не переписывать evaluation/*.json. Алгоритмы и входные данные не менялись. Свежие полные результаты сохранены рядом.
 
-97 PASS, две предупреждающие записи зависимостей. HTTP TestClient использует COOKIE_SECURE=false; боевой HTTPS cookie режим не менялся. Проверены ownership, состояние попыток, контакты/PDF/чат, повторная публикация и новое согласие, задания и регрессии. Это не полный внешний security-аудит.
+Дополнительная контрпроба: [исходник](evidence/independent_r2/extra-probe-source.txt) копируется в `/tmp/independent-r2-extra.py`, запуск `python3 scripts/run_local.py .venv/bin/python /tmp/independent-r2-extra.py`. Первый запуск подтвердил B05/B06, затем упал на ошибочном точном accessible-label селекторе SQL, не найдя элемент. Это ошибка измерительного скрипта, не доказательство дефекта продукта. Селектор исправлен на существующий label.field + текст SQL + select; продукт не менялся. [Первый лог](evidence/independent_r2/extra-probe.log) сохранён; [повтор](evidence/independent_r2/extra-probe-rerun.log) учитывается отдельно.
 
-## E2. Live HTTPS smoke, включая отрицательный B01
+## Q1/B01 и Q3: отрицательные пути
 
-```bash
-python3 scripts/run_local.py .venv/bin/python scripts/smoke_stage_a.py --out /tmp/q1-smoke-2.json
-```
-
-```json
-{
-  "status": "pass",
-  "checked_at": "2026-10-21T10:33:32.295674+00:00",
-  "base_url": "https://85-137-26-131.sslip.io",
-  "checks": [
-    "https_health_ok",
-    "openapi_exact",
-    "three_review_logins_ok",
-    "Q1_navigation_reload_server_draft_owner_expiry",
-    "Q2_live_bank_2_1_rounding_hint",
-    "Q1_failed_PUT_leave_cancel_accept_reload_close_reopen_retry_server_ack",
-    "Q3_direct_API_without_confirm_409_active_draft_unchanged",
-    "Q3_cancel_keeps_active_accept_completes",
-    "Q4_verified_published_hidden_empty_invitations_and_overview_CTA",
-    "Q5_anonymous_label_selection_invitation_PDF_UI",
-    "invite_accept_addressed_contacts_PDF_isolation",
-    "FSP_does_not_change_grade_zero_without_FSP",
-    "old_snapshot_preserved",
-    "Q5_two_visible_score_sums_unique_labels_changed_banner_scroll",
-    "Q5_filters_snapshot_and_score_UI",
-    "Q6_live_7day_resume_no_duplicate_UI_date_equals_API",
-    "Q4_hidden_overview_revoked_chat_snapshot_PDF",
-    "mobile_no_horizontal_overflow"
-  ],
-  "page_errors": [],
-  "scope": "Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed."
-}
-```
-
-Все assertions исполнены на развернутом HTTPS. Отрицательный сценарий:
-
-1. Успешный PUT `90,63`, серверный GET, Обзор/назад/reload.
-2. Контекст браузера обрывает только PUT answers. Новый `UNSAVED-123` остаётся локальным, сервер всё ещё содержит `90,63`; статус ошибки виден.
-3. Отмена ухода оставляет тест видимым. Подтверждение → Обзор → назад: новый ответ и ошибка на месте, PUT повторяется.
-4. Reload показывает beforeunload; после reload ответ и ошибка остаются. Закрытие с run_before_unload=True вызывает второй beforeunload; новая вкладка в том же контексте восстанавливает черновик при всё ещё оборванном PUT.
-5. Маршрут разблокирован; уход/возврат без нового ввода отправляет черновик. Сервер получает `UNSAVED-123`, localStorage очищен только после ACK, reload сохраняет ответ. ID и expiry прежние.
-6. Возвращаем один ответ `90,63`; Q3 напрямую отвергает submit без confirm, затем UI отменяет и подтверждает сдачу с 7 пропусками.
-
-Остальные Q4–Q6 и REG проверены свежими шагами скрипта: CTA по состоянию, анонимы/фильтры/scroll/сумма компонентов, pause/resume с датой из API, адресное согласие и изоляция PDF, скрытие из старых снимков. Smoke не выдаёт созданные solver-результаты за человеческую валидацию.
-
-## E3. Отдельная отрицательная контрпроба
-
-[Код](../../scripts/probe_stage_a_q1.py) использует отдельные вымышленные аккаунты и другие отказы. В отличие от E2, отвечает HTTP503 и удерживает успешный запрос до следующего ввода. Выполнена отдельно после деплоя:
-
-```bash
-python3 scripts/run_local.py .venv/bin/python scripts/probe_stage_a_q1.py
-```
+Полный smoke действительно выполняет `route.abort()` для PUT answers: сервер сохраняет старое значение, UI показывает ошибку. Leave cancel удерживает экран; leave accept разрешает Обзор; после round-trip значение и предупреждение остаются. Reload вызывает beforeunload; закрытие с run_before_unload и новая вкладка восстанавливают dirty draft. Снятие сбоя и возврат дают ACK; API содержит новый ответ, localStorage очищен, id/expires_at прежние. Отдельный probe заменяет сбой сети HTTP503, меняет два ответа, отменяет reload и нажимает «Повторить сохранение»; задержанный ACK для 44 не стирает ввод 55. Это исполненные assertions, не вывод из наличия localStorage в коде.
 
 ```text
 PASS independent HTTP503 / two dirty answers / cancel reload / manual flush
 PASS independent delayed ACK / newer edit retained / ordered flush / stable id and expiry
 ```
 
-Проверено: сервер содержит старый ответ, пока два новых не сохранены; отмена beforeunload сохраняет оба поля; кнопка повтора отправляет оба поля. При задержанном PUT 44 пользователь вводит 55; после ACK 44 UI всё ещё показывает 55 и несохранённость. Второй PUT подтверждает 55, очередь очищается. ID/expiry прежние. Не только совпадение текста в DOM: проверяется серверный GET и удаление localStorage после успеха.
+Q3 direct API без confirm_incomplete возвращает 409 и оставляет active, answers и expires_at. UI: 7 пустых из 8, Cancel сохраняет active, Accept завершает. Pytest дополнительно проверяет absent/false flag и whitespace. Текст native confirm явно сообщает неверные ответы и 24 часа пересдачи (App.tsx); понятность текста человеку ещё не оценена.
 
-## E4. Отдельные целевые удары по канону
+## Q7: измерение, не обещание улучшения
 
-```bash
-COOKIE_SECURE=false python3 scripts/run_local.py .venv/bin/pytest -v tests/test_stage_a.py tests/test_bank.py::test_half_up_exact_boundaries tests/test_bank.py::test_conditional_rounding_new_and_historical_versions tests/test_matching.py tests/test_employer_tasks.py
-```
+VERSION matching-1.1.0 → matching-1.2.0; банк 2.1.0. Live версии проверены smoke, соответствие production выбранным весам — pytest. Сетка выбирается по dev, holdout используется после выбора; синтетическая авторская релевантность не является экспертной истиной. Документированное precommit намерение нельзя ретроспективно доказать как независимый эксперимент.
+
+| Выборка | Кандидаты / запросы | P@5 до | P@5 после |
+|---|---:|---:|---:|
+| dev | 16 / 2 | 1.00 | 1.00 |
+| holdout/test | 48 / 8 | 0.80 | 0.80 |
+
+Веса 60/15/20/5 → 30/15/45/10. **Улучшение P@5 не доказано.** Test+FSP меняют порядок внутри категории; самодекларация не даёт баллов. VERSION + таблица в VALIDATION и описание в FOR_JURY совпадают с повтором.
 
 ```text
-============================= test session starts ==============================
-platform linux -- Python 3.12.3, pytest-8.3.5, pluggy-1.6.0 -- /root/hakaton/.venv/bin/python
-cachedir: .pytest_cache
-rootdir: /root/hakaton
-plugins: anyio-4.15.1, platformdirs-4.12.3
-collecting ... collected 20 items
-
-tests/test_stage_a.py::test_draft_answers_owner_lifecycle PASSED         [  5%]
-tests/test_stage_a.py::test_draft_expired PASSED                         [ 10%]
-tests/test_stage_a.py::test_anonymous_labels_distinct_and_stable PASSED  [ 15%]
-tests/test_stage_a.py::test_incomplete_submit_requires_explicit_confirmation PASSED [ 20%]
-tests/test_bank.py::test_half_up_exact_boundaries[2900-32-90.63] PASSED  [ 25%]
-tests/test_bank.py::test_half_up_exact_boundaries[1005-1000-1.01] PASSED [ 30%]
-tests/test_bank.py::test_half_up_exact_boundaries[625-1000-0.63] PASSED  [ 35%]
-tests/test_bank.py::test_conditional_rounding_new_and_historical_versions PASSED [ 40%]
-tests/test_matching.py::test_unknown_never_becomes_proof_and_sport_does_not_change_category PASSED [ 45%]
-tests/test_matching.py::test_explicit_evidence_and_zero_experience_remain_distinct PASSED [ 50%]
-tests/test_matching.py::test_required_skill_coverage_is_not_a_score_threshold PASSED [ 55%]
-tests/test_matching.py::test_untrusted_achievement_does_not_satisfy_fsp_filter PASSED [ 60%]
-tests/test_matching.py::test_stage_a_test_and_sport_change_within_category_order PASSED [ 65%]
-tests/test_matching.py::test_production_matches_selected_weights_on_frozen_sample PASSED [ 70%]
-tests/test_employer_tasks.py::test_task_complete_lifecycle_grade_and_contact_isolation PASSED [ 75%]
-tests/test_employer_tasks.py::test_task_plan_idempotency_consent_and_schema PASSED [ 80%]
-tests/test_employer_tasks.py::test_scheduler_periodic_delivery_deduplicates_and_does_not_burst PASSED [ 85%]
-tests/test_employer_tasks.py::test_submitted_work_waits_for_review_and_pause_cancels_open_tasks PASSED [ 90%]
-tests/test_employer_tasks.py::test_deadline_and_concurrent_answers PASSED [ 95%]
-tests/test_employer_tasks.py::test_resume_keeps_cadence_after_review_and_legacy_pause PASSED [100%]
-
-=============================== warnings summary ===============================
-.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
-  /root/hakaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
-    from starlette.testclient import TestClient as TestClient  # noqa
-
-.venv/lib/python3.12/site-packages/starlette/testclient.py:53
-  /root/hakaton/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
-    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
-
--- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 20 passed, 2 warnings in 8.64s ========================
+{"old_weights": [60, 15, 20, 5], "selected_weights": [30, 15, 45, 10], "selection": "max dev P@5; tie: minimum L1 distance to old weights, then tuple order"}
+dev 1.0 -> 1.0
+test 0.8 -> 0.8
+{"oracle_checks": 36000, "oracle_mismatches": [], "simulated_attempts": 42000, "analytic_iid": [{"version": "1.2.0", "probability_correct": 0.8, "pass_probability": 0.6144000000000001}, {"version": "1.2.0", "probability_correct": 0.9, "pass_probability": 0.8019000000000001}, {"version": "2.1.0", "probability_correct": 0.8, "pass_probability": 0.7340032000000002}, {"version": "2.1.0", "probability_correct": 0.9, "pass_probability": 0.9300217499999999}]}
+1.2.0 frequent_guess mean pass 0.025 pair agreement 0.9534
+1.2.0 noise_10 mean pass 0.7997 pair agreement 0.6795
+1.2.0 noise_20 mean pass 0.5933 pair agreement 0.5167
+1.2.0 old_families_only mean pass 1 pair agreement 1.0
+2.1.0 frequent_guess mean pass 0 pair agreement 1.0
+2.1.0 noise_10 mean pass 0.926 pair agreement 0.8628
+2.1.0 noise_20 mean pass 0.714 pair agreement 0.5914
+2.1.0 old_families_only mean pass 0 pair agreement 1.0
 ```
 
-Q2: 90.625→90.63, 1.005, 0.625, точка/запятая; новый банк 2.1.0 согласован с подсказкой. Политика старых версий документирована: без массового пересчёта. Q3: отсутствующий/false confirm и whitespace →409, ответ/срок/active прежние, explicit true завершает. Q6: контролируемая временная граница, конкурентные ticks, resume и closed. Реальная неделя не ожидалась.
+36 000 сверок эталонов без расхождений; 42 000 синтетических попыток — не люди. Сохраняются 4 семейства по 2 вопроса, устойчивость к заучиванию и профессиональные грейды не валидированы пилотом. Q7 PASS именно по техническому DoD канона и честной процедуре, не по рыночному качеству.
 
-## E5. Q7 — свежие измерения, не старые числа
+## Все ID и accept аудита
 
-Оба main() выполнены в текущей сессии с перенаправлением только результата в /tmp, исходная fixture не изменялась:
+| ID | Вердикт | Основание |
+|---|---|---|
+| Q1 | PASS | failed PUT → leave cancel/accept → round-trip → warning → reload/close/reopen → retry ACK; id/expiry stable |
+| Q2 | PASS | Live bank 2.1.0, hint 90,625 → 90,63 |
+| Q3 | PASS | Direct submit without confirm: 409, active, draft/expiry unchanged; UI 7 из 8, cancel → active, accept → completed |
+| Q4 | PASS | Новый, неподтверждённый, подтверждённый published/hidden; CTA, publication without relogin; composer removed, PDF404 |
+| Q5 | PASS | Ярлыки selection/invitation/PDF; статусы приглашения; filters/reload/scroll; dated snapshot/changed banner; две суммы вкладов; unique labels |
+| Q6 | PASS | Evaluate85 → pause → resume: одна выдача, next_issue_at прежний; UI дата=API |
+| Q7 | PASS | [60,15,20,5] → [30,15,45,10]; dev1→1; holdout .8→.8; 36000 oracle checks/0 mismatches, 42000 synthetic attempts |
+| Pck1 | PASS | Равная P@5 соответствует CHANGELOG; улучшение не заявлено |
+| Pck2 | PARTIAL | Три review login200; OpenAPI exact |
+| Pck3 | PASS | health ok/demo true; db volume fsp-mvp_fsp_db; product diff empty |
+| Pck4 | PASS | 18 групп PASS, page_errors=[]; полный scripts/smoke_stage_a.py |
+| Pck5 | HUMAN_ONLY | Внешняя отправка не проверяется git; SUBMISSION_LINKS подготовлен локально |
+| REG_FSP | PASS | Junior без ФСП остаётся Junior; demo-winner +6 к score, grade прежний |
+| REG_ISO | PASS | До согласия PDF без email; после — email только у адресата, другая компания без контактов; outsider PDF403 |
+| REG_OLD_SEL | PASS | Старый search доступен после нового; hidden candidate исключён; dated snapshot+changed banner |
+| NOTTODO | PASS | Stage A diff demo/docs/presentation пуст; продукт в этой сессии не изменён |
 
-```bash
-PYTHONPATH=apps/api:. .venv/bin/python - <<'PYCODE'
+B01→Q1; B02→Q2; B03→Q3; B04→Q6; B05/B06→Q4; U01–U04→Q5. Все accept сопоставлены: повторный вход/срок через server lifecycle и live restore; B03 последствия в confirm; B04 граница/повтор/concurrent/closed через time tests; B06 republish/new invite через дополнительный live probe; U03 смена специализации дополнительно выполнена; U04 unknown/unmet и суммы проверены отдельно. Субъективное «легко/понятно» вынесено в human, не объявлено наблюдением человека.
+
+confirmed_by_audit проверены вновь, а не унаследованы: no_fsp_keeps_category + fsp_bonus_does_not_change_grade → REG_FSP; old_selections_preserved → REG_OLD_SEL; cross_company_contacts_isolated + cross_candidate_pdf_denied → REG_ISO. Это проверенные сценарии, не полный ACL.
+
+## Pck1 и NOT TODO
+
+Текущий CHANGELOG содержит Q1–Q7, историю STOP явно отделяет от актуального статуса и ссылается на протокол. Его утверждения про dirty draft/retry/confirm совпали с новым прогоном; 97 тестов, 18 групп и P@5 .8→.8 воспроизведены. Упоминание 20 целевых тестов относится к прошлому прогону: в этой сессии они отдельно не повторялись, полный suite включает соответствующие тесты. Противоречий свежим вердиктам не обнаружено; changelog не редактировался для получения PASS.
+
+NOTTODO: diff Stage A `git diff 2e6d6da HEAD -- demo docs/presentation` пуст; новый IRT pipeline не добавлен в перечне/истории apps/evaluation; веса имеют замер; FOR_JURY/CHANGELOG явно называют SMTP not_run и ФСП демонстрационным. Питч не репетировался, новый функционал и редизайн в verify не добавлялись, настройки VPN/SSH не менялись. Время чужой работы вне git не наблюдалось. Отдельный untracked PPTX не подтверждает замену отслеживаемой презентации.
+
+## §6 канона — пункт за пунктом
+
+| Пункт | Статус | Сверка |
+|---|---|---|
+| Q1–Q3 закрыты или обоснован stop | PASS | Q1–Q3 PASS по свежим проверкам; stop не нужен. |
+| Q7 новая VERSION + таблица на выборке | PASS | matching-1.2.0; VALIDATION содержит dev1→1/test.8→.8; свежий rerun совпал. |
+| Q4–Q6 сделано или partial в changelog | PASS | Технические DoD PASS; календарная неделя и человеческие оценки выделены. |
+| Pck1–Pck3 | PARTIAL | Pck1/Pck3 PASS; Pck2 ожидает публикацию актуальной ветки и human walk. |
+| Pck4 smoke green | PASS | 18 свежих групп, page_errors=[]; Q1–Q3 не FAIL. |
+| Pck5 ссылки ушли | HUMAN_ONLY | Не отправлены агентом; подтверждения человека нет. |
+
+## Блокеры и передача
+
+Нет воспроизведённых must FAIL. Текущий блокер публикации: remote не содержит проверенный HEAD; Проверка `GIT_TERMINAL_PROMPT=0 git push --dry-run origin codex/fsp-mvp` завершилась exit128: `fatal: could not read Username for https://github.com: terminal prompts disabled` ([лог](evidence/independent_r2/push-preflight.log)). Это конкретный блокер авторизации; dry-run ничего не отправил. Нужны успешный обычный push, актуальные GitHub-ссылки, заполнение HUMAN_VERIFY_PROTOCOL_STAGE_A.md (включая ★) и фактическая отправка человеком. Только после успешных push+human можно слать; этап A целиком ещё не закрыт. SMTP и реальная неделя не являются скрыто выполненными проверками.
+
+Код продукта, исходные подборки, БД и пользовательские документы не исправлялись. Коммит ограничен этими тремя документами и новыми сырыми доказательствами в docs/delivery/evidence/independent_r2. Старые результаты сохранены в git-истории; новые файлы не копируют их вердикты.
+
+## Дополнение к воспроизведению и контролю документов
+
+Дополнительный live probe повторно завершился exit0:
+
+```text
+PASS B05 orb before/after confirmation; B06 hide, republish stays denied, new accepted invite opens composer
+PASS U03 specialization changes relevant skill controls and required default; untested skills labeled
+```
+
+В первом запуске ошибочный селектор был `form.get_by_label('SQL', exact=True)`; в сохранённом исходнике повтора — `form.locator('label.field').filter(has=hr.get_by_text('SQL',exact=True)).locator('select')`. Оба лога сохранены, FAIL инструмента не скрыт.
+
+Метрики без записи в исходные результаты можно повторить так:
+
+```python
 from pathlib import Path
 from unittest.mock import patch
 from evaluation import stage_a_matching, bank_v2_audit
-out=Path('/tmp/q1-evaluation'); out.mkdir(exist_ok=True)
-original=Path.write_text
-with patch.object(Path,'write_text',lambda self,data,*a,**kw:original(out/self.name,data,*a,**kw)):
+write = Path.write_text
+out = Path('docs/delivery/evidence/independent_r2')
+def redirected(path, data, *args, **kwargs):
+    return write(out / path.name, data, *args, **kwargs)
+with patch.object(Path, 'write_text', redirected):
     stage_a_matching.main()
     bank_v2_audit.main()
-PYCODE
 ```
 
-```json
-{
-  "old_weights": [
-    60,
-    15,
-    20,
-    5
-  ],
-  "selected_weights": [
-    30,
-    15,
-    45,
-    10
-  ],
-  "selection": "max dev P@5; tie: minimum L1 distance to old weights, then tuple order",
-  "fixture_sha256": "0f4bb52e97a78d1326e6da2031303315dc6105461f59860fc3581402b3e50850"
-}
-```
-
-| Набор | До | После |
-|---|---:|---:|
-| dev P@5 | 1.00 | 1.00 |
-| test P@5 | 0.80 | 0.80 |
-
-Свежий stdout банка: `oracle_checks: 36000`, `oracle_mismatches: []`, `simulated_attempts: 42000`.
-[Полный результат matching](evidence/q1-recovery/stage_a_matching_results.json), [банка](evidence/q1-recovery/bank_v2_results.json).
-Production VERSION matching-1.2.0 проверяется live smoke; совпадение весов с fixture — E4. Выбор на dev; holdout — 48 кандидатов / 8 запросов. Авторская синтетика, не внешняя экспертная разметка; рост P@5 не доказан. Эти ограничения и цифры присутствуют в VALIDATION/FOR_JURY.
-
-## E6. Pck3 — хеши и health
-
-```bash
-npm --prefix apps/web run build
-python3 docs/delivery/evidence/q1-recovery/check_deploy.py
-```
-
-```text
-
-> fsp-reverse-hiring@1.0.0 build
-> tsc -b && vite build
-
-vite v6.4.4 building for production...
-transforming...
-✓ 55 modules transformed.
-rendering chunks...
-computing gzip size...
-dist/index.html                   0.44 kB │ gzip:  0.34 kB
-dist/assets/index-x85TwcNR.css   19.36 kB │ gzip:  5.18 kB
-dist/assets/index-DYn7UgI3.js   263.71 kB │ gzip: 79.67 kB
-✓ built in 3.15s
-```
-
-```json
-{
-  "git_sha": "7f3dde4cbe5b17b0f16154e4ede90a91673428f8",
-  "health": {
-    "status": "ok",
-    "demo": true,
-    "version": "1.0.0"
-  },
-  "api_modules": 17,
-  "worker_modules": 17,
-  "web": [
-    {
-      "file": "assets/index-DYn7UgI3.js",
-      "sha256": "8fc3107f9ef4386dae9f7684c86b091d9a0a41b105da4a3cd7149c935514b0ac",
-      "container_equal": true,
-      "https_equal": true
-    },
-    {
-      "file": "assets/index-x85TwcNR.css",
-      "sha256": "84e3e536817c07c4d727f5eb69d16b05a65f6d19b2886afb37730962853a8060",
-      "container_equal": true,
-      "https_equal": true
-    },
-    {
-      "file": "index.html",
-      "sha256": "60688c76c7276efdfc13774e9877f132fd3faf4ac626b4cda524b387ae2e2b48",
-      "container_equal": true,
-      "https_equal": true
-    }
-  ],
-  "db_mount": [
-    {
-      "Type": "volume",
-      "Name": "fsp-mvp_fsp_db",
-      "Source": "/var/lib/docker/volumes/fsp-mvp_fsp_db/_data",
-      "Destination": "/var/lib/postgresql/data",
-      "Driver": "local",
-      "Mode": "rw",
-      "RW": true,
-      "Propagation": ""
-    }
-  ]
-}
-```
-
-Проверяющий скрипт assert-ит равенство каждого Python-файла workspace=git HEAD=container, каждого web-файла fresh build=container=public HTTPS и отсутствие diff apps/compose от HEAD. [Все SHA](evidence/q1-recovery/deploy.json). Последующие коммиты документов/проверок не изменяют runtime; проверенная версия приложения указана отдельно, без невозможного самоссылочного SHA протокола.
-
-## E7. NOTTODO и границы изменений
-- `demo/FSP_NIKITA_SUBMISSION.pptx` SHA256 `41e86f5eb8cc809facb6240f87c81fdb83f8d000a67cb80a4735eaa164e930f8`.
-- `demo/FSP_MVP.pptx` SHA256 `8a88789e4e89e44c49bcf50c49086ac63d40301c025aa6ec5c6e216c6472cf9e`.
-
-`git diff d4501b9 --name-only -- apps demo evaluation compose.yaml` вывел только `apps/web/src/App.tsx`. Презентация не редизайнилась, веса/банк не изменялись, новых IRT/функций продукта нет. Полное содержательное перечитывание архивных приложений и бинарных исходников не заявляется; целевое трёхпроходное ревью описано в [Q1_RECOVERY](../review/Q1_RECOVERY_2026-10-21.md).
-
-## E8. Pck1/Pck2/Pck5 — честная упаковка
-
-FOR_JURY содержательно проверен: URL стенда/ветки, три роли, 7 шагов маршрута, две воспроизведённые метрики, not_run и ссылка на аудит присутствуют. Три входа →200 в E2, общие аккаунты не менялись. Ссылки FOR_JURY/CHANGELOG/SUBMISSION_LINKS проверены через Path.exists: missing local links=[] для всех трёх.
-
-CHANGELOG теперь описывает провал E3 из d4501b9 как историю, новый фикс, провал первого цикла и свежий результат второго; Q1–Q7 перечислены. Формулировка текущего закрытия ограничена техническими DoD, Pck2/Pck5 и человеческий протокол явно оставлены. SUBMISSION_LINKS не утверждает состоявшуюся отправку. Человеческие клетки не заполнены.
-
-## E9. GitHub auth — реальный внешний блокер
-
-```bash
-GIT_TERMINAL_PROMPT=0 git push origin codex/fsp-mvp
-```
-
-```text
-fatal: could not read Username for 'https://github.com': terminal prompts disabled
-```
-
-```text
-git ls-remote origin refs/heads/codex/fsp-mvp
-2e6d6daa5bfb59f6d5a7e7317aa41093c8f05980 refs/heads/codex/fsp-mvp
-```
-
-Push не выполнен, force-push не использовался. Pck2 PARTIAL только по этому внешнему шагу. Pck5 HUMAN_ONLY: на площадку ничего не отправлено.
-
-## Матрица текущих вердиктов
-
-| ID | Вердикт | Свежие доказательства |
-|---|---|---|
-| Q1 | PASS | E2; E3; E4 |
-| Q2 | PASS | E2; E4 |
-| Q3 | PASS | E2; E4 |
-| Q4 | PASS | E2; E1 |
-| Q5 | PASS | E2 |
-| Q6 | PASS | E2; E4 |
-| Q7 | PASS | E5; E4; E8 |
-| Pck1 | PASS | E8 |
-| Pck2 | PARTIAL | E2; E8; E9 |
-| Pck3 | PASS | E6 |
-| Pck4 | PASS | E2; E3 |
-| Pck5 | HUMAN_ONLY | E8 |
-| REG_FSP | PASS | E2; E4 |
-| REG_ISO | PASS | E2; E1 |
-| REG_OLD_SEL | PASS | E2 |
-| NOTTODO | PASS | E7; E5; E8 |
-
-14 PASS, 1 PARTIAL, 1 HUMAN_ONLY, **0 FAIL**. Цикл остановлен на второй итерации по условию пользователя.
-
-## Чеклист §6 канона
-
-| Пункт | Да/нет | Основание |
-|---|---|---|
-| Q1–Q3 закрыты или явно обоснован stop | ДА | Q1/Q2/Q3: свежие E2–E4 PASS. |
-| Q7: новая VERSION + таблица на выборке в VALIDATION/for-jury | ДА | matching-1.2.0, dev 1→1 / holdout .8→.8, E5. |
-| Q4–Q6: сделано или partial в changelog | ДА | Q4/Q5/Q6: E1/E2/E4 PASS. |
-| Pck1–Pck3 | НЕТ | Pck1/Pck3 PASS; Pck2 PARTIAL только из-за отсутствия GitHub auth. |
-| Pck4 smoke green | ДА | 18 групп PASS, включая отрицательный Q1; отдельная E3 PASS. |
-| Pck5 ссылки ушли | НЕТ | Pck5 HUMAN_ONLY: человек не подтвердил отправку. |
-
-Технические критерии закрыты; считать внешнюю сдачу состоявшейся нельзя. После публикации ветки и человеческого протокола остаётся отправка ссылок. SMTP, внешний ФСП, нагрузка, реальный недельный календарь, независимая экспертная разметка/человеческий пилот и полный аудит ACL не объявлены выполненными.
+Запуск с `PYTHONPATH=apps/api:. .venv/bin/python`. Свежий matching result совпал с отслеживаемым JSON целиком. [source-hashes.json](evidence/independent_r2/source-hashes.json) фиксирует версии скриптов и упаковки. Проверены 16 уникальных ID, все ссылки evidence, все human_checks_required и локальные ссылки FOR_JURY/SUBMISSION_LINKS; отсутствующих не найдено. `git diff --check` для трёх основных документов чист. После добавления сырых логов staged-check показал trailing whitespace и пустую последнюю строку в extra-probe.log: это исходное форматирование traceback Playwright, сохранённое без изменения. Человеческие клетки не заполнены агентом.
