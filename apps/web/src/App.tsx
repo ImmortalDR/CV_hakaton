@@ -398,7 +398,7 @@ export function App() {
           {tab === "tasks" && <Tasks user={user} {...props} />}
           {tab === "search" && <SearchPage {...props} userId={user.id} />}
           {tab === "invitations" && (
-            <Invitations {...props} user={user} version={version} />
+            <Invitations {...props} user={user} profile={profile} version={version} />
           )}
           {tab === "company" &&
             (company ? (
@@ -754,13 +754,13 @@ function Overview({
             className="white"
             onClick={() =>
               navigate(
-                candidate ? (p?.name ? "assessment" : "profile") : "search",
+                candidate ? (!p?.name ? "profile" : !p.verified_grade ? "assessment" : p.published && p.processing ? "invitations" : "profile") : "search",
               )
             }
           >
             {candidate
               ? p?.name
-                ? "Перейти к тестированию"
+                ? !p.verified_grade ? "Перейти к тестированию" : p.published && p.processing ? "Посмотреть приглашения" : "Настроить видимость"
                 : "Заполнить профиль"
               : "Подобрать кандидатов"}
             <ArrowRight size={18} />
@@ -1180,7 +1180,7 @@ function Assessments({
                 await saveQueue.current;
                 const result = await api<Attempt>(
                   `/me/attempts/${current.id}/submit`,
-                  { answers },
+                  { answers, confirm_incomplete: empty > 0 },
                 );
                 sessionStorage.removeItem(draftKey(current.id));
                 setCurrent(result);
@@ -2079,11 +2079,12 @@ function InviteModal({
 
 function Invitations({
   user,
+  profile,
   version,
   act,
   busy,
   refresh,
-}: Actions & { user: User; version: number }) {
+}: Actions & { user: User; profile: Profile | null; version: number }) {
   const [items, setItems] = useState<Invitation[]>([]),
     [chat, setChat] = useState<string | null>(null),
     [loading, setLoading] = useState(true);
@@ -2118,7 +2119,13 @@ function Invitations({
           title="Пока нет приглашений"
           description={
             user.role === "candidate"
-              ? "Подтвердите навыки и опубликуйте профиль, чтобы работодатели могли вас найти."
+              ? !profile?.name
+                ? "Заполните профиль, чтобы начать путь к предложениям."
+                : !profile.verified_grade
+                  ? "Подтвердите навыки тестом, чтобы попасть в категорию кандидатов."
+                  : !profile.published || !profile.processing
+                    ? "Ваш уровень подтверждён. Включите публикацию и согласие на обработку в профиле."
+                    : "Ваш профиль опубликован, уровень подтверждён. Ожидайте приглашений работодателей; настройки видимости доступны в профиле."
               : "Откройте подбор, выберите кандидата и отправьте предложение с зарплатой."
           }
         />

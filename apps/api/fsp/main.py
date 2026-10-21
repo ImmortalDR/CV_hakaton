@@ -702,7 +702,7 @@ def create_app(database_url=None, demo=None, rate_limit=True):
         response_model_exclude_unset=True,
         tags=["Тестирование"],
     )
-    def submit(attempt_id: str, data: S.Answers, user: AUTH, db: DB):
+    def submit(attempt_id: str, data: S.SubmitAnswers, user: AUTH, db: DB):
         p = candidate(user, db, True)
         a = db.scalar(
             select(Attempt)
@@ -722,6 +722,9 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             fail(409, "Согласие на обработку отозвано")
         if set(data.answers) - {q["id"] for q in a.questions}:
             fail(422, "Ответ содержит задание, которого нет в этой попытке")
+        empty = sum(not data.answers.get(q["id"], "").strip() for q in a.questions)
+        if empty and not data.confirm_incomplete:
+            fail(409, f"Не заполнено {empty} из {len(a.questions)} заданий. Подтвердите завершение теста с пропусками.")
         result = bank.grade_answers(a.questions, data.answers, version=a.version)
         a.answers = data.answers
         a.result = result

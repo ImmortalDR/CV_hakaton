@@ -8,6 +8,7 @@ import argparse
 import json
 import os
 import secrets
+import re
 from pathlib import Path
 from uuid import uuid4
 from datetime import datetime, timezone
@@ -63,7 +64,9 @@ try:
         for email,password in [('review.candidate.fsp@example.org','Review-Cand-2026!'),('review.employer.fsp@example.org','Review-Emp-2026!'),('review.employer2.fsp@example.org','Review-Emp2-2026!')]:
             r=review.request.post('/api/auth/login',data=dict(email=email,password=password));assert r.status==200
         review.close();checks.append('three_review_logins_ok')
-        page.goto(a.base_url);nav(page,'Подтверждение навыков')
+        page.goto(a.base_url);nav(page,'Приглашения')
+        expect(page.get_by_text('Подтвердите навыки тестом',exact=False)).to_be_visible()
+        nav(page,'Подтверждение навыков')
         page.get_by_label('Уровень теста').select_option('Middle')
         page.get_by_role('button',name='Начать тест',exact=True).click()
         answer=page.get_by_label('Ответ на задание 1',exact=True);expect(answer).to_be_visible()
@@ -76,6 +79,11 @@ try:
         assert call(c,'/me/attempts')[0]['expires_at']==started['expires_at']
         assert outsider.request.put('/api/me/attempts/'+started['id']+'/answers',data={'answers':{'1':'999'}}).status==404
         checks+=['Q1_navigation_reload_server_draft_owner_expiry','Q2_live_bank_2_1_rounding_hint']
+        rejected=c.request.post('/api/me/attempts/'+started['id']+'/submit',data={'answers':{'1':'90,63'}})
+        assert rejected.status==409 and 'Подтвердите' in rejected.json()['detail']
+        unchanged=call(c,'/me/attempts')[0]
+        assert unchanged['status']=='active' and unchanged['answers']==started['answers'] and unchanged['expires_at']==started['expires_at']
+        checks.append('Q3_direct_API_without_confirm_409_active_draft_unchanged')
         dialogs=[]
         def dismiss(d): dialogs.append(d.message);d.dismiss()
         page.once('dialog',dismiss);page.get_by_role('button',name='Завершить и узнать результат').click()
@@ -91,6 +99,16 @@ try:
         result=call(c,'/me/attempts/'+attempt['id']+'/submit',{'answers':{q['id']:str(solve(q)) for q in qs}})
         assert result['result']['passed']
         before=call(c,'/me/profile');cid=accounts[0]['id']
+        fields=['name','phone','about','specialization','claimed_grade','skills','roles','soft_skills','experience_years','processing','published','show_experience']
+        for published, text in [(True,'Ваш профиль опубликован, уровень подтверждён.'),(False,'Ваш уровень подтверждён. Включите публикацию')]:
+            call(c,'/me/profile',{**{k:before[k] for k in fields},'published':published},'PUT')
+            page.reload();nav(page,'Приглашения')
+            expect(page.get_by_text(text,exact=False)).to_be_visible()
+            expect(page.get_by_text('Подтвердите навыки и опубликуйте профиль',exact=False)).to_have_count(0)
+            nav(page,'Обзор')
+            expect(page.get_by_role('button',name='Посмотреть приглашения' if published else 'Настроить видимость',exact=True)).to_be_visible()
+        call(c,'/me/profile',{k:before[k] for k in fields},'PUT')
+        checks.append('Q4_verified_published_hidden_empty_invitations_and_overview_CTA')
         need=dict(title='Проверка аналитика',description='Вымышленные задачи аналитики для проверки',specialization='data',grades=['Junior'],required_skills=['sql'],desired_skills=['statistics'],min_years=None,fsp_only=False,confirmed=True)
         snap=call(e,'/searches',need)
         base_item=next(p for p in snap['items'] if p['id']==cid)
@@ -103,6 +121,11 @@ try:
         assert accounts[0]['email'] not in pdf(e.request.get('/api/profiles/'+cid+'/pdf'))
         inv=call(e,'/invitations',dict(candidate_id=cid,request_id=str(uuid4()),description='Предложение для smoke этапа A',salary_min=100000,salary_max=150000,currency='RUB'))
         assert inv['contacts'] is None
+        assert inv['candidate_name']==base_item['display_name']
+        assert base_item['display_name'] in pdf(e.request.get('/api/profiles/'+cid+'/pdf'))
+        hr.goto(a.base_url);nav(hr,'Приглашения')
+        expect(hr.get_by_role('heading',name=base_item['display_name'],exact=True)).to_be_visible()
+        checks.append('Q5_anonymous_label_selection_invitation_PDF_UI')
         call(c,'/invitations/'+inv['id'],{'status':'accepted'},'PATCH')
         assert call(e,'/candidates/'+cid)['contacts']['email']==accounts[0]['email']
         assert call(other,'/candidates/'+cid)['contacts'] is None
@@ -120,7 +143,22 @@ try:
         hr.get_by_label('Специализация').select_option('data')
         hr.get_by_role('button',name='Сформировать подборку',exact=True).click()
         expect(hr.get_by_text('Сохранённая подборка на',exact=False)).to_be_visible()
-        expect(hr.get_by_text('Балл ',exact=False).first).to_be_visible()
+        lines=hr.locator('.candidate-card .evidence > small')
+        expect(lines.first).to_be_visible()
+        assert lines.count()>=2
+        for line in lines.all_text_contents()[:2]:
+            values=[float(x) for x in re.findall(r'\d+\.\d{2}',line)]
+            assert len(values)==4 and abs(values[0]-sum(values[1:]))<=0.02,line
+        labels=hr.locator('.candidate-card h3').all_text_contents()
+        assert len(labels)==len(set(labels))
+        hr.get_by_label('Специализация').select_option('python')
+        expect(hr.get_by_text('Параметры изменены',exact=False)).to_be_visible()
+        hr.evaluate('window.scrollTo(0, 400)');hr.wait_for_timeout(200)
+        scroll=hr.evaluate('window.scrollY');assert scroll>0
+        nav(hr,'Обзор');nav(hr,'Подбор кандидатов')
+        hr.wait_for_timeout(500)
+        assert abs(hr.evaluate('window.scrollY')-scroll)<5
+        checks.append('Q5_two_visible_score_sums_unique_labels_changed_banner_scroll')
         nav(hr,'Обзор');nav(hr,'Подбор кандидатов');expect(hr.get_by_text('Сохранённая подборка на',exact=False)).to_be_visible()
         checks.append('Q5_filters_snapshot_and_score_UI')
         # Q6 actual HTTP pause/resume after review.
@@ -131,7 +169,11 @@ try:
         call(c,'/tasks/plans/'+plan['id'],{'status':'paused'},'PATCH')
         resumed=call(c,'/tasks/plans/'+plan['id'],{'status':'active'},'PATCH')
         assert len(resumed['assignments'])==1 and resumed['next_issue_at']==active['next_issue_at']
-        call(c,'/tasks/plans/'+plan['id'],{'status':'closed'},'PATCH');checks.append('Q6_live_7day_resume_no_duplicate')
+        page.reload();nav(page,'Задания от компаний')
+        expected_date=page.evaluate('(value) => new Date(value).toLocaleString("ru-RU", {timeZone:"Europe/Moscow", dateStyle:"medium", timeStyle:"short"})',resumed['next_issue_at'])
+        date_line=page.get_by_text('Следующая выдача не ранее',exact=False)
+        expect(date_line).to_contain_text(expected_date)
+        call(c,'/tasks/plans/'+plan['id'],{'status':'closed'},'PATCH');checks.append('Q6_live_7day_resume_no_duplicate_UI_date_equals_API')
         # Q4 hide with an open employer chat: poll must close input.
         nav(hr,'Приглашения');hr.get_by_role('button',name='Открыть диалог').click();expect(hr.get_by_label('Сообщение',exact=True)).to_be_visible()
         own=call(c,'/me/profile')

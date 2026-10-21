@@ -38,7 +38,7 @@ def test_stored_attempt_count_rules_scoring_and_history(app, version):
     assert row['rubric']['core_min_correct'] == bank.rubric(version)['core_min_correct']
     # Make the final question wrong: the last item must contribute to the score.
     answers = {q['id']: q['answer'] for q in qs[:-1]}
-    result = c.post(f"/api/me/attempts/{a['id']}/submit", json={'answers':answers})
+    result = c.post(f"/api/me/attempts/{a['id']}/submit", json={'answers':answers, 'confirm_incomplete': True})
     assert result.status_code == 200
     data = result.json()
     assert data['result']['score'] == (expected-1)*100/expected

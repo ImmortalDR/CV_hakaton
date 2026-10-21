@@ -471,7 +471,7 @@ def test_new_core_rule_and_inflight_legacy_attempt_keep_their_rubrics(app):
             a.questions = bank.generate('python', 'Junior', a.seed, version=version)
             answers = {q['id']: str(solve(q)) for q in a.questions}
             answers.pop(next(q['id'] for q in a.questions if q['skill'] == 'python'))
-        r = c.post(f"/api/me/attempts/{attempt['id']}/submit", json={'answers': answers})
+        r = c.post(f"/api/me/attempts/{attempt['id']}/submit", json={'answers': answers, 'confirm_incomplete': True})
         assert r.status_code == 200, r.text
         assert r.json()['result']['score'] == 75
         assert r.json()['result']['passed'] is expected
@@ -506,7 +506,7 @@ def test_v2_fractional_score_rubric_and_foreign_question_rejection(app):
         stored = db.get(Attempt, a['id'])
         answers = {q['id']:str(solve(q)) for q in stored.questions}
         answers.pop(next(q['id'] for q in stored.questions if q['skill']=='python'))
-    r = c.post('/api/me/attempts/'+a['id']+'/submit', json={'answers':answers})
+    r = c.post('/api/me/attempts/'+a['id']+'/submit', json={'answers':answers, 'confirm_incomplete': True})
     assert r.status_code == 200, r.text
     assert r.json()['result']['score'] == 87.5 and r.json()['result']['passed']
     assert c.get('/api/me/profile').json()['test_score'] == 87.5

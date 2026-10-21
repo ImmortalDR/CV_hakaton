@@ -85,6 +85,10 @@ class Answers(Input):
         return v
 
 
+class SubmitAnswers(Answers):
+    confirm_incomplete: bool = False
+
+
 class NeedInput(Input):
     title: str = Field(min_length=3, max_length=160)
     description: str = Field(min_length=10, max_length=3000)

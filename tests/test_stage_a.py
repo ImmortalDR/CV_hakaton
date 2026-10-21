@@ -42,3 +42,22 @@ def test_anonymous_labels_distinct_and_stable(app):
     assert one[a]['display_name'] != one[b]['display_name']
     assert one[a]['display_name'] == two[a]['display_name']
     assert one[a]['contacts'] is None and one[b]['contacts'] is None
+
+
+def test_incomplete_submit_requires_explicit_confirmation(app):
+    c, _ = account(app)
+    profile(c)
+    a = c.post('/api/me/attempts', json={'grade': 'Junior'}).json()
+    url = f"/api/me/attempts/{a['id']}/submit"
+    c.put(url.replace('/submit', '/answers'), json={'answers': {'1': '42'}})
+    for answers in ({'1': '42'}, {str(i): '  ' for i in range(1, 9)}):
+        for flag in ({}, {'confirm_incomplete': False}):
+            r = c.post(url, json={'answers': answers, **flag})
+            assert r.status_code == 409
+            assert 'Подтвердите' in r.json()['detail']
+            saved = c.get('/api/me/attempts').json()[0]
+            assert saved['status'] == 'active' and saved['result'] is None
+            assert saved['answers'] == {'1': '42'}
+            assert saved['expires_at'] == a['expires_at']
+    r = c.post(url, json={'answers': {'1': '42'}, 'confirm_incomplete': True})
+    assert r.status_code == 200 and r.json()['status'] == 'completed'

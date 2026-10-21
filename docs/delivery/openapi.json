@@ -1941,7 +1941,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Answers"
+                "$ref": "#/components/schemas/SubmitAnswers"
               }
             }
           }
@@ -6532,6 +6532,29 @@
           "grade"
         ],
         "title": "StartAttempt"
+      },
+      "SubmitAnswers": {
+        "properties": {
+          "answers": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "maxProperties": 8,
+            "title": "Answers"
+          },
+          "confirm_incomplete": {
+            "type": "boolean",
+            "title": "Confirm Incomplete",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "answers"
+        ],
+        "title": "SubmitAnswers"
       },
       "TaskAnswer": {
         "properties": {
