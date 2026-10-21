@@ -86,7 +86,7 @@
     {
       "id": "CC5",
       "priority": "P2",
-      "status": "todo",
+      "status": "PASS",
       "owner": "astra",
       "title": "Secrets and config hygiene checklist + proof .env not committed",
       "artifact": "docs/delivery/closed_contour/04_SECRETS_AND_CONFIG.md"
