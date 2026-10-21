@@ -1550,3 +1550,5 @@ button:focus-visible, summary:focus-visible, a:focus-visible { outline: 3px soli
 .chat-candidate { margin: 8px 0 24px; }
 .chat-candidate .candidate-footer { flex-wrap: wrap; }
 .chat-candidate .candidate-footer .button { max-width: 100%; white-space: normal; }
+
+.demo-entry .after-call-note a { text-decoration: underline; text-underline-offset: 2px; }

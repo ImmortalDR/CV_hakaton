@@ -4,9 +4,10 @@
 > Отправка на площадку организаторов — действие команды (скопировать блок ниже).
 
 Команда: Нанотехнологический альянс. Кейс ФСП — обратный найм.
-Этап A: доработки для самостоятельной экспертной проверки без питча + заготовка внедрения в закрытый контур.
+После созвона с организаторами (20→21.10): доработки для самостоятельной проверки без питча + сценарий «два окна» + профиль/PDF в чате + заготовка внедрения в закрытый контур. Карта изменений: AFTER_ORGANIZERS_CALL_2026-10-21.md.
 
 - Стенд: https://85-137-26-131.sslip.io/
+- После созвона (карта для жюри): https://github.com/ImmortalDR/CV_hakaton/blob/main/docs/delivery/AFTER_ORGANIZERS_CALL_2026-10-21.md
 - Ветка сдачи: https://github.com/ImmortalDR/CV_hakaton/tree/main
 - Маршрут жюри 10–15 мин: https://github.com/ImmortalDR/CV_hakaton/blob/main/docs/delivery/FOR_JURY.md
 - Changelog: https://github.com/ImmortalDR/CV_hakaton/blob/main/docs/delivery/CHANGELOG_STAGE_A.md
