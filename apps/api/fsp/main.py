@@ -322,6 +322,8 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             "updated_at": i.updated_at,
             "candidate_name": bank.SPECS[p.specialization] + " · кандидат",
             "contacts": None,
+            "chat_available": bool(i.status == "accepted" and p.processing and p.published
+                                   and db.get(ContactGrant, (p.user_id, i.company_id))),
         }
         if (
             user.role == "employer"

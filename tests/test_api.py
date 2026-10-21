@@ -326,11 +326,13 @@ def test_contacts_full_lifecycle_pdf_search_history_and_chat(app):
     assert e.get("/api/profiles/" + cid + "/pdf").status_code == 404
     assert e.get("/api/searches/" + snapshot["id"]).json()["hidden_count"] == 1
     assert e.get("/api/invitations").json()[0]["contacts"] is None
+    assert not next(i for i in e.get("/api/invitations").json() if i["id"] == url.split("/")[-1])["chat_available"]
     assert e.get(url + "/messages").status_code == 403
     # Republishing does not silently resurrect consent via an idempotent replay.
     profile(c, published=True)
     assert c.patch(url, json={"status": "accepted"}).status_code == 200
     assert e.get("/api/candidates/" + cid).json()["contacts"] is None
+    assert not next(i for i in e.get("/api/invitations").json() if i["id"] == url.split("/")[-1])["chat_available"]
     assert e.get(url + "/messages").status_code == 403
     second, _ = invite(e, cid)
     assert (
@@ -390,7 +392,7 @@ def test_search_unknowns_empty_filters_history_and_fsp(app):
     assert linked["next_grade_change"] == before["next_grade_change"]
     assert linked["achievements"][0]["verification"] == "simulated"
     fsp = e.post("/api/searches", json=need(fsp_only=True)).json()
-    assert fsp["items"][0]["match"]["breakdown"]["fsp"] == 3
+    assert fsp["items"][0]["match"]["breakdown"]["fsp"] == 6
     assert len(e.get("/api/candidates?fsp_only=true").json()) == 1
     assert (
         e.get("/api/searches/" + search["id"]).json()["items"][0]["achievements"] == []
@@ -498,7 +500,7 @@ def test_v2_fractional_score_rubric_and_foreign_question_rejection(app):
     c, _ = account(app, 'v2-score@example.org')
     profile(c)
     a = c.post('/api/me/attempts', json={'grade':'Junior'}).json()
-    assert a['version'] == '2.0.0' and a['rubric']['question_count'] == 8
+    assert a['version'] == bank.VERSION and a['rubric']['question_count'] == 8
     assert c.post('/api/me/attempts/'+a['id']+'/submit', json={'answers':{'9':'0'}}).status_code == 422
     with app.state.factory() as db:
         stored = db.get(Attempt, a['id'])

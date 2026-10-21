@@ -706,7 +706,9 @@ function Overview({
           <p>
             {candidate
               ? p?.verified_grade
-                ? "Ваш уровень подтверждён тестом. Работодатели могут найти вас в соответствующей категории."
+                ? p.published && p.processing
+                  ? "Ваш уровень подтверждён тестом. Работодатели могут найти вас в соответствующей категории."
+                  : "Ваш уровень подтверждён, но профиль скрыт. Включите публикацию и согласие в профиле, чтобы попасть в подбор."
                 : "Тест по основному и вспомогательному навыкам поможет подтвердить выбранный уровень. ФСП ID для этого не нужен."
               : "Никакого потока случайных откликов: выбирайте подтверждённую категорию и смотрите основания подбора."}
           </p>
@@ -2116,7 +2118,7 @@ function Invitations({
                     )}
                   </>
                 )}
-              {i.status === "accepted" && (
+              {i.chat_available && (
                 <button
                   className="secondary"
                   onClick={() => setChat(chat === i.id ? null : i.id)}
@@ -2126,7 +2128,8 @@ function Invitations({
                 </button>
               )}
             </div>
-            {chat === i.id && (
+            {i.status === "accepted" && !i.chat_available && <p className="muted">Диалог недоступен: согласие на доступ к профилю отозвано.</p>}
+            {chat === i.id && i.chat_available && (
               <Chat invitationId={i.id} act={act} busy={busy} />
             )}
           </article>
@@ -2148,10 +2151,21 @@ function Chat({
       { id: string; text: string; mine: boolean; created_at: string }[]
     >([]),
     [text, setText] = useState("");
-  const load = async () =>
-    setMessages(await api("/invitations/" + invitationId + "/messages"));
+  const [available, setAvailable] = useState(false);
+  const load = async () => {
+    try {
+      setMessages(await api("/invitations/" + invitationId + "/messages"));
+      setAvailable(true);
+    } catch (error) {
+      setAvailable(false);
+      setMessages([]);
+      throw error;
+    }
+  };
   useEffect(() => {
     void act(load);
+    const timer = window.setInterval(() => { void load().catch(() => {}); }, 15000);
+    return () => window.clearInterval(timer);
   }, [invitationId]);
   return (
     <div className="chat">
@@ -2169,11 +2183,18 @@ function Chat({
           </small>
         </div>
       ))}
-      <form
+      {!available && <p role="status">Диалог недоступен или загружается. Отправка сообщений закрыта до проверки доступа.</p>}
+      {available && <form
         onSubmit={(e) => {
           e.preventDefault();
           void act(async () => {
-            await api("/invitations/" + invitationId + "/messages", { text });
+            try {
+              await api("/invitations/" + invitationId + "/messages", { text });
+            } catch (error) {
+              setAvailable(false);
+              setMessages([]);
+              throw error;
+            }
             setText("");
             await load();
           });
@@ -2189,7 +2210,7 @@ function Chat({
           />
         </Field>
         <button disabled={busy}>Отправить</button>
-      </form>
+      </form>}
     </div>
   );
 }

@@ -205,6 +205,7 @@ class Invitation(Output):
     created_at: datetime
     updated_at: datetime
     candidate_name: str
+    chat_available: bool
     contacts: Contacts | None
 
 

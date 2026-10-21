@@ -69,9 +69,10 @@
         "B06"
       ],
       "owner": "nikita",
-      "status": "todo",
+      "status": "done",
       "priority": "P2",
-      "title": "Hints match profile/dialog state after hide/revoke"
+      "title": "Hints match profile/dialog state after hide/revoke",
+      "verification": "22 API tests passed (privacy and revoked chat); frontend build passed"
     },
     {
       "id": "Q5",

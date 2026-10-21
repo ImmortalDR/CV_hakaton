@@ -120,6 +120,7 @@ export type Invitation = {
   id: string;
   candidate_id: string;
   candidate_name: string;
+  chat_available: boolean;
   company_name: string;
   description: string;
   salary_min: number;
