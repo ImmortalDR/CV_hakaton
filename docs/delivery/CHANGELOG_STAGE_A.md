@@ -18,7 +18,7 @@
 Проверено до деплоя: 96 pytest tests passed, frontend build, 55 numeral assertions;
 после уточнения закрытия плана — 6 scheduler tests passed.
 Протокол: [журнал](../review/STAGE_A_2026-10-21.md), [валидация](VALIDATION.md).
-Результаты деплоя и браузерного smoke будут зафиксированы в [STAGE_A_SMOKE.md](STAGE_A_SMOKE.md).
+Результаты деплоя и браузерного smoke зафиксированы в [STAGE_A_SMOKE.md](STAGE_A_SMOKE.md).
 
 Ограничения: синтетические метки, без внешних экспертов и пилота на людях;
 четыре семейства по два вопроса в тесте; старый SQL-кейс аудита автоматически

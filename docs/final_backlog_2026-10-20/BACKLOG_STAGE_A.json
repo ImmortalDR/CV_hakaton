@@ -152,7 +152,7 @@
       "owner": "team",
       "status": "human_pending",
       "title": "Submit links like previous round",
-      "verification": "docs/delivery/SUBMISSION_LINKS.md prepared; no external submission"
+      "verification": "SUBMISSION_LINKS prepared; human must authenticate/push branch, verify GitHub links, then submit externally"
     }
   ],
   "stage_b_after_submission": [
@@ -169,5 +169,11 @@
     "pitch rehearsal instead of Q1-Q7",
     "promise live FSP registry"
   ],
-  "vps_docs": "/root/hakaton/docs/final_backlog_2026-10-20/"
+  "vps_docs": "/root/hakaton/docs/final_backlog_2026-10-20/",
+  "publication": {
+    "local_commits": "complete",
+    "deployment": "complete",
+    "git_push": "blocked_no_https_or_ssh_credentials",
+    "external_form": "not_sent"
+  }
 }

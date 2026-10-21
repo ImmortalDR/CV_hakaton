@@ -1,5 +1,6 @@
 # Самостоятельная проверка этапа A · 10–15 минут
 
+> Перед отправкой: GitHub ещё не обновлён — на сервере нет HTTPS/SSH-авторизации для push. Все изменения и материалы сохранены локально. Сначала выполните `git push origin codex/fsp-mvp` после настройки доступа, затем проверьте ссылки.
 Стенд: https://85-137-26-131.sslip.io/  
 Код: https://github.com/ImmortalDR/CV_hakaton/tree/codex/fsp-mvp  
 [Что изменено после аудита](CHANGELOG_STAGE_A.md) · [Аудит 20 октября](../final_backlog_2026-10-20/FSP-audit-2026-10-20/findings.json) · [Протокол проверки](STAGE_A_SMOKE.md)
