@@ -14,6 +14,7 @@
 
 | Место | Значение |
 |---|---|
+| Tip `main` | `9155b20` |
 | GitHub (дефолт) | https://github.com/ImmortalDR/CV_hakaton/tree/main |
 | Handoff | https://github.com/ImmortalDR/CV_hakaton/blob/main/docs/delivery/closed_contour/HANDOFF_CLOSED_CONTOUR.md |
 | Стенд | https://85-137-26-131.sslip.io/ |
