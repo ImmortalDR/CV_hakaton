@@ -1,76 +1,87 @@
 {
-  "session": "spot-stage-a-after-f86d733-2026-10-21",
-  "checked_at": "2026-10-21T09:32:20.584451+00:00",
-  "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86",
+  "criteria_source": "COMPREHENSIVE_STAGE_A_2026-10-21.md",
+  "criteria_path": "docs/final_backlog_2026-10-20/COMPREHENSIVE_STAGE_A_2026-10-21.md",
+  "criteria_sha256": "cd652c55e049b78e491ae682d5adbf3ebb208d0dc14a390e4b118179fc4827da",
+  "checked_at": "2026-10-21T10:16:03.917754+00:00",
+  "git_sha": "feb67e508f83659cba60cf0c5de89cc16bf043cd",
   "branch": "codex/fsp-mvp",
-  "submission_allowed": false,
-  "counts": {
-    "PASS": 14,
-    "PARTIAL": 1,
-    "HUMAN_ONLY": 1,
-    "FAIL": 0
+  "base_url": "https://85-137-26-131.sslip.io/",
+  "source_hashes": {
+    "docs/final_backlog_2026-10-20/COMPREHENSIVE_STAGE_A_2026-10-21.md": "cd652c55e049b78e491ae682d5adbf3ebb208d0dc14a390e4b118179fc4827da",
+    "docs/final_backlog_2026-10-20/FSP-audit-2026-10-20/findings.json": "6ab1dbd3e96614213fc323a25ec986a4aab2821e65aa1bfe4451ae3e645e6cc0",
+    "docs/final_backlog_2026-10-20/BACKLOG_STAGE_A.json": "80ef311a6e9dd75ebb540f704e9d64d2cb90c3c1b5624e34bae2332d04ac1bf2",
+    "docs/final_backlog_2026-10-20/prompts/ASTRA_VERIFY_STAGE_A.md": "e45c37dd922d99fd50118c80e5ddb37223e02f2354b15d948a8eb7a84e733229",
+    "docs/final_backlog_2026-10-20/prompts/ASTRA_VERIFY_BY_TASK.md": "ea760336458965756863cd443c6b3d0eeecbad17350c06759cb2cb0245fe80ab",
+    "docs/final_backlog_2026-10-20/prompts/ASTRA_HUMAN_PROTOCOL_SPEC.md": "565646c0e01a17832d0257c02abc5441134c3a8b8f4f079ad18bd1cc33424032"
   },
-  "summary": "Pck1 и Q4 закрыты точечной перепроверкой после f86d733. Технических FAIL нет. После успешного push актуальной ветки и human PASS по обязательным шагам можно отправлять; сейчас Pck2 PARTIAL, Pck5 HUMAN_ONLY.",
+  "independent": true,
+  "submission_allowed": false,
+  "can_close_after_push_and_human_only": false,
+  "counts": {
+    "FAIL": 3,
+    "PASS": 11,
+    "PARTIAL": 1,
+    "HUMAN_ONLY": 1
+  },
   "tasks": [
     {
       "id": "Q1",
-      "verdict": "PASS",
-      "dod_from_canon": "Ответы сохраняются при Обзор → тест → reload, срок и попытка прежние.",
+      "verdict": "FAIL",
+      "dod_from_canon": "Ушёл в Обзор и вернулся — ответы на месте; или явное предупреждение до потери. B01 уточняет: неподтверждённое сохранение видно, уход с несохранёнными изменениями требует подтверждения; reload/повторный вход не меняет попытку и срок.",
       "audit_refs": [
         "B01"
       ],
       "agent_evidence": [
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
-          "excerpt": "Q1_navigation_reload_server_draft_owner_expiry"
+          "ref": "E2",
+          "excerpt": "normal navigation/reload/server draft/owner/expiry PASS"
         },
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#pytest",
-          "excerpt": "97 passed; test_draft_answers_owner_lifecycle, test_draft_expired; UI status Ответы сохранены, outsider draft 404"
+          "ref": "E3",
+          "excerpt": "failed PUT: warning visible; after roundtrip status=\"\", dialogs=[]; reopen tab answer reverts from UNSAVED-123 to 90,63"
         },
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
-          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
+          "ref": "E4",
+          "excerpt": "draft owner/lifecycle/expired tests PASS"
         }
       ],
-      "gaps": [],
-      "human_checks_required": [
-        "H-Q1"
+      "gaps": [
+        "Обычный путь канона работает. Отрицательный accept B01 не выполнен: после неудачного PUT и round-trip теряется индикация несохранённого ответа; нет подтверждения ухода/закрытия вкладки; новый ответ теряется при повторном открытии.",
+        "После возврата нет повторной отправки локального черновика. Это воспроизведённый сбой, не предположение по коду."
       ],
-      "regression_risk": "low",
-      "checked_at": "2026-10-21T09:32:20.584451+00:00",
-      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
+      "human_checks_required": [
+        "H-Q1",
+        "H-Q1-network"
+      ],
+      "regression_risk": "high",
+      "checked_at": "2026-10-21T10:16:03.917754+00:00",
+      "git_sha": "feb67e508f83659cba60cf0c5de89cc16bf043cd"
     },
     {
       "id": "Q2",
       "verdict": "PASS",
-      "dod_from_canon": "Единое округление и явное правило 90,625 → 90,63 в новых выдачах.",
+      "dod_from_canon": "Правило записано в условии или единый round-half-up; кейс SQL Middle зелёный.",
       "audit_refs": [
         "B02"
       ],
       "agent_evidence": [
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
-          "excerpt": "Q2_live_bank_2_1_rounding_hint"
+          "ref": "E4",
+          "excerpt": "90.625→90.63; 1.005→1.01; 0.625→0.63; точка/запятая приняты, 90.62 отклонён новым банком; legacy 2.0.0 сохранён"
         },
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#pytest",
-          "excerpt": "test_half_up_exact_boundaries; test_conditional_rounding_new_and_historical_versions: 90.63 и 90,63 принимаются, 90.62 отвергается"
+          "ref": "E2",
+          "excerpt": "Живая попытка version=2.1.0 и правило 90,625 → 90,63 в условии"
         },
         {
           "kind": "file",
-          "ref": "CHANGELOG_STAGE_A.md",
+          "ref": "docs/delivery/CHANGELOG_STAGE_A.md",
           "excerpt": "Старые попытки сохраняют исходные версии; массового пересчёта не было."
-        },
-        {
-          "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
-          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
         }
       ],
       "gaps": [],
@@ -78,31 +89,31 @@
         "H-Q2"
       ],
       "regression_risk": "low",
-      "checked_at": "2026-10-21T09:32:20.584451+00:00",
-      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
+      "checked_at": "2026-10-21T10:16:03.917754+00:00",
+      "git_sha": "feb67e508f83659cba60cf0c5de89cc16bf043cd"
     },
     {
       "id": "Q3",
       "verdict": "PASS",
-      "dod_from_canon": "Диалог считает пропуски; без подтверждения не завершает; отмена сохраняет ответы.",
+      "dod_from_canon": "Модалка: N пустых из M; без подтверждения попытка не закрывается.",
       "audit_refs": [
         "B03"
       ],
       "agent_evidence": [
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
-          "excerpt": "Q3_direct_API_without_confirm_409_active_draft_unchanged; Q3_cancel_keeps_active_accept_completes"
-        },
-        {
-          "kind": "api",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#blockers",
-          "excerpt": "POST submit: 409; detail=Не заполнено 7 из 8 заданий. Подтвердите завершение теста с пропусками.; status=active, answers={1:42}, same_expiry=true"
+          "ref": "E2",
+          "excerpt": "POST без confirm →409, active/draft/expiry неизменны; UI 7 из 8 → cancel active → accept completed"
         },
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
-          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
+          "ref": "E4",
+          "excerpt": "Пустые строки/отсутствующий и false confirm проверены; явный true завершает"
+        },
+        {
+          "kind": "file",
+          "ref": "apps/web/src/App.tsx:1180",
+          "excerpt": "Текст: пропуски неверные; пересдача через 24 часа. Native window.confirm."
         }
       ],
       "gaps": [],
@@ -110,13 +121,13 @@
         "H-Q3"
       ],
       "regression_risk": "low",
-      "checked_at": "2026-10-21T09:32:20.584451+00:00",
-      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
+      "checked_at": "2026-10-21T10:16:03.917754+00:00",
+      "git_sha": "feb67e508f83659cba60cf0c5de89cc16bf043cd"
     },
     {
       "id": "Q4",
       "verdict": "PASS",
-      "dod_from_canon": "Обзор/приглашения/диалог соответствуют текущему состоянию профиля и согласия.",
+      "dod_from_canon": "Обзор и диалог согласованы со статусом; кнопка «Открыть диалог» не врёт.",
       "audit_refs": [
         "B05",
         "B06"
@@ -124,13 +135,13 @@
       "agent_evidence": [
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
-          "excerpt": "App.tsx: verified_grade определяет орб; свежая dist = web = публичный JS. Chromium: verified_grade=null, published=false/true → «навыки к проверке»; B05 regression PASS."
+          "ref": "E2",
+          "excerpt": "Новый/неподтверждённый/подтверждённый published/hidden; после публикации CTA обновляется; открытый chat composer исчезает после отзыва"
         },
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
-          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
+          "ref": "E1",
+          "excerpt": "test_contacts_full_lifecycle_pdf_search_history_and_chat PASS: повторная публикация и replay accepted не восстанавливают доступ; новое принятое приглашение восстанавливает"
         }
       ],
       "gaps": [],
@@ -138,14 +149,14 @@
         "H-Q4a",
         "H-Q4b"
       ],
-      "regression_risk": "low",
-      "checked_at": "2026-10-21T09:32:20.584451+00:00",
-      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
+      "regression_risk": "med",
+      "checked_at": "2026-10-21T10:16:03.917754+00:00",
+      "git_sha": "feb67e508f83659cba60cf0c5de89cc16bf043cd"
     },
     {
       "id": "Q5",
       "verdict": "PASS",
-      "dod_from_canon": "Различимые анонимы, сохранение контекста, компактная форма и видимые слагаемые.",
+      "dod_from_canon": "U01–U04 закрыты на стенде; в карточке видны вклады: различимые анонимы, сохранение фильтров, компактнее форма потребности, короткая расшифровка балла.",
       "audit_refs": [
         "U01",
         "U02",
@@ -155,13 +166,13 @@
       "agent_evidence": [
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
-          "excerpt": "Q5_anonymous_label_selection_invitation_PDF_UI; Q5_two_visible_score_sums_unique_labels_changed_banner_scroll; Q5_filters_snapshot_and_score_UI"
+          "ref": "E2",
+          "excerpt": "Стабильный ярлык selection/invitation/PDF/UI; статус отправлено/принято; фильтры/reload/scroll; snapshot dated/changed banner; один select навыка, context collapsed; две видимые суммы сходятся ≤0.02"
         },
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
-          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
+          "ref": "E4",
+          "excerpt": "unknown ≠ unmet; self_report не даёт баллов; ФСП отсутствует →0; уникальные стабильные анонимы PASS"
         }
       ],
       "gaps": [],
@@ -170,237 +181,233 @@
         "H-Q5b",
         "H-Q5c"
       ],
-      "regression_risk": "low",
-      "checked_at": "2026-10-21T09:32:20.584451+00:00",
-      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
+      "regression_risk": "med",
+      "checked_at": "2026-10-21T10:16:03.917754+00:00",
+      "git_sha": "feb67e508f83659cba60cf0c5de89cc16bf043cd"
     },
     {
       "id": "Q6",
       "verdict": "PASS",
-      "dod_from_canon": "Период 7 дней, resume без раннего дубля, UI дата соответствует API.",
+      "dod_from_canon": "Период 7 дней соблюдается; дубль после resume нет.",
       "audit_refs": [
         "B04"
       ],
       "agent_evidence": [
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
-          "excerpt": "Q6_live_7day_resume_no_duplicate_UI_date_equals_API"
+          "ref": "E2",
+          "excerpt": "live evaluate→pause→resume: 1 assignment, next_issue_at прежний; UI дата совпадает с API в МСК"
         },
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#pytest",
-          "excerpt": "97 passed включает 6 tests/test_employer_tasks.py: управляемое время до границы/на границе, 4 concurrent ticks, closed не выдаёт."
-        },
-        {
-          "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
-          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
+          "ref": "E4",
+          "excerpt": "6 task tests PASS: до границы нет выдачи, 4 конкурентных tick на границе дают одну выдачу; repeated resume; legacy null; closed +100 days не выдаёт"
         }
       ],
-      "gaps": [],
+      "gaps": [
+        "Реальные семь календарных дней не ожидались: это ограничение метода, не найденное нарушение периодичности."
+      ],
       "human_checks_required": [
         "H-Q6-calendar"
       ],
-      "regression_risk": "low",
-      "checked_at": "2026-10-21T09:32:20.584451+00:00",
-      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
+      "regression_risk": "med",
+      "checked_at": "2026-10-21T10:16:03.917754+00:00",
+      "git_sha": "feb67e508f83659cba60cf0c5de89cc16bf043cd"
     },
     {
       "id": "Q7",
       "verdict": "PASS",
-      "dod_from_canon": "Версия формулы; выбор весов на размеченном dev; честное до/после на holdout.",
+      "dod_from_canon": "До/после на размеченных фикстурах: P@5 или согласованная метрика; test+FSP двигают ранг сильнее чекбоксов навыков; VERSION bump; цифры в VALIDATION.",
       "audit_refs": [
-        "M01",
-        "M02"
+        "expert_call",
+        "U04"
       ],
       "agent_evidence": [
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#matching",
-          "excerpt": "selected_weights=[30,15,45,10]; dev 1.0 -> 1.0; test 0.8 -> 0.8; 36000 oracle checks, mismatches=[]; 42000 simulated attempts"
+          "ref": "E5",
+          "excerpt": "matching-1.1.0→matching-1.2.0; dev 1→1; holdout .8→.8; weights 60/15/20/5→30/15/45/10; candidate IDs overlap=[]"
         },
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
-          "excerpt": "matching-1.2.0 в live API; test_stage_a_test_and_sport_change_within_category_order и test_production_matches_selected_weights_on_frozen_sample прошли"
+          "ref": "E4",
+          "excerpt": "Production scores совпадают с выбранными весами на всей fixture"
+        },
+        {
+          "kind": "command",
+          "ref": "E6",
+          "excerpt": "36 000 oracle checks, 0 mismatches; 42 000 synthetic attempts"
+        },
+        {
+          "kind": "file",
+          "ref": "docs/delivery/VALIDATION.md:147",
+          "excerpt": "Таблица до/после; улучшение P@5 не доказано; авторская синтетика, не внешняя экспертиза"
         }
       ],
-      "gaps": [],
+      "gaps": [
+        "Нет независимой человеческой разметки/пилота. Раздельные ID не доказывают независимость синтетических шаблонов; holdout многократно известен проекту. Код выбора использует только dev, fixture не менялась в Stage A."
+      ],
       "human_checks_required": [
         "H-Q7"
       ],
-      "regression_risk": "low",
-      "checked_at": "2026-10-21T09:22:32.651398+00:00",
-      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+      "regression_risk": "med",
+      "checked_at": "2026-10-21T10:16:03.917754+00:00",
+      "git_sha": "feb67e508f83659cba60cf0c5de89cc16bf043cd"
     },
     {
       "id": "Pck1",
-      "verdict": "PASS",
-      "dod_from_canon": "Эксперт за 2 минуты видит однозначное текущее состояние Q1–Q7. ",
+      "verdict": "FAIL",
+      "dod_from_canon": "Changelog после промежуточного/аудита: эксперт за 2 минуты видит список Q1–Q7.",
       "audit_refs": [],
       "agent_evidence": [
         {
-          "kind": "file",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
-          "excerpt": "CHANGELOG_STAGE_A.md: старый STOP явно ИСТОРИЯ/архив, актуальный статус отдельно. Прежний запрет по старым FAIL отменён."
+          "kind": "command",
+          "ref": "E8",
+          "excerpt": "Все Q1–Q7 перечислены и связаны с FOR_JURY; ограничения SMTP/ФСП указаны"
         },
         {
-          "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
-          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
+          "kind": "file",
+          "ref": "docs/delivery/CHANGELOG_STAGE_A.md",
+          "excerpt": "Актуальный статус: «Q1–Q7 и Pck3–Pck4: закрыты кодом и свежими автопроверками» противоречит E3"
         }
       ],
-      "gaps": [],
+      "gaps": [
+        "Структурный DoD списка выполнен; актуальное утверждение о закрытии не соответствует Q1 FAIL. Требуется STOP/обновление статуса после исправления и повторной проверки, не архивирование нового блокера."
+      ],
       "human_checks_required": [
         "H-Pck1"
       ],
-      "regression_risk": "low",
-      "checked_at": "2026-10-21T09:32:20.584451+00:00",
-      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
+      "regression_risk": "high",
+      "checked_at": "2026-10-21T10:16:03.917754+00:00",
+      "git_sha": "feb67e508f83659cba60cf0c5de89cc16bf043cd"
     },
     {
       "id": "Pck2",
       "verdict": "PARTIAL",
-      "dod_from_canon": "Стенд, ветка, рабочие review-логины, две метрики, not_run, аудит и маршрут 10–15 минут.",
+      "dod_from_canon": "For-jury/README: стенд, ветка, review-логины, две цифры, not_run, ссылка на аудит; путь 10–15 минут без команды.",
       "audit_refs": [],
       "agent_evidence": [
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
-          "excerpt": "three_review_logins_ok; все 3 login HTTP 200"
-        },
-        {
-          "kind": "file",
-          "ref": "FOR_JURY.md",
-          "excerpt": "Стенд, branch URL, 3 review-логина, P@5=0.80→0.80, 36000 сверок; not_run SMTP/пилот/нагрузка/реальные интервалы; ссылка на findings.json."
+          "ref": "E2",
+          "excerpt": "Все 3 review login API →200, без изменения паролей"
         },
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#environment",
-          "excerpt": "git ls-remote: 2e6d6daa5bfb59f6d5a7e7317aa41093c8f05980; локальный HEAD 6b965aca; push dry-run: could not read Username"
+          "ref": "E8",
+          "excerpt": "Все обязательные поля и локальные ссылки присутствуют"
         },
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
-          "excerpt": "Свежий remote: 2e6d6da; push --dry-run exit 128, GitHub credentials unavailable."
+          "ref": "E9",
+          "excerpt": "Remote codex/fsp-mvp=2e6d6daa5bfb59f6d5a7e7317aa41093c8f05980, HEAD=feb67e508f83659cba60cf0c5de89cc16bf043cd"
         }
       ],
       "gaps": [
-        "Изменения этапа A и актуальные документы не опубликованы в ветке GitHub.",
-        "Человеческий маршрут общих аккаунтов может упереться в cooldown; это не разрешение сбрасывать попытки или БД."
+        "GitHub не содержит актуальную сдачу; push не выполнялся в этой verify-сессии.",
+        "Маршрут общих аккаунтов может упереться в cooldown; human walkthrough не исполнен."
       ],
       "human_checks_required": [
+        "H-ACC",
         "H-Pck2-walk",
         "H-PUSH"
       ],
       "regression_risk": "high",
-      "checked_at": "2026-10-21T09:32:20.584451+00:00",
-      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
+      "checked_at": "2026-10-21T10:16:03.917754+00:00",
+      "git_sha": "feb67e508f83659cba60cf0c5de89cc16bf043cd"
     },
     {
       "id": "Pck3",
       "verdict": "PASS",
-      "dod_from_canon": "Health ok, локальная ветка соответствует приложению контейнеров, том сохранён.",
+      "dod_from_canon": "Health ok; стенд = то, что в репо после Q*. Здесь репо — локальный HEAD, публикация GitHub отдельно Pck2.",
       "audit_refs": [],
       "agent_evidence": [
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#hashes",
-          "excerpt": "14/14 Python файлов api и 14/14 worker совпали; index.html, JS, CSS совпали после npm run build. Только дополнительный штатный nginx 50x.html."
-        },
-        {
-          "kind": "api",
-          "ref": "https://85-137-26-131.sslip.io/api/health",
-          "excerpt": "{\"status\":\"ok\",\"demo\":true,\"version\":\"1.0.0\"}"
+          "ref": "E7",
+          "excerpt": "17 Python-файлов api и 17 worker совпадают с workspace и git HEAD; fresh web build 3 файла равны container и public HTTPS; health ok"
         },
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#environment",
-          "excerpt": "Том fsp-mvp_fsp_db создан 2026-10-07T22:42:58+02:00; деплой/миграции/удаление БД в этой сессии не выполнялись."
-        },
-        {
-          "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
-          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
+          "ref": "E0",
+          "excerpt": "Compose healthy api/db/web/edge; worker Up; том fsp-mvp_fsp_db сохранён"
         }
       ],
       "gaps": [],
       "human_checks_required": [
-        "H-ACC",
         "H-Pck3-reach"
       ],
-      "regression_risk": "low",
-      "checked_at": "2026-10-21T09:32:20.584451+00:00",
-      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
+      "regression_risk": "med",
+      "checked_at": "2026-10-21T10:16:03.917754+00:00",
+      "git_sha": "feb67e508f83659cba60cf0c5de89cc16bf043cd"
     },
     {
       "id": "Pck4",
-      "verdict": "PASS",
-      "dod_from_canon": "Свежий smoke Q1–Q3, invite→accept→contacts, ФСП и изоляция.",
+      "verdict": "FAIL",
+      "dod_from_canon": "VERIFY_NOW + три бага аудита не воспроизводятся; invite→accept→contacts; регрессия ФСП/изоляции.",
       "audit_refs": [],
       "agent_evidence": [
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
-          "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:18:21.766998+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
+          "ref": "E2",
+          "excerpt": "Свежий штатный smoke status=pass, 17 групп, page_errors=[]"
         },
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
-          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
+          "ref": "E3",
+          "excerpt": "Дополнительный отрицательный Q1 воспроизводит потерю неподтверждённого ответа"
         }
       ],
-      "gaps": [],
+      "gaps": [
+        "По ASTRA_VERIFY_BY_TASK Pck4.D зелёный скрипт при Q1–Q3 FAIL не даёт PASS задаче Pck4. Текущий smoke не проверяет failed-save/leave-confirmation."
+      ],
       "human_checks_required": [
         "H-Pck4-spot"
       ],
-      "regression_risk": "low",
-      "checked_at": "2026-10-21T09:32:20.584451+00:00",
-      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
+      "regression_risk": "high",
+      "checked_at": "2026-10-21T10:16:03.917754+00:00",
+      "git_sha": "feb67e508f83659cba60cf0c5de89cc16bf043cd"
     },
     {
       "id": "Pck5",
       "verdict": "HUMAN_ONLY",
-      "dod_from_canon": "Человек отправил ссылки на прежнюю площадку.",
+      "dod_from_canon": "Отправить ссылки сдачи как раньше: форма/чат площадки.",
       "audit_refs": [],
       "agent_evidence": [
         {
           "kind": "file",
-          "ref": "SUBMISSION_LINKS.md",
-          "excerpt": "Текст подготовлен; Q1–Q7 PASS по агентским проверкам. Отправка человеком ещё не подтверждена."
-        },
-        {
-          "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
-          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
+          "ref": "docs/delivery/SUBMISSION_LINKS.md",
+          "excerpt": "Текст есть, прямо отмечено «не отправлено»; ссылки Stage A подготовлены"
         }
       ],
       "gaps": [
-        "Нужны успешный push актуальной ветки, human PASS обязательных шагов и подтверждение отправки."
+        "Нет факта отправки человеком; агент не отправлял.",
+        "Текст «Закрыты Q1–Q7» нужно актуализировать до отправки после нового цикла исправления/проверки."
       ],
       "human_checks_required": [
         "H-Pck5"
       ],
       "regression_risk": "high",
-      "checked_at": "2026-10-21T09:32:20.584451+00:00",
-      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
+      "checked_at": "2026-10-21T10:16:03.917754+00:00",
+      "git_sha": "feb67e508f83659cba60cf0c5de89cc16bf043cd"
     },
     {
       "id": "REG_FSP",
       "verdict": "PASS",
-      "dod_from_canon": "Без ФСП категория сохраняется; достижение не меняет грейд.",
-      "audit_refs": [],
+      "dod_from_canon": "Нет ФСП — категория не теряется; бонус ФСП не меняет грейд.",
+      "audit_refs": [
+        "canon §1"
+      ],
       "agent_evidence": [
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
-          "excerpt": "FSP_does_not_change_grade_zero_without_FSP"
+          "ref": "E2",
+          "excerpt": "Подтверждённый Junior без ФСП доступен в подборе; demo-winner добавляет +6 без изменения verified_grade"
         },
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
-          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
+          "ref": "E4",
+          "excerpt": "unknown не превращается в proof; category grouping остаётся прежним"
         }
       ],
       "gaps": [],
@@ -408,49 +415,51 @@
         "H-REG-FSP"
       ],
       "regression_risk": "low",
-      "checked_at": "2026-10-21T09:32:20.584451+00:00",
-      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
+      "checked_at": "2026-10-21T10:16:03.917754+00:00",
+      "git_sha": "feb67e508f83659cba60cf0c5de89cc16bf043cd"
     },
     {
       "id": "REG_ISO",
       "verdict": "PASS",
-      "dod_from_canon": "Другая компания не видит адрес/контакты в API/PDF; чужой кандидат PDF 403.",
-      "audit_refs": [],
+      "dod_from_canon": "Чужая компания не видит контакты; чужой PDF не скачивается/не раскрывает контакты.",
+      "audit_refs": [
+        "canon §1"
+      ],
       "agent_evidence": [
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
-          "excerpt": "invite_accept_addressed_contacts_PDF_isolation"
+          "ref": "E2",
+          "excerpt": "До согласия email нет; после только адресной компании; чужой company PDF анонимный; кандидат outsider PDF 403; после hide employer PDF 404"
         },
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
-          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
+          "ref": "E1",
+          "excerpt": "API lifecycle: contacts/search/chat/PDF isolation, revoked/republication/new consent PASS"
         }
       ],
-      "gaps": [],
+      "gaps": [
+        "Полный security-аудит всех серверных ACL этим не заявляется."
+      ],
       "human_checks_required": [
         "H-REG-ISO"
       ],
-      "regression_risk": "low",
-      "checked_at": "2026-10-21T09:32:20.584451+00:00",
-      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
+      "regression_risk": "med",
+      "checked_at": "2026-10-21T10:16:03.917754+00:00",
+      "git_sha": "feb67e508f83659cba60cf0c5de89cc16bf043cd"
     },
     {
       "id": "REG_OLD_SEL",
       "verdict": "PASS",
-      "dod_from_canon": "Новый поиск не уничтожает старую подборку; текущая приватность соблюдается.",
-      "audit_refs": [],
+      "dod_from_canon": "Старые подборки сохраняются как сохранённые; новый запрос их не уничтожает.",
+      "audit_refs": [
+        "canon §1",
+        "U02"
+      ],
       "agent_evidence": [
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
-          "excerpt": "old_snapshot_preserved; Q4_hidden_overview_revoked_chat_snapshot_PDF"
-        },
-        {
-          "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#spot-re-audit",
-          "excerpt": "Spot re-audit: 97 pytest passed; live smoke 17/17, page_errors=[]; health ok. Детали и границы — в секции spot re-audit."
+          "ref": "E2",
+          "excerpt": "После нового поиска GET old snapshot сохраняет id; UI дата; hidden исключён из old snapshot"
         }
       ],
       "gaps": [],
@@ -458,36 +467,107 @@
         "H-REG-OLD"
       ],
       "regression_risk": "low",
-      "checked_at": "2026-10-21T09:32:20.584451+00:00",
-      "git_sha": "f86d7331f8b208a461d2f76d6288036a46513d86"
+      "checked_at": "2026-10-21T10:16:03.917754+00:00",
+      "git_sha": "feb67e508f83659cba60cf0c5de89cc16bf043cd"
     },
     {
       "id": "NOTTODO",
       "verdict": "PASS",
-      "dod_from_canon": "Нет редизайна презентации, нового IRT pipeline, обещаний боевого ФСП/SMTP.",
+      "dod_from_canon": "Нет нового вау-функционала/IRT с нуля/редизайна презы; веса не на глаз; питч не вместо Q; не обещать live ФСП/SMTP; без Amik-споров/VPN off.",
       "audit_refs": [],
       "agent_evidence": [
         {
           "kind": "command",
-          "ref": "VERIFY_STAGE_A_PROTOCOL.md#environment",
-          "excerpt": "git diff 2e6d6da..HEAD -- demo docs/presentation: пусто; тематический diff evaluation/matching не содержит нового IRT pipeline."
+          "ref": "E10",
+          "excerpt": "Stage A diff demo/*.pptx пуст; SHA презентации фиксирован; source/diff review: существующий numeric bank, без IRT pipeline"
         },
         {
-          "kind": "file",
-          "ref": "FOR_JURY.md",
-          "excerpt": "ФСП — DemoProvider; реальный SMTP, пилот, независимая разметка not_run."
+          "kind": "command",
+          "ref": "E5",
+          "excerpt": "Размеченная fixture и dev selection воспроизведены"
+        },
+        {
+          "kind": "command",
+          "ref": "E8",
+          "excerpt": "ФСП DemoProvider, SMTP/human pilot/load not_run"
         }
       ],
-      "gaps": [],
+      "gaps": [
+        "Вердикт относится к проверенным артефактам и действиям этой сессии; чужие разговоры/распорядок дня не проверялись."
+      ],
       "human_checks_required": [
         "H-PREZA",
         "H-SMTP"
       ],
       "regression_risk": "low",
-      "checked_at": "2026-10-21T09:22:32.651398+00:00",
-      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+      "checked_at": "2026-10-21T10:16:03.917754+00:00",
+      "git_sha": "feb67e508f83659cba60cf0c5de89cc16bf043cd"
     }
   ],
-  "previous_audit_commit": "44c3fb0",
-  "submission_allowed_after_push_and_human": true
+  "canon_section_6": [
+    {
+      "item": "Q1–Q3 закрыты или явно обоснован stop",
+      "yes": false,
+      "reason": "Q1 FAIL; в changelog нет актуального STOP. Этот протокол вводит запрет отправки, а не заменяет закрытие Q1."
+    },
+    {
+      "item": "Q7: новая VERSION + таблица на выборке в VALIDATION/for-jury",
+      "yes": true,
+      "reason": "matching-1.2.0; таблица 1→1/.8→.8 воспроизведена."
+    },
+    {
+      "item": "Q4–Q6: сделано или partial в changelog",
+      "yes": true,
+      "reason": "Технические DoD PASS; человеческое прочтение UX и решение по календарному наблюдению остаются в протоколе."
+    },
+    {
+      "item": "Pck1–Pck3",
+      "yes": false,
+      "reason": "Pck1 FAIL, Pck2 PARTIAL; Pck3 PASS."
+    },
+    {
+      "item": "Pck4 smoke green",
+      "yes": false,
+      "reason": "Штатный скрипт зелёный, но acceptance Pck4 FAIL из-за Q1."
+    },
+    {
+      "item": "Pck5 ссылки ушли",
+      "yes": false,
+      "reason": "Подтверждения человека нет; отправки не было."
+    }
+  ],
+  "out_of_scope": [
+    {
+      "id": "P-01",
+      "verdict": "N/A",
+      "reason": "Этап B после проверки; не блокирует A."
+    },
+    {
+      "id": "P-02",
+      "verdict": "N/A",
+      "reason": "Этап B после проверки; не блокирует A."
+    },
+    {
+      "id": "P-03",
+      "verdict": "N/A",
+      "reason": "Этап B после проверки; не блокирует A."
+    },
+    {
+      "id": "P-04",
+      "verdict": "N/A",
+      "reason": "Этап B после проверки; не блокирует A."
+    },
+    {
+      "id": "P-05",
+      "verdict": "N/A",
+      "reason": "Этап B после проверки; не блокирует A."
+    }
+  ],
+  "unverified_audit_tail": {
+    "smtp_registration_email": "NOT_RUN",
+    "full_server_acl": "NOT_RUN (проверены только явно перечисленные регрессии)",
+    "long_schedule_intervals": "HUMAN_ONLY (календарь), управляемое время PASS",
+    "load": "NOT_RUN",
+    "source_bundle_completeness": "NOT_RUN (проверено совпадение runtime-кода, не полный архив сдачи)"
+  }
 }

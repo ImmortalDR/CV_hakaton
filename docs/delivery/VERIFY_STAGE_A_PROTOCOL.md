@@ -1,282 +1,60 @@
-# Проверка этапа A — актуальный spot re-audit
+# Независимая проверка этапа A по объединённому канону
 
-Дата: 2026-10-21T09:32:20.584451+00:00. Проверенный продуктовый HEAD: `f86d7331f8b208a461d2f76d6288036a46513d86`, ветка `codex/fsp-mvp`.
-Основание: независимый аудит `44c3fb0`, исправление упаковки и орба `f86d733`.
+Дата (UTC): 2026-10-21T10:16:03.917754+00:00
+Ветка: `codex/fsp-mvp` · проверенный HEAD: `feb67e508f83659cba60cf0c5de89cc16bf043cd`
+Стенд: https://85-137-26-131.sslip.io/
+Критерий: [COMPREHENSIVE_STAGE_A_2026-10-21.md](../final_backlog_2026-10-20/COMPREHENSIVE_STAGE_A_2026-10-21.md), SHA-256 `cd652c55e049b78e491ae682d5adbf3ebb208d0dc14a390e4b118179fc4827da`.
 
-**Pck1 PASS, Q4 PASS. Технических FAIL нет; после успешного push и human PASS обязательных шагов можно слать.**
-Сейчас отправка ещё не разрешена: Pck2 PARTIAL (ветка GitHub отстаёт), Pck5 HUMAN_ONLY (факта сдачи нет).
-Итог: 14 PASS / 1 PARTIAL / 0 FAIL / 1 HUMAN_ONLY. Старые запреты ниже сохранены исключительно как история.
+**STOP: критерии A не закрыты. Push + human сами по себе недостаточны.** Найден отрицательный сценарий Q1/B01. Pck4 FAIL по методике, даже при зелёном штатном smoke. Pck1 заявляет полное закрытие вопреки найденному сбою. Код продукта не изменялся; деплой и БД не пересоздавались. Требуется отдельный цикл исправления Q1 → повтор verify → актуальная упаковка → push → human → отправка.
 
-<a id="spot-re-audit"></a>
-## Spot re-audit после packaging and orb fix
+## Основания и границы чтения
 
-### Объём и результаты
+Порядок: рабочая версия COMPREHENSIVE → B01–B06/U01–U04 `findings.json` → BACKLOG → три обязательные методики контроля. Канон уже имел пользовательские изменения до начала; это **не** версия `git show HEAD`, её точный хеш указан выше. Старый PROMPT_ASTRA.md не открывался. Старые матрица и smoke-вердикты не использовались как доказательства. BACKLOG прочитан как исторические утверждения; его статусы не копировались. Изменены только три запрошенных документа проверки; BACKLOG и changelog сохранены, поэтому их прежние статусы не являются итогом этой сессии.
 
-Код продукта, changelog и smoke-скрипт в этой сессии не менялись. Содержательно прочитаны
-актуальный changelog, относящиеся к Q4 ветви App.tsx (обзор, орб, пустые приглашения),
-smoke и фикстура изоляции pytest. Выполнены трассировка условий и проверки на стенде.
-Это точечная перепроверка, а не новый полный аудит ТЗ, архивов и бинарных материалов.
-Исходные результаты matching/oracle, ревью презентации и NOTTODO наследуются из `44c3fb0`;
-массовые измерения качества и визуальный осмотр презентации заново не выполнялись.
+Содержательное чтение: критерии и accept; smoke; test_stage_a, test_bank, test_matching, conftest, test_employer_tasks; контактный lifecycle test_api; сохранение/submit в App.tsx; matching.py, tasks.py; оценочные скрипты и протоколы; FOR_JURY, CHANGELOG, SUBMISSION_LINKS, Stage A раздел VALIDATION, VERIFY_NOW, compose/Dockerfile. Три смысловых прохода проверки: требования → механизмы и границы существующих проверок → сопоставление свежего исполнения и контрпробы с accept. Это **не** заявление о полном трёхпроходном ревью первоначальных 8 тысяч файлов: разработка не выполнялась.
 
-- Pck1: в CHANGELOG_STAGE_A.md раздел старого STOP имеет заголовок «Архив … ИСТОРИЯ, не текущий статус»,
-  пояснение о закрытии FAIL и свёрнутый блок «Исторический STOP (устарело)». После него отдельный актуальный статус.
-  Действующего запрета из-за старых Q3/Q4 FAIL нет. Матрица и human-протокол синхронизированы этой записью.
-- Q4: App.tsx:775–778 выбирает «навыки / к проверке» при отсутствии verified_grade.
-  Основной текст предлагает тест, CTA — «Перейти к тестированию»; сообщение о подтверждении доступно в ветви verified_grade.
-  Свежий публичный бандл содержит то же условие (ниже). Chromium подтвердил его при published=false и true.
-- Q3: свежий HTTPS POST submit без confirm_incomplete → 409; попытка active, ответы и expires_at прежние.
-  Далее браузерная отмена оставляет active, явное подтверждение завершает попытку.
-- B05: у published+verified и пустого списка приглашений текст «Ваш профиль опубликован, уровень подтверждён.
-  Ожидайте приглашений работодателей; настройки видимости доступны в профиле.» Нет требования заново подтвердить и опубликовать.
-- Health: `{"status":"ok","demo":true,"version":"1.0.0"}`; api/web/db/edge healthy, worker Up.
-  Перезапуск, миграции, удаление рабочих данных не выполнялись.
+Автоматические проверки: pytest/PostgreSQL, браузер Chromium/HTTPS, численные симуляции, сборка, хеши. Бинарные PPTX проверены на неизменность, не просмотрены глазами. PDF в smoke разобран как текст для проверки контактов, не оценивалась вёрстка. Остальные исходные архивы/PDF задания/старые кадры аудита заново не рецензировались: заданный пользователем канон определяет объём текущей проверки. Хеширование не выдано за содержательное чтение.
 
-### Исполненные команды
+Все PASS ниже относятся к указанному техническому DoD и данным, **не** означают, что human-шаг исполнен. Остатки SMTP, полного ACL-аудита, нагрузки, полного комплекта исходников и календарных семи дней не объявлены проверенными.
 
-| Команда | Результат |
-|---|---|
-| `COOKIE_SECURE=false python3 scripts/run_local.py .venv/bin/pytest tests -q` | exit 0; **97 passed, 2 warnings in 42.82s** (httpx/Starlette и anyio deprecation) |
-| `python3 scripts/run_local.py .venv/bin/python scripts/smoke_stage_a.py --out /tmp/stage-a-spot-smoke.json` | exit 0; **17/17**, page_errors=[] |
-| `npm run build` в apps/web | exit 0; tsc + Vite, 55 modules, 3.38s |
-| `python3 scripts/run_local.py .venv/bin/python /tmp/stage-a-spot-orb.py` | повторный запуск exit 0; два состояния неподтверждённого кандидата PASS |
-| `curl -fsS https://85-137-26-131.sslip.io/api/health` | exit 0; status=ok |
-| `docker compose ps` | api/web/db/edge healthy, worker Up |
-| `git rev-parse HEAD` | f86d7331f8b208a461d2f76d6288036a46513d86 |
-| `git ls-remote origin refs/heads/codex/fsp-mvp` | 2e6d6daa5bfb59f6d5a7e7317aa41093c8f05980 |
-| `GIT_TERMINAL_PROMPT=0 git push --dry-run origin codex/fsp-mvp` | exit 128; could not read Username for https://github.com: terminal prompts disabled |
+## E0. Окружение
 
-Pytest работал с отдельной fsp_test. Smoke и probe создавали только вымышленные demo-аккаунты;
-общие review-аккаунты использованы только для входа. Первая попытка probe завершилась ошибкой
-IndentationError во временном cleanup-коде (не в приложении); отступ исправлен, probe повторён успешно.
-Оба кандидата первого запуска адресно скрыты отдельным cleanup, кандидаты smoke/повторного probe также скрыты.
-Рабочая БД не сбрасывалась. SMTP, реальные семь дней, человек и внешняя сеть жюри — not_run.
-
-### Бандл и DOM
-
-Публичный HTML прочитан через urllib.request, из src извлечён текущий JS; его байты сравнили
-с `docker compose exec -T web cat /usr/share/nginx/html/assets/index-CiUyEab4.js`
-и apps/web/dist/assets/index-CiUyEab4.js после успешной свежей сборки.
-
-```json
-{
-  "asset": "/assets/index-CiUyEab4.js",
-  "sha256": "23fedeb2b2986c3b5c4e1b7df33a0a946156bfa3fecfb44b9dd9f0e1829794dc",
-  "public_container_local_equal": true,
-  "conditional_excerpt": "jsx(Dn,{size:18})]})]}),i.jsxs(\"div\",{className:\"orb\",children:[i.jsx(Aa,{size:78}),i.jsx(\"span\",{children:p?f!=null&&f.verified_grade?i.jsxs(i.Fragment,{children:[\"навыки\",i.jsx(\"br\",{}),\"подтверждены\"]}):i.jsxs(i.Fragment,{children:[\"навыки\",i.jsx(\"br\",{}),\"к проверке\"]}):i.jsxs(i.Fragment,{children:[\"навыки\",i.jsx(\"br\",{}),\"в основе\"]})})]})]}),i.jsx(\"div\",{className:\"stats\""
-}
-```
-
-Фактические DOM-тексты нового кандидата:
-
-```json
-[
-  {
-    "published": false,
-    "verified_grade": null,
-    "orb": "навыки\nк проверке",
-    "banner": "Ваш профиль — больше, чем резюме\nПокажите, что вы умеете\n\nТест по основному и вспомогательному навыкам поможет подтвердить выбранный уровень. ФСП ID для этого не нужен.\n\nПерейти к тестированию\nнавыки\nк проверке"
-  },
-  {
-    "published": true,
-    "verified_grade": null,
-    "orb": "навыки\nк проверке",
-    "banner": "Ваш профиль — больше, чем резюме\nПокажите, что вы умеете\n\nТест по основному и вспомогательному навыкам поможет подтвердить выбранный уровень. ФСП ID для этого не нужен.\n\nПерейти к тестированию\nнавыки\nк проверке"
-  }
-]
-```
-
-Воспроизводимый дополнительный probe (временный файл /tmp/stage-a-spot-orb.py; bootstrap и cleanup из неизменённого smoke):
-
-```python
-from pathlib import Path
-source=Path('scripts/smoke_stage_a.py').read_text()
-exec(source.split('try:\n    with sync_playwright()')[0])
-records=[]
-try:
- with sync_playwright() as pw:
-  browser=pw.chromium.launch()
-  ctx=browser.new_context(base_url=a.base_url,extra_http_headers={'X-Requested-With':'fsp-web'})
-  assert ctx.request.post('/api/auth/login',data={k:accounts[0][k] for k in ['email','password']}).status==200
-  own=ctx.request.get('/api/me/profile').json()
-  assert own['verified_grade'] is None
-  fields=['name','phone','about','specialization','claimed_grade','skills','roles','soft_skills','experience_years','processing','published','show_experience']
-  page=ctx.new_page()
-  for published in [False,True]:
-   assert ctx.request.put('/api/me/profile',data={**{k:own[k] for k in fields},'published':published}).ok
-   page.goto(a.base_url)
-   page.locator('nav').get_by_role('button',name='Обзор',exact=True).click()
-   expect(page.locator('.orb')).to_contain_text('к проверке')
-   banner=page.locator('.feature-banner').inner_text()
-   assert 'подтверждены' not in banner and 'Ваш уровень подтверждён' not in banner
-   records.append(dict(published=published,verified_grade=None,orb=page.locator('.orb').inner_text(),banner=banner))
-  browser.close()
-finally:
- exec(__import__("textwrap").dedent(source.split('finally:\n')[1].split('assert not errors')[0]))
-Path('/tmp/stage-a-spot-orb.json').write_text(json.dumps(records,ensure_ascii=False,indent=2))
-print(json.dumps(records,ensure_ascii=False))
-```
-
-Полный свежий smoke-report:
-
-```json
-{
-  "status": "pass",
-  "checked_at": "2026-10-21T09:30:16.735418+00:00",
-  "base_url": "https://85-137-26-131.sslip.io",
-  "checks": [
-    "https_health_ok",
-    "openapi_exact",
-    "three_review_logins_ok",
-    "Q1_navigation_reload_server_draft_owner_expiry",
-    "Q2_live_bank_2_1_rounding_hint",
-    "Q3_direct_API_without_confirm_409_active_draft_unchanged",
-    "Q3_cancel_keeps_active_accept_completes",
-    "Q4_verified_published_hidden_empty_invitations_and_overview_CTA",
-    "Q5_anonymous_label_selection_invitation_PDF_UI",
-    "invite_accept_addressed_contacts_PDF_isolation",
-    "FSP_does_not_change_grade_zero_without_FSP",
-    "old_snapshot_preserved",
-    "Q5_two_visible_score_sums_unique_labels_changed_banner_scroll",
-    "Q5_filters_snapshot_and_score_UI",
-    "Q6_live_7day_resume_no_duplicate_UI_date_equals_API",
-    "Q4_hidden_overview_revoked_chat_snapshot_PDF",
-    "mobile_no_horizontal_overflow"
-  ],
-  "page_errors": [],
-  "scope": "Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed."
-}
-```
-
-### Все ID после spot re-audit
-
-| ID | Вердикт | Остаток |
-|---|---|---|
-| Q1 | PASS | Связанные human-шаги остаются для заполнения. |
-| Q2 | PASS | Связанные human-шаги остаются для заполнения. |
-| Q3 | PASS | Связанные human-шаги остаются для заполнения. |
-| Q4 | PASS | Связанные human-шаги остаются для заполнения. |
-| Q5 | PASS | Связанные human-шаги остаются для заполнения. |
-| Q6 | PASS | Связанные human-шаги остаются для заполнения. |
-| Q7 | PASS | Связанные human-шаги остаются для заполнения. |
-| Pck1 | PASS | Связанные human-шаги остаются для заполнения. |
-| Pck2 | PARTIAL | Push актуальной ветки + H-PUSH. |
-| Pck3 | PASS | Связанные human-шаги остаются для заполнения. |
-| Pck4 | PASS | Связанные human-шаги остаются для заполнения. |
-| Pck5 | HUMAN_ONLY | Факт отправки фиксирует человек после допуска. |
-| REG_FSP | PASS | Связанные human-шаги остаются для заполнения. |
-| REG_ISO | PASS | Связанные human-шаги остаются для заполнения. |
-| REG_OLD_SEL | PASS | Связанные human-шаги остаются для заполнения. |
-| NOTTODO | PASS | Связанные human-шаги остаются для заполнения. |
-
-Допуск: успешный push этого docs-коммита вместе с f86d733, сверка GitHub-ссылок и human PASS всех ★;
-решение по календарному наблюдению Q6 фиксируется честно. Старые FAIL больше не блокируют отправку.
-
----
-
-## Архив независимого аудита 44c3fb0 — ИСТОРИЯ
-
-Весь текст ниже описывает состояние **до f86d733**. Вердикты Pck1 FAIL / Q4 PARTIAL и запрет отправки
-отменены результатами spot re-audit выше. Старые доказательства сохранены для трассируемости.
-
-# Независимая adversarial-перепроверка этапа A
-
-Дата: 2026-10-21T09:22:32.651398+00:00. Проверяемый HEAD: `6b965aca20f70efe4e6430c30aaabc102c52581d`, ветка `codex/fsp-mvp`.
-Это новая проверка, не перенос прежних «14 PASS». Код продукта и scripts/smoke_stage_a.py не изменялись.
-
-**Нельзя отправлять даже после одного лишь push: Pck1 FAIL (противоречивый changelog).**
-Q4 PARTIAL: статичная надпись о подтверждённых навыках у неподтверждённого кандидата.
-Pck2 PARTIAL: GitHub отстаёт. Pck5 HUMAN_ONLY: никто ничего на площадку не отправлял.
-Счёт: {"PASS": 12, "PARTIAL": 2, "FAIL": 1, "HUMAN_ONLY": 1}.
-
-## Границы и источники
-
-Прочитаны три заданных verify-промпта, WORKSPACE_MAP, REVIEW_PROTOCOL, GIT_WORKFLOW,
-канон (включая пользовательские изменения, без перезаписи), backlog и предметные findings
-B01–B06/U01–U04/M01–M02. Предыдущая матрица не использовалась при вынесении вердиктов.
-Содержательно прочитаны smoke, профильные тесты, процедура matching, упаковка;
-App.tsx/main.py/tasks.py просмотрены по относящимся к задачам участкам.
-Три смысловых прохода этой проверки: критерии → трассировка проверок/API/UI → сопоставление свежих результатов с DoD.
-Это не повторное полное ревью исходной подборки: оригинальные ТЗ/транскрипт, все архивные приложения,
-все исходники и бинарные материалы не перечитаны. Разработки в этой сессии нет.
-Презентация проверена хешем и git diff, визуальный просмотр не выполнялся.
-Хеширование, поиск строк и машинные тесты не объявляются содержательным чтением.
-
-Pytest использует отдельную `fsp_test`: стандартная фикстура очищает только её тестовые таблицы;
-рабочая БД `fsp` не сбрасывалась. Live-проверки добавляют вымышленные demo-аккаунты,
-после проверки их кандидаты скрыты. Общие review-аккаунты использованы только для login.
-Новый seed/эталон читался проверочным кодом на сервере, не передавался UI активной попытки.
-
-<a id="environment"></a>
-## Окружение и публикация
-
-Первая команда сессии: `pwd && git branch --show-current && git rev-parse HEAD && git status --short && docker compose ps`.
-Получено `/root/hakaton`, `6b965aca20f70efe4e6430c30aaabc102c52581d`, `codex/fsp-mvp`; api/web/db/edge healthy, worker Up.
-Уже были пользовательские untracked документы и изменение канона — они не включаются в commit.
-Ниже повторная фиксация после тестов, тот же HEAD:
+Команды: `git branch --show-current`; `git rev-parse HEAD`; `git status --short`; `docker compose ps`; `curl -fsS https://85-137-26-131.sslip.io/api/health`.
 
 ```text
-2026-10-21T09:20:06.123454+00:00
-$ git branch --show-current
-codex/fsp-mvp
-
-exit=0
-
-$ git rev-parse HEAD
-6b965aca20f70efe4e6430c30aaabc102c52581d
-
-exit=0
-
-$ git status -sb --untracked-files=no
-## codex/fsp-mvp...origin/codex/fsp-mvp [ahead 15]
- M docs/final_backlog_2026-10-20/COMPREHENSIVE_STAGE_A_2026-10-21.md
-
-exit=0
-
-$ curl -fsS https://85-137-26-131.sslip.io/api/health
-{"status":"ok","demo":true,"version":"1.0.0"}
-exit=0
-
-$ docker compose ps
-NAME                    IMAGE                                                                                         COMMAND                  SERVICE       CREATED          STATUS                    PORTS
-fsp-mvp-api-1           fsp-mvp-api                                                                                   "sh -c 'alembic upgr…"   api           16 minutes ago   Up 15 minutes (healthy)
-fsp-mvp-db-1            postgres:16-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea    "docker-entrypoint.s…"   db            13 days ago      Up 9 days (healthy)       127.0.0.1:5547->5432/tcp
-fsp-mvp-edge-1          caddy:2.11.7-alpine@sha256:d8542f48d34a9cf4e4c11a478865229840e87e4c96ea3f439101f31a5d35f75f   "caddy run --config …"   edge          9 days ago       Up 9 days (healthy)
-fsp-mvp-task-worker-1   fsp-mvp-task-worker                                                                           "python -m fsp.task_…"   task-worker   16 minutes ago   Up 15 minutes
-fsp-mvp-web-1           fsp-mvp-web                                                                                   "/docker-entrypoint.…"   web           16 minutes ago   Up 15 minutes (healthy)   127.0.0.1:3080->80/tcp
-
-exit=0
-
-$ git ls-remote origin refs/heads/codex/fsp-mvp
-2e6d6daa5bfb59f6d5a7e7317aa41093c8f05980	refs/heads/codex/fsp-mvp
-
-exit=0
-
-$ docker volume inspect fsp-mvp_fsp_db --format {{.Name}} {{.CreatedAt}}
-fsp-mvp_fsp_db 2026-10-07T22:42:58+02:00
-
-exit=0
-
-$ git diff 2e6d6da..HEAD -- demo docs/presentation
-
-exit=0
+branch: codex/fsp-mvp
+HEAD: feb67e508f83659cba60cf0c5de89cc16bf043cd
+status: до проверки M docs/final_backlog_2026-10-20/COMPREHENSIVE_STAGE_A_2026-10-21.md; много пользовательских untracked docs/архивов и logs/; staged пуст.
+api/db/web/edge: healthy; task-worker: Up
+health: {"status":"ok","demo":true,"version":"1.0.0"}
 ```
 
-`GIT_TERMINAL_PROMPT=0 git push --dry-run origin codex/fsp-mvp` (exit 128):
-```text
-fatal: could not read Username for 'https://github.com': terminal prompts disabled
+Первоначальный `curl http://localhost:8000/health` завершился exit 7: этот порт не опубликован compose. Это ошибка адреса пробы, не падение стенда. Публичный правильный маршрут выше возвращает ok. Health `1.0.0` — версия приложения, не matching/bank и не git SHA.
+
+Фиксация compose (без environment/секретов):
+
+```json
+{"Command":"\"sh -c 'alembic upgr…\"","CreatedAt":"2026-10-21 11:03:54 +0200 CEST","ExitCode":0,"Health":"healthy","ID":"94514e7c9bac","Image":"fsp-mvp-api","Labels":"com.docker.compose.config-hash=688647376cb13e02e257ac066b4e8200598cce832d992707679178b55713ec28,com.docker.compose.depends_on=,com.docker.compose.oneoff=False,com.docker.compose.project=fsp-mvp,com.docker.compose.project.working_dir=/root/hakaton,com.docker.compose.replace=api-1,com.docker.compose.service=api,com.docker.compose.version=2.40.3,com.docker.compose.container-number=1,com.docker.compose.image=sha256:2588633957d291e8eeb469ea772e507bab8ce5bfd01c08e0c9356f7748f18259,com.docker.compose.project.config_files=/root/hakaton/compose.yaml","LocalVolumes":"0","Mounts":"","Name":"fsp-mvp-api-1","Names":"fsp-mvp-api-1","Networks":"fsp-mvp_default","Ports":"","Project":"fsp-mvp","Publishers":[],"RunningFor":"About an hour ago","Service":"api","Size":"0B","State":"running","Status":"Up About an hour (healthy)"}
+{"Command":"\"docker-entrypoint.s…\"","CreatedAt":"2026-10-07 22:42:58 +0200 CEST","ExitCode":0,"Health":"healthy","ID":"59f21df183b7","Image":"postgres:16-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea","Labels":"com.docker.compose.config-hash=3bca2c73361f7055ca0a3bf65204956f97fb88d091f67c92d0ee1a2cd60c816d,com.docker.compose.container-number=1,com.docker.compose.oneoff=False,com.docker.compose.project=fsp-mvp,com.docker.compose.project.config_files=/root/hakaton/compose.yaml,com.docker.compose.version=2.40.3,com.docker.compose.depends_on=,com.docker.compose.image=sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea,com.docker.compose.project.working_dir=/root/hakaton,com.docker.compose.service=db","LocalVolumes":"1","Mounts":"fsp-mvp_fsp_db","Name":"fsp-mvp-db-1","Names":"fsp-mvp-db-1","Networks":"fsp-mvp_default","Ports":"127.0.0.1:5547-\u003e5432/tcp","Project":"fsp-mvp","Publishers":[{"URL":"127.0.0.1","TargetPort":5432,"PublishedPort":5547,"Protocol":"tcp"}],"RunningFor":"13 days ago","Service":"db","Size":"0B","State":"running","Status":"Up 9 days (healthy)"}
+{"Command":"\"caddy run --config …\"","CreatedAt":"2026-10-11 21:17:18 +0200 CEST","ExitCode":0,"Health":"healthy","ID":"8051e4bdd372","Image":"caddy:2.11.7-alpine@sha256:d8542f48d34a9cf4e4c11a478865229840e87e4c96ea3f439101f31a5d35f75f","Labels":"com.docker.compose.project.config_files=/root/hakaton-fixes-20261011/compose.yaml,com.docker.compose.replace=edge-1,org.opencontainers.image.description=a powerful, enterprise-ready, open source web server with automatic HTTPS written in Go,org.opencontainers.image.licenses=Apache-2.0,org.opencontainers.image.source=https://github.com/caddyserver/caddy-docker,org.opencontainers.image.url=https://caddyserver.com,com.docker.compose.config-hash=55fbe568ac9fed665991290273fdb3766a4a8df6771e3b8471ae7e6fb915c368,com.docker.compose.container-number=1,com.docker.compose.project.working_dir=/root/hakaton-fixes-20261011,com.docker.compose.service=edge,com.docker.compose.version=2.40.3,org.opencontainers.image.documentation=https://caddyserver.com/docs,org.opencontainers.image.version=v2.11.7,org.opencontainers.image.title=Caddy,org.opencontainers.image.vendor=Light Code Labs,com.docker.compose.depends_on=,com.docker.compose.image=sha256:d8542f48d34a9cf4e4c11a478865229840e87e4c96ea3f439101f31a5d35f75f,com.docker.compose.oneoff=False,com.docker.compose.project=fsp-mvp","LocalVolumes":"2","Mounts":"/root/hakaton-…,fsp-mvp_fsp_tl…,fsp-mvp_fsp_tl…","Name":"fsp-mvp-edge-1","Names":"fsp-mvp-edge-1","Networks":"host","Ports":"","Project":"fsp-mvp","Publishers":[],"RunningFor":"9 days ago","Service":"edge","Size":"0B","State":"running","Status":"Up 9 days (healthy)"}
+{"Command":"\"python -m fsp.task_…\"","CreatedAt":"2026-10-21 11:04:04 +0200 CEST","ExitCode":0,"Health":"","ID":"f281e32de7a7","Image":"fsp-mvp-task-worker","Labels":"com.docker.compose.config-hash=70f91d0293b15ec6b9c2fd5d3086ad3ab840578654939f9fd625ac357be38863,com.docker.compose.image=sha256:9df2e7e3c28439afb542d3189b2b0b52dde8dc2c3964f95ae57c66d9f4c829fc,com.docker.compose.project=fsp-mvp,com.docker.compose.replace=task-worker-1,com.docker.compose.service=task-worker,com.docker.compose.version=2.40.3,com.docker.compose.container-number=1,com.docker.compose.depends_on=api:service_healthy:false,com.docker.compose.oneoff=False,com.docker.compose.project.config_files=/root/hakaton/compose.yaml,com.docker.compose.project.working_dir=/root/hakaton","LocalVolumes":"0","Mounts":"","Name":"fsp-mvp-task-worker-1","Names":"fsp-mvp-task-worker-1","Networks":"fsp-mvp_default","Ports":"","Project":"fsp-mvp","Publishers":[],"RunningFor":"About an hour ago","Service":"task-worker","Size":"0B","State":"running","Status":"Up About an hour"}
+{"Command":"\"/docker-entrypoint.…\"","CreatedAt":"2026-10-21 11:28:13 +0200 CEST","ExitCode":0,"Health":"healthy","ID":"f949f3a7baa0","Image":"fsp-mvp-web","Labels":"maintainer=NGINX Docker Maintainers \u003cdocker-maint@nginx.com\u003e,com.docker.compose.config-hash=f1e57e53508f5f3af5294ed5421d0bcc67f5457abbc69279a8df9b05bdfd205a,com.docker.compose.image=sha256:2899f13a7b78bc6c48c8bf4899e9b3f618e9da2404321ae2c9e14b99e2bc09bd,com.docker.compose.oneoff=False,com.docker.compose.project.config_files=/root/hakaton/compose.yaml,com.docker.compose.project.working_dir=/root/hakaton,com.docker.compose.service=web,com.docker.compose.container-number=1,com.docker.compose.depends_on=,com.docker.compose.project=fsp-mvp,com.docker.compose.replace=web-1,com.docker.compose.version=2.40.3","LocalVolumes":"0","Mounts":"","Name":"fsp-mvp-web-1","Names":"fsp-mvp-web-1","Networks":"fsp-mvp_default","Ports":"127.0.0.1:3080-\u003e80/tcp","Project":"fsp-mvp","Publishers":[{"URL":"127.0.0.1","TargetPort":80,"PublishedPort":3080,"Protocol":"tcp"}],"RunningFor":"43 minutes ago","Service":"web","Size":"0B","State":"running","Status":"Up 43 minutes (healthy)"}
 
 ```
-Это проверка возможности push, не успешная публикация. Реальный push после verify-коммита также должен быть подтверждён отдельно.
 
-<a id="pytest"></a>
-## Свежий pytest
+Исходный полный status сохранён локально `/tmp/stage-a-independent/status-before.txt`; пользовательские файлы не включались в staging. Проверка использует изолированную `fsp_test`: существующая fixture очищает **тестовые** таблицы перед тестами. База продукта `fsp` и том `fsp-mvp_fsp_db` не удалялись. Live smoke и отдельная контрпроба создали по четыре вымышленные учётки; после выполнения их кандидаты скрыты, собственные grants сняты; чужие профили не менялись. Это не тест SMTP и не реальных людей.
 
-Команда (exit 0):
-```sh
-COOKIE_SECURE=false python3 scripts/run_local.py .venv/bin/pytest tests -q
+## E1. Полный pytest — оба результата
+
+```bash
+python3 scripts/run_local.py .venv/bin/pytest -q tests
+# exit 1: 40 failed, 57 passed, 2 warnings in 20.37s
+# representative: profile PUT -> 401 {"detail":"Войдите в личный кабинет"}
+COOKIE_SECURE=false python3 scripts/run_local.py .venv/bin/pytest -q tests
 ```
-Полный вывод:
+
+Причина первого прогона: run_local наследует COOKIE_SECURE=true HTTPS-стенда, а TestClient использует HTTP; secure cookie после login не посылается. Повтор задаёт флаг **только процессу тестов**, не меняет конфиг/код/деплой. Это ограничение команды README в данном окружении, а не основание скрыть первый красный результат.
+
 ```text
 ........................................................................ [ 74%]
 .........................                                                [100%]
@@ -290,25 +68,24 @@ COOKIE_SECURE=false python3 scripts/run_local.py .venv/bin/pytest tests -q
     _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-97 passed, 2 warnings in 34.41s
+97 passed, 2 warnings in 28.92s
 
 ```
-В частности: draft owner/expiry/lifecycle, неполный submit с отсутствующим/false flag и пробелами,
-90.625/точка/запятая/старые версии, privacy/republication, 6 scheduler tests с управляемым временем
-и конкурентными ticks, соответствие production формулы выбранным весам на dev и test.
 
-<a id="fresh-smoke"></a>
-## Свежий live smoke
+## E2. Свежий live smoke
 
-Команда (exit 0):
-```sh
+До запуска прочитан скрипт, чтобы понять его реальные assertions и побочные эффекты. Команда:
+
+```bash
 python3 scripts/run_local.py .venv/bin/python scripts/smoke_stage_a.py --out /tmp/stage-a-independent/smoke.json
 ```
-17 групп (не старые 13), Chromium + HTTPS API:
+
+Exit 0. Фактический вывод:
+
 ```json
 {
   "status": "pass",
-  "checked_at": "2026-10-21T09:18:21.766998+00:00",
+  "checked_at": "2026-10-21T10:10:42.839491+00:00",
   "base_url": "https://85-137-26-131.sslip.io",
   "checks": [
     "https_health_ok",
@@ -332,374 +109,550 @@ python3 scripts/run_local.py .venv/bin/python scripts/smoke_stage_a.py --out /tm
   "page_errors": [],
   "scope": "Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed."
 }
-```
-Q1 проверяет видимое «Ответы сохранены», переход Обзор → тест → reload, ответ и expiry, чужую запись 404.
-Q3: первое подтверждение dismiss с 7 из 8, active; следующий accept → completed.
-Q5: одинаковая анонимная метка selection/invitation/PDF/UI; приглашение на карточке;
-два видимых score breakdown сходятся до 0.02; уникальные ярлыки; фильтры/reload/scroll;
-изменённый черновик помечен, контекст свёрнут. Субъективная ясность отдана человеку.
-Q6: после ответа/оценки pause/resume сохраняет единственное задание и next_issue_at;
-дата в браузере сопоставлена с API в МСК. Реальных 7 дней не ждали.
 
-<a id="blockers"></a>
-## Отдельный удар по бывшим блокерам и B05
+```
 
-Независимый probe вне репозитория: `/tmp/stage-a-independent/blockers.py`.
-Повторно создаёт изолированные demo-аккаунты (bootstrap взят из smoke), далее собственные HTTP-запросы
-и чтение DOM. Он не импортирует прежний report и не использует готовые smoke verdicts.
-Команда (exit 0):
-```sh
-python3 scripts/run_local.py .venv/bin/python /tmp/stage-a-independent/blockers.py
+Включает API без confirm=409, браузер cancel/accept, expiry/owner/draft, банк 2.1.0, review-login 200, видимые суммы баллов, согласие/контакты/PDF, ФСП/грейд, снимки и resume. Но **не включает** провал сохранения и обязательное подтверждение ухода; поэтому 17 зелёных групп недостаточно для всего B01.
+
+## E3. Независимая контрпроба Q1/B01 — воспроизведённый дефект
+
+Сценарий в новом вымышленном аккаунте (на том же HTTPS, без изменения backend):
+
+1. Сохранить `90,63` в первом ответе; убедиться в серверном сохранении.
+2. Только для PUT `/api/me/attempts/*/answers` оборвать сеть средствами Playwright `route.abort()`; заменить ответ на `UNSAVED-123`.
+3. Видно «Не удалось сохранить на сервере. Не закрывайте вкладку…»; на сервере остался `90,63`.
+4. Обзор → Подтверждение навыков. Локально показан `UNSAVED-123`, но status пустой; уход не потребовал подтверждения.
+5. Закрыть вкладку с `run_before_unload=True`; открыть новую в том же авторизованном browser context. Показан старый `90,63`, подтверждения не было.
+
+Exit 0 контрпробы означает успешное воспроизведение **дефекта**, не PASS продукта:
+
+```text
+INDEPENDENT normal Q1 id/expiry stable: True
+INDEPENDENT failed PUT: error visible; server answer: 90,63
+INDEPENDENT after roundtrip: status= '' dialogs= []
+INDEPENDENT reopen tab: answer reverted to 90,63 dialogs= []
+
 ```
-Протокол запросов/экранных текстов:
-```json
-[
-  {
-    "case": "submit_without_confirmation",
-    "http": 409,
-    "body": {
-      "detail": "Не заполнено 7 из 8 заданий. Подтвердите завершение теста с пропусками."
-    },
-    "status": "active",
-    "answers": {
-      "1": "42"
-    },
-    "same_expiry": true
-  },
-  {
-    "case": "submit_without_confirmation",
-    "http": 409,
-    "body": {
-      "detail": "Не заполнено 8 из 8 заданий. Подтвердите завершение теста с пропусками."
-    },
-    "status": "active",
-    "answers": {
-      "1": "42"
-    },
-    "same_expiry": true
-  },
-  {
-    "case": "submit_without_confirmation",
-    "http": 409,
-    "body": {
-      "detail": "Не заполнено 8 из 8 заданий. Подтвердите завершение теста с пропусками."
-    },
-    "status": "active",
-    "answers": {
-      "1": "42"
-    },
-    "same_expiry": true
-  },
-  {
-    "case": "B05",
-    "published": false,
-    "verified": false,
-    "overview": "Ваш профиль — больше, чем резюме\nПокажите, что вы умеете\n\nТест по основному и вспомогательному навыкам поможет подтвердить выбранный уровень. ФСП ID для этого не нужен.\n\nПерейти к тестированию\nнавыки\nподтверждены",
-    "invitations": "Демонстрационный стенд. Данные примеров и достижения ФСП — синтетические.\nОТ ПРЕДЛОЖЕНИЯ К ЗНАКОМСТВУ\nПриглашения\n\nИзучите условия до начала общения. При принятии контакты получит только пригласившая компания.\n\nЗагружаем приглашения\n\nСекунда — подтягиваем актуальные статусы с сервера."
-  },
-  {
-    "case": "B05",
-    "published": true,
-    "verified": false,
-    "overview": "Ваш профиль — больше, чем резюме\nПокажите, что вы умеете\n\nТест по основному и вспомогательному навыкам поможет подтвердить выбранный уровень. ФСП ID для этого не нужен.\n\nПерейти к тестированию\nнавыки\nподтверждены",
-    "invitations": "Демонстрационный стенд. Данные примеров и достижения ФСП — синтетические.\nОТ ПРЕДЛОЖЕНИЯ К ЗНАКОМСТВУ\nПриглашения\n\nИзучите условия до начала общения. При принятии контакты получит только пригласившая компания.\n\nПока нет приглашений\n\nПодтвердите навыки тестом, чтобы попасть в категорию кандидатов."
-  },
-  {
-    "case": "B05",
-    "published": false,
-    "verified": true,
-    "overview": "Ваш профиль — больше, чем резюме\nАналитика данных / SQL · Junior\n\nВаш уровень подтверждён, но профиль скрыт. Включите публикацию и согласие в профиле, чтобы попасть в подбор.\n\nНастроить видимость\nнавыки\nподтверждены",
-    "invitations": "Демонстрационный стенд. Данные примеров и достижения ФСП — синтетические.\nОТ ПРЕДЛОЖЕНИЯ К ЗНАКОМСТВУ\nПриглашения\n\nИзучите условия до начала общения. При принятии контакты получит только пригласившая компания.\n\nПока нет приглашений\n\nВаш уровень подтверждён. Включите публикацию и согласие на обработку в профиле."
-  },
-  {
-    "case": "B05",
-    "published": true,
-    "verified": true,
-    "overview": "Ваш профиль — больше, чем резюме\nАналитика данных / SQL · Junior\n\nВаш уровень подтверждён тестом. Работодатели могут найти вас в соответствующей категории.\n\nПосмотреть приглашения\nнавыки\nподтверждены",
-    "invitations": "Демонстрационный стенд. Данные примеров и достижения ФСП — синтетические.\nОТ ПРЕДЛОЖЕНИЯ К ЗНАКОМСТВУ\nПриглашения\n\nИзучите условия до начала общения. При принятии контакты получит только пригласившая компания.\n\nПока нет приглашений\n\nВаш профиль опубликован, уровень подтверждён. Ожидайте приглашений работодателей; настройки видимости доступны в профиле."
-  },
-  {
-    "case": "republication_consent",
-    "contacts_after_republish": null,
-    "old_chat_available": false,
-    "new_accepted_chat_available": true
-  }
-]
+
+Это не повтор исходного happy path B01: он теперь проходит. FAIL обусловлен уточнённым `accept[1]` из findings: «Неподтверждённое сохранение явно видно; уход с несохранёнными изменениями требует подтверждения». Предупреждение сначала есть, но исчезает после навигации, хотя сервер всё ещё не сохранил ответ. Поэтому базовый узкий DoD «ответ → Обзор → назад» выполнен, **полный** DoD с обязательным уточнением — нет. Ошибку нельзя закрыть одним human PASS обычного пути.
+
+Воспроизведение без изменения tracked файлов: взять исходный `scripts/smoke_stage_a.py`, в его копии заменить участок от `rejected=c.request.post` до `dialogs=[]` следующим кодом (остальные bootstrap/cleanup оригинала сохранены):
+
+```python
+        print('INDEPENDENT normal Q1 id/expiry stable:', started['id']==call(c,'/me/attempts')[0]['id'], flush=True)
+        page.route('**/api/me/attempts/*/answers', lambda route: route.abort())
+        answer.fill('UNSAVED-123')
+        expect(page.get_by_role('status')).to_contain_text('Не удалось сохранить на сервере')
+        print('INDEPENDENT failed PUT: error visible; server answer:',call(c,'/me/attempts')[0]['answers']['1'],flush=True)
+        prompted=[]
+        page.on('dialog',lambda d:(prompted.append(d.message),d.dismiss()))
+        nav(page,'Обзор');nav(page,'Подтверждение навыков')
+        expect(answer).to_have_value('UNSAVED-123')
+        print('INDEPENDENT after roundtrip: status=',repr(page.get_by_role('status').inner_text()),'dialogs=',prompted,flush=True)
+        page.close(run_before_unload=True)
+        page=c.new_page();page.goto(a.base_url);nav(page,'Подтверждение навыков')
+        answer=page.get_by_label('Ответ на задание 1',exact=True)
+        expect(answer).to_have_value('90,63')
+        print('INDEPENDENT reopen tab: answer reverted to',answer.input_value(),'dialogs=',prompted,flush=True)
+        browser.close()
+        raise SystemExit(0)
+
 ```
-Повторяемость probe обеспечивается полным кодом ниже; сохранить во временный файл, запустить из корня.
-Он повторяет bootstrap из проверенного scripts/smoke_stage_a.py; пароли случайные и не печатаются.
+
+Запуск копии: `python3 scripts/run_local.py .venv/bin/python /tmp/stage-a-independent/probe_draft.py`. Cleanup оригинального smoke выполняется через finally и при SystemExit. Для независимого ручного повторения есть H-Q1-network.
+
+## E4. Отдельные целевые удары Q1–Q3, matching и периодичность
+
+```bash
+COOKIE_SECURE=false python3 scripts/run_local.py .venv/bin/pytest -v tests/test_stage_a.py tests/test_bank.py::test_half_up_exact_boundaries tests/test_bank.py::test_conditional_rounding_new_and_historical_versions tests/test_matching.py tests/test_employer_tasks.py
+```
+
+```text
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.3.5, pluggy-1.6.0 -- /root/hakaton/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /root/hakaton
+plugins: anyio-4.15.1, platformdirs-4.12.3
+collecting ... collected 20 items
+
+tests/test_stage_a.py::test_draft_answers_owner_lifecycle PASSED         [  5%]
+tests/test_stage_a.py::test_draft_expired PASSED                         [ 10%]
+tests/test_stage_a.py::test_anonymous_labels_distinct_and_stable PASSED  [ 15%]
+tests/test_stage_a.py::test_incomplete_submit_requires_explicit_confirmation PASSED [ 20%]
+tests/test_bank.py::test_half_up_exact_boundaries[2900-32-90.63] PASSED  [ 25%]
+tests/test_bank.py::test_half_up_exact_boundaries[1005-1000-1.01] PASSED [ 30%]
+tests/test_bank.py::test_half_up_exact_boundaries[625-1000-0.63] PASSED  [ 35%]
+tests/test_bank.py::test_conditional_rounding_new_and_historical_versions PASSED [ 40%]
+tests/test_matching.py::test_unknown_never_becomes_proof_and_sport_does_not_change_category PASSED [ 45%]
+tests/test_matching.py::test_explicit_evidence_and_zero_experience_remain_distinct PASSED [ 50%]
+tests/test_matching.py::test_required_skill_coverage_is_not_a_score_threshold PASSED [ 55%]
+tests/test_matching.py::test_untrusted_achievement_does_not_satisfy_fsp_filter PASSED [ 60%]
+tests/test_matching.py::test_stage_a_test_and_sport_change_within_category_order PASSED [ 65%]
+tests/test_matching.py::test_production_matches_selected_weights_on_frozen_sample PASSED [ 70%]
+tests/test_employer_tasks.py::test_task_complete_lifecycle_grade_and_contact_isolation PASSED [ 75%]
+tests/test_employer_tasks.py::test_task_plan_idempotency_consent_and_schema PASSED [ 80%]
+tests/test_employer_tasks.py::test_scheduler_periodic_delivery_deduplicates_and_does_not_burst PASSED [ 85%]
+tests/test_employer_tasks.py::test_submitted_work_waits_for_review_and_pause_cancels_open_tasks PASSED [ 90%]
+tests/test_employer_tasks.py::test_deadline_and_concurrent_answers PASSED [ 95%]
+tests/test_employer_tasks.py::test_resume_keeps_cadence_after_review_and_legacy_pause PASSED [100%]
+
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /root/hakaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+.venv/lib/python3.12/site-packages/starlette/testclient.py:53
+  /root/hakaton/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 20 passed, 2 warnings in 7.92s ========================
+
+```
+
+Q2: сгенерирован именно 29/32 SQL Middle; 90.63 и 90,63 принимаются, 90.62 отклоняется новым банком, legacy 2.0.0 воспроизводит старый эталон. B02 допускает documented policy: старые попытки не пересчитывались (CHANGELOG Q2 и FOR_JURY). Q3: без/false confirm и whitespace →409, ответы/срок/active сохранены; explicit true завершает. UI `window.confirm` содержит число пропусков, их последствия и 24 часа. Идемпотентность сдачи проверяется в полном test_api. Q6: до границы выдачи нет; на границе четыре worker ticks не плодят дубли; после закрытия +100 дней не создаёт новую выдачу. Реальная неделя не ожидалась.
+
+## E5. Q7 matching: новая VERSION и повторная выборка
+
+Документированная процедура: `PYTHONPATH=apps/api:. .venv/bin/python evaluation/stage_a_matching.py`. В этой сессии `main()` запущен с перенаправлением только записи результата в `/tmp`, чтобы не менять evaluation. То же сделано для E6:
+
 ```python
 from pathlib import Path
-# Reuse only isolated demo bootstrap, never the smoke verdict/assertions.
-exec(Path('scripts/smoke_stage_a.py').read_text().split('try:\n    with sync_playwright()')[0])
-records=[]
-try:
- with sync_playwright() as pw:
-  b=pw.chromium.launch(); ctx=b.new_context(base_url=a.base_url,extra_http_headers={'X-Requested-With':'fsp-web'})
-  assert ctx.request.post('/api/auth/login',data={k:accounts[0][k] for k in ['email','password']}).status==200
-  def api(path,data=None,method=None):
-   r=ctx.request.fetch('/api'+path,method=method or ('POST' if data is not None else 'GET'),data=data); assert r.ok,(path,r.status,r.text()); return r.json()
-  attempt=api('/me/attempts',{'grade':'Junior'}); url='/me/attempts/'+attempt['id']
-  api(url+'/answers',{'answers':{'1':'42'}},'PUT')
-  for payload in [{'answers':{'1':'42'}},{'answers':{},'confirm_incomplete':False},{'answers':{str(i):' ' for i in range(1,9)}}]:
-   r=ctx.request.post('/api'+url+'/submit',data=payload); saved=api('/me/attempts')[0]
-   record={'case':'submit_without_confirmation','http':r.status,'body':r.json(),'status':saved['status'],'answers':saved['answers'],'same_expiry':saved['expires_at']==attempt['expires_at']}; records.append(record)
-   assert r.status==409 and saved['status']=='active' and saved['answers']=={'1':'42'} and record['same_expiry']
-  p=ctx.new_page(); p.goto(a.base_url)
-  def nav(label): p.locator('nav').get_by_role('button',name=label,exact=True).click()
-  fields=['name','phone','about','specialization','claimed_grade','skills','roles','soft_skills','experience_years','processing','published','show_experience']
-  for verified in [False,True]:
-   if verified:
-    with Session(engine) as db: qs=db.get(Attempt,attempt['id']).questions
-    api(url+'/submit',{'answers':{q['id']:str(solve(q)) for q in qs}})
-   for published in [False,True]:
-    own=api('/me/profile'); api('/me/profile',{**{k:own[k] for k in fields},'published':published},'PUT')
-    p.reload(); nav('Обзор'); overview=p.locator('.feature-banner').inner_text()
-    nav('Приглашения'); invitation=p.locator('main').inner_text()
-    records.append({'case':'B05','published':published,'verified':verified,'overview':overview,'invitations':invitation})
-    if verified and published:
-     assert 'Ваш профиль опубликован, уровень подтверждён.' in invitation
-     assert 'Подтвердите навыки и опубликуйте профиль' not in invitation
-     assert 'Работодатели могут найти вас' in overview and 'Посмотреть приглашения' in overview
-    if verified and not published:
-     assert 'профиль скрыт' in overview and 'Работодатели могут найти вас' not in overview
-  emp=b.new_context(base_url=a.base_url,extra_http_headers={'X-Requested-With':'fsp-web'})
-  assert emp.request.post('/api/auth/login',data={k:accounts[1][k] for k in ['email','password']}).status==200
-  def invite():
-   r=emp.request.post('/api/invitations',data=dict(candidate_id=accounts[0]['id'],request_id=str(uuid4()),description='Независимая проверка нового согласия',salary_min=100000,salary_max=150000,currency='RUB')); assert r.ok; return r.json()
-  inv=invite(); api('/invitations/'+inv['id'],{'status':'accepted'},'PATCH')
-  own=api('/me/profile'); payload={k:own[k] for k in fields}
-  api('/me/profile',dict(payload,published=False),'PUT'); api('/me/profile',dict(payload,published=True),'PUT')
-  after=emp.request.get('/api/candidates/'+accounts[0]['id']).json(); assert after['contacts'] is None
-  old=next(i for i in emp.request.get('/api/invitations').json() if i['id']==inv['id']); assert not old['chat_available']
-  new=invite(); api('/invitations/'+new['id'],{'status':'accepted'},'PATCH')
-  fresh=next(i for i in emp.request.get('/api/invitations').json() if i['id']==new['id']); assert fresh['chat_available']
-  records.append({'case':'republication_consent','contacts_after_republish':after['contacts'],'old_chat_available':old['chat_available'],'new_accepted_chat_available':fresh['chat_available']})
-  b.close()
-finally:
- with Session(engine) as db:
-  for account in accounts:
-   profile=db.get(Profile,account['id'])
-   if profile: profile.published=False
-  db.commit()
- Path('/tmp/stage-a-independent/blockers.json').write_text(json.dumps(records,ensure_ascii=False,indent=2))
-print(json.dumps(records,ensure_ascii=False,indent=2))
-
+from unittest.mock import patch
+from evaluation import stage_a_matching as m  # для E6: bank_v2_audit
+original = Path.write_text
+with patch.object(Path, 'write_text', lambda self, data, *a, **kw:
+    original(Path('/tmp/stage-a-independent') / self.name, data, *a, **kw)):
+    m.main()
 ```
 
-**Q3 PASS:** отсутствующий флаг, false, пробельные ответы → 409, active, прежний draft/expiry.
-**Бывшие B05-блокеры не воспроизвелись:** hidden не обещает нахождение; published+verified не просит
-заново подтвердить навыки. **Q4 PARTIAL:** в DOM feature-banner при verified=false остаётся
-декоративная надпись «навыки подтверждены». Не считать полную согласованность всех текстов доказанной.
-Воспроизведение без кода: неподтверждённый кандидат → Обзор → сравнить предложение пройти тест
-с надписью в круглом блоке. Новый явный invite после republish возвращает chat; сам republish — нет.
+Окружение: `PYTHONPATH=apps/api:. .venv/bin/python`. Свежий вывод и дополнительная sanity-проверка production:
 
-<a id="matching"></a>
-## Q7: повторное измерение
-
-Чтобы не менять evaluation/results, fixture скопирована в `/tmp/stage-a-independent/evaluation/`.
-Временный cwd; исходный скрипт и модули из workspace:
-```sh
-cd /tmp/stage-a-independent
-PYTHONPATH=/root/hakaton/apps/api:/root/hakaton /root/hakaton/.venv/bin/python /root/hakaton/evaluation/stage_a_matching.py
-```
-Exit 0:
 ```text
 {"old_weights": [60, 15, 20, 5], "selected_weights": [30, 15, 45, 10], "selection": "max dev P@5; tie: minimum L1 distance to old weights, then tuple order"}
 dev 1.0 -> 1.0
 test 0.8 -> 0.8
-
-```
-Dev: 16 кандидатов/2 запроса; holdout: 48/8, разные ID; авторские синтетические relevance labels.
-Выбор по dev P@5, равенство — L1 к старым весам, затем tuple. Holdout не выбирает веса в скрипте.
-Это не доказательство, что автор никогда не видел holdout; независимых экспертов нет.
-P@5 не вырос, улучшение качества найма не заявляется. VERSION `matching-1.2.0` проверена live smoke.
-Тест sanity подтверждает 66 > 63.75 при более сильном тесте+ФСП, при этом неизвестный навык остаётся unknown.
-
-Дополнительно вызвана read-only функция `evaluation.bank_v2_audit.audit()` с `PYTHONPATH=apps/api:.`;
-результат не записывался поверх старого evaluation JSON. Exit 0:
-```json
-{"oracle_checks": 36000, "oracle_mismatches": [], "simulated_attempts": 42000}
+VERSION matching-1.2.0 dev/test candidate ID overlap [] sizes 16 48
+fixture sha256 0f4bb52e97a78d1326e6da2031303315dc6105461f59860fc3581402b3e50850
+rank sanity 63.75 66.0 no sport 60.0
+checkbox delta 0.0
 
 ```
 
-<a id="hashes"></a>
-## Pck3: совпадение исполняемого кода
+Fixture содержит явные relevant_ids: 16 кандидатов/2 запроса dev, 48/8 holdout; ID не пересекаются. `git diff 2e6d6da HEAD -- evaluation/matching_fixtures.json` пуст. Сетка выбирается по dev; holdout используется только в последующем measure. Метки авторские/синтетические и давно известны проекту, поэтому нельзя называть набор новой слепой внешней валидацией. Отсутствие пересечения ID не доказывает независимость шаблонов. На текущем прогоне коэффициенты не подбирались вручную.
 
-`npm run build` в apps/web, exit 0:
+| Набор | До matching-1.1.0 | После matching-1.2.0 |
+|---|---:|---:|
+| dev P@5 | 1.00 | 1.00 |
+| holdout P@5 | 0.80 | 0.80 |
+
+VERSION bump независимо проверен `git diff 2e6d6da HEAD -- apps/api/fsp/matching.py`; живая API-выдача smoke требует methodology=matching-1.2.0. Production scoring сверяется с вычислителем выбранных весов на fixture в E4. Сильный тест+ФСП 66 > полное skill coverage с тестом 75% (63.75), без ФСП 60; непроверенный второй навык остаётся unknown. Чекбоксы самодекларации дают delta=0. Это соответствует направлению канона, **не** доказательство роста качества найма.
+
+## E6. Качество банка на моделях ответов
+
+Запущен `evaluation.bank_v2_audit.main()` с перенаправлением файла, как описано E5. Exit 0:
+
+```text
+{"oracle_checks": 36000, "oracle_mismatches": [], "simulated_attempts": 42000, "analytic_iid": [{"version": "1.2.0", "probability_correct": 0.8, "pass_probability": 0.6144000000000001}, {"version": "1.2.0", "probability_correct": 0.9, "pass_probability": 0.8019000000000001}, {"version": "2.1.0", "probability_correct": 0.8, "pass_probability": 0.7340032000000002}, {"version": "2.1.0", "probability_correct": 0.9, "pass_probability": 0.9300217499999999}]}
+1.2.0 frequent_guess mean pass 0.025 pair agreement 0.9534
+1.2.0 noise_10 mean pass 0.7997 pair agreement 0.6795
+1.2.0 noise_20 mean pass 0.5933 pair agreement 0.5167
+1.2.0 old_families_only mean pass 1 pair agreement 1.0
+2.1.0 frequent_guess mean pass 0 pair agreement 1.0
+2.1.0 noise_10 mean pass 0.926 pair agreement 0.8628
+2.1.0 noise_20 mean pass 0.714 pair agreement 0.5914
+2.1.0 old_families_only mean pass 0 pair agreement 1.0
+
+```
+
+36 000 независимых вычислений эталонов без расхождений; 42 000 синтетических попыток. Числа FOR_JURY воспроизведены. Человеческий пилот и реалистичность профессиональных грейдов этим не подтверждаются.
+
+## E7. Pck3: совпадение деплоя с кодом
+
+Свежая сборка: в `apps/web` выполнено `npm run build -- --outDir /tmp/stage-a-independent/web-dist`, exit 0:
+
 ```text
 
 > fsp-reverse-hiring@1.0.0 build
-> tsc -b && vite build
+> tsc -b && vite build --outDir /tmp/stage-a-independent/web-dist
 
 vite v6.4.4 building for production...
+
+(!) outDir /tmp/stage-a-independent/web-dist is not inside project root and will not be emptied.
+Use --emptyOutDir to override.
+
 transforming...
 ✓ 55 modules transformed.
 rendering chunks...
 computing gzip size...
-dist/index.html                   0.44 kB │ gzip:  0.33 kB
-dist/assets/index-x85TwcNR.css   19.36 kB │ gzip:  5.18 kB
-dist/assets/index-B9FXyoib.js   261.54 kB │ gzip: 79.00 kB
-✓ built in 2.34s
+../../../../tmp/stage-a-independent/web-dist/index.html                   0.44 kB │ gzip:  0.33 kB
+../../../../tmp/stage-a-independent/web-dist/assets/index-x85TwcNR.css   19.36 kB │ gzip:  5.18 kB
+../../../../tmp/stage-a-independent/web-dist/assets/index-CiUyEab4.js   261.76 kB │ gzip: 79.03 kB
+✓ built in 2.30s
 
 ```
-Python SHA256 считались для всех `fsp/**/*.py` через `docker compose exec -T api python -c ...`
-и аналогично task-worker, сравнивались с `apps/api/fsp/**/*.py`.
-Web: `docker compose exec -T web sh -c 'cd /usr/share/nginx/html && find . -type f -exec sha256sum {} \;'`,
-сравнение с новой локальной dist. Полное равенство списков web=false из-за штатного nginx 50x.html;
-все файлы приложения, включая index.html, совпали. Это не устаревшая сборка.
-```json
-{
-  "api": {
-    "match": true,
-    "container": {
-      "fsp/schemas.py": "f8cd2f8fe464e3d3407ef07f1bbc12508fb84b4ad873d78825bd31baac573912",
-      "fsp/seed.py": "9db892cab8be235b22f636d016c8d96a6f16c74395da8c9cfa8c2681aa8c60fc",
-      "fsp/formatting.py": "8be015724ca30d94c9082bf7dac31e858e3880fab559de9ddee7dc775c789501",
-      "fsp/tasks.py": "258134a8ea6e3a126a2a365e790775db8fcf1e99df20f5ed3f7ebee186082b6e",
-      "fsp/models.py": "5040873b582b60ac9729c5f1459555684a5e9ad6131ab54a8f391dac8d5491cd",
-      "fsp/matching.py": "6f4b042f1d438eaefceae3c92717b3426c89913143c1d80dddaedf3b4b39ad43",
-      "fsp/pdf.py": "b7b3148f019176c1ee9704eb3ccb49c809a36612ae0eed21482bef74ac69a68d",
-      "fsp/assessment.py": "d5b30eab36bfdda4d978584be30b42fea6c0cea537dd55f1ee91da0a2e369b58",
-      "fsp/outputs.py": "2ec9c8e367979ccbf195a4223fc98510028fdf0178c8337d4e4ef5eec07871a6",
-      "fsp/task_worker.py": "9dc4d9b97a9fec495ff08af98efc25428f3e7f92baf395f392a28bac661ee85f",
-      "fsp/bank.py": "d4bd2697d15a30f742be50d07faa1e4124fc2fec584337939105ebb90c5a5d16",
-      "fsp/main.py": "6e9e297743689b3018e8ee8d540a12325baee117e050cb6c49647c817d1a335b",
-      "fsp/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "fsp/fsp_provider.py": "5b119010cf47324fc619228204ad12763b8cb7cfefb8ad39336a204fe5b11b64"
-    },
-    "workspace": {
-      "fsp/schemas.py": "f8cd2f8fe464e3d3407ef07f1bbc12508fb84b4ad873d78825bd31baac573912",
-      "fsp/seed.py": "9db892cab8be235b22f636d016c8d96a6f16c74395da8c9cfa8c2681aa8c60fc",
-      "fsp/formatting.py": "8be015724ca30d94c9082bf7dac31e858e3880fab559de9ddee7dc775c789501",
-      "fsp/tasks.py": "258134a8ea6e3a126a2a365e790775db8fcf1e99df20f5ed3f7ebee186082b6e",
-      "fsp/models.py": "5040873b582b60ac9729c5f1459555684a5e9ad6131ab54a8f391dac8d5491cd",
-      "fsp/matching.py": "6f4b042f1d438eaefceae3c92717b3426c89913143c1d80dddaedf3b4b39ad43",
-      "fsp/pdf.py": "b7b3148f019176c1ee9704eb3ccb49c809a36612ae0eed21482bef74ac69a68d",
-      "fsp/assessment.py": "d5b30eab36bfdda4d978584be30b42fea6c0cea537dd55f1ee91da0a2e369b58",
-      "fsp/outputs.py": "2ec9c8e367979ccbf195a4223fc98510028fdf0178c8337d4e4ef5eec07871a6",
-      "fsp/task_worker.py": "9dc4d9b97a9fec495ff08af98efc25428f3e7f92baf395f392a28bac661ee85f",
-      "fsp/bank.py": "d4bd2697d15a30f742be50d07faa1e4124fc2fec584337939105ebb90c5a5d16",
-      "fsp/main.py": "6e9e297743689b3018e8ee8d540a12325baee117e050cb6c49647c817d1a335b",
-      "fsp/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "fsp/fsp_provider.py": "5b119010cf47324fc619228204ad12763b8cb7cfefb8ad39336a204fe5b11b64"
-    }
-  },
-  "task-worker": {
-    "match": true,
-    "container": {
-      "fsp/schemas.py": "f8cd2f8fe464e3d3407ef07f1bbc12508fb84b4ad873d78825bd31baac573912",
-      "fsp/seed.py": "9db892cab8be235b22f636d016c8d96a6f16c74395da8c9cfa8c2681aa8c60fc",
-      "fsp/formatting.py": "8be015724ca30d94c9082bf7dac31e858e3880fab559de9ddee7dc775c789501",
-      "fsp/tasks.py": "258134a8ea6e3a126a2a365e790775db8fcf1e99df20f5ed3f7ebee186082b6e",
-      "fsp/models.py": "5040873b582b60ac9729c5f1459555684a5e9ad6131ab54a8f391dac8d5491cd",
-      "fsp/matching.py": "6f4b042f1d438eaefceae3c92717b3426c89913143c1d80dddaedf3b4b39ad43",
-      "fsp/pdf.py": "b7b3148f019176c1ee9704eb3ccb49c809a36612ae0eed21482bef74ac69a68d",
-      "fsp/assessment.py": "d5b30eab36bfdda4d978584be30b42fea6c0cea537dd55f1ee91da0a2e369b58",
-      "fsp/outputs.py": "2ec9c8e367979ccbf195a4223fc98510028fdf0178c8337d4e4ef5eec07871a6",
-      "fsp/task_worker.py": "9dc4d9b97a9fec495ff08af98efc25428f3e7f92baf395f392a28bac661ee85f",
-      "fsp/bank.py": "d4bd2697d15a30f742be50d07faa1e4124fc2fec584337939105ebb90c5a5d16",
-      "fsp/main.py": "6e9e297743689b3018e8ee8d540a12325baee117e050cb6c49647c817d1a335b",
-      "fsp/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "fsp/fsp_provider.py": "5b119010cf47324fc619228204ad12763b8cb7cfefb8ad39336a204fe5b11b64"
-    },
-    "workspace": {
-      "fsp/schemas.py": "f8cd2f8fe464e3d3407ef07f1bbc12508fb84b4ad873d78825bd31baac573912",
-      "fsp/seed.py": "9db892cab8be235b22f636d016c8d96a6f16c74395da8c9cfa8c2681aa8c60fc",
-      "fsp/formatting.py": "8be015724ca30d94c9082bf7dac31e858e3880fab559de9ddee7dc775c789501",
-      "fsp/tasks.py": "258134a8ea6e3a126a2a365e790775db8fcf1e99df20f5ed3f7ebee186082b6e",
-      "fsp/models.py": "5040873b582b60ac9729c5f1459555684a5e9ad6131ab54a8f391dac8d5491cd",
-      "fsp/matching.py": "6f4b042f1d438eaefceae3c92717b3426c89913143c1d80dddaedf3b4b39ad43",
-      "fsp/pdf.py": "b7b3148f019176c1ee9704eb3ccb49c809a36612ae0eed21482bef74ac69a68d",
-      "fsp/assessment.py": "d5b30eab36bfdda4d978584be30b42fea6c0cea537dd55f1ee91da0a2e369b58",
-      "fsp/outputs.py": "2ec9c8e367979ccbf195a4223fc98510028fdf0178c8337d4e4ef5eec07871a6",
-      "fsp/task_worker.py": "9dc4d9b97a9fec495ff08af98efc25428f3e7f92baf395f392a28bac661ee85f",
-      "fsp/bank.py": "d4bd2697d15a30f742be50d07faa1e4124fc2fec584337939105ebb90c5a5d16",
-      "fsp/main.py": "6e9e297743689b3018e8ee8d540a12325baee117e050cb6c49647c817d1a335b",
-      "fsp/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "fsp/fsp_provider.py": "5b119010cf47324fc619228204ad12763b8cb7cfefb8ad39336a204fe5b11b64"
-    }
-  },
-  "web": {
-    "match": false,
-    "container": {
-      "50x.html": "876766b4e80133fd490603e073d3567425b88794828a9292104244c9e40875ed",
-      "index.html": "41c62f8ec585615e69b2d1d56e94863e751e260450863551d8db4c4c48538394",
-      "assets/index-x85TwcNR.css": "84e3e536817c07c4d727f5eb69d16b05a65f6d19b2886afb37730962853a8060",
-      "assets/index-B9FXyoib.js": "5fa38d42be8c1a6a8139f3f4597448f3044de03aa3f3513e06342355f18e821a"
-    },
-    "workspace_dist": {
-      "index.html": "41c62f8ec585615e69b2d1d56e94863e751e260450863551d8db4c4c48538394",
-      "assets/index-x85TwcNR.css": "84e3e536817c07c4d727f5eb69d16b05a65f6d19b2886afb37730962853a8060",
-      "assets/index-B9FXyoib.js": "5fa38d42be8c1a6a8139f3f4597448f3044de03aa3f3513e06342355f18e821a"
-    },
-    "rebuilt_workspace_dist": {
-      "index.html": "41c62f8ec585615e69b2d1d56e94863e751e260450863551d8db4c4c48538394",
-      "assets/index-x85TwcNR.css": "84e3e536817c07c4d727f5eb69d16b05a65f6d19b2886afb37730962853a8060",
-      "assets/index-B9FXyoib.js": "5fa38d42be8c1a6a8139f3f4597448f3044de03aa3f3513e06342355f18e821a"
-    },
-    "application_files_match": true,
-    "extra_container_files": [
-      "50x.html"
-    ]
-  }
-}
+
+Проверка сравнивает содержимое, а не возраст контейнера: все `apps/api/fsp/*.py` и Python миграции с git HEAD и `/app/` в обоих api/worker; три свежесобранных web-файла с nginx-контейнером и публичным HTTPS. Исходники продукта не имеют diff относительно HEAD; documentation-only commit проверки не изменит этот факт. Runtime dependencies не выданы за побайтовое совпадение всех слоёв образа.
+
+Воспроизводимый проверяющий код (`python3 /tmp/stage-a-independent/deploy.py`):
+
+```python
+import subprocess,json,hashlib,urllib.request
+from pathlib import Path
+h=lambda b:hashlib.sha256(b).hexdigest()
+run=lambda *a:subprocess.check_output(a)
+root=Path.cwd(); result={}
+for service in ['api','task-worker']:
+ files=sorted(Path('apps/api/fsp').glob('*.py'))+sorted(Path('apps/api/migrations').rglob('*.py'))
+ rows=[]
+ for f in files:
+  deployed=run('docker','compose','exec','-T',service,'cat','/app/'+str(f.relative_to('apps/api')))
+  committed=run('git','show','HEAD:'+str(f))
+  rows.append({'file':str(f),'sha256':h(f.read_bytes()),'workspace_equals_HEAD':f.read_bytes()==committed,'deployed_equals_workspace':deployed==f.read_bytes()})
+ result[service]=rows
+assets=[]
+for f in sorted(Path('/tmp/stage-a-independent/web-dist').rglob('*')):
+ if not f.is_file():continue
+ rel=str(f.relative_to('/tmp/stage-a-independent/web-dist'))
+ deployed=run('docker','compose','exec','-T','web','cat','/usr/share/nginx/html/'+rel)
+ public=urllib.request.urlopen('https://85-137-26-131.sslip.io/'+('' if rel=='index.html' else rel)).read()
+ assets.append(dict(file=rel,sha256=h(f.read_bytes()),container_equal=f.read_bytes()==deployed,https_equal=f.read_bytes()==public))
+result['web']=assets
+result['product_diff_HEAD']=run('git','diff','HEAD','--','apps','compose.yaml').decode()
+result['health']=json.load(urllib.request.urlopen('https://85-137-26-131.sslip.io/api/health'))
+result['db_mount']=json.loads(run('docker','inspect','fsp-mvp-db-1','--format','{{json .Mounts}}'))
+print(json.dumps(result,ensure_ascii=False,indent=2))
+assert all(x['workspace_equals_HEAD'] and x['deployed_equals_workspace'] for s in ['api','task-worker'] for x in result[s])
+assert all(x['container_equal'] and x['https_equal'] for x in assets)
+assert result['product_diff_HEAD']==''
+print('PASS deployed api/worker sources = HEAD; fresh build = container = public HTTPS assets')
+
 ```
-Хеши входов (включая неизменённую презентацию):
-```json
-{
-  "scripts/smoke_stage_a.py": "ac4f7eb28f826856a962082db06573797b63b66ac4e7757afb3660e8eabdc3eb",
-  "evaluation/stage_a_matching.py": "fdff5ee7ff84ffbdb712a317ff399df3771880334db56e943a47f0f36662e5b8",
-  "evaluation/matching_fixtures.json": "0f4bb52e97a78d1326e6da2031303315dc6105461f59860fc3581402b3e50850",
-  "apps/web/src/App.tsx": "d16b8e6e58739279e1be1fb69fccfc3acad92b1369d4951ae89e57ec8ef55bec",
-  "docs/delivery/CHANGELOG_STAGE_A.md": "3685bf33002ecedcd06dd8999dca03c6d2ab8ab9f9b1f63db88c98cfebb28eba",
-  "docs/delivery/FOR_JURY.md": "e16b8fa66caece077c32cd1edb8cbd6a0f63e6182a0141ddafe306b8e440698a",
-  "demo/FSP_NIKITA_SUBMISSION.pptx": "41e86f5eb8cc809facb6240f87c81fdb83f8d000a67cb80a4735eaa164e930f8"
-}
-```
-SHA контейнерной image label не заявляется: проверено побайтовое равенство прикладных файлов текущему
-workspace, свежая web-сборка и версии в живом API. Remote GitHub отстаёт — отдельный Pck2.
 
-## Упаковка и итоговые вердикты
+Фактический вывод:
 
-Pck1 FAIL: в CHANGELOG_STAGE_A.md начало говорит о серверном запрете неполной сдачи,
-а заключительный «Контроль сдачи» утверждает HTTP 200, Q3 FAIL, B05 снова воспроизводится.
-История не обозначена как отменённая; эксперт не получает однозначного текущего статуса за 2 минуты.
-Не переписано: это найденный дефект документа сдачи. Нужна явная историческая пометка и актуальный итог,
-в том числе честный PARTIAL Q4. SUBMISSION_LINKS «Закрыты Q1–Q7» также нельзя копировать без уточнения.
-Pck2 содержит нужные поля и рабочие логины, но ссылки GitHub пока не ведут на обновления этапа A.
-NOTTODO: diff demo/presentation пуст, matching/evaluation diff — перебор весов и банк, не IRT pipeline;
-SMTP/ФСП честно ограничены. Внешние действия, SMTP, новый нагрузочный тест, пилот и календарная неделя — NOT_RUN.
-
-| ID | Вердикт | Остаток |
-|---|---|---|
-| Q1 | PASS | Человеческая проверка по связанному протоколу; автоматический DoD проверен. |
-| Q2 | PASS | Человеческая проверка по связанному протоколу; автоматический DoD проверен. |
-| Q3 | PASS | Человеческая проверка по связанному протоколу; автоматический DoD проверен. |
-| Q4 | PARTIAL | Статичная надпись «навыки подтверждены» показана и при verified=false: полная согласованность всех текстов не достигнута. Прежние два сценария B05 исправлены.; Требуется человеческая оценка этой надписи; PARTIAL пока не отражён в актуальном changelog. |
-| Q5 | PASS | Человеческая проверка по связанному протоколу; автоматический DoD проверен. |
-| Q6 | PASS | Человеческая проверка по связанному протоколу; автоматический DoD проверен. |
-| Q7 | PASS | Человеческая проверка по связанному протоколу; автоматический DoD проверен. |
-| Pck1 | FAIL | Упаковка противоречит свежим проверкам и собственному описанию исправлений. Старый STOP выглядит действующим.; Нужно явно отделить историю от текущего результата и указать оставшийся PARTIAL Q4; в этой сессии файл changelog не менялся. |
-| Pck2 | PARTIAL | Изменения этапа A и актуальные документы не опубликованы в ветке GitHub.; Человеческий маршрут общих аккаунтов может упереться в cooldown; это не разрешение сбрасывать попытки или БД. |
-| Pck3 | PASS | Человеческая проверка по связанному протоколу; автоматический DoD проверен. |
-| Pck4 | PASS | Человеческая проверка по связанному протоколу; автоматический DoD проверен. |
-| Pck5 | HUMAN_ONLY | Нужны исправление упаковки, push, human PASS и подтверждение отправки. |
-| REG_FSP | PASS | Человеческая проверка по связанному протоколу; автоматический DoD проверен. |
-| REG_ISO | PASS | Человеческая проверка по связанному протоколу; автоматический DoD проверен. |
-| REG_OLD_SEL | PASS | Человеческая проверка по связанному протоколу; автоматический DoD проверен. |
-| NOTTODO | PASS | Человеческая проверка по связанному протоколу; автоматический DoD проверен. |
-
-Для отправки: исправить противоречивую упаковку; решить/честно описать PARTIAL Q4; повторно проверить изменённое; опубликовать ветку; заполнить человеческий протокол без FAIL по ★. Pck5 закрывает только человек.
-
-## Завершение verify-сессии
-
-После создания verify-коммита выполнен настоящий `GIT_TERMINAL_PROMPT=0 git push origin codex/fsp-mvp`.
-Exit 128:
 ```text
-fatal: could not read Username for 'https://github.com': terminal prompts disabled
+{
+  "api": [
+    {
+      "file": "apps/api/fsp/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/assessment.py",
+      "sha256": "d5b30eab36bfdda4d978584be30b42fea6c0cea537dd55f1ee91da0a2e369b58",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/bank.py",
+      "sha256": "d4bd2697d15a30f742be50d07faa1e4124fc2fec584337939105ebb90c5a5d16",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/formatting.py",
+      "sha256": "8be015724ca30d94c9082bf7dac31e858e3880fab559de9ddee7dc775c789501",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/fsp_provider.py",
+      "sha256": "5b119010cf47324fc619228204ad12763b8cb7cfefb8ad39336a204fe5b11b64",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/main.py",
+      "sha256": "6e9e297743689b3018e8ee8d540a12325baee117e050cb6c49647c817d1a335b",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/matching.py",
+      "sha256": "6f4b042f1d438eaefceae3c92717b3426c89913143c1d80dddaedf3b4b39ad43",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/models.py",
+      "sha256": "5040873b582b60ac9729c5f1459555684a5e9ad6131ab54a8f391dac8d5491cd",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/outputs.py",
+      "sha256": "2ec9c8e367979ccbf195a4223fc98510028fdf0178c8337d4e4ef5eec07871a6",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/pdf.py",
+      "sha256": "b7b3148f019176c1ee9704eb3ccb49c809a36612ae0eed21482bef74ac69a68d",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/schemas.py",
+      "sha256": "f8cd2f8fe464e3d3407ef07f1bbc12508fb84b4ad873d78825bd31baac573912",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/seed.py",
+      "sha256": "9db892cab8be235b22f636d016c8d96a6f16c74395da8c9cfa8c2681aa8c60fc",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/task_worker.py",
+      "sha256": "9dc4d9b97a9fec495ff08af98efc25428f3e7f92baf395f392a28bac661ee85f",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/tasks.py",
+      "sha256": "258134a8ea6e3a126a2a365e790775db8fcf1e99df20f5ed3f7ebee186082b6e",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/migrations/env.py",
+      "sha256": "d55c8957e9757b69f0eeb50ed59561d08e3ed2e01450dfbf4eaec99bcdd969e1",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/migrations/versions/b9e1c4d7a201_employer_tasks.py",
+      "sha256": "99a5e43eb5c0ecc1e138c6bc2c0bc9bee6f29a8c07ba47b688322d5b4c43a80b",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/migrations/versions/f8a2ba6fc338_initial_schema.py",
+      "sha256": "330315ddc103ceb0e3a497faf22d1207d9ee8b66bce5f05d2b81fb332bc3fdff",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    }
+  ],
+  "task-worker": [
+    {
+      "file": "apps/api/fsp/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/assessment.py",
+      "sha256": "d5b30eab36bfdda4d978584be30b42fea6c0cea537dd55f1ee91da0a2e369b58",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/bank.py",
+      "sha256": "d4bd2697d15a30f742be50d07faa1e4124fc2fec584337939105ebb90c5a5d16",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/formatting.py",
+      "sha256": "8be015724ca30d94c9082bf7dac31e858e3880fab559de9ddee7dc775c789501",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/fsp_provider.py",
+      "sha256": "5b119010cf47324fc619228204ad12763b8cb7cfefb8ad39336a204fe5b11b64",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/main.py",
+      "sha256": "6e9e297743689b3018e8ee8d540a12325baee117e050cb6c49647c817d1a335b",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/matching.py",
+      "sha256": "6f4b042f1d438eaefceae3c92717b3426c89913143c1d80dddaedf3b4b39ad43",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/models.py",
+      "sha256": "5040873b582b60ac9729c5f1459555684a5e9ad6131ab54a8f391dac8d5491cd",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/outputs.py",
+      "sha256": "2ec9c8e367979ccbf195a4223fc98510028fdf0178c8337d4e4ef5eec07871a6",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/pdf.py",
+      "sha256": "b7b3148f019176c1ee9704eb3ccb49c809a36612ae0eed21482bef74ac69a68d",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/schemas.py",
+      "sha256": "f8cd2f8fe464e3d3407ef07f1bbc12508fb84b4ad873d78825bd31baac573912",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/seed.py",
+      "sha256": "9db892cab8be235b22f636d016c8d96a6f16c74395da8c9cfa8c2681aa8c60fc",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/task_worker.py",
+      "sha256": "9dc4d9b97a9fec495ff08af98efc25428f3e7f92baf395f392a28bac661ee85f",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/fsp/tasks.py",
+      "sha256": "258134a8ea6e3a126a2a365e790775db8fcf1e99df20f5ed3f7ebee186082b6e",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/migrations/env.py",
+      "sha256": "d55c8957e9757b69f0eeb50ed59561d08e3ed2e01450dfbf4eaec99bcdd969e1",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/migrations/versions/b9e1c4d7a201_employer_tasks.py",
+      "sha256": "99a5e43eb5c0ecc1e138c6bc2c0bc9bee6f29a8c07ba47b688322d5b4c43a80b",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    },
+    {
+      "file": "apps/api/migrations/versions/f8a2ba6fc338_initial_schema.py",
+      "sha256": "330315ddc103ceb0e3a497faf22d1207d9ee8b66bce5f05d2b81fb332bc3fdff",
+      "workspace_equals_HEAD": true,
+      "deployed_equals_workspace": true
+    }
+  ],
+  "web": [
+    {
+      "file": "assets/index-CiUyEab4.js",
+      "sha256": "23fedeb2b2986c3b5c4e1b7df33a0a946156bfa3fecfb44b9dd9f0e1829794dc",
+      "container_equal": true,
+      "https_equal": true
+    },
+    {
+      "file": "assets/index-x85TwcNR.css",
+      "sha256": "84e3e536817c07c4d727f5eb69d16b05a65f6d19b2886afb37730962853a8060",
+      "container_equal": true,
+      "https_equal": true
+    },
+    {
+      "file": "index.html",
+      "sha256": "d989c5ff9d1f4c42e822d100065b8d20559f7c6e42ca008c5fa743220c0a4bf1",
+      "container_equal": true,
+      "https_equal": true
+    }
+  ],
+  "product_diff_HEAD": "",
+  "health": {
+    "status": "ok",
+    "demo": true,
+    "version": "1.0.0"
+  },
+  "db_mount": [
+    {
+      "Type": "volume",
+      "Name": "fsp-mvp_fsp_db",
+      "Source": "/var/lib/docker/volumes/fsp-mvp_fsp_db/_data",
+      "Destination": "/var/lib/postgresql/data",
+      "Driver": "local",
+      "Mode": "rw",
+      "RW": true,
+      "Propagation": ""
+    }
+  ]
+}
+PASS deployed api/worker sources = HEAD; fresh build = container = public HTTPS assets
+
 ```
-Push не выполнен. Эта запись добавлена в тот же локальный verify-коммит через amend;
-продуктовый код не менялся. Перед отправкой человек должен обеспечить публикацию из авторизованного окружения.
-Проверка структуры: 16 уникальных ID, все обязательные поля и evidence заполнены,
-все human_checks_required имеют полные шаги; 22 человеческих шага. `git diff --cached --check` — без ошибок.
+
+## E8–E10. Упаковка, публикация, NOTTODO
+
+E8: FOR_JURY прочитан целиком: URL стенда, ветка, 3 review-роли, две метрики, not_run, ссылка на findings, 7 шагов маршрута присутствуют. Все относительные ссылки из FOR_JURY/CHANGELOG существуют локально. Логины проверены E2 без изменения общих профилей. Содержательная проверка changelog видит Q1–Q7, ограничения реестра/почты и архив старого STOP. Но актуальная строка «Q1–Q7 и Pck3–Pck4: закрыты кодом и свежими автопроверками» теперь опровергнута E3. В delivery/SUBMISSION_LINKS также написано «Закрыты Q1–Q7». Эти файлы не исправлены в verify-only сессии; отправлять этот текст сейчас нельзя. PASS по структуре changelog не равен PASS честной упаковке.
+
+E9, свежий read-only запрос:
+
+```bash
+git ls-remote https://github.com/ImmortalDR/CV_hakaton.git refs/heads/codex/fsp-mvp
+```
+
+```text
+2e6d6daa5bfb59f6d5a7e7317aa41093c8f05980 refs/heads/codex/fsp-mvp
+```
+
+Ветка GitHub отстаёт от проверенного HEAD. Доступность push-auth в этой сессии не проверялась; старые заявления об отсутствии credentials не приняты как новый факт. Пользователь просил commit документов, push не выполнялся. Текст отправки проверен локально; внешняя форма/чат не отправлялись.
+
+E10:
+
+```bash
+git diff --name-only 2e6d6da HEAD -- demo '*.pptx'
+# пусто
+sha256sum demo/*.pptx
+```
+
+```text
+8a88789e4e89e44c49bcf50c49086ac63d40301c025aa6ec5c6e216c6472cf9e  demo/FSP_MVP.pptx
+41e86f5eb8cc809facb6240f87c81fdb83f8d000a67cb80a4735eaa164e930f8  demo/FSP_NIKITA_SUBMISSION.pptx
+```
+
+Состав Stage A diff и прочитанные bank/matching/evaluation показывают текущий численный банк и перебор весов, не новый IRT pipeline. Дополнение tasks продолжает существующий стенд (предусмотрено Q6); не трактуется как новый вау-функционал. Новых продуктовых правок в этой сессии нет. Вместо питча выполнялась проверка Q; VPN/SSH не менялись, Amik-действий не было. SMTP/боевой ФСП не заявляются готовыми.
+
+## Матрица решений
+
+| ID | Вердикт | Основание |
+|---|---|---|
+| Q1 | FAIL | E2; E3; E4 |
+| Q2 | PASS | E4; E2; docs/delivery/CHANGELOG_STAGE_A.md |
+| Q3 | PASS | E2; E4; apps/web/src/App.tsx:1180 |
+| Q4 | PASS | E2; E1 |
+| Q5 | PASS | E2; E4 |
+| Q6 | PASS | E2; E4 |
+| Q7 | PASS | E5; E4; E6; docs/delivery/VALIDATION.md:147 |
+| Pck1 | FAIL | E8; docs/delivery/CHANGELOG_STAGE_A.md |
+| Pck2 | PARTIAL | E2; E8; E9 |
+| Pck3 | PASS | E7; E0 |
+| Pck4 | FAIL | E2; E3 |
+| Pck5 | HUMAN_ONLY | docs/delivery/SUBMISSION_LINKS.md |
+| REG_FSP | PASS | E2; E4 |
+| REG_ISO | PASS | E2; E1 |
+| REG_OLD_SEL | PASS | E2 |
+| NOTTODO | PASS | E10; E5; E8 |
+
+Полные DoD, уточнения, доказательства и остатки — [VERIFY_STAGE_A_MATRIX.json](VERIFY_STAGE_A_MATRIX.json). Итог: {'FAIL': 3, 'PASS': 11, 'PARTIAL': 1, 'HUMAN_ONLY': 1}.
+
+## §6 канона: можно отправлять
+
+| Пункт | Да/нет | Причина |
+|---|---|---|
+| Q1–Q3 закрыты или явно обоснован stop | НЕТ | Q1 FAIL; в changelog нет актуального STOP. Этот протокол вводит запрет отправки, а не заменяет закрытие Q1. |
+| Q7: новая VERSION + таблица на выборке в VALIDATION/for-jury | ДА | matching-1.2.0; таблица 1→1/.8→.8 воспроизведена. |
+| Q4–Q6: сделано или partial в changelog | ДА | Технические DoD PASS; человеческое прочтение UX и решение по календарному наблюдению остаются в протоколе. |
+| Pck1–Pck3 | НЕТ | Pck1 FAIL, Pck2 PARTIAL; Pck3 PASS. |
+| Pck4 smoke green | НЕТ | Штатный скрипт зелёный, но acceptance Pck4 FAIL из-за Q1. |
+| Pck5 ссылки ушли | НЕТ | Подтверждения человека нет; отправки не было. |
+
+«Явно обоснован stop» из §6 трактуется как честный запрет продолжения, а не разрешение отправлять известный дефект. Сам по себе STOP в этом отчёте не делает Q1 закрытым и не обновляет changelog. Итог отправки — НЕТ.
+
+## Не выполнено / передача человеку
+
+P-01…P-05: N/A, только этап B. SMTP registration email: NOT_RUN; полный server ACL: NOT_RUN вне перечисленных тестов; нагрузка: NOT_RUN; полный архив исходников сдачи: NOT_RUN; реальные 7 дней: HUMAN_ONLY. Human-протокол не заполнен за человека. Проверка доступности с ноутбука жюри и зрительной понятности UI ещё нужна, но не подменяет исправление Q1. Никакие старые «14 PASS» не переносятся.
+
+Изменяются и коммитятся только VERIFY_STAGE_A_MATRIX.json, VERIFY_STAGE_A_PROTOCOL.md и HUMAN_VERIFY_PROTOCOL_STAGE_A.md. Сообщение коммита: `docs(verify): independent audit against comprehensive Stage A canon`. Проверенный продукт остаётся на указанном HEAD; новый commit содержит только документацию этой проверки.
