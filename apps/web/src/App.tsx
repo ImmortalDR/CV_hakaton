@@ -128,7 +128,7 @@ export function App() {
   const unsavedAssessment = useRef(false);
   const confirmLeave = () => !unsavedAssessment.current || window.confirm("Есть ответы, не сохранённые на сервере. Покинуть тест? Черновик останется в этом браузере; срок теста продолжает идти.");
   const setTab = (value: string) => {
-    if (value !== tab && !confirmLeave()) return;
+    if (tab === "assessment" && value !== tab && !confirmLeave()) return;
     setTabState(value);
     if (user) try { sessionStorage.setItem(`fsp-tab-${user.id}`, value); } catch { /* Optional UI context. */ }
   };
