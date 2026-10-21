@@ -150,7 +150,7 @@
     {
       "id": "CC13",
       "priority": "P2",
-      "status": "todo",
+      "status": "PASS",
       "owner": "astra",
       "title": "Short pointer from FOR_JURY/CHANGELOG without bloating Stage A",
       "artifact": "docs/delivery/FOR_JURY.md"
@@ -158,7 +158,7 @@
     {
       "id": "CC14",
       "priority": "P2",
-      "status": "todo",
+      "status": "PASS",
       "owner": "astra",
       "title": "90s pitch text for Stage B",
       "artifact": "docs/delivery/closed_contour/PITCH_CLOSED_CONTOUR_90S.md"
