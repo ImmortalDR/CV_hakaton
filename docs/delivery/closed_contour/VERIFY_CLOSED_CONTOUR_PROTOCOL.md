@@ -279,3 +279,15 @@ f491b37 docs(pitch): link readiness without expanding Stage A scope
 ```
 
 Итоговый SHA CCV1 сообщается в чате; `git log cf91823..codex/closed-contour-readiness --oneline` воспроизводит полный список. Финальная фиксация включает матрицу и этот протокол.
+
+
+## Independent verify (Cursor) 2026-10-21
+
+- Verifier: `cursor_independent_r1`
+- Evidence: `evidence/INDEPENDENT_VERIFY_R1.json`
+- Time: 2026-10-21T19:03:15.837744+00:00
+- Result: must IDs all PASS; CCV2 HUMAN_ONLY; CCV3 PARTIAL
+- Live `/api/health`: HTTP 200, demo=true
+- Dry-run log: `EXIT_CODE=0`, isolated project `fsp-cc-dryrun-…`, cleanup verified
+- FOR_JURY pointer: present (`Closed contour readiness` → onepager)
+- Human ★ still required before pitch claim «готовы внедрить» is team-approved
