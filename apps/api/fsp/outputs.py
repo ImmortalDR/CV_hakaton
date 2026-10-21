@@ -165,6 +165,7 @@ class Attempt(Output):
     created_at: datetime
     expires_at: datetime
     result: Result | None
+    answers: dict[str, str]
     questions: list[Question]
     rubric: AssessmentRubric
 

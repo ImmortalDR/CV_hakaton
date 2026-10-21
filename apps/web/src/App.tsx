@@ -1,5 +1,6 @@
 import {
   useCallback,
+  useRef,
   useEffect,
   useState,
   type FormEvent,
@@ -1022,6 +1023,26 @@ function Assessments({
     [current, setCurrent] = useState<Attempt | null>(null),
     [answers, setAnswers] = useState<Record<string, string>>({}),
     [grade, setGrade] = useState(profile.claimed_grade ?? "Junior");
+  const [saveStatus, setSaveStatus] = useState("");
+  const saveQueue = useRef(Promise.resolve());
+  const draftKey = (id: string) => `fsp-attempt-${id}`;
+  const restore = (a: Attempt) => {
+    let local = {};
+    try { local = JSON.parse(sessionStorage.getItem(draftKey(a.id)) ?? "{}"); } catch { /* Server copy remains available. */ }
+    setAnswers({ ...a.answers, ...local });
+  };
+  const saveAnswer = (id: string, value: string) => {
+    if (!current) return;
+    const next = { ...answers, [id]: value };
+    setAnswers(next);
+    try { sessionStorage.setItem(draftKey(current.id), JSON.stringify(next)); } catch { /* Report server persistence below. */ }
+    setSaveStatus("Сохраняем ответы…");
+    const attemptId = current.id;
+    saveQueue.current = saveQueue.current.then(async () => {
+      await api(`/me/attempts/${attemptId}/answers`, { answers: { [id]: value } }, "PUT");
+      setSaveStatus("Ответы сохранены");
+    }).catch(() => setSaveStatus("Не удалось сохранить на сервере. Не закрывайте вкладку; повторите ввод при восстановлении связи."));
+  };
   const policy = current?.rubric ?? catalog.rubric;
   const ruleText = policy
     ? `Не менее ${policy.threshold}%` + (policy.core_min_correct
@@ -1031,6 +1052,8 @@ function Assessments({
   const load = async () => {
     const list = await api<Attempt[]>("/me/attempts");
     setAttempts(list);
+    const active = list.find(x => x.status === "active" && new Date(x.expires_at) > new Date());
+    if (!current && active) restore(active);
     setCurrent(
       (a) =>
         a ??
@@ -1085,14 +1108,17 @@ function Assessments({
               </div>
             </div>
           )}
+          <p role="status">{saveStatus}</p>
           <form
             onSubmit={(e) => {
               e.preventDefault();
               void act(async () => {
+                await saveQueue.current;
                 const result = await api<Attempt>(
                   `/me/attempts/${current.id}/submit`,
                   { answers },
                 );
+                sessionStorage.removeItem(draftKey(current.id));
                 setCurrent(result);
                 await load();
                 refresh();
@@ -1126,7 +1152,7 @@ function Assessments({
                       value={answers[q.id] ?? ""}
                       maxLength={100}
                       onChange={(e) =>
-                        setAnswers((v) => ({ ...v, [q.id]: e.target.value }))
+                        saveAnswer(q.id, e.target.value)
                       }
                       placeholder="Число"
                       inputMode="decimal"
@@ -1185,8 +1211,9 @@ function Assessments({
               disabled={busy || !profile.name || !profile.processing}
               onClick={() =>
                 void act(async () => {
-                  setCurrent(await api<Attempt>("/me/attempts", { grade }));
-                  setAnswers({});
+                  const started = await api<Attempt>("/me/attempts", { grade });
+                  setCurrent(started);
+                  restore(started);
                   await load();
                 })
               }

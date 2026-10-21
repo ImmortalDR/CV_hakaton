@@ -98,6 +98,7 @@ export type Result = {
   }[];
 };
 export type Attempt = {
+  answers: Record<string, string>;
   id: string;
   grade: string;
   status: string;

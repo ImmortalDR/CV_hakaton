@@ -295,6 +295,7 @@ def create_app(database_url=None, demo=None, rate_limit=True):
             "created_at": a.created_at,
             "expires_at": a.expires_at,
             "result": a.result,
+            "answers": a.answers or {},
             "questions": [
                 {k: q[k] for k in ("id", "text", "skill")} for q in a.questions
             ],
@@ -660,6 +661,25 @@ def create_app(database_url=None, demo=None, rate_limit=True):
         )
         p.claimed_grade = data.grade
         db.add(a)
+        db.flush()
+        return attempt_view(a)
+
+    @app.put("/api/me/attempts/{attempt_id}/answers", response_model=O.Attempt,
+             tags=["Тестирование"])
+    def save_answers(attempt_id: str, data: S.Answers, user: AUTH, db: DB):
+        p = candidate(user, db, True)
+        a = db.scalar(select(Attempt).where(
+            Attempt.id == attempt_id, Attempt.user_id == user.id
+        ).with_for_update())
+        if not a:
+            fail(404, "Попытка не найдена")
+        if not p.processing:
+            fail(409, "Согласие на обработку отозвано")
+        if a.status != "active" or a.expires_at <= now():
+            fail(409, "Попытка закрыта или время истекло")
+        if set(data.answers) - {q["id"] for q in a.questions}:
+            fail(422, "Ответ содержит задание, которого нет в этой попытке")
+        a.answers = {**(a.answers or {}), **data.answers}
         db.flush()
         return attempt_view(a)
 

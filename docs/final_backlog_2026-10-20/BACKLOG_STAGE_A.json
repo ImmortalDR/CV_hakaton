@@ -1,0 +1,162 @@
+{
+  "canon": "COMPREHENSIVE_STAGE_A_2026-10-21.md",
+  "updated": "2026-10-21",
+  "merged_from": [
+    "FSP-audit-2026-10-20/findings.json",
+    "CALL_NOTES_2026-10-20.md",
+    "FINAL_INSTRUCTIONS_AND_BACKLOG_2026-10-20.md"
+  ],
+  "team": "Нанотехнологический альянс",
+  "stand": "https://85-137-26-131.sslip.io/",
+  "repo": "ImmortalDR/CV_hakaton",
+  "branch": "codex/fsp-mvp",
+  "stage": "A_silent_submission",
+  "confirmed_by_audit": [
+    "no_fsp_keeps_category",
+    "fsp_bonus_does_not_change_grade",
+    "old_selections_preserved",
+    "cross_company_contacts_isolated",
+    "cross_candidate_pdf_denied"
+  ],
+  "unverified_by_audit": [
+    "smtp_registration_email",
+    "full_server_acl",
+    "long_schedule_intervals",
+    "load",
+    "source_bundle_completeness"
+  ],
+  "tasks": [
+    {
+      "id": "Q1",
+      "audit": "B01",
+      "owner": "danila+nikita",
+      "status": "done",
+      "priority": "P1",
+      "title": "Persist in-progress test answers when navigating away",
+      "dod": [
+        "answers survive Overview round-trip or explicit warn before loss"
+      ],
+      "verification": "2 API tests passed; frontend build passed; browser round-trip queued for Pck4"
+    },
+    {
+      "id": "Q2",
+      "audit": "B02",
+      "owner": "timofey",
+      "status": "todo",
+      "priority": "P1",
+      "title": "Document/fix rounding rule for SQL Middle 90.625 case",
+      "dod": [
+        "single rounding rule; 90.63/90.62 ambiguity gone"
+      ]
+    },
+    {
+      "id": "Q3",
+      "audit": "B03",
+      "owner": "nikita+danila",
+      "status": "todo",
+      "priority": "P1",
+      "title": "Confirm before submit with blank answers",
+      "dod": [
+        "modal with skip count; no silent empty submit"
+      ]
+    },
+    {
+      "id": "Q4",
+      "audit": [
+        "B05",
+        "B06"
+      ],
+      "owner": "nikita",
+      "status": "todo",
+      "priority": "P2",
+      "title": "Hints match profile/dialog state after hide/revoke"
+    },
+    {
+      "id": "Q5",
+      "audit": [
+        "U01",
+        "U02",
+        "U03",
+        "U04"
+      ],
+      "owner": "nikita+timofey",
+      "status": "todo",
+      "priority": "P2",
+      "title": "Employer UX: distinct anon, filters, compact need, score breakdown"
+    },
+    {
+      "id": "Q6",
+      "audit": "B04",
+      "owner": "danila",
+      "status": "todo",
+      "priority": "P2",
+      "title": "Task schedule: pause/resume must not spawn early duplicate"
+    },
+    {
+      "id": "Q7",
+      "audit": "expert_call+weights",
+      "owner": "timofey",
+      "status": "todo",
+      "priority": "P1",
+      "title": "Reweight ranking + validate on labeled sample (not arbitrary coeffs)",
+      "path": "apps/api/fsp/matching.py",
+      "matching_now": {
+        "version": "matching-1.1.0",
+        "required_skills_weight": 60,
+        "test": "0.2 * test_score",
+        "fsp_cap": 5
+      },
+      "dod": [
+        "bump VERSION",
+        "labeled sample metrics before/after",
+        "test+FSP move rank more than skill checkboxes",
+        "update VALIDATION"
+      ]
+    },
+    {
+      "id": "Pck1",
+      "owner": "nikita",
+      "status": "todo",
+      "title": "Changelog after interim + audit 20.10"
+    },
+    {
+      "id": "Pck2",
+      "owner": "nikita",
+      "status": "todo",
+      "title": "For-jury / README path 10-15 min"
+    },
+    {
+      "id": "Pck3",
+      "owner": "danila",
+      "status": "todo",
+      "title": "Deploy to sslip after Q merges"
+    },
+    {
+      "id": "Pck4",
+      "owner": "any",
+      "status": "todo",
+      "title": "Smoke: Q1-Q3 + invite consent + isolation regression"
+    },
+    {
+      "id": "Pck5",
+      "owner": "team",
+      "status": "todo",
+      "title": "Submit links like previous round"
+    }
+  ],
+  "stage_b_after_submission": [
+    "P-01",
+    "P-02",
+    "P-03",
+    "P-04",
+    "P-05"
+  ],
+  "not_todo": [
+    "arbitrary weight tweaks without labeled sample",
+    "presentation redesign",
+    "IRT from scratch",
+    "pitch rehearsal instead of Q1-Q7",
+    "promise live FSP registry"
+  ],
+  "vps_docs": "/root/hakaton/docs/final_backlog_2026-10-20/"
+}
