@@ -1,0 +1,464 @@
+{
+  "kind": "synthetic_simulation_not_human_validation",
+  "bank_version": "1.1.0",
+  "matching_version": "matching-1.0.0",
+  "fixture_sha256": {
+    "PROTOCOL.md": "0747f6c216a0bc8bc60e080146873ab8d7bb2414358511cb32b14d6e2f45730b",
+    "matching_fixtures.json": "0f4bb52e97a78d1326e6da2031303315dc6105461f59860fc3581402b3e50850",
+    "grade_personas.json": "7a553125064875a53e101112c451c0d7e817542e48a072fc30f6e2520f45726c"
+  },
+  "matching": {
+    "dev": {
+      "candidates": 16,
+      "queries": 2,
+      "mean_p_at_5": 1.0,
+      "mean_baseline_p_at_5": 0.6,
+      "rows": [
+        {
+          "query": "dev-0-query",
+          "relevant_ids": [
+            "dev-0-a",
+            "dev-0-b",
+            "dev-0-c",
+            "dev-0-g",
+            "dev-0-h"
+          ],
+          "top5": [
+            "dev-0-g",
+            "dev-0-a",
+            "dev-0-h",
+            "dev-0-b",
+            "dev-0-c"
+          ],
+          "baseline_top5": [
+            "dev-0-e",
+            "dev-0-d",
+            "dev-0-a",
+            "dev-0-b",
+            "dev-0-h"
+          ],
+          "p_at_5": 1.0,
+          "baseline_p_at_5": 0.6,
+          "false_positives": [],
+          "false_negatives": []
+        },
+        {
+          "query": "dev-1-query",
+          "relevant_ids": [
+            "dev-1-a",
+            "dev-1-b",
+            "dev-1-c",
+            "dev-1-g",
+            "dev-1-h"
+          ],
+          "top5": [
+            "dev-1-g",
+            "dev-1-a",
+            "dev-1-h",
+            "dev-1-b",
+            "dev-1-c"
+          ],
+          "baseline_top5": [
+            "dev-1-e",
+            "dev-1-d",
+            "dev-1-a",
+            "dev-1-b",
+            "dev-1-h"
+          ],
+          "p_at_5": 1.0,
+          "baseline_p_at_5": 0.6,
+          "false_positives": [],
+          "false_negatives": []
+        }
+      ]
+    },
+    "test": {
+      "candidates": 48,
+      "queries": 8,
+      "mean_p_at_5": 0.8,
+      "mean_baseline_p_at_5": 0.475,
+      "rows": [
+        {
+          "query": "test-0-query",
+          "relevant_ids": [
+            "test-0-a",
+            "test-0-b",
+            "test-0-c",
+            "test-0-g",
+            "test-0-h"
+          ],
+          "top5": [
+            "test-0-g",
+            "test-0-a",
+            "test-0-h",
+            "test-0-b",
+            "test-0-c"
+          ],
+          "baseline_top5": [
+            "test-0-e",
+            "test-0-d",
+            "test-0-a",
+            "test-0-b",
+            "test-0-h"
+          ],
+          "p_at_5": 1.0,
+          "baseline_p_at_5": 0.6,
+          "false_positives": [],
+          "false_negatives": []
+        },
+        {
+          "query": "test-1-query",
+          "relevant_ids": [
+            "test-1-a",
+            "test-1-b",
+            "test-1-c",
+            "test-1-g",
+            "test-1-h"
+          ],
+          "top5": [
+            "test-1-g",
+            "test-1-a",
+            "test-1-h",
+            "test-1-b",
+            "test-1-c"
+          ],
+          "baseline_top5": [
+            "test-1-e",
+            "test-1-d",
+            "test-1-a",
+            "test-1-b",
+            "test-1-h"
+          ],
+          "p_at_5": 1.0,
+          "baseline_p_at_5": 0.6,
+          "false_positives": [],
+          "false_negatives": []
+        },
+        {
+          "query": "test-2-query",
+          "relevant_ids": [
+            "test-2-a",
+            "test-2-b",
+            "test-2-c",
+            "test-2-g",
+            "test-2-h"
+          ],
+          "top5": [
+            "test-2-g",
+            "test-2-a",
+            "test-2-h",
+            "test-2-b",
+            "test-2-c"
+          ],
+          "baseline_top5": [
+            "test-2-e",
+            "test-2-d",
+            "test-2-a",
+            "test-2-b",
+            "test-2-h"
+          ],
+          "p_at_5": 1.0,
+          "baseline_p_at_5": 0.6,
+          "false_positives": [],
+          "false_negatives": []
+        },
+        {
+          "query": "test-3-query",
+          "relevant_ids": [
+            "test-3-a",
+            "test-3-b",
+            "test-3-c",
+            "test-3-g",
+            "test-3-h"
+          ],
+          "top5": [
+            "test-3-g",
+            "test-3-a",
+            "test-3-h",
+            "test-3-b",
+            "test-3-c"
+          ],
+          "baseline_top5": [
+            "test-3-e",
+            "test-3-d",
+            "test-3-a",
+            "test-3-b",
+            "test-3-h"
+          ],
+          "p_at_5": 1.0,
+          "baseline_p_at_5": 0.6,
+          "false_positives": [],
+          "false_negatives": []
+        },
+        {
+          "query": "test-4-query",
+          "relevant_ids": [
+            "test-4-a",
+            "test-4-b",
+            "test-4-c",
+            "test-4-g",
+            "test-4-h"
+          ],
+          "top5": [
+            "test-4-g",
+            "test-4-a",
+            "test-4-h",
+            "test-4-b",
+            "test-4-c"
+          ],
+          "baseline_top5": [
+            "test-4-e",
+            "test-4-d",
+            "test-4-a",
+            "test-4-b",
+            "test-4-h"
+          ],
+          "p_at_5": 1.0,
+          "baseline_p_at_5": 0.6,
+          "false_positives": [],
+          "false_negatives": []
+        },
+        {
+          "query": "test-5-query",
+          "relevant_ids": [
+            "test-5-a",
+            "test-5-b",
+            "test-5-c",
+            "test-5-g",
+            "test-5-h"
+          ],
+          "top5": [
+            "test-5-g",
+            "test-5-a",
+            "test-5-h",
+            "test-5-b",
+            "test-5-c"
+          ],
+          "baseline_top5": [
+            "test-5-e",
+            "test-5-d",
+            "test-5-a",
+            "test-5-b",
+            "test-5-h"
+          ],
+          "p_at_5": 1.0,
+          "baseline_p_at_5": 0.6,
+          "false_positives": [],
+          "false_negatives": []
+        },
+        {
+          "query": "test-uncovered-react",
+          "relevant_ids": [],
+          "top5": [
+            "test-0-g",
+            "test-0-a",
+            "test-0-d",
+            "test-0-h",
+            "test-0-b"
+          ],
+          "baseline_top5": [
+            "test-0-e",
+            "test-0-d",
+            "test-0-a",
+            "test-0-b",
+            "test-0-c"
+          ],
+          "p_at_5": 0.0,
+          "baseline_p_at_5": 0.0,
+          "false_positives": [
+            "test-0-g",
+            "test-0-a",
+            "test-0-d",
+            "test-0-h",
+            "test-0-b"
+          ],
+          "false_negatives": []
+        },
+        {
+          "query": "test-both-required",
+          "relevant_ids": [
+            "test-0-a",
+            "test-0-g"
+          ],
+          "top5": [
+            "test-0-g",
+            "test-0-a",
+            "test-0-d",
+            "test-0-h",
+            "test-0-b"
+          ],
+          "baseline_top5": [
+            "test-0-e",
+            "test-0-d",
+            "test-0-a",
+            "test-0-b",
+            "test-0-h"
+          ],
+          "p_at_5": 0.4,
+          "baseline_p_at_5": 0.2,
+          "false_positives": [
+            "test-0-d",
+            "test-0-h",
+            "test-0-b"
+          ],
+          "false_negatives": []
+        }
+      ]
+    }
+  },
+  "grading": {
+    "personas": 12,
+    "variants_per_persona": 20,
+    "classifications": 240,
+    "oracle_checks": 2880,
+    "unique_variants": 720,
+    "confusion_matrix": {
+      "unconfirmed": {
+        "unconfirmed": 80,
+        "Junior": 0,
+        "Middle": 0,
+        "Senior": 0
+      },
+      "Junior": {
+        "unconfirmed": 0,
+        "Junior": 40,
+        "Middle": 0,
+        "Senior": 0
+      },
+      "Middle": {
+        "unconfirmed": 2,
+        "Junior": 3,
+        "Middle": 75,
+        "Senior": 0
+      },
+      "Senior": {
+        "unconfirmed": 0,
+        "Junior": 0,
+        "Middle": 0,
+        "Senior": 40
+      }
+    },
+    "agreement": 0.9791666666666666,
+    "mean_variant_stability": 0.9791666666666666,
+    "details": [
+      {
+        "persona": "python-novice",
+        "expected": "unconfirmed",
+        "predictions": {
+          "unconfirmed": 20
+        },
+        "agreement": 1.0,
+        "variant_stability": 1.0
+      },
+      {
+        "persona": "python-junior",
+        "expected": "Junior",
+        "predictions": {
+          "Junior": 20
+        },
+        "agreement": 1.0,
+        "variant_stability": 1.0
+      },
+      {
+        "persona": "python-middle",
+        "expected": "Middle",
+        "predictions": {
+          "Middle": 20
+        },
+        "agreement": 1.0,
+        "variant_stability": 1.0
+      },
+      {
+        "persona": "python-senior",
+        "expected": "Senior",
+        "predictions": {
+          "Senior": 20
+        },
+        "agreement": 1.0,
+        "variant_stability": 1.0
+      },
+      {
+        "persona": "python-narrow",
+        "expected": "unconfirmed",
+        "predictions": {
+          "unconfirmed": 20
+        },
+        "agreement": 1.0,
+        "variant_stability": 1.0
+      },
+      {
+        "persona": "python-noisy-middle",
+        "expected": "Middle",
+        "predictions": {
+          "Middle": 18,
+          "Junior": 2
+        },
+        "agreement": 0.9,
+        "variant_stability": 0.9
+      },
+      {
+        "persona": "data-novice",
+        "expected": "unconfirmed",
+        "predictions": {
+          "unconfirmed": 20
+        },
+        "agreement": 1.0,
+        "variant_stability": 1.0
+      },
+      {
+        "persona": "data-junior",
+        "expected": "Junior",
+        "predictions": {
+          "Junior": 20
+        },
+        "agreement": 1.0,
+        "variant_stability": 1.0
+      },
+      {
+        "persona": "data-middle",
+        "expected": "Middle",
+        "predictions": {
+          "Middle": 20
+        },
+        "agreement": 1.0,
+        "variant_stability": 1.0
+      },
+      {
+        "persona": "data-senior",
+        "expected": "Senior",
+        "predictions": {
+          "Senior": 20
+        },
+        "agreement": 1.0,
+        "variant_stability": 1.0
+      },
+      {
+        "persona": "data-narrow",
+        "expected": "unconfirmed",
+        "predictions": {
+          "unconfirmed": 20
+        },
+        "agreement": 1.0,
+        "variant_stability": 1.0
+      },
+      {
+        "persona": "data-noisy-middle",
+        "expected": "Middle",
+        "predictions": {
+          "Middle": 17,
+          "Junior": 1,
+          "unconfirmed": 2
+        },
+        "agreement": 0.85,
+        "variant_stability": 0.85
+      }
+    ]
+  },
+  "limitations": [
+    "Авторские синтетические метки; внешних экспертов и испытуемых нет.",
+    "Веса не обучались; train отсутствует. Dev использован для проверки процедуры.",
+    "Параметрические варианты сохраняют известный алгоритм решения; защиты от LLM нет.",
+    "Оценка профессиональных грейдов требует независимого пилота с людьми.",
+    "Малая выборка и искусственные сценарии не позволяют оценить качество на рынке."
+  ]
+}

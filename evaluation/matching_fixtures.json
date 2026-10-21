@@ -1,0 +1,2194 @@
+{
+  "schema_version": 1,
+  "source": "synthetic_author_labels",
+  "human_experts": 0,
+  "train": null,
+  "dev": {
+    "candidates": [
+      {
+        "id": "dev-0-a",
+        "specialization": "python",
+        "verified_grade": "Junior",
+        "skills": [
+          "python",
+          "testing"
+        ],
+        "experience_years": 3,
+        "evidence": [
+          {
+            "skill": "python",
+            "state": "met",
+            "source": "assessment",
+            "id": "dev-0-a-python",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "testing",
+            "state": "met",
+            "source": "assessment",
+            "id": "dev-0-a-testing",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 100,
+        "achievements": []
+      },
+      {
+        "id": "dev-0-b",
+        "specialization": "python",
+        "verified_grade": "Junior",
+        "skills": [
+          "python"
+        ],
+        "experience_years": 2,
+        "evidence": [
+          {
+            "skill": "python",
+            "state": "met",
+            "source": "assessment",
+            "id": "dev-0-b-python",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "testing",
+            "state": "unmet",
+            "source": "assessment",
+            "id": "dev-0-b-testing",
+            "correct": 1,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": []
+      },
+      {
+        "id": "dev-0-c",
+        "specialization": "python",
+        "verified_grade": "Junior",
+        "skills": [],
+        "experience_years": 1,
+        "evidence": [
+          {
+            "skill": "python",
+            "state": "met",
+            "source": "assessment",
+            "id": "dev-0-c-python",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": []
+      },
+      {
+        "id": "dev-0-d",
+        "specialization": "python",
+        "verified_grade": "Junior",
+        "skills": [
+          "python",
+          "testing"
+        ],
+        "experience_years": 12,
+        "evidence": [
+          {
+            "skill": "testing",
+            "state": "met",
+            "source": "assessment",
+            "id": "dev-0-d-testing",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": [
+          {
+            "provider": "demo_fsp",
+            "points": 3,
+            "verification": "simulated"
+          }
+        ]
+      },
+      {
+        "id": "dev-0-e",
+        "specialization": "python",
+        "verified_grade": "Junior",
+        "skills": [
+          "python",
+          "testing"
+        ],
+        "experience_years": 15,
+        "evidence": [
+          {
+            "skill": "python",
+            "state": "unmet",
+            "source": "assessment",
+            "id": "dev-0-e-python",
+            "correct": 1,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "testing",
+            "state": "met",
+            "source": "assessment",
+            "id": "dev-0-e-testing",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": []
+      },
+      {
+        "id": "dev-0-f",
+        "specialization": "python",
+        "verified_grade": null,
+        "skills": [
+          "python",
+          "testing"
+        ],
+        "experience_years": 20,
+        "evidence": [],
+        "test_score": 0,
+        "achievements": []
+      },
+      {
+        "id": "dev-0-g",
+        "specialization": "python",
+        "verified_grade": "Junior",
+        "skills": [],
+        "experience_years": 0,
+        "evidence": [
+          {
+            "skill": "python",
+            "state": "met",
+            "source": "assessment",
+            "id": "dev-0-g-python",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "testing",
+            "state": "met",
+            "source": "assessment",
+            "id": "dev-0-g-testing",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 100,
+        "achievements": [
+          {
+            "provider": "demo_fsp",
+            "points": 1,
+            "verification": "simulated"
+          }
+        ]
+      },
+      {
+        "id": "dev-0-h",
+        "specialization": "python",
+        "verified_grade": "Junior",
+        "skills": [
+          "python"
+        ],
+        "experience_years": null,
+        "evidence": [
+          {
+            "skill": "python",
+            "state": "met",
+            "source": "assessment",
+            "id": "dev-0-h-python",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "testing",
+            "state": "unmet",
+            "source": "assessment",
+            "id": "dev-0-h-testing",
+            "correct": 1,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": [
+          {
+            "provider": "demo_fsp",
+            "points": 3,
+            "verification": "simulated"
+          }
+        ]
+      },
+      {
+        "id": "dev-1-a",
+        "specialization": "data",
+        "verified_grade": "Junior",
+        "skills": [
+          "sql",
+          "statistics"
+        ],
+        "experience_years": 3,
+        "evidence": [
+          {
+            "skill": "sql",
+            "state": "met",
+            "source": "assessment",
+            "id": "dev-1-a-sql",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "statistics",
+            "state": "met",
+            "source": "assessment",
+            "id": "dev-1-a-statistics",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 100,
+        "achievements": []
+      },
+      {
+        "id": "dev-1-b",
+        "specialization": "data",
+        "verified_grade": "Junior",
+        "skills": [
+          "sql"
+        ],
+        "experience_years": 2,
+        "evidence": [
+          {
+            "skill": "sql",
+            "state": "met",
+            "source": "assessment",
+            "id": "dev-1-b-sql",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "statistics",
+            "state": "unmet",
+            "source": "assessment",
+            "id": "dev-1-b-statistics",
+            "correct": 1,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": []
+      },
+      {
+        "id": "dev-1-c",
+        "specialization": "data",
+        "verified_grade": "Junior",
+        "skills": [],
+        "experience_years": 1,
+        "evidence": [
+          {
+            "skill": "sql",
+            "state": "met",
+            "source": "assessment",
+            "id": "dev-1-c-sql",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": []
+      },
+      {
+        "id": "dev-1-d",
+        "specialization": "data",
+        "verified_grade": "Junior",
+        "skills": [
+          "sql",
+          "statistics"
+        ],
+        "experience_years": 12,
+        "evidence": [
+          {
+            "skill": "statistics",
+            "state": "met",
+            "source": "assessment",
+            "id": "dev-1-d-statistics",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": [
+          {
+            "provider": "demo_fsp",
+            "points": 3,
+            "verification": "simulated"
+          }
+        ]
+      },
+      {
+        "id": "dev-1-e",
+        "specialization": "data",
+        "verified_grade": "Junior",
+        "skills": [
+          "sql",
+          "statistics"
+        ],
+        "experience_years": 15,
+        "evidence": [
+          {
+            "skill": "sql",
+            "state": "unmet",
+            "source": "assessment",
+            "id": "dev-1-e-sql",
+            "correct": 1,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "statistics",
+            "state": "met",
+            "source": "assessment",
+            "id": "dev-1-e-statistics",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": []
+      },
+      {
+        "id": "dev-1-f",
+        "specialization": "data",
+        "verified_grade": null,
+        "skills": [
+          "sql",
+          "statistics"
+        ],
+        "experience_years": 20,
+        "evidence": [],
+        "test_score": 0,
+        "achievements": []
+      },
+      {
+        "id": "dev-1-g",
+        "specialization": "data",
+        "verified_grade": "Junior",
+        "skills": [],
+        "experience_years": 0,
+        "evidence": [
+          {
+            "skill": "sql",
+            "state": "met",
+            "source": "assessment",
+            "id": "dev-1-g-sql",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "statistics",
+            "state": "met",
+            "source": "assessment",
+            "id": "dev-1-g-statistics",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 100,
+        "achievements": [
+          {
+            "provider": "demo_fsp",
+            "points": 1,
+            "verification": "simulated"
+          }
+        ]
+      },
+      {
+        "id": "dev-1-h",
+        "specialization": "data",
+        "verified_grade": "Junior",
+        "skills": [
+          "sql"
+        ],
+        "experience_years": null,
+        "evidence": [
+          {
+            "skill": "sql",
+            "state": "met",
+            "source": "assessment",
+            "id": "dev-1-h-sql",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "statistics",
+            "state": "unmet",
+            "source": "assessment",
+            "id": "dev-1-h-statistics",
+            "correct": 1,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": [
+          {
+            "provider": "demo_fsp",
+            "points": 3,
+            "verification": "simulated"
+          }
+        ]
+      }
+    ],
+    "queries": [
+      {
+        "id": "dev-0-query",
+        "text": "Нужен Junior python: python, желательно testing.",
+        "criteria": {
+          "specialization": "python",
+          "grades": [
+            "Junior"
+          ],
+          "required_skills": [
+            "python"
+          ],
+          "desired_skills": [
+            "testing"
+          ],
+          "min_years": null,
+          "fsp_only": false
+        },
+        "relevant_ids": [
+          "dev-0-a",
+          "dev-0-b",
+          "dev-0-c",
+          "dev-0-g",
+          "dev-0-h"
+        ],
+        "reason": "Категория подтверждена; основной навык доказан. Неподтверждённый стаж и спортивный опыт не заменяют навык."
+      },
+      {
+        "id": "dev-1-query",
+        "text": "Нужен Junior data: sql, желательно statistics.",
+        "criteria": {
+          "specialization": "data",
+          "grades": [
+            "Junior"
+          ],
+          "required_skills": [
+            "sql"
+          ],
+          "desired_skills": [
+            "statistics"
+          ],
+          "min_years": null,
+          "fsp_only": false
+        },
+        "relevant_ids": [
+          "dev-1-a",
+          "dev-1-b",
+          "dev-1-c",
+          "dev-1-g",
+          "dev-1-h"
+        ],
+        "reason": "Категория подтверждена; основной навык доказан. Неподтверждённый стаж и спортивный опыт не заменяют навык."
+      }
+    ]
+  },
+  "test": {
+    "candidates": [
+      {
+        "id": "test-0-a",
+        "specialization": "python",
+        "verified_grade": "Junior",
+        "skills": [
+          "python",
+          "testing"
+        ],
+        "experience_years": 3,
+        "evidence": [
+          {
+            "skill": "python",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-0-a-python",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "testing",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-0-a-testing",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 100,
+        "achievements": []
+      },
+      {
+        "id": "test-0-b",
+        "specialization": "python",
+        "verified_grade": "Junior",
+        "skills": [
+          "python"
+        ],
+        "experience_years": 2,
+        "evidence": [
+          {
+            "skill": "python",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-0-b-python",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "testing",
+            "state": "unmet",
+            "source": "assessment",
+            "id": "test-0-b-testing",
+            "correct": 1,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": []
+      },
+      {
+        "id": "test-0-c",
+        "specialization": "python",
+        "verified_grade": "Junior",
+        "skills": [],
+        "experience_years": 1,
+        "evidence": [
+          {
+            "skill": "python",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-0-c-python",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": []
+      },
+      {
+        "id": "test-0-d",
+        "specialization": "python",
+        "verified_grade": "Junior",
+        "skills": [
+          "python",
+          "testing"
+        ],
+        "experience_years": 12,
+        "evidence": [
+          {
+            "skill": "testing",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-0-d-testing",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": [
+          {
+            "provider": "demo_fsp",
+            "points": 3,
+            "verification": "simulated"
+          }
+        ]
+      },
+      {
+        "id": "test-0-e",
+        "specialization": "python",
+        "verified_grade": "Junior",
+        "skills": [
+          "python",
+          "testing"
+        ],
+        "experience_years": 15,
+        "evidence": [
+          {
+            "skill": "python",
+            "state": "unmet",
+            "source": "assessment",
+            "id": "test-0-e-python",
+            "correct": 1,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "testing",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-0-e-testing",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": []
+      },
+      {
+        "id": "test-0-f",
+        "specialization": "python",
+        "verified_grade": null,
+        "skills": [
+          "python",
+          "testing"
+        ],
+        "experience_years": 20,
+        "evidence": [],
+        "test_score": 0,
+        "achievements": []
+      },
+      {
+        "id": "test-0-g",
+        "specialization": "python",
+        "verified_grade": "Junior",
+        "skills": [],
+        "experience_years": 0,
+        "evidence": [
+          {
+            "skill": "python",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-0-g-python",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "testing",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-0-g-testing",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 100,
+        "achievements": [
+          {
+            "provider": "demo_fsp",
+            "points": 1,
+            "verification": "simulated"
+          }
+        ]
+      },
+      {
+        "id": "test-0-h",
+        "specialization": "python",
+        "verified_grade": "Junior",
+        "skills": [
+          "python"
+        ],
+        "experience_years": null,
+        "evidence": [
+          {
+            "skill": "python",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-0-h-python",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "testing",
+            "state": "unmet",
+            "source": "assessment",
+            "id": "test-0-h-testing",
+            "correct": 1,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": [
+          {
+            "provider": "demo_fsp",
+            "points": 3,
+            "verification": "simulated"
+          }
+        ]
+      },
+      {
+        "id": "test-1-a",
+        "specialization": "python",
+        "verified_grade": "Middle",
+        "skills": [
+          "python",
+          "http"
+        ],
+        "experience_years": 3,
+        "evidence": [
+          {
+            "skill": "python",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-1-a-python",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "http",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-1-a-http",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 100,
+        "achievements": []
+      },
+      {
+        "id": "test-1-b",
+        "specialization": "python",
+        "verified_grade": "Middle",
+        "skills": [
+          "python"
+        ],
+        "experience_years": 2,
+        "evidence": [
+          {
+            "skill": "python",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-1-b-python",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "http",
+            "state": "unmet",
+            "source": "assessment",
+            "id": "test-1-b-http",
+            "correct": 1,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": []
+      },
+      {
+        "id": "test-1-c",
+        "specialization": "python",
+        "verified_grade": "Middle",
+        "skills": [],
+        "experience_years": 1,
+        "evidence": [
+          {
+            "skill": "python",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-1-c-python",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": []
+      },
+      {
+        "id": "test-1-d",
+        "specialization": "python",
+        "verified_grade": "Middle",
+        "skills": [
+          "python",
+          "http"
+        ],
+        "experience_years": 12,
+        "evidence": [
+          {
+            "skill": "http",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-1-d-http",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": [
+          {
+            "provider": "demo_fsp",
+            "points": 3,
+            "verification": "simulated"
+          }
+        ]
+      },
+      {
+        "id": "test-1-e",
+        "specialization": "python",
+        "verified_grade": "Middle",
+        "skills": [
+          "python",
+          "http"
+        ],
+        "experience_years": 15,
+        "evidence": [
+          {
+            "skill": "python",
+            "state": "unmet",
+            "source": "assessment",
+            "id": "test-1-e-python",
+            "correct": 1,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "http",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-1-e-http",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": []
+      },
+      {
+        "id": "test-1-f",
+        "specialization": "python",
+        "verified_grade": null,
+        "skills": [
+          "python",
+          "http"
+        ],
+        "experience_years": 20,
+        "evidence": [],
+        "test_score": 0,
+        "achievements": []
+      },
+      {
+        "id": "test-1-g",
+        "specialization": "python",
+        "verified_grade": "Middle",
+        "skills": [],
+        "experience_years": 0,
+        "evidence": [
+          {
+            "skill": "python",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-1-g-python",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "http",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-1-g-http",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 100,
+        "achievements": [
+          {
+            "provider": "demo_fsp",
+            "points": 1,
+            "verification": "simulated"
+          }
+        ]
+      },
+      {
+        "id": "test-1-h",
+        "specialization": "python",
+        "verified_grade": "Middle",
+        "skills": [
+          "python"
+        ],
+        "experience_years": null,
+        "evidence": [
+          {
+            "skill": "python",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-1-h-python",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "http",
+            "state": "unmet",
+            "source": "assessment",
+            "id": "test-1-h-http",
+            "correct": 1,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": [
+          {
+            "provider": "demo_fsp",
+            "points": 3,
+            "verification": "simulated"
+          }
+        ]
+      },
+      {
+        "id": "test-2-a",
+        "specialization": "python",
+        "verified_grade": "Senior",
+        "skills": [
+          "python",
+          "http"
+        ],
+        "experience_years": 3,
+        "evidence": [
+          {
+            "skill": "python",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-2-a-python",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "http",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-2-a-http",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 100,
+        "achievements": []
+      },
+      {
+        "id": "test-2-b",
+        "specialization": "python",
+        "verified_grade": "Senior",
+        "skills": [
+          "python"
+        ],
+        "experience_years": 2,
+        "evidence": [
+          {
+            "skill": "python",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-2-b-python",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "http",
+            "state": "unmet",
+            "source": "assessment",
+            "id": "test-2-b-http",
+            "correct": 1,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": []
+      },
+      {
+        "id": "test-2-c",
+        "specialization": "python",
+        "verified_grade": "Senior",
+        "skills": [],
+        "experience_years": 1,
+        "evidence": [
+          {
+            "skill": "python",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-2-c-python",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": []
+      },
+      {
+        "id": "test-2-d",
+        "specialization": "python",
+        "verified_grade": "Senior",
+        "skills": [
+          "python",
+          "http"
+        ],
+        "experience_years": 12,
+        "evidence": [
+          {
+            "skill": "http",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-2-d-http",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": [
+          {
+            "provider": "demo_fsp",
+            "points": 3,
+            "verification": "simulated"
+          }
+        ]
+      },
+      {
+        "id": "test-2-e",
+        "specialization": "python",
+        "verified_grade": "Senior",
+        "skills": [
+          "python",
+          "http"
+        ],
+        "experience_years": 15,
+        "evidence": [
+          {
+            "skill": "python",
+            "state": "unmet",
+            "source": "assessment",
+            "id": "test-2-e-python",
+            "correct": 1,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "http",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-2-e-http",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": []
+      },
+      {
+        "id": "test-2-f",
+        "specialization": "python",
+        "verified_grade": null,
+        "skills": [
+          "python",
+          "http"
+        ],
+        "experience_years": 20,
+        "evidence": [],
+        "test_score": 0,
+        "achievements": []
+      },
+      {
+        "id": "test-2-g",
+        "specialization": "python",
+        "verified_grade": "Senior",
+        "skills": [],
+        "experience_years": 0,
+        "evidence": [
+          {
+            "skill": "python",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-2-g-python",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "http",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-2-g-http",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 100,
+        "achievements": [
+          {
+            "provider": "demo_fsp",
+            "points": 1,
+            "verification": "simulated"
+          }
+        ]
+      },
+      {
+        "id": "test-2-h",
+        "specialization": "python",
+        "verified_grade": "Senior",
+        "skills": [
+          "python"
+        ],
+        "experience_years": null,
+        "evidence": [
+          {
+            "skill": "python",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-2-h-python",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "http",
+            "state": "unmet",
+            "source": "assessment",
+            "id": "test-2-h-http",
+            "correct": 1,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": [
+          {
+            "provider": "demo_fsp",
+            "points": 3,
+            "verification": "simulated"
+          }
+        ]
+      },
+      {
+        "id": "test-3-a",
+        "specialization": "data",
+        "verified_grade": "Junior",
+        "skills": [
+          "sql",
+          "statistics"
+        ],
+        "experience_years": 3,
+        "evidence": [
+          {
+            "skill": "sql",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-3-a-sql",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "statistics",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-3-a-statistics",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 100,
+        "achievements": []
+      },
+      {
+        "id": "test-3-b",
+        "specialization": "data",
+        "verified_grade": "Junior",
+        "skills": [
+          "sql"
+        ],
+        "experience_years": 2,
+        "evidence": [
+          {
+            "skill": "sql",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-3-b-sql",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "statistics",
+            "state": "unmet",
+            "source": "assessment",
+            "id": "test-3-b-statistics",
+            "correct": 1,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": []
+      },
+      {
+        "id": "test-3-c",
+        "specialization": "data",
+        "verified_grade": "Junior",
+        "skills": [],
+        "experience_years": 1,
+        "evidence": [
+          {
+            "skill": "sql",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-3-c-sql",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": []
+      },
+      {
+        "id": "test-3-d",
+        "specialization": "data",
+        "verified_grade": "Junior",
+        "skills": [
+          "sql",
+          "statistics"
+        ],
+        "experience_years": 12,
+        "evidence": [
+          {
+            "skill": "statistics",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-3-d-statistics",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": [
+          {
+            "provider": "demo_fsp",
+            "points": 3,
+            "verification": "simulated"
+          }
+        ]
+      },
+      {
+        "id": "test-3-e",
+        "specialization": "data",
+        "verified_grade": "Junior",
+        "skills": [
+          "sql",
+          "statistics"
+        ],
+        "experience_years": 15,
+        "evidence": [
+          {
+            "skill": "sql",
+            "state": "unmet",
+            "source": "assessment",
+            "id": "test-3-e-sql",
+            "correct": 1,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "statistics",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-3-e-statistics",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": []
+      },
+      {
+        "id": "test-3-f",
+        "specialization": "data",
+        "verified_grade": null,
+        "skills": [
+          "sql",
+          "statistics"
+        ],
+        "experience_years": 20,
+        "evidence": [],
+        "test_score": 0,
+        "achievements": []
+      },
+      {
+        "id": "test-3-g",
+        "specialization": "data",
+        "verified_grade": "Junior",
+        "skills": [],
+        "experience_years": 0,
+        "evidence": [
+          {
+            "skill": "sql",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-3-g-sql",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "statistics",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-3-g-statistics",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 100,
+        "achievements": [
+          {
+            "provider": "demo_fsp",
+            "points": 1,
+            "verification": "simulated"
+          }
+        ]
+      },
+      {
+        "id": "test-3-h",
+        "specialization": "data",
+        "verified_grade": "Junior",
+        "skills": [
+          "sql"
+        ],
+        "experience_years": null,
+        "evidence": [
+          {
+            "skill": "sql",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-3-h-sql",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "statistics",
+            "state": "unmet",
+            "source": "assessment",
+            "id": "test-3-h-statistics",
+            "correct": 1,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": [
+          {
+            "provider": "demo_fsp",
+            "points": 3,
+            "verification": "simulated"
+          }
+        ]
+      },
+      {
+        "id": "test-4-a",
+        "specialization": "data",
+        "verified_grade": "Middle",
+        "skills": [
+          "sql",
+          "statistics"
+        ],
+        "experience_years": 3,
+        "evidence": [
+          {
+            "skill": "sql",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-4-a-sql",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "statistics",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-4-a-statistics",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 100,
+        "achievements": []
+      },
+      {
+        "id": "test-4-b",
+        "specialization": "data",
+        "verified_grade": "Middle",
+        "skills": [
+          "sql"
+        ],
+        "experience_years": 2,
+        "evidence": [
+          {
+            "skill": "sql",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-4-b-sql",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "statistics",
+            "state": "unmet",
+            "source": "assessment",
+            "id": "test-4-b-statistics",
+            "correct": 1,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": []
+      },
+      {
+        "id": "test-4-c",
+        "specialization": "data",
+        "verified_grade": "Middle",
+        "skills": [],
+        "experience_years": 1,
+        "evidence": [
+          {
+            "skill": "sql",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-4-c-sql",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": []
+      },
+      {
+        "id": "test-4-d",
+        "specialization": "data",
+        "verified_grade": "Middle",
+        "skills": [
+          "sql",
+          "statistics"
+        ],
+        "experience_years": 12,
+        "evidence": [
+          {
+            "skill": "statistics",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-4-d-statistics",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": [
+          {
+            "provider": "demo_fsp",
+            "points": 3,
+            "verification": "simulated"
+          }
+        ]
+      },
+      {
+        "id": "test-4-e",
+        "specialization": "data",
+        "verified_grade": "Middle",
+        "skills": [
+          "sql",
+          "statistics"
+        ],
+        "experience_years": 15,
+        "evidence": [
+          {
+            "skill": "sql",
+            "state": "unmet",
+            "source": "assessment",
+            "id": "test-4-e-sql",
+            "correct": 1,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "statistics",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-4-e-statistics",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": []
+      },
+      {
+        "id": "test-4-f",
+        "specialization": "data",
+        "verified_grade": null,
+        "skills": [
+          "sql",
+          "statistics"
+        ],
+        "experience_years": 20,
+        "evidence": [],
+        "test_score": 0,
+        "achievements": []
+      },
+      {
+        "id": "test-4-g",
+        "specialization": "data",
+        "verified_grade": "Middle",
+        "skills": [],
+        "experience_years": 0,
+        "evidence": [
+          {
+            "skill": "sql",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-4-g-sql",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "statistics",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-4-g-statistics",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 100,
+        "achievements": [
+          {
+            "provider": "demo_fsp",
+            "points": 1,
+            "verification": "simulated"
+          }
+        ]
+      },
+      {
+        "id": "test-4-h",
+        "specialization": "data",
+        "verified_grade": "Middle",
+        "skills": [
+          "sql"
+        ],
+        "experience_years": null,
+        "evidence": [
+          {
+            "skill": "sql",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-4-h-sql",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "statistics",
+            "state": "unmet",
+            "source": "assessment",
+            "id": "test-4-h-statistics",
+            "correct": 1,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": [
+          {
+            "provider": "demo_fsp",
+            "points": 3,
+            "verification": "simulated"
+          }
+        ]
+      },
+      {
+        "id": "test-5-a",
+        "specialization": "data",
+        "verified_grade": "Senior",
+        "skills": [
+          "sql",
+          "transactions"
+        ],
+        "experience_years": 3,
+        "evidence": [
+          {
+            "skill": "sql",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-5-a-sql",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "transactions",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-5-a-transactions",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 100,
+        "achievements": []
+      },
+      {
+        "id": "test-5-b",
+        "specialization": "data",
+        "verified_grade": "Senior",
+        "skills": [
+          "sql"
+        ],
+        "experience_years": 2,
+        "evidence": [
+          {
+            "skill": "sql",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-5-b-sql",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "transactions",
+            "state": "unmet",
+            "source": "assessment",
+            "id": "test-5-b-transactions",
+            "correct": 1,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": []
+      },
+      {
+        "id": "test-5-c",
+        "specialization": "data",
+        "verified_grade": "Senior",
+        "skills": [],
+        "experience_years": 1,
+        "evidence": [
+          {
+            "skill": "sql",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-5-c-sql",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": []
+      },
+      {
+        "id": "test-5-d",
+        "specialization": "data",
+        "verified_grade": "Senior",
+        "skills": [
+          "sql",
+          "transactions"
+        ],
+        "experience_years": 12,
+        "evidence": [
+          {
+            "skill": "transactions",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-5-d-transactions",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": [
+          {
+            "provider": "demo_fsp",
+            "points": 3,
+            "verification": "simulated"
+          }
+        ]
+      },
+      {
+        "id": "test-5-e",
+        "specialization": "data",
+        "verified_grade": "Senior",
+        "skills": [
+          "sql",
+          "transactions"
+        ],
+        "experience_years": 15,
+        "evidence": [
+          {
+            "skill": "sql",
+            "state": "unmet",
+            "source": "assessment",
+            "id": "test-5-e-sql",
+            "correct": 1,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "transactions",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-5-e-transactions",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": []
+      },
+      {
+        "id": "test-5-f",
+        "specialization": "data",
+        "verified_grade": null,
+        "skills": [
+          "sql",
+          "transactions"
+        ],
+        "experience_years": 20,
+        "evidence": [],
+        "test_score": 0,
+        "achievements": []
+      },
+      {
+        "id": "test-5-g",
+        "specialization": "data",
+        "verified_grade": "Senior",
+        "skills": [],
+        "experience_years": 0,
+        "evidence": [
+          {
+            "skill": "sql",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-5-g-sql",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "transactions",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-5-g-transactions",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 100,
+        "achievements": [
+          {
+            "provider": "demo_fsp",
+            "points": 1,
+            "verification": "simulated"
+          }
+        ]
+      },
+      {
+        "id": "test-5-h",
+        "specialization": "data",
+        "verified_grade": "Senior",
+        "skills": [
+          "sql"
+        ],
+        "experience_years": null,
+        "evidence": [
+          {
+            "skill": "sql",
+            "state": "met",
+            "source": "assessment",
+            "id": "test-5-h-sql",
+            "correct": 2,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          },
+          {
+            "skill": "transactions",
+            "state": "unmet",
+            "source": "assessment",
+            "id": "test-5-h-transactions",
+            "correct": 1,
+            "total": 2,
+            "version": "fixture-1",
+            "date": "2026-10-01"
+          }
+        ],
+        "test_score": 75,
+        "achievements": [
+          {
+            "provider": "demo_fsp",
+            "points": 3,
+            "verification": "simulated"
+          }
+        ]
+      }
+    ],
+    "queries": [
+      {
+        "id": "test-0-query",
+        "text": "Нужен Junior python: python, желательно testing.",
+        "criteria": {
+          "specialization": "python",
+          "grades": [
+            "Junior"
+          ],
+          "required_skills": [
+            "python"
+          ],
+          "desired_skills": [
+            "testing"
+          ],
+          "min_years": null,
+          "fsp_only": false
+        },
+        "relevant_ids": [
+          "test-0-a",
+          "test-0-b",
+          "test-0-c",
+          "test-0-g",
+          "test-0-h"
+        ],
+        "reason": "Категория подтверждена; основной навык доказан. Неподтверждённый стаж и спортивный опыт не заменяют навык."
+      },
+      {
+        "id": "test-1-query",
+        "text": "Нужен Middle python: python, желательно http.",
+        "criteria": {
+          "specialization": "python",
+          "grades": [
+            "Middle"
+          ],
+          "required_skills": [
+            "python"
+          ],
+          "desired_skills": [
+            "http"
+          ],
+          "min_years": null,
+          "fsp_only": false
+        },
+        "relevant_ids": [
+          "test-1-a",
+          "test-1-b",
+          "test-1-c",
+          "test-1-g",
+          "test-1-h"
+        ],
+        "reason": "Категория подтверждена; основной навык доказан. Неподтверждённый стаж и спортивный опыт не заменяют навык."
+      },
+      {
+        "id": "test-2-query",
+        "text": "Нужен Senior python: python, желательно http.",
+        "criteria": {
+          "specialization": "python",
+          "grades": [
+            "Senior"
+          ],
+          "required_skills": [
+            "python"
+          ],
+          "desired_skills": [
+            "http"
+          ],
+          "min_years": null,
+          "fsp_only": false
+        },
+        "relevant_ids": [
+          "test-2-a",
+          "test-2-b",
+          "test-2-c",
+          "test-2-g",
+          "test-2-h"
+        ],
+        "reason": "Категория подтверждена; основной навык доказан. Неподтверждённый стаж и спортивный опыт не заменяют навык."
+      },
+      {
+        "id": "test-3-query",
+        "text": "Нужен Junior data: sql, желательно statistics.",
+        "criteria": {
+          "specialization": "data",
+          "grades": [
+            "Junior"
+          ],
+          "required_skills": [
+            "sql"
+          ],
+          "desired_skills": [
+            "statistics"
+          ],
+          "min_years": null,
+          "fsp_only": false
+        },
+        "relevant_ids": [
+          "test-3-a",
+          "test-3-b",
+          "test-3-c",
+          "test-3-g",
+          "test-3-h"
+        ],
+        "reason": "Категория подтверждена; основной навык доказан. Неподтверждённый стаж и спортивный опыт не заменяют навык."
+      },
+      {
+        "id": "test-4-query",
+        "text": "Нужен Middle data: sql, желательно statistics.",
+        "criteria": {
+          "specialization": "data",
+          "grades": [
+            "Middle"
+          ],
+          "required_skills": [
+            "sql"
+          ],
+          "desired_skills": [
+            "statistics"
+          ],
+          "min_years": null,
+          "fsp_only": false
+        },
+        "relevant_ids": [
+          "test-4-a",
+          "test-4-b",
+          "test-4-c",
+          "test-4-g",
+          "test-4-h"
+        ],
+        "reason": "Категория подтверждена; основной навык доказан. Неподтверждённый стаж и спортивный опыт не заменяют навык."
+      },
+      {
+        "id": "test-5-query",
+        "text": "Нужен Senior data: sql, желательно transactions.",
+        "criteria": {
+          "specialization": "data",
+          "grades": [
+            "Senior"
+          ],
+          "required_skills": [
+            "sql"
+          ],
+          "desired_skills": [
+            "transactions"
+          ],
+          "min_years": null,
+          "fsp_only": false
+        },
+        "relevant_ids": [
+          "test-5-a",
+          "test-5-b",
+          "test-5-c",
+          "test-5-g",
+          "test-5-h"
+        ],
+        "reason": "Категория подтверждена; основной навык доказан. Неподтверждённый стаж и спортивный опыт не заменяют навык."
+      },
+      {
+        "id": "test-uncovered-react",
+        "text": "Python Junior с обязательным React",
+        "criteria": {
+          "specialization": "python",
+          "grades": [
+            "Junior"
+          ],
+          "required_skills": [
+            "react"
+          ],
+          "desired_skills": [],
+          "min_years": null,
+          "fsp_only": false
+        },
+        "relevant_ids": [],
+        "reason": "В fixture нет проверки React. Выдавать слабое соответствие допустимо, считать кандидатов релевантными — нет."
+      },
+      {
+        "id": "test-both-required",
+        "text": "Python Junior: обязательны Python и тестирование",
+        "criteria": {
+          "specialization": "python",
+          "grades": [
+            "Junior"
+          ],
+          "required_skills": [
+            "python",
+            "testing"
+          ],
+          "desired_skills": [],
+          "min_years": null,
+          "fsp_only": false
+        },
+        "relevant_ids": [
+          "test-0-a",
+          "test-0-g"
+        ],
+        "reason": "Два обязательных навыка: релевантны только оба подтверждённых. Это более строгая контрольная разметка."
+      }
+    ]
+  }
+}

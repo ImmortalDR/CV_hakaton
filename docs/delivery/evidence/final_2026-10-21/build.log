@@ -1,0 +1,13 @@
+
+> fsp-reverse-hiring@1.0.0 build
+> tsc -b && vite build
+
+vite v6.4.4 building for production...
+transforming...
+✓ 55 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.44 kB │ gzip:  0.34 kB
+dist/assets/index-Ba64Ju2F.css   20.18 kB │ gzip:  5.37 kB
+dist/assets/index-BONHRVeM.js   268.36 kB │ gzip: 81.53 kB
+✓ built in 3.04s

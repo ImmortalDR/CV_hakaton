@@ -1,0 +1,88 @@
+{
+  "version": "application-decisions-v3-enriched",
+  "target": "recorded_application_acceptance_vs_refusal_within_30_days",
+  "counts": {
+    "applications": 6398,
+    "no_reply_unknown": 3834,
+    "outside_30_day_window": 451,
+    "ambiguous_history_entities": 0,
+    "job_no_pre_event_version": 594,
+    "cv_no_pre_event_version": 360,
+    "insufficient_professional_text": 72,
+    "not_it_at_application": 45,
+    "conflicting_closed_pair_histories": 22,
+    "repeat_closed_pair_observations_removed": 84,
+    "cross_anchor_component_rows_excluded": 107
+  },
+  "pairs": 829,
+  "split": {
+    "train": {
+      "1": 258,
+      "0": 286
+    },
+    "validation": {
+      "0": 118,
+      "1": 63
+    },
+    "test": {
+      "0": 65,
+      "1": 39
+    }
+  },
+  "with_work": 707,
+  "with_education": 695,
+  "new_vs_v2": 307,
+  "v2_pairs_retained": 522,
+  "pairs_sha256": "590683b940e175b941e485c0e9cb3af526416e4bcfc6b79c955fc53f34fef533",
+  "anchor_pairs_sha256": "83688d10652cad2969dce0584245af06dca43437a86ab902c841b43f8126be89",
+  "enrichment": {
+    "inputs": {
+      "workexp.csv": {
+        "input": {
+          "rows": 12162960,
+          "bytes": 8051776967,
+          "sha256": "c8cb0b7d4e7950114402a528e9ead8e5e1c27b8174be1802e0b367643cc48aa0"
+        },
+        "counts": {
+          "selected_source_rows": 22543,
+          "stored": 21858,
+          "empty_professional_text": 247,
+          "invalid_work_dates": 438
+        },
+        "output_sha256": "90124b57311f15911728eba02f9107bbe2ab73194f08e3680eea176769f51acd"
+      },
+      "edu.csv": {
+        "input": {
+          "rows": 4540219,
+          "bytes": 921286277,
+          "sha256": "b8e5c77abefddfe4b456f345cbc0683835176edee85af0f3a026abecfd5b76dd"
+        },
+        "counts": {
+          "selected_source_rows": 5205,
+          "empty_professional_text": 487,
+          "stored": 4699,
+          "invalid_education_year": 19
+        },
+        "output_sha256": "a4e2b640b7c14282cd95221e1da3a59427bdb00636feb09b00142160901676f4"
+      },
+      "invitations.csv": {
+        "input": {
+          "rows": 6984541,
+          "bytes": 1785986571,
+          "sha256": "5c584451bce85d8f54ac6b20bb6beb33e9bb42a45fcca0b4179fc63e8e833fdb"
+        },
+        "counts": {
+          "stored": 6398
+        },
+        "output_sha256": "4107559709a6e25a141ad496e761eee5633f508a348b9005e4ff7a26fde88c1f"
+      }
+    },
+    "wanted_cvs": 4218,
+    "base_scan_sha256": "25d5f45a60f1ae973bb28e06ee81464c875de5815cb7c972e5309d373bc671e0",
+    "base_index_sha256": "b3fcd164c489fc575a21264c187e99930627317134ed949208c66444a723d4e8",
+    "code_sha256": "c274dd5aaee685f5589b10a7b23ea00ebe975781902a813ae8a273ea3a7503b2"
+  },
+  "code_sha256": "1b6185862b0daca7b62137e3d3c74b7faa893fa138de5eaf10afea87344e50c9",
+  "test_is_pristine": false,
+  "production_promotion_allowed": false
+}

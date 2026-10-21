@@ -1,0 +1,86 @@
+[
+  {
+    "version": "1.1.0",
+    "spec": "python",
+    "grade": "Junior",
+    "seed": "legacy-fixed-regression",
+    "fingerprint": "b9503e4f10b7331522bd263148cb3394567d0deb33d0d51e2240a2c8822f94ab"
+  },
+  {
+    "version": "1.1.0",
+    "spec": "python",
+    "grade": "Middle",
+    "seed": "legacy-fixed-regression",
+    "fingerprint": "572b58ccf1098891297665ada664b2728b16944d6daba81d39af8242b8a0d71f"
+  },
+  {
+    "version": "1.1.0",
+    "spec": "python",
+    "grade": "Senior",
+    "seed": "legacy-fixed-regression",
+    "fingerprint": "7aa528bb3d7f5f3533f1f517890b27f3606b707934bede16a6e96d43093bfc34"
+  },
+  {
+    "version": "1.1.0",
+    "spec": "data",
+    "grade": "Junior",
+    "seed": "legacy-fixed-regression",
+    "fingerprint": "30cd194c030bf3404469ad29f620e020de0fe7aee67e06ca652fa294f8ced619"
+  },
+  {
+    "version": "1.1.0",
+    "spec": "data",
+    "grade": "Middle",
+    "seed": "legacy-fixed-regression",
+    "fingerprint": "ec7dad3cf208ae422a94c536d36efe7925059dfb1f870ab53134eb1b8c96eebc"
+  },
+  {
+    "version": "1.1.0",
+    "spec": "data",
+    "grade": "Senior",
+    "seed": "legacy-fixed-regression",
+    "fingerprint": "9a1d486392657325263ce6ff509503e3f6fd2a7d9a018be3618f3885baf6a846"
+  },
+  {
+    "version": "1.2.0",
+    "spec": "python",
+    "grade": "Junior",
+    "seed": "legacy-fixed-regression",
+    "fingerprint": "42d52cf1e0adcd2aa8c6284219ff752aa2ffd17d96e451c38158254efb760e29"
+  },
+  {
+    "version": "1.2.0",
+    "spec": "python",
+    "grade": "Middle",
+    "seed": "legacy-fixed-regression",
+    "fingerprint": "500f9dcb3dfdf4d704f193fe6b8b78fe76d59c32a2dc8ceae9c5f139dd072f2f"
+  },
+  {
+    "version": "1.2.0",
+    "spec": "python",
+    "grade": "Senior",
+    "seed": "legacy-fixed-regression",
+    "fingerprint": "a501420ac46a8f9dce2c3dd03bfaf96ebf2e6646011aa7a3e43749a99ec5fc68"
+  },
+  {
+    "version": "1.2.0",
+    "spec": "data",
+    "grade": "Junior",
+    "seed": "legacy-fixed-regression",
+    "fingerprint": "be9cb77b0f652747bd499620e7f87685049ca14fa812277577073d2c74feec57"
+  },
+  {
+    "version": "1.2.0",
+    "spec": "data",
+    "grade": "Middle",
+    "seed": "legacy-fixed-regression",
+    "fingerprint": "4ac352c243ee04420c8e63b687d134df4ac1ec26650cf29640ab32244e449d63"
+  },
+  {
+    "version": "1.2.0",
+    "spec": "data",
+    "grade": "Senior",
+    "seed": "legacy-fixed-regression",
+    "fingerprint": "a7aca9308c9bbe3c61752ed2dee453860c50c470242ba229bd24e300cb7fcfd9"
+  }
+]

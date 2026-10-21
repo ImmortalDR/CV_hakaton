@@ -1,0 +1,18 @@
+{
+  "v1": {
+    "frozen_input_sha_verified": true,
+    "model_sha_verified": true,
+    "entity_and_exact_text_isolation": true,
+    "new_process_prediction_replay_equal": true,
+    "test_metrics_recomputed_equal": true,
+    "test_rows": 140
+  },
+  "v2": {
+    "frozen_input_sha_verified": true,
+    "model_sha_verified": true,
+    "entity_and_exact_text_isolation": true,
+    "new_process_prediction_replay_equal": true,
+    "test_metrics_recomputed_equal": true,
+    "test_rows": 112
+  }
+}

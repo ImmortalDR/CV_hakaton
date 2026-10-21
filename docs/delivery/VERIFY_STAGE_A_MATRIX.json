@@ -1,0 +1,531 @@
+{
+  "criteria_source": "COMPREHENSIVE_STAGE_A_2026-10-21.md",
+  "criteria_path": "docs/final_backlog_2026-10-20/COMPREHENSIVE_STAGE_A_2026-10-21.md",
+  "session_note": "independent_r2",
+  "checked_at": "2026-10-21T10:48:31.092494+00:00",
+  "git_sha": "ab915af6eb771c9688d60f08dcf1bd9211f59d25",
+  "branch": "codex/fsp-mvp",
+  "counts": {
+    "PASS": 14,
+    "PARTIAL": 1,
+    "FAIL": 0,
+    "HUMAN_ONLY": 1,
+    "NOT_RUN": 0
+  },
+  "submission_allowed_now": false,
+  "submission_after_push_and_human": "YES only if publication verified and all human must checks pass; Pck5 still needs actual send",
+  "section6": [
+    {
+      "item": "Q1–Q3 закрыты или обоснован stop",
+      "status": "PASS",
+      "detail": "Q1–Q3 PASS по свежим проверкам; stop не нужен."
+    },
+    {
+      "item": "Q7 новая VERSION + таблица на выборке",
+      "status": "PASS",
+      "detail": "matching-1.2.0; VALIDATION содержит dev1→1/test.8→.8; свежий rerun совпал."
+    },
+    {
+      "item": "Q4–Q6 сделано или partial в changelog",
+      "status": "PASS",
+      "detail": "Технические DoD PASS; календарная неделя и человеческие оценки выделены."
+    },
+    {
+      "item": "Pck1–Pck3",
+      "status": "PARTIAL",
+      "detail": "Pck1/Pck3 PASS; Pck2 ожидает публикацию актуальной ветки и human walk."
+    },
+    {
+      "item": "Pck4 smoke green",
+      "status": "PASS",
+      "detail": "18 свежих групп, page_errors=[]; Q1–Q3 не FAIL."
+    },
+    {
+      "item": "Pck5 ссылки ушли",
+      "status": "HUMAN_ONLY",
+      "detail": "Не отправлены агентом; подтверждения человека нет."
+    }
+  ],
+  "tasks": [
+    {
+      "id": "Q1",
+      "verdict": "PASS",
+      "dod_from_canon": "Ответы переживают Обзор и возврат/reload; ошибка сохранения видна, уход подтверждается; попытка и срок прежние.",
+      "audit_refs": [
+        "B01"
+      ],
+      "agent_evidence": [
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/smoke.json",
+          "excerpt": "failed PUT → leave cancel/accept → round-trip → warning → reload/close/reopen → retry ACK; id/expiry stable"
+        },
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/q1-probe.log",
+          "excerpt": "HTTP503; two dirty answers; cancel reload; manual flush; delayed ACK/newer edit retained"
+        },
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/pytest.log",
+          "excerpt": "97 passed, включая draft owner/lifecycle/expiry"
+        }
+      ],
+      "gaps": [],
+      "human_checks_required": [
+        "H-Q1"
+      ],
+      "regression_risk": "high",
+      "checked_at": "2026-10-21T10:48:31.092494+00:00",
+      "git_sha": "ab915af6eb771c9688d60f08dcf1bd9211f59d25"
+    },
+    {
+      "id": "Q2",
+      "verdict": "PASS",
+      "dod_from_canon": "Явное единое округление; SQL Middle 90,625 → 90,63.",
+      "audit_refs": [
+        "B02"
+      ],
+      "agent_evidence": [
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/smoke.json",
+          "excerpt": "Live bank 2.1.0, hint 90,625 → 90,63"
+        },
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/pytest.log",
+          "excerpt": "test_half_up_exact_boundaries и test_conditional_rounding_new_and_historical_versions прошли: 1.005, .625, 90.625; точка/запятая; legacy 2.0.0"
+        }
+      ],
+      "gaps": [],
+      "human_checks_required": [
+        "H-Q2"
+      ],
+      "regression_risk": "med",
+      "checked_at": "2026-10-21T10:48:31.092494+00:00",
+      "git_sha": "ab915af6eb771c9688d60f08dcf1bd9211f59d25"
+    },
+    {
+      "id": "Q3",
+      "verdict": "PASS",
+      "dod_from_canon": "N пустых из M; без подтверждения попытка не закрывается, отмена сохраняет ответы.",
+      "audit_refs": [
+        "B03"
+      ],
+      "agent_evidence": [
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/smoke.json",
+          "excerpt": "Direct submit without confirm: 409, active, draft/expiry unchanged; UI 7 из 8, cancel → active, accept → completed"
+        },
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/pytest.log",
+          "excerpt": "Absent/false confirm и whitespace отклонены; true завершает"
+        }
+      ],
+      "gaps": [],
+      "human_checks_required": [
+        "H-Q3"
+      ],
+      "regression_risk": "high",
+      "checked_at": "2026-10-21T10:48:31.092494+00:00",
+      "git_sha": "ab915af6eb771c9688d60f08dcf1bd9211f59d25"
+    },
+    {
+      "id": "Q4",
+      "verdict": "PASS",
+      "dod_from_canon": "Обзор/диалог согласованы со статусом; скрытый профиль не обещает поиск; composer без согласия закрыт.",
+      "audit_refs": [
+        "B05",
+        "B06"
+      ],
+      "agent_evidence": [
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/smoke.json",
+          "excerpt": "Новый, неподтверждённый, подтверждённый published/hidden; CTA, publication without relogin; composer removed, PDF404"
+        },
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/extra-probe-rerun.log",
+          "excerpt": "Orb до/после подтверждения; republish не возвращает контакты; новое принятое приглашение открывает composer"
+        },
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/pytest.log",
+          "excerpt": "Полный lifecycle контактов/PDF/истории/чата прошёл"
+        }
+      ],
+      "gaps": [],
+      "human_checks_required": [
+        "H-Q4a",
+        "H-Q4b"
+      ],
+      "regression_risk": "med",
+      "checked_at": "2026-10-21T10:48:31.092494+00:00",
+      "git_sha": "ab915af6eb771c9688d60f08dcf1bd9211f59d25"
+    },
+    {
+      "id": "Q5",
+      "verdict": "PASS",
+      "dod_from_canon": "U01–U04: различимые анонимы, контекст/снимки сохраняются, компактная форма, видны вклады.",
+      "audit_refs": [
+        "U01",
+        "U02",
+        "U03",
+        "U04"
+      ],
+      "agent_evidence": [
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/smoke.json",
+          "excerpt": "Ярлыки selection/invitation/PDF; статусы приглашения; filters/reload/scroll; dated snapshot/changed banner; две суммы вкладов; unique labels"
+        },
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/extra-probe-rerun.log",
+          "excerpt": "Смена data/python меняет релевантные skills и обязательный навык; Docker/React обозначены непроверяемыми"
+        },
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/pytest.log",
+          "excerpt": "unknown/unmet/self_report различаются; anonymous labels distinct/stable"
+        }
+      ],
+      "gaps": [],
+      "human_checks_required": [
+        "H-Q5a",
+        "H-Q5b",
+        "H-Q5c"
+      ],
+      "regression_risk": "med",
+      "checked_at": "2026-10-21T10:48:31.092494+00:00",
+      "git_sha": "ab915af6eb771c9688d60f08dcf1bd9211f59d25"
+    },
+    {
+      "id": "Q6",
+      "verdict": "PASS",
+      "dod_from_canon": "Период 7 дней сохраняется после pause/resume; нет досрочного дубля.",
+      "audit_refs": [
+        "B04"
+      ],
+      "agent_evidence": [
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/smoke.json",
+          "excerpt": "Evaluate85 → pause → resume: одна выдача, next_issue_at прежний; UI дата=API"
+        },
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/pytest.log",
+          "excerpt": "6 tests/test_employer_tasks.py passed, управляемое время до/на границе, 4 concurrent workers, closed +100 days"
+        }
+      ],
+      "gaps": [
+        "Реальные 7 календарных дней не ожидались."
+      ],
+      "human_checks_required": [
+        "H-Q6-calendar"
+      ],
+      "regression_risk": "med",
+      "checked_at": "2026-10-21T10:48:31.092494+00:00",
+      "git_sha": "ab915af6eb771c9688d60f08dcf1bd9211f59d25"
+    },
+    {
+      "id": "Q7",
+      "verdict": "PASS",
+      "dod_from_canon": "VERSION bump, размеченная выборка, до/после P@5, test+FSP сильнее чекбоксов, цифры в VALIDATION.",
+      "audit_refs": [
+        "expert_call",
+        "U04"
+      ],
+      "agent_evidence": [
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/metrics.log",
+          "excerpt": "[60,15,20,5] → [30,15,45,10]; dev1→1; holdout .8→.8; 36000 oracle checks/0 mismatches, 42000 synthetic attempts"
+        },
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/stage_a_matching_results.json",
+          "excerpt": "dev16/2; test48/8; dev-only grid selection, frozen fixture SHA"
+        },
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/pytest.log",
+          "excerpt": "Production weights match frozen sample; strong test+sport 66 > full skills63.75, self-report 0"
+        },
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/smoke.json",
+          "excerpt": "Live methodology matching-1.2.0"
+        }
+      ],
+      "gaps": [
+        "P@5 не вырос. Авторская синтетика, не независимая экспертная разметка; 4 семейства по 2 вопроса, человеческий пилот not_run."
+      ],
+      "human_checks_required": [
+        "H-Q7"
+      ],
+      "regression_risk": "med",
+      "checked_at": "2026-10-21T10:48:31.092494+00:00",
+      "git_sha": "ab915af6eb771c9688d60f08dcf1bd9211f59d25"
+    },
+    {
+      "id": "Pck1",
+      "verdict": "PASS",
+      "dod_from_canon": "Changelog позволяет увидеть Q1–Q7; не противоречит свежим результатам.",
+      "audit_refs": [],
+      "agent_evidence": [
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/metrics.log",
+          "excerpt": "Равная P@5 соответствует CHANGELOG; улучшение не заявлено"
+        },
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/smoke.json",
+          "excerpt": "Свежие Q1–Q6 совпадают с текущими утверждениями CHANGELOG"
+        },
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/pytest.log",
+          "excerpt": "97 passed соответствует текущему changelog"
+        }
+      ],
+      "gaps": [
+        "Читаемость за 2 минуты остаётся человеческой проверкой."
+      ],
+      "human_checks_required": [
+        "H-Pck1"
+      ],
+      "regression_risk": "med",
+      "checked_at": "2026-10-21T10:48:31.092494+00:00",
+      "git_sha": "ab915af6eb771c9688d60f08dcf1bd9211f59d25"
+    },
+    {
+      "id": "Pck2",
+      "verdict": "PARTIAL",
+      "dod_from_canon": "FOR_JURY: стенд, ветка, review-логины, 2 цифры, not_run, аудит; маршрут10–15мин.",
+      "audit_refs": [],
+      "agent_evidence": [
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/smoke.json",
+          "excerpt": "Три review login200; OpenAPI exact"
+        },
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/remote.log",
+          "excerpt": "Remote branch = 2e6d6daa5bfb59f6d5a7e7317aa41093c8f05980; отличается от проверенного HEAD"
+        },
+        {
+          "kind": "command",
+          "ref": "evidence/independent_r2/push-preflight.log",
+          "excerpt": "git push --dry-run exit128: could not read Username; terminal prompts disabled"
+        }
+      ],
+      "gaps": [
+        "Актуальная сдача не опубликована в remote на момент проверки; push и проверка ссылок необходимы.",
+        "Маршрут глазами 10–15мин не пройден человеком.",
+        "Свежий preflight push заблокирован отсутствием HTTPS-авторизации GitHub."
+      ],
+      "human_checks_required": [
+        "H-Pck2-walk",
+        "H-PUSH"
+      ],
+      "regression_risk": "med",
+      "checked_at": "2026-10-21T10:48:31.092494+00:00",
+      "git_sha": "ab915af6eb771c9688d60f08dcf1bd9211f59d25"
+    },
+    {
+      "id": "Pck3",
+      "verdict": "PASS",
+      "dod_from_canon": "Health ok; стенд соответствует коду проверяемой ветки.",
+      "audit_refs": [],
+      "agent_evidence": [
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/environment.json",
+          "excerpt": "health ok/demo true; db volume fsp-mvp_fsp_db; product diff empty"
+        },
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/hashes.json",
+          "excerpt": "14 Python API +14 worker: workspace=HEAD=container; 3 web files fresh build=container=HTTPS"
+        },
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/build.log",
+          "excerpt": "tsc -b && vite build exit0"
+        },
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/compose.json",
+          "excerpt": "API/db/web/edge healthy, worker running"
+        }
+      ],
+      "gaps": [
+        "Это равенство содержимого runtime, не наличие встроенного git SHA в образе."
+      ],
+      "human_checks_required": [
+        "H-ACC",
+        "H-Pck3-reach"
+      ],
+      "regression_risk": "med",
+      "checked_at": "2026-10-21T10:48:31.092494+00:00",
+      "git_sha": "ab915af6eb771c9688d60f08dcf1bd9211f59d25"
+    },
+    {
+      "id": "Pck4",
+      "verdict": "PASS",
+      "dod_from_canon": "VERIFY_NOW: Q1–Q3, invite→accept→контакты, ФСП/изоляция smoke green.",
+      "audit_refs": [],
+      "agent_evidence": [
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/smoke.json",
+          "excerpt": "18 групп PASS, page_errors=[]; полный scripts/smoke_stage_a.py"
+        },
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/q1-probe.log",
+          "excerpt": "Отдельная отрицательная Q1 контрпроба PASS"
+        }
+      ],
+      "gaps": [],
+      "human_checks_required": [
+        "H-Pck4-spot"
+      ],
+      "regression_risk": "med",
+      "checked_at": "2026-10-21T10:48:31.092494+00:00",
+      "git_sha": "ab915af6eb771c9688d60f08dcf1bd9211f59d25"
+    },
+    {
+      "id": "Pck5",
+      "verdict": "HUMAN_ONLY",
+      "dod_from_canon": "Отправить ссылки на прежнюю площадку.",
+      "audit_refs": [],
+      "agent_evidence": [
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/remote.log",
+          "excerpt": "Внешняя отправка не проверяется git; SUBMISSION_LINKS подготовлен локально"
+        }
+      ],
+      "gaps": [
+        "Человек не подтвердил отправку. Агент форму/чат не отправлял."
+      ],
+      "human_checks_required": [
+        "H-Pck5"
+      ],
+      "regression_risk": "med",
+      "checked_at": "2026-10-21T10:48:31.092494+00:00",
+      "git_sha": "ab915af6eb771c9688d60f08dcf1bd9211f59d25"
+    },
+    {
+      "id": "REG_FSP",
+      "verdict": "PASS",
+      "dod_from_canon": "confirmed_by_audit: no_fsp_keeps_category; fsp_bonus_does_not_change_grade.",
+      "audit_refs": [],
+      "agent_evidence": [
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/smoke.json",
+          "excerpt": "Junior без ФСП остаётся Junior; demo-winner +6 к score, grade прежний"
+        },
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/pytest.log",
+          "excerpt": "unknown never proof; sport does not change category"
+        }
+      ],
+      "gaps": [],
+      "human_checks_required": [
+        "H-REG-FSP"
+      ],
+      "regression_risk": "med",
+      "checked_at": "2026-10-21T10:48:31.092494+00:00",
+      "git_sha": "ab915af6eb771c9688d60f08dcf1bd9211f59d25"
+    },
+    {
+      "id": "REG_ISO",
+      "verdict": "PASS",
+      "dod_from_canon": "confirmed_by_audit: cross_company_contacts_isolated; cross_candidate_pdf_denied.",
+      "audit_refs": [],
+      "agent_evidence": [
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/smoke.json",
+          "excerpt": "До согласия PDF без email; после — email только у адресата, другая компания без контактов; outsider PDF403"
+        },
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/pytest.log",
+          "excerpt": "Полный privacy lifecycle и чужой search404"
+        }
+      ],
+      "gaps": [
+        "Полный формальный ACL-аудит всех возможных endpoint/state combinations не заявлен."
+      ],
+      "human_checks_required": [
+        "H-REG-ISO"
+      ],
+      "regression_risk": "high",
+      "checked_at": "2026-10-21T10:48:31.092494+00:00",
+      "git_sha": "ab915af6eb771c9688d60f08dcf1bd9211f59d25"
+    },
+    {
+      "id": "REG_OLD_SEL",
+      "verdict": "PASS",
+      "dod_from_canon": "confirmed_by_audit: old_selections_preserved.",
+      "audit_refs": [],
+      "agent_evidence": [
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/smoke.json",
+          "excerpt": "Старый search доступен после нового; hidden candidate исключён; dated snapshot+changed banner"
+        }
+      ],
+      "gaps": [],
+      "human_checks_required": [
+        "H-REG-OLD"
+      ],
+      "regression_risk": "med",
+      "checked_at": "2026-10-21T10:48:31.092494+00:00",
+      "git_sha": "ab915af6eb771c9688d60f08dcf1bd9211f59d25"
+    },
+    {
+      "id": "NOTTODO",
+      "verdict": "PASS",
+      "dod_from_canon": "Нет IRT/вау-функций/редизайна презентации/весов без выборки/ложных обещаний SMTP и боевого ФСП.",
+      "audit_refs": [],
+      "agent_evidence": [
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/environment.json",
+          "excerpt": "Stage A diff demo/docs/presentation пуст; продукт в этой сессии не изменён"
+        },
+        {
+          "kind": "file",
+          "ref": "evidence/independent_r2/metrics.log",
+          "excerpt": "Веса проверены на размеченной выборке; не произвольное обещание улучшения"
+        }
+      ],
+      "gaps": [
+        "SMTP, боевой ФСП, нагрузка, комплект исходников и календарная неделя не превращены в PASS. Питч B вне этого аудита."
+      ],
+      "human_checks_required": [
+        "H-PREZA",
+        "H-SMTP"
+      ],
+      "regression_risk": "med",
+      "checked_at": "2026-10-21T10:48:31.092494+00:00",
+      "git_sha": "ab915af6eb771c9688d60f08dcf1bd9211f59d25"
+    }
+  ],
+  "historical_snapshot": true,
+  "current_status_document": "CURRENT_STATUS_2026-10-21.md"
+}

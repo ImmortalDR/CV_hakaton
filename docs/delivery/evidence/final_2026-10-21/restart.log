@@ -1,0 +1,11 @@
+ Container fsp-mvp-api-1  Restarting
+ Container fsp-mvp-edge-1  Restarting
+ Container fsp-mvp-web-1  Restarting
+ Container fsp-mvp-task-worker-1  Restarting
+ Container fsp-mvp-db-1  Restarting
+ Container fsp-mvp-edge-1  Started
+ Container fsp-mvp-web-1  Started
+ Container fsp-mvp-db-1  Started
+ Container fsp-mvp-api-1  Started
+ Container fsp-mvp-task-worker-1  Started
+{"status": "pass", "project": "fsp-mvp", "before": {"counts": {"users": 223, "profiles": 101, "attempts": 86, "invitations": 56, "search_snapshots": 70}, "sha256": "0455dc800e286444bd422efde05e85c36cd6777e29ec2423fe79d45ff421d9b7"}, "after": {"counts": {"users": 223, "profiles": 101, "attempts": 86, "invitations": 56, "search_snapshots": 70}, "sha256": "0455dc800e286444bd422efde05e85c36cd6777e29ec2423fe79d45ff421d9b7"}, "volume_removed": false}

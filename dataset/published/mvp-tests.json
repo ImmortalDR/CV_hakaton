@@ -1,0 +1,166 @@
+{
+  "command": "COOKIE_SECURE=false python3 scripts/run_local.py .venv/bin/pytest -q tests --junitxml=dataset/logs/mvp-tests.junit.xml",
+  "database": "fsp_test (isolated existing test database; no production records)",
+  "production_database_modified": false,
+  "source_junit_sha256": "fac962b8b5888b2455d35fa3a98996b1537c53dd5c01865945579b4538d5e191",
+  "status": "passed",
+  "test_cases": [
+    {
+      "node": "tests/test_api.py::test_registration_verification_expiry_hashes_and_logout",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_api.py::test_roles_csrf_invalid_registration_and_sessions",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_api.py::test_server_grading_no_leaks_no_injection_and_idempotence",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_api.py::test_failed_first_attempt_lower_choice_and_failed_retake_keeps_grade",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_api.py::test_cooldown_exact_boundary_voluntary_downgrade_and_expiry",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_api.py::test_retake_exact_24_hour_boundary_and_specialization_lock",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_api.py::test_invitation_salary_contract[bad0]",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_api.py::test_invitation_salary_contract[bad1]",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_api.py::test_invitation_salary_contract[bad2]",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_api.py::test_invitation_salary_contract[bad3]",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_api.py::test_invitation_salary_contract[bad4]",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_api.py::test_invitation_salary_contract[bad5]",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_api.py::test_invitation_salary_contract[bad6]",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_api.py::test_invitation_salary_contract[bad7]",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_api.py::test_contacts_full_lifecycle_pdf_search_history_and_chat",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_api.py::test_rejection_never_grants_and_invitation_owner_lists",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_api.py::test_search_unknowns_empty_filters_history_and_fsp",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_api.py::test_concurrent_start_submit_invitation_and_accept_are_idempotent",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_api.py::test_non_demo_mail_failure_rolls_back_and_demo_disabled",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_bank.py::test_variants_reproducible_and_independent_oracle[python-Junior]",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_bank.py::test_variants_reproducible_and_independent_oracle[python-Middle]",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_bank.py::test_variants_reproducible_and_independent_oracle[python-Senior]",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_bank.py::test_variants_reproducible_and_independent_oracle[data-Junior]",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_bank.py::test_variants_reproducible_and_independent_oracle[data-Middle]",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_bank.py::test_variants_reproducible_and_independent_oracle[data-Senior]",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_bank.py::test_boundary_family_has_meaningful_different_answers",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_bank.py::test_bad_numeric_inputs_fail_without_crashing[NaN]",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_bank.py::test_bad_numeric_inputs_fail_without_crashing[Infinity]",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_bank.py::test_bad_numeric_inputs_fail_without_crashing[-Infinity]",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_bank.py::test_bad_numeric_inputs_fail_without_crashing[]",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_bank.py::test_bad_numeric_inputs_fail_without_crashing[1e9999]",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_bank.py::test_bad_numeric_inputs_fail_without_crashing[x]",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_bank.py::test_bad_numeric_inputs_fail_without_crashing[None]",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_bank.py::test_rounding_comma_threshold_and_empty_answers",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_matching.py::test_unknown_never_becomes_proof_and_sport_does_not_change_category",
+      "status": "passed"
+    },
+    {
+      "node": "tests/test_matching.py::test_explicit_evidence_and_zero_experience_remain_distinct",
+      "status": "passed"
+    }
+  ],
+  "test_source_sha256": {
+    "tests/browser_flow.py": "edb0ee19274543919c5c2402561b04c0e2023fad1fa78be9293883930a7c896a",
+    "tests/conftest.py": "637f2d46ac7ae3d8d3037c5fe74c7799a53cd4aacf527651b034f1c53af97d54",
+    "tests/load_probe.py": "351ec1ea84d24415a9c8aaa74a506b013eeab8f4c31e8bac821d263407e9c0f9",
+    "tests/test_api.py": "9c0dc45c8987400f6042346abdfe4be7b6eb6fa2924e2fb9d7f1bfaf5003f450",
+    "tests/test_bank.py": "79680195b8e61f48716c74452a87db4d32fc5cd7b960427d3e467286e6f04b70",
+    "tests/test_matching.py": "50ecac4d234b44b79352f4e078d689457517498afa5d0e85a3fd3de03a184cc1"
+  },
+  "tests": 36,
+  "warnings": [
+    "Starlette HTTPX deprecation",
+    "AnyIO BlockingPortal deprecation"
+  ]
+}

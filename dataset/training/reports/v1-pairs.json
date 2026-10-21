@@ -1,0 +1,63 @@
+{
+  "target": "recorded_invitation_vs_refusal",
+  "actor_semantics_verified": false,
+  "verified_professional_suitability_labels": 0,
+  "counts": {
+    "it_event_ids": 5591,
+    "other_status_not_negative": 1223,
+    "job_no_pre_event_version": 1221,
+    "cv_no_pre_event_version": 361,
+    "insufficient_professional_text": 966,
+    "events_from_conflicting_pair_histories": 80,
+    "not_it_at_event": 101,
+    "invalid_event_identity_or_date": 1,
+    "duplicate_pair_observations_removed": 198
+  },
+  "explicit_links": {
+    "explicit_link_same_pair": 1370,
+    "explicit_link_different_pair": 0,
+    "Отказ <- Отклик соискателя": 1370
+  },
+  "pairs": 1440,
+  "vacancy_technology_mentions": {
+    "python": 11,
+    "sql": 220
+  },
+  "split": {
+    "train": {
+      "1": 423,
+      "0": 305
+    },
+    "validation": {
+      "1": 365,
+      "0": 207
+    },
+    "test": {
+      "1": 84,
+      "0": 56
+    }
+  },
+  "connected_components": 419,
+  "largest_component_pairs": 399,
+  "seed": "fsp-trudvsem-20261009-v1",
+  "pairs_sha256": "4eb5d9f461e0c5c42fdc3d737603faf96d2c1dfd6e371beae724fb03aa1f4fb6",
+  "features": {
+    "candidate": [
+      "position_name",
+      "skills"
+    ],
+    "vacancy": [
+      "title",
+      "requirements_qualifications",
+      "responsibilities"
+    ]
+  },
+  "production_promotion_allowed": false,
+  "limitations": [
+    "Actor of refusal unresolved: not a suitability gold standard.",
+    "Selected observed interactions only; unobserved pairs have no negative label.",
+    "Daily as-of snapshots strictly precede event; snapshot availability does not prove no selection bias.",
+    "Broad IT title cohort, not exclusively Python/Data; historic source 2018–2021.",
+    "No human judgement, certification, grade or FSP labels. No workexp/education enrichment in v1."
+  ]
+}

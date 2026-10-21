@@ -1,0 +1,59 @@
+{
+  "files": [
+    {
+      "file": "data/auxiliary/careercorpus.jsonl",
+      "identical": true
+    },
+    {
+      "file": "data/auxiliary/talentclef.jsonl",
+      "identical": true
+    },
+    {
+      "file": "data/tianchi/candidates.jsonl",
+      "identical": true
+    },
+    {
+      "file": "data/tianchi/legacy_pairs.jsonl",
+      "identical": true
+    },
+    {
+      "file": "data/tianchi/legacy_pools.jsonl",
+      "identical": true
+    },
+    {
+      "file": "data/tianchi/needs.jsonl",
+      "identical": true
+    },
+    {
+      "file": "data/tianchi/outcomes.jsonl",
+      "identical": true
+    },
+    {
+      "file": "data/trudvsem/candidates.jsonl",
+      "identical": true
+    },
+    {
+      "file": "data/trudvsem/events_unresolved.jsonl",
+      "identical": true
+    },
+    {
+      "file": "data/trudvsem/needs.jsonl",
+      "identical": true
+    },
+    {
+      "file": "reports/auxiliary.json",
+      "identical": true
+    },
+    {
+      "file": "reports/tianchi.json",
+      "identical": true
+    },
+    {
+      "file": "reports/trudvsem.json",
+      "identical": true
+    }
+  ],
+  "records": 213472,
+  "scope": "Replayed all three local adapters on unchanged sources; synthetic generation separately tested",
+  "status": "passed"
+}

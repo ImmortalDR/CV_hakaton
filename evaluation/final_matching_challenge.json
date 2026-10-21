@@ -1,0 +1,957 @@
+{
+  "version": "1.0.0",
+  "label_source": "author-designed scenarios, 2026-10-21",
+  "independent_annotators": 0,
+  "policy": "Total score within category; partial mandatory-skill matches remain labelled. User confirmed 2026-10-21.",
+  "cases": [
+    {
+      "id": "coverage_vs_test",
+      "rationale": "Полное покрытие не является жёстким приоритетом; неизвестный навык виден отдельно.",
+      "criteria": {
+        "specialization": "python",
+        "grades": [
+          "Junior"
+        ],
+        "required_skills": [
+          "python",
+          "http",
+          "testing"
+        ],
+        "desired_skills": [],
+        "fsp_only": false,
+        "min_years": null
+      },
+      "candidates": [
+        {
+          "id": "full",
+          "specialization": "python",
+          "verified_grade": "Junior",
+          "test_score": 75,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            },
+            {
+              "skill": "http",
+              "state": "met"
+            },
+            {
+              "skill": "testing",
+              "state": "met"
+            }
+          ],
+          "achievements": []
+        },
+        {
+          "id": "strong_partial",
+          "specialization": "python",
+          "verified_grade": "Junior",
+          "test_score": 100,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            },
+            {
+              "skill": "http",
+              "state": "met"
+            }
+          ],
+          "achievements": []
+        }
+      ],
+      "assertions": [
+        [
+          "missing",
+          "strong_partial",
+          "testing"
+        ]
+      ]
+    },
+    {
+      "id": "fsp_vs_test",
+      "rationale": "ФСП может изменить порядок внутри грейда, но бонус ограничен.",
+      "criteria": {
+        "specialization": "python",
+        "grades": [
+          "Junior"
+        ],
+        "required_skills": [
+          "python",
+          "http",
+          "testing"
+        ],
+        "desired_skills": [],
+        "fsp_only": false,
+        "min_years": null
+      },
+      "candidates": [
+        {
+          "id": "no_fsp",
+          "specialization": "python",
+          "verified_grade": "Junior",
+          "test_score": 95,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            },
+            {
+              "skill": "http",
+              "state": "met"
+            },
+            {
+              "skill": "testing",
+              "state": "met"
+            }
+          ],
+          "achievements": []
+        },
+        {
+          "id": "sport",
+          "specialization": "python",
+          "verified_grade": "Junior",
+          "test_score": 85,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            },
+            {
+              "skill": "http",
+              "state": "met"
+            },
+            {
+              "skill": "testing",
+              "state": "met"
+            }
+          ],
+          "achievements": [
+            {
+              "provider": "demo_fsp",
+              "points": 5
+            }
+          ]
+        }
+      ],
+      "assertions": [
+        [
+          "zero_fsp",
+          "no_fsp"
+        ]
+      ]
+    },
+    {
+      "id": "self_report",
+      "rationale": "Самооценка и стаж не дают проверенных баллов.",
+      "criteria": {
+        "specialization": "python",
+        "grades": [
+          "Junior"
+        ],
+        "required_skills": [
+          "python",
+          "http",
+          "testing"
+        ],
+        "desired_skills": [],
+        "fsp_only": false,
+        "min_years": null
+      },
+      "candidates": [
+        {
+          "id": "a",
+          "specialization": "python",
+          "verified_grade": "Junior",
+          "test_score": 75,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            },
+            {
+              "skill": "http",
+              "state": "met"
+            },
+            {
+              "skill": "testing",
+              "state": "met"
+            }
+          ],
+          "achievements": []
+        },
+        {
+          "id": "b",
+          "specialization": "python",
+          "verified_grade": "Junior",
+          "test_score": 75,
+          "skills": [
+            "python",
+            "http",
+            "testing"
+          ],
+          "experience_years": 20,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            },
+            {
+              "skill": "http",
+              "state": "met"
+            },
+            {
+              "skill": "testing",
+              "state": "met"
+            }
+          ],
+          "achievements": []
+        }
+      ],
+      "assertions": [
+        [
+          "equal",
+          "a",
+          "b"
+        ],
+        [
+          "before",
+          "a",
+          "b"
+        ]
+      ]
+    },
+    {
+      "id": "unknown_vs_unmet",
+      "rationale": "Непроверенный и проваленный навык различаются даже при одинаковом балле.",
+      "criteria": {
+        "specialization": "python",
+        "grades": [
+          "Junior"
+        ],
+        "required_skills": [
+          "python",
+          "http",
+          "testing"
+        ],
+        "desired_skills": [],
+        "fsp_only": false,
+        "min_years": null
+      },
+      "candidates": [
+        {
+          "id": "unknown",
+          "specialization": "python",
+          "verified_grade": "Junior",
+          "test_score": 85,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            },
+            {
+              "skill": "http",
+              "state": "met"
+            }
+          ],
+          "achievements": []
+        },
+        {
+          "id": "failed",
+          "specialization": "python",
+          "verified_grade": "Junior",
+          "test_score": 85,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            },
+            {
+              "skill": "http",
+              "state": "met"
+            },
+            {
+              "skill": "testing",
+              "state": "unmet"
+            }
+          ],
+          "achievements": []
+        }
+      ],
+      "assertions": [
+        [
+          "missing",
+          "unknown",
+          "testing"
+        ],
+        [
+          "unmet",
+          "failed",
+          "testing"
+        ],
+        [
+          "equal",
+          "unknown",
+          "failed"
+        ]
+      ]
+    },
+    {
+      "id": "no_full_matches",
+      "rationale": "Весь список частичный: нельзя утверждать полное соответствие.",
+      "criteria": {
+        "specialization": "python",
+        "grades": [
+          "Junior"
+        ],
+        "required_skills": [
+          "python",
+          "http",
+          "testing"
+        ],
+        "desired_skills": [],
+        "fsp_only": false,
+        "min_years": null
+      },
+      "candidates": [
+        {
+          "id": "one",
+          "specialization": "python",
+          "verified_grade": "Junior",
+          "test_score": 100,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            }
+          ],
+          "achievements": []
+        },
+        {
+          "id": "two",
+          "specialization": "python",
+          "verified_grade": "Junior",
+          "test_score": 75,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            },
+            {
+              "skill": "http",
+              "state": "met"
+            }
+          ],
+          "achievements": []
+        }
+      ],
+      "assertions": [
+        [
+          "no_full",
+          "all"
+        ]
+      ]
+    },
+    {
+      "id": "multiple_required",
+      "rationale": "Больше подтверждённых навыков при равном тесте даёт не меньший балл.",
+      "criteria": {
+        "specialization": "python",
+        "grades": [
+          "Junior"
+        ],
+        "required_skills": [
+          "python",
+          "http",
+          "testing"
+        ],
+        "desired_skills": [],
+        "fsp_only": false,
+        "min_years": null
+      },
+      "candidates": [
+        {
+          "id": "all",
+          "specialization": "python",
+          "verified_grade": "Junior",
+          "test_score": 85,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            },
+            {
+              "skill": "http",
+              "state": "met"
+            },
+            {
+              "skill": "testing",
+              "state": "met"
+            }
+          ],
+          "achievements": []
+        },
+        {
+          "id": "part",
+          "specialization": "python",
+          "verified_grade": "Junior",
+          "test_score": 85,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            }
+          ],
+          "achievements": []
+        }
+      ],
+      "assertions": [
+        [
+          "before",
+          "all",
+          "part"
+        ]
+      ]
+    },
+    {
+      "id": "mixed_grades",
+      "rationale": "Грейд группирует выдачу до сортировки по баллу; ФСП грейд не меняет.",
+      "criteria": {
+        "specialization": "python",
+        "grades": [
+          "Junior",
+          "Middle"
+        ],
+        "required_skills": [
+          "python",
+          "http",
+          "testing"
+        ],
+        "desired_skills": [],
+        "fsp_only": false,
+        "min_years": null
+      },
+      "candidates": [
+        {
+          "id": "junior",
+          "specialization": "python",
+          "verified_grade": "Junior",
+          "test_score": 100,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            },
+            {
+              "skill": "http",
+              "state": "met"
+            },
+            {
+              "skill": "testing",
+              "state": "met"
+            }
+          ],
+          "achievements": [
+            {
+              "provider": "demo_fsp",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "middle",
+          "specialization": "python",
+          "verified_grade": "Middle",
+          "test_score": 75,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            },
+            {
+              "skill": "http",
+              "state": "met"
+            },
+            {
+              "skill": "testing",
+              "state": "met"
+            }
+          ],
+          "achievements": []
+        }
+      ],
+      "assertions": [
+        [
+          "before",
+          "middle",
+          "junior"
+        ]
+      ]
+    },
+    {
+      "id": "stable_ties",
+      "rationale": "Равные баллы имеют устойчивый порядок по ID.",
+      "criteria": {
+        "specialization": "python",
+        "grades": [
+          "Junior"
+        ],
+        "required_skills": [
+          "python",
+          "http",
+          "testing"
+        ],
+        "desired_skills": [],
+        "fsp_only": false,
+        "min_years": null
+      },
+      "candidates": [
+        {
+          "id": "c",
+          "specialization": "python",
+          "verified_grade": "Junior",
+          "test_score": 75,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            },
+            {
+              "skill": "http",
+              "state": "met"
+            },
+            {
+              "skill": "testing",
+              "state": "met"
+            }
+          ],
+          "achievements": []
+        },
+        {
+          "id": "a",
+          "specialization": "python",
+          "verified_grade": "Junior",
+          "test_score": 75,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            },
+            {
+              "skill": "http",
+              "state": "met"
+            },
+            {
+              "skill": "testing",
+              "state": "met"
+            }
+          ],
+          "achievements": []
+        },
+        {
+          "id": "b",
+          "specialization": "python",
+          "verified_grade": "Junior",
+          "test_score": 75,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            },
+            {
+              "skill": "http",
+              "state": "met"
+            },
+            {
+              "skill": "testing",
+              "state": "met"
+            }
+          ],
+          "achievements": []
+        }
+      ],
+      "assertions": [
+        [
+          "before",
+          "a",
+          "b"
+        ],
+        [
+          "before",
+          "b",
+          "c"
+        ]
+      ]
+    },
+    {
+      "id": "unsupported_achievement",
+      "rationale": "Неподтверждённый источник ФСП не даёт бонус или допуск в ФСП-фильтр.",
+      "criteria": {
+        "specialization": "python",
+        "grades": [
+          "Junior"
+        ],
+        "required_skills": [
+          "python",
+          "http",
+          "testing"
+        ],
+        "desired_skills": [],
+        "fsp_only": true,
+        "min_years": null
+      },
+      "candidates": [
+        {
+          "id": "imported",
+          "specialization": "python",
+          "verified_grade": "Junior",
+          "test_score": 90,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            },
+            {
+              "skill": "http",
+              "state": "met"
+            },
+            {
+              "skill": "testing",
+              "state": "met"
+            }
+          ],
+          "achievements": [
+            {
+              "provider": "untrusted",
+              "points": 100
+            }
+          ]
+        },
+        {
+          "id": "demo",
+          "specialization": "python",
+          "verified_grade": "Junior",
+          "test_score": 90,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            },
+            {
+              "skill": "http",
+              "state": "met"
+            },
+            {
+              "skill": "testing",
+              "state": "met"
+            }
+          ],
+          "achievements": [
+            {
+              "provider": "demo_fsp",
+              "points": 1
+            }
+          ]
+        }
+      ],
+      "assertions": [
+        [
+          "excluded",
+          "imported"
+        ]
+      ]
+    },
+    {
+      "id": "eligibility",
+      "rationale": "Нельзя компенсировать несовпадение специализации и неподтверждённый уровень баллами.",
+      "criteria": {
+        "specialization": "python",
+        "grades": [
+          "Junior"
+        ],
+        "required_skills": [
+          "python",
+          "http",
+          "testing"
+        ],
+        "desired_skills": [],
+        "fsp_only": false,
+        "min_years": null
+      },
+      "candidates": [
+        {
+          "id": "valid",
+          "specialization": "python",
+          "verified_grade": "Junior",
+          "test_score": 75,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            },
+            {
+              "skill": "http",
+              "state": "met"
+            },
+            {
+              "skill": "testing",
+              "state": "met"
+            }
+          ],
+          "achievements": []
+        },
+        {
+          "id": "wrong_spec",
+          "specialization": "data",
+          "verified_grade": "Junior",
+          "test_score": 100,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            },
+            {
+              "skill": "http",
+              "state": "met"
+            },
+            {
+              "skill": "testing",
+              "state": "met"
+            }
+          ],
+          "achievements": [
+            {
+              "provider": "demo_fsp",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "unverified",
+          "specialization": "python",
+          "verified_grade": null,
+          "test_score": 100,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            },
+            {
+              "skill": "http",
+              "state": "met"
+            },
+            {
+              "skill": "testing",
+              "state": "met"
+            }
+          ],
+          "achievements": [
+            {
+              "provider": "demo_fsp",
+              "points": 5
+            }
+          ]
+        }
+      ],
+      "assertions": [
+        [
+          "excluded",
+          "wrong_spec"
+        ],
+        [
+          "excluded",
+          "unverified"
+        ]
+      ]
+    },
+    {
+      "id": "fsp_cap",
+      "rationale": "Большое число достижений не обходит потолок десяти баллов.",
+      "criteria": {
+        "specialization": "python",
+        "grades": [
+          "Junior"
+        ],
+        "required_skills": [
+          "python",
+          "http",
+          "testing"
+        ],
+        "desired_skills": [],
+        "fsp_only": false,
+        "min_years": null
+      },
+      "candidates": [
+        {
+          "id": "five",
+          "specialization": "python",
+          "verified_grade": "Junior",
+          "test_score": 90,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            },
+            {
+              "skill": "http",
+              "state": "met"
+            },
+            {
+              "skill": "testing",
+              "state": "met"
+            }
+          ],
+          "achievements": [
+            {
+              "provider": "demo_fsp",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "fifty",
+          "specialization": "python",
+          "verified_grade": "Junior",
+          "test_score": 90,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            },
+            {
+              "skill": "http",
+              "state": "met"
+            },
+            {
+              "skill": "testing",
+              "state": "met"
+            }
+          ],
+          "achievements": [
+            {
+              "provider": "demo_fsp",
+              "points": 50
+            }
+          ]
+        }
+      ],
+      "assertions": [
+        [
+          "equal",
+          "five",
+          "fifty"
+        ]
+      ]
+    },
+    {
+      "id": "desired_tradeoff",
+      "rationale": "Желательный навык конкурирует с общим тестом; обязательные остаются явно видимыми.",
+      "criteria": {
+        "specialization": "python",
+        "grades": [
+          "Junior"
+        ],
+        "required_skills": [
+          "python"
+        ],
+        "desired_skills": [
+          "testing"
+        ],
+        "fsp_only": false,
+        "min_years": null
+      },
+      "candidates": [
+        {
+          "id": "desired",
+          "specialization": "python",
+          "verified_grade": "Junior",
+          "test_score": 75,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            },
+            {
+              "skill": "http",
+              "state": "met"
+            },
+            {
+              "skill": "testing",
+              "state": "met"
+            }
+          ],
+          "achievements": []
+        },
+        {
+          "id": "strong",
+          "specialization": "python",
+          "verified_grade": "Junior",
+          "test_score": 100,
+          "skills": [],
+          "experience_years": null,
+          "evidence": [
+            {
+              "skill": "python",
+              "state": "met"
+            },
+            {
+              "skill": "http",
+              "state": "met"
+            }
+          ],
+          "achievements": []
+        }
+      ],
+      "assertions": []
+    }
+  ]
+}

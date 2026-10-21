@@ -1,0 +1,207 @@
+{
+  "status": "trained_offline",
+  "target": "recorded_invitation_vs_refusal",
+  "counts": {
+    "train": {
+      "0": 305,
+      "1": 423
+    },
+    "validation": {
+      "0": 207,
+      "1": 354
+    },
+    "test": {
+      "0": 56,
+      "1": 84
+    }
+  },
+  "near_duplicates_removed": {
+    "validation": 11,
+    "test": 0
+  },
+  "vocabulary_size": 8537,
+  "selected_C": 0.1,
+  "selection_metric": "validation_average_precision",
+  "candidates": [
+    {
+      "C": 0.1,
+      "validation_ap": 0.7613059282258883,
+      "iterations": 3
+    },
+    {
+      "C": 1.0,
+      "validation_ap": 0.7530170770206157,
+      "iterations": 4
+    },
+    {
+      "C": 10.0,
+      "validation_ap": 0.7330944634810158,
+      "iterations": 6
+    }
+  ],
+  "scores": {
+    "validation": {
+      "learned_pair": {
+        "n": 561,
+        "positives": 354,
+        "positive_fraction": 0.6310160427807486,
+        "average_precision": 0.7613059282258883,
+        "roc_auc": 0.6689047190152568,
+        "mixed_vacancy_pools": 13,
+        "ndcg_at_5": 0.7789275918441725,
+        "precision_at_min_5_n": 0.614102564102564
+      },
+      "tfidf_cosine": {
+        "n": 561,
+        "positives": 354,
+        "positive_fraction": 0.6310160427807486,
+        "average_precision": 0.6493645374611563,
+        "roc_auc": 0.5264472283632196,
+        "mixed_vacancy_pools": 13,
+        "ndcg_at_5": 0.7536459481734066,
+        "precision_at_min_5_n": 0.614102564102564
+      },
+      "job_text_only": {
+        "n": 561,
+        "positives": 354,
+        "positive_fraction": 0.6310160427807486,
+        "average_precision": 0.7233281709022639,
+        "roc_auc": 0.585714675618876,
+        "mixed_vacancy_pools": 13,
+        "ndcg_at_5": 0.8109427637365667,
+        "precision_at_min_5_n": 0.6056283460129613
+      },
+      "constant": {
+        "n": 561,
+        "positives": 354,
+        "positive_fraction": 0.6310160427807486,
+        "average_precision": 0.6310160427807486,
+        "roc_auc": 0.5,
+        "mixed_vacancy_pools": 13,
+        "ndcg_at_5": 0.8109427637365667,
+        "precision_at_min_5_n": 0.6056283460129613
+      }
+    },
+    "test": {
+      "learned_pair": {
+        "n": 140,
+        "positives": 84,
+        "positive_fraction": 0.6,
+        "average_precision": 0.5393319353995913,
+        "roc_auc": 0.42431972789115646,
+        "mixed_vacancy_pools": 1,
+        "ndcg_at_5": 0.8304198973631918,
+        "precision_at_min_5_n": 0.8
+      },
+      "tfidf_cosine": {
+        "n": 140,
+        "positives": 84,
+        "positive_fraction": 0.6,
+        "average_precision": 0.5941454049837714,
+        "roc_auc": 0.4236819727891156,
+        "mixed_vacancy_pools": 1,
+        "ndcg_at_5": 0.8687949224876581,
+        "precision_at_min_5_n": 0.8
+      },
+      "job_text_only": {
+        "n": 140,
+        "positives": 84,
+        "positive_fraction": 0.6,
+        "average_precision": 0.5887711150164494,
+        "roc_auc": 0.45174319727891155,
+        "mixed_vacancy_pools": 1,
+        "ndcg_at_5": 0.8888888888888886,
+        "precision_at_min_5_n": 0.888888888888889
+      },
+      "constant": {
+        "n": 140,
+        "positives": 84,
+        "positive_fraction": 0.6,
+        "average_precision": 0.6,
+        "roc_auc": 0.5,
+        "mixed_vacancy_pools": 1,
+        "ndcg_at_5": 0.8888888888888886,
+        "precision_at_min_5_n": 0.888888888888889
+      }
+    }
+  },
+  "descriptive_test_slices": {
+    "vacancy_mentions_python": {
+      "learned_pair": {
+        "n": 2,
+        "positives": 0,
+        "positive_fraction": 0.0,
+        "average_precision": null,
+        "roc_auc": null,
+        "mixed_vacancy_pools": 0,
+        "ndcg_at_5": null,
+        "precision_at_min_5_n": null
+      },
+      "tfidf_cosine": {
+        "n": 2,
+        "positives": 0,
+        "positive_fraction": 0.0,
+        "average_precision": null,
+        "roc_auc": null,
+        "mixed_vacancy_pools": 0,
+        "ndcg_at_5": null,
+        "precision_at_min_5_n": null
+      }
+    },
+    "vacancy_mentions_sql": {
+      "learned_pair": {
+        "n": 17,
+        "positives": 4,
+        "positive_fraction": 0.23529411764705882,
+        "average_precision": 0.251984126984127,
+        "roc_auc": 0.4423076923076923,
+        "mixed_vacancy_pools": 0,
+        "ndcg_at_5": null,
+        "precision_at_min_5_n": null
+      },
+      "tfidf_cosine": {
+        "n": 17,
+        "positives": 4,
+        "positive_fraction": 0.23529411764705882,
+        "average_precision": 0.27400210084033616,
+        "roc_auc": 0.5,
+        "mixed_vacancy_pools": 0,
+        "ndcg_at_5": null,
+        "precision_at_min_5_n": null
+      }
+    }
+  },
+  "bootstrap": {
+    "unit": "connected_component",
+    "components": 56,
+    "valid_repeats": 500,
+    "ap_gain_95_percentile_ci": [
+      -0.1786018431790717,
+      0.018682573067915372
+    ]
+  },
+  "artifact_reload_equal": true,
+  "production_promotion_allowed": false,
+  "promotion_blockers": [
+    "Actor/meaning of source refusal unresolved; labels are not suitability.",
+    "Historical broad-IT cohort is not validated for current Python/Data matching.",
+    "No independent human qualification labels or certification."
+  ],
+  "pairs_sha256": "4eb5d9f461e0c5c42fdc3d737603faf96d2c1dfd6e371beae724fb03aa1f4fb6",
+  "model_sha256": "a2bd86cb72a23fff4ca55b489657308c05cebbc420cf70896fa20674963e7fe4",
+  "split_manifest_sha256": "f9c9937a800857fe38672c5ec42c1e045891618783dec5ace169773df147cee4",
+  "versions": {
+    "python": "3.12.3",
+    "scikit-learn": "1.6.1",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "joblib": "1.6.0"
+  },
+  "seconds": 3.0577281119767576,
+  "max_rss_kb": 148572,
+  "code_sha256": {
+    "prepare.py": "a3d48ab63c28059ada3693db4fe8d6ecbd1e18be7613d5e61c0a24437fba7857",
+    "pairs.py": "bee3da5dbace58b8da59340ef73848f6f5c15e02c3a5401c22cf7210a5dc8bd5",
+    "train.py": "b728bcbf6f036ce6f9ee76b5027c088dd4b3d7b3e03a945af0f51b69947636b4"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "checked_at": "2026-10-21T10:44:08.176754+00:00",
+  "branch": "codex/fsp-mvp",
+  "head": "ab915af6eb771c9688d60f08dcf1bd9211f59d25",
+  "health": {
+    "status": "ok",
+    "demo": true,
+    "version": "1.0.0"
+  },
+  "canon_workspace_sha256": "cd652c55e049b78e491ae682d5adbf3ebb208d0dc14a390e4b118179fc4827da",
+  "canon_changed_on_entry": true,
+  "db_mounts": [
+    {
+      "Type": "volume",
+      "Name": "fsp-mvp_fsp_db",
+      "Source": "/var/lib/docker/volumes/fsp-mvp_fsp_db/_data",
+      "Destination": "/var/lib/postgresql/data",
+      "Driver": "local",
+      "Mode": "rw",
+      "RW": true,
+      "Propagation": ""
+    }
+  ],
+  "presentation_diff": "",
+  "product_worktree_diff": ""
+}

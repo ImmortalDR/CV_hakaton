@@ -1,0 +1,410 @@
+[
+  {
+    "spec": "python",
+    "grade": "Junior",
+    "seed": 0,
+    "version": "2.1.0",
+    "fingerprint": "4b66223a31dfc17f4a4f2b0f09b7fdd73fc90ce99a196290e94bdf62b0b82fa0",
+    "answers": [
+      "7",
+      "0",
+      "4",
+      "8",
+      "23",
+      "5",
+      "2",
+      "3"
+    ]
+  },
+  {
+    "spec": "python",
+    "grade": "Junior",
+    "seed": 17,
+    "version": "2.1.0",
+    "fingerprint": "bee09ea94082539c5d49f17ac74cfd6094b6bf9abeacfebeba2d17bb3389f0e9",
+    "answers": [
+      "0",
+      "2",
+      "5",
+      "3",
+      "55",
+      "3",
+      "2",
+      "3"
+    ]
+  },
+  {
+    "spec": "python",
+    "grade": "Junior",
+    "seed": 43,
+    "version": "2.1.0",
+    "fingerprint": "b8748ff45df04fcfd5eae5d709b410192e04b3a157aeb48b45a84489225d3a1f",
+    "answers": [
+      "14",
+      "4",
+      "0",
+      "-3",
+      "2",
+      "44",
+      "0",
+      "2"
+    ]
+  },
+  {
+    "spec": "python",
+    "grade": "Junior",
+    "seed": "historical-2.1",
+    "version": "2.1.0",
+    "fingerprint": "8914e142eb4cf885a33f2d69624c8bd2ea38ad686a0d52f740b1ad7f68f211e2",
+    "answers": [
+      "30",
+      "1",
+      "20",
+      "23",
+      "29",
+      "2",
+      "1",
+      "3"
+    ]
+  },
+  {
+    "spec": "python",
+    "grade": "Middle",
+    "seed": 0,
+    "version": "2.1.0",
+    "fingerprint": "79b3e506ed6bb53e7a6d18c4cc14feaffb60a368202447e7e72e39b00311317b",
+    "answers": [
+      "15",
+      "57",
+      "32",
+      "9",
+      "14",
+      "12",
+      "73",
+      "46"
+    ]
+  },
+  {
+    "spec": "python",
+    "grade": "Middle",
+    "seed": 17,
+    "version": "2.1.0",
+    "fingerprint": "14bf1ac79abd5406d0c1b40e021ce58c33d2ae09e1779e9dea7f2d4e82458d2f",
+    "answers": [
+      "16",
+      "12",
+      "16",
+      "20",
+      "96",
+      "62",
+      "24",
+      "12"
+    ]
+  },
+  {
+    "spec": "python",
+    "grade": "Middle",
+    "seed": 43,
+    "version": "2.1.0",
+    "fingerprint": "ea6790552a5cc438fd43e0b04404533ba9968ed439446acfcb64c6ea2cea1afa",
+    "answers": [
+      "12",
+      "175",
+      "9",
+      "29",
+      "12",
+      "8",
+      "48",
+      "56"
+    ]
+  },
+  {
+    "spec": "python",
+    "grade": "Middle",
+    "seed": "historical-2.1",
+    "version": "2.1.0",
+    "fingerprint": "fdb42d5ef8554a5b369b47c19336b13e5d152a4bf2b0190d17a17a5427c774e4",
+    "answers": [
+      "28",
+      "45",
+      "66",
+      "12",
+      "65",
+      "20",
+      "12",
+      "33"
+    ]
+  },
+  {
+    "spec": "python",
+    "grade": "Senior",
+    "seed": 0,
+    "version": "2.1.0",
+    "fingerprint": "957d5ed844b0dbcf4e7208414cff28e0348bd815b4463e35b797703b451d0472",
+    "answers": [
+      "19",
+      "33",
+      "35",
+      "16",
+      "24",
+      "21",
+      "14",
+      "24"
+    ]
+  },
+  {
+    "spec": "python",
+    "grade": "Senior",
+    "seed": 17,
+    "version": "2.1.0",
+    "fingerprint": "006c5ad37fe662a33fe1806f678512cbd35fe8c908c70ba660db5b251bae208d",
+    "answers": [
+      "29",
+      "24",
+      "42",
+      "45",
+      "67",
+      "15",
+      "28",
+      "15"
+    ]
+  },
+  {
+    "spec": "python",
+    "grade": "Senior",
+    "seed": 43,
+    "version": "2.1.0",
+    "fingerprint": "5ab8821f50baf6e1f67f15ecba2396338177129a2856a75026c6a082f989df7b",
+    "answers": [
+      "145",
+      "14",
+      "32",
+      "30",
+      "21",
+      "36",
+      "8",
+      "29"
+    ]
+  },
+  {
+    "spec": "python",
+    "grade": "Senior",
+    "seed": "historical-2.1",
+    "version": "2.1.0",
+    "fingerprint": "c0bab6edb9cecd3dbec278bd42ea6a1bbf07f7ae5f7f41ac69fb696bef825733",
+    "answers": [
+      "17",
+      "22",
+      "66",
+      "40",
+      "25",
+      "18",
+      "125",
+      "36"
+    ]
+  },
+  {
+    "spec": "data",
+    "grade": "Junior",
+    "seed": 0,
+    "version": "2.1.0",
+    "fingerprint": "378f7f2540666b6da823d47aa2bbac170d589ca37f0e92cbd9307efbb6af69c3",
+    "answers": [
+      "9",
+      "45",
+      "11.50",
+      "68",
+      "13.33",
+      "62",
+      "21",
+      "5"
+    ]
+  },
+  {
+    "spec": "data",
+    "grade": "Junior",
+    "seed": 17,
+    "version": "2.1.0",
+    "fingerprint": "850fa7b7d21ad34c8150002d1f901f05dd5f1942c53acaad8450a015246f0a2c",
+    "answers": [
+      "80",
+      "10",
+      "64",
+      "105",
+      "81",
+      "13",
+      "9.50",
+      "8.50"
+    ]
+  },
+  {
+    "spec": "data",
+    "grade": "Junior",
+    "seed": 43,
+    "version": "2.1.0",
+    "fingerprint": "a600f8cbf70269c704d3c504ff6061e415e09c43422de6600a2a7cea66e2e8ec",
+    "answers": [
+      "7.17",
+      "10.00",
+      "72",
+      "17",
+      "40",
+      "9",
+      "70",
+      "13"
+    ]
+  },
+  {
+    "spec": "data",
+    "grade": "Junior",
+    "seed": "historical-2.1",
+    "version": "2.1.0",
+    "fingerprint": "02318884a334d9b7a22e407c77c72138bc75f32d974f2b0fa1bd99bb7c5f4aaa",
+    "answers": [
+      "49",
+      "59",
+      "60",
+      "14.50",
+      "12",
+      "9.17",
+      "52",
+      "16"
+    ]
+  },
+  {
+    "spec": "data",
+    "grade": "Middle",
+    "seed": 0,
+    "version": "2.1.0",
+    "fingerprint": "736b622713ca0dd47c48c0a1facfcfed4ea32ba80ad654c649031e270fb85b3f",
+    "answers": [
+      "1",
+      "1",
+      "24.55",
+      "214",
+      "55.81",
+      "18.57",
+      "173",
+      "74.51"
+    ]
+  },
+  {
+    "spec": "data",
+    "grade": "Middle",
+    "seed": 17,
+    "version": "2.1.0",
+    "fingerprint": "5238cf56688ac29b5cf08291c6e372b7d636457b4246cfa8550d57b881df7233",
+    "answers": [
+      "20.91",
+      "203",
+      "2",
+      "88.24",
+      "86.96",
+      "2",
+      "18.33",
+      "130"
+    ]
+  },
+  {
+    "spec": "data",
+    "grade": "Middle",
+    "seed": 43,
+    "version": "2.1.0",
+    "fingerprint": "299907997a34a480ddb1337e1205f4973b031f3987ad9f2e41247a9db1e0add3",
+    "answers": [
+      "20.00",
+      "20.00",
+      "2",
+      "25.45",
+      "61",
+      "3",
+      "202",
+      "24.55"
+    ]
+  },
+  {
+    "spec": "data",
+    "grade": "Middle",
+    "seed": "historical-2.1",
+    "version": "2.1.0",
+    "fingerprint": "58253ccd1cd2bfa6a868cdad4229a5643c6417b5196b2b6791de609ad7101441",
+    "answers": [
+      "15.79",
+      "2",
+      "16.67",
+      "205",
+      "196",
+      "3",
+      "22.00",
+      "46.15"
+    ]
+  },
+  {
+    "spec": "data",
+    "grade": "Senior",
+    "seed": 0,
+    "version": "2.1.0",
+    "fingerprint": "4fcb854c30b9c34aec209167852521520d0d5f7e9073fd437f7363ec09f35feb",
+    "answers": [
+      "850",
+      "60",
+      "300",
+      "2",
+      "2",
+      "76",
+      "4",
+      "7"
+    ]
+  },
+  {
+    "spec": "data",
+    "grade": "Senior",
+    "seed": 17,
+    "version": "2.1.0",
+    "fingerprint": "aab1d9270c77e12923308ba76e226a8e1d42b8c659728417320b6e6e5f645859",
+    "answers": [
+      "3",
+      "99",
+      "123",
+      "623",
+      "810",
+      "2",
+      "9",
+      "6"
+    ]
+  },
+  {
+    "spec": "data",
+    "grade": "Senior",
+    "seed": 43,
+    "version": "2.1.0",
+    "fingerprint": "2959e8b664255cf154c0e269639c5059cdd3deebf01611fcd7d15c0236f1d611",
+    "answers": [
+      "3",
+      "1",
+      "35",
+      "2",
+      "611",
+      "9",
+      "514",
+      "57"
+    ]
+  },
+  {
+    "spec": "data",
+    "grade": "Senior",
+    "seed": "historical-2.1",
+    "version": "2.1.0",
+    "fingerprint": "00c98f3b74ae6d15fad549a49ecce486567418a9a3bd3f14538c78c3d379d614",
+    "answers": [
+      "74",
+      "6",
+      "79",
+      "7",
+      "500",
+      "6",
+      "6",
+      "503"
+    ]
+  }
+]

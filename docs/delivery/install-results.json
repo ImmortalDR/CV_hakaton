@@ -1,0 +1,10 @@
+{
+  "status": "pass",
+  "database": "fsp_installcheck",
+  "migration": "f8a2ba6fc338",
+  "tables": 14,
+  "users_after_first_seed": 15,
+  "users_after_second_seed": 15,
+  "schema_drift": false,
+  "scope": "Separate empty PostgreSQL DB; existing application DB unchanged"
+}

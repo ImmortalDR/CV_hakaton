@@ -1,0 +1,39 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.3.5, pluggy-1.6.0 -- /root/hakaton/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /root/hakaton
+plugins: anyio-4.15.1, platformdirs-4.12.3
+collecting ... collected 20 items
+
+tests/test_stage_a.py::test_draft_answers_owner_lifecycle PASSED         [  5%]
+tests/test_stage_a.py::test_draft_expired PASSED                         [ 10%]
+tests/test_stage_a.py::test_anonymous_labels_distinct_and_stable PASSED  [ 15%]
+tests/test_stage_a.py::test_incomplete_submit_requires_explicit_confirmation PASSED [ 20%]
+tests/test_bank.py::test_half_up_exact_boundaries[2900-32-90.63] PASSED  [ 25%]
+tests/test_bank.py::test_half_up_exact_boundaries[1005-1000-1.01] PASSED [ 30%]
+tests/test_bank.py::test_half_up_exact_boundaries[625-1000-0.63] PASSED  [ 35%]
+tests/test_bank.py::test_conditional_rounding_new_and_historical_versions PASSED [ 40%]
+tests/test_matching.py::test_unknown_never_becomes_proof_and_sport_does_not_change_category PASSED [ 45%]
+tests/test_matching.py::test_explicit_evidence_and_zero_experience_remain_distinct PASSED [ 50%]
+tests/test_matching.py::test_required_skill_coverage_is_not_a_score_threshold PASSED [ 55%]
+tests/test_matching.py::test_untrusted_achievement_does_not_satisfy_fsp_filter PASSED [ 60%]
+tests/test_matching.py::test_stage_a_test_and_sport_change_within_category_order PASSED [ 65%]
+tests/test_matching.py::test_production_matches_selected_weights_on_frozen_sample PASSED [ 70%]
+tests/test_employer_tasks.py::test_task_complete_lifecycle_grade_and_contact_isolation PASSED [ 75%]
+tests/test_employer_tasks.py::test_task_plan_idempotency_consent_and_schema PASSED [ 80%]
+tests/test_employer_tasks.py::test_scheduler_periodic_delivery_deduplicates_and_does_not_burst PASSED [ 85%]
+tests/test_employer_tasks.py::test_submitted_work_waits_for_review_and_pause_cancels_open_tasks PASSED [ 90%]
+tests/test_employer_tasks.py::test_deadline_and_concurrent_answers PASSED [ 95%]
+tests/test_employer_tasks.py::test_resume_keeps_cadence_after_review_and_legacy_pause PASSED [100%]
+
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /root/hakaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+.venv/lib/python3.12/site-packages/starlette/testclient.py:53
+  /root/hakaton/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 20 passed, 2 warnings in 8.64s ========================

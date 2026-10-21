@@ -1,0 +1,2 @@
+# Optional PostgreSQL importer; offline validation does not need this driver.
+psycopg[binary]==3.2.9

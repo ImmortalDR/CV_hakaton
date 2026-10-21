@@ -1,0 +1,25 @@
+{
+  "status": "pass",
+  "project": "fsp-mvp",
+  "before": {
+    "counts": {
+      "users": 223,
+      "profiles": 101,
+      "attempts": 86,
+      "invitations": 56,
+      "search_snapshots": 70
+    },
+    "sha256": "0455dc800e286444bd422efde05e85c36cd6777e29ec2423fe79d45ff421d9b7"
+  },
+  "after": {
+    "counts": {
+      "users": 223,
+      "profiles": 101,
+      "attempts": 86,
+      "invitations": 56,
+      "search_snapshots": 70
+    },
+    "sha256": "0455dc800e286444bd422efde05e85c36cd6777e29ec2423fe79d45ff421d9b7"
+  },
+  "volume_removed": false
+}

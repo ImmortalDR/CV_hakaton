@@ -1,0 +1,207 @@
+{
+  "status": "trained_offline",
+  "target": "recorded_application_acceptance_vs_refusal_within_30_days",
+  "counts": {
+    "train": {
+      "0": 189,
+      "1": 167
+    },
+    "validation": {
+      "0": 79,
+      "1": 42
+    },
+    "test": {
+      "0": 70,
+      "1": 42
+    }
+  },
+  "near_duplicates_removed": {
+    "validation": 0,
+    "test": 0
+  },
+  "vocabulary_size": 4905,
+  "selected_C": 1.0,
+  "selection_metric": "validation_average_precision",
+  "candidates": [
+    {
+      "C": 0.1,
+      "validation_ap": 0.4006269682026343,
+      "iterations": 3
+    },
+    {
+      "C": 1.0,
+      "validation_ap": 0.41458867795311205,
+      "iterations": 4
+    },
+    {
+      "C": 10.0,
+      "validation_ap": 0.3944263371387944,
+      "iterations": 6
+    }
+  ],
+  "scores": {
+    "validation": {
+      "learned_pair": {
+        "n": 121,
+        "positives": 42,
+        "positive_fraction": 0.34710743801652894,
+        "average_precision": 0.41458867795311205,
+        "roc_auc": 0.5669077757685352,
+        "mixed_vacancy_pools": 3,
+        "ndcg_at_5": 1.0,
+        "precision_at_min_5_n": 0.6388888888888888
+      },
+      "tfidf_cosine": {
+        "n": 121,
+        "positives": 42,
+        "positive_fraction": 0.34710743801652894,
+        "average_precision": 0.35198836723497684,
+        "roc_auc": 0.4683544303797468,
+        "mixed_vacancy_pools": 3,
+        "ndcg_at_5": 0.9891559944963898,
+        "precision_at_min_5_n": 0.6388888888888888
+      },
+      "job_text_only": {
+        "n": 121,
+        "positives": 42,
+        "positive_fraction": 0.34710743801652894,
+        "average_precision": 0.4884789390619739,
+        "roc_auc": 0.6699819168173599,
+        "mixed_vacancy_pools": 3,
+        "ndcg_at_5": 0.8626981503054306,
+        "precision_at_min_5_n": 0.6388888888888888
+      },
+      "constant": {
+        "n": 121,
+        "positives": 42,
+        "positive_fraction": 0.34710743801652894,
+        "average_precision": 0.34710743801652894,
+        "roc_auc": 0.5,
+        "mixed_vacancy_pools": 3,
+        "ndcg_at_5": 0.8626981503054306,
+        "precision_at_min_5_n": 0.6388888888888888
+      }
+    },
+    "test": {
+      "learned_pair": {
+        "n": 112,
+        "positives": 42,
+        "positive_fraction": 0.375,
+        "average_precision": 0.43286650703548496,
+        "roc_auc": 0.5452380952380952,
+        "mixed_vacancy_pools": 4,
+        "ndcg_at_5": 0.6495021491235523,
+        "precision_at_min_5_n": 0.3833333333333333
+      },
+      "tfidf_cosine": {
+        "n": 112,
+        "positives": 42,
+        "positive_fraction": 0.375,
+        "average_precision": 0.36614857836956416,
+        "roc_auc": 0.40272108843537413,
+        "mixed_vacancy_pools": 4,
+        "ndcg_at_5": 0.6786953034353886,
+        "precision_at_min_5_n": 0.41666666666666663
+      },
+      "job_text_only": {
+        "n": 112,
+        "positives": 42,
+        "positive_fraction": 0.375,
+        "average_precision": 0.5528922678411237,
+        "roc_auc": 0.6311224489795917,
+        "mixed_vacancy_pools": 4,
+        "ndcg_at_5": 0.6839870547186423,
+        "precision_at_min_5_n": 0.425
+      },
+      "constant": {
+        "n": 112,
+        "positives": 42,
+        "positive_fraction": 0.375,
+        "average_precision": 0.375,
+        "roc_auc": 0.5,
+        "mixed_vacancy_pools": 4,
+        "ndcg_at_5": 0.6839870547186423,
+        "precision_at_min_5_n": 0.425
+      }
+    }
+  },
+  "descriptive_test_slices": {
+    "vacancy_mentions_python": {
+      "learned_pair": {
+        "n": 2,
+        "positives": 0,
+        "positive_fraction": 0.0,
+        "average_precision": null,
+        "roc_auc": null,
+        "mixed_vacancy_pools": 0,
+        "ndcg_at_5": null,
+        "precision_at_min_5_n": null
+      },
+      "tfidf_cosine": {
+        "n": 2,
+        "positives": 0,
+        "positive_fraction": 0.0,
+        "average_precision": null,
+        "roc_auc": null,
+        "mixed_vacancy_pools": 0,
+        "ndcg_at_5": null,
+        "precision_at_min_5_n": null
+      }
+    },
+    "vacancy_mentions_sql": {
+      "learned_pair": {
+        "n": 15,
+        "positives": 2,
+        "positive_fraction": 0.13333333333333333,
+        "average_precision": 0.16666666666666666,
+        "roc_auc": 0.423076923076923,
+        "mixed_vacancy_pools": 0,
+        "ndcg_at_5": null,
+        "precision_at_min_5_n": null
+      },
+      "tfidf_cosine": {
+        "n": 15,
+        "positives": 2,
+        "positive_fraction": 0.13333333333333333,
+        "average_precision": 0.11212121212121212,
+        "roc_auc": 0.13461538461538458,
+        "mixed_vacancy_pools": 0,
+        "ndcg_at_5": null,
+        "precision_at_min_5_n": null
+      }
+    }
+  },
+  "bootstrap": {
+    "unit": "connected_component",
+    "components": 45,
+    "valid_repeats": 500,
+    "ap_gain_95_percentile_ci": [
+      -0.11641594328358028,
+      0.1922472004610469
+    ]
+  },
+  "artifact_reload_equal": true,
+  "production_promotion_allowed": false,
+  "promotion_blockers": [
+    "Actor/meaning of source refusal unresolved; labels are not suitability.",
+    "Historical broad-IT cohort is not validated for current Python/Data matching.",
+    "No independent human qualification labels or certification."
+  ],
+  "pairs_sha256": "83688d10652cad2969dce0584245af06dca43437a86ab902c841b43f8126be89",
+  "model_sha256": "fce01c4a8f4fe116bfc62f91bffb1f1033bffc74e815630c28a74dcd8c35628d",
+  "split_manifest_sha256": "d8124cba4be65b331aa25169cb9cfc73c22f3152e07835d32c590e1270c3033f",
+  "versions": {
+    "python": "3.12.3",
+    "scikit-learn": "1.6.1",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "joblib": "1.6.0"
+  },
+  "seconds": 1.6872595959575847,
+  "max_rss_kb": 132672,
+  "code_sha256": {
+    "prepare.py": "a3d48ab63c28059ada3693db4fe8d6ecbd1e18be7613d5e61c0a24437fba7857",
+    "pairs.py": "bee3da5dbace58b8da59340ef73848f6f5c15e02c3a5401c22cf7210a5dc8bd5",
+    "train.py": "b728bcbf6f036ce6f9ee76b5027c088dd4b3d7b3e03a945af0f51b69947636b4"
+  }
+}

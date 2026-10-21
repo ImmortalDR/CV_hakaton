@@ -1,0 +1,59 @@
+{
+  "status": "pass",
+  "checked_at": "2026-10-07T21:42:24.091186+00:00",
+  "unit_integration_tests": 36,
+  "openapi_operations": 27,
+  "openapi_models": 35,
+  "presentation_slides": 8,
+  "documentation_pdf_pages": 15,
+  "docx_paragraphs": 108,
+  "docx_render_pages": 16,
+  "docx_tables": 7,
+  "dependency_audits": {
+    "npm_known_vulnerabilities": 0,
+    "pip_known_vulnerabilities": 0,
+    "scope": "runtime dependencies, current advisory databases; not a full security audit"
+  },
+  "preserved_inputs": 8141,
+  "video": {
+    "programs": [],
+    "streams": [
+      {
+        "codec_name": "vp9",
+        "width": 1440,
+        "height": 1000
+      }
+    ],
+    "format": {
+      "duration": "182.600000",
+      "size": "3319787"
+    }
+  },
+  "visual_review": "All eight slide renders reviewed; contrast/overlap fixed. Documentation PDF pages reviewed. Desktop/mobile UI and video captures inspected.",
+  "artifacts": {
+    "demo/FSP_MVP.pptx": {
+      "bytes": 12387360,
+      "sha256": "8a88789e4e89e44c49bcf50c49086ac63d40301c025aa6ec5c6e216c6472cf9e"
+    },
+    "demo/FSP_MVP.pdf": {
+      "bytes": 1143036,
+      "sha256": "f53d127305fdd37b9769b39ba259c31f188eaca07c76d5e9ff0e42c56ae801d5"
+    },
+    "demo/walkthrough.webm": {
+      "bytes": 3319787,
+      "sha256": "3b92efcb4efbba36b9c675ae4946a75c7bb2747edfda1bb666b2238ea566c661"
+    },
+    "docs/delivery/FSP_MVP.docx": {
+      "bytes": 55721,
+      "sha256": "9cc7f6c3281972bcd92b1568bdff6d4d8aa71c7e19f01dc644abcc5d0e685d92"
+    },
+    "docs/delivery/FSP_MVP.pdf": {
+      "bytes": 97726,
+      "sha256": "549e9493f1ac0cfc4d88207c86b1824b7e4c91a9d73409d6990899a3dad7c2b4"
+    },
+    "docs/delivery/openapi.json": {
+      "bytes": 135313,
+      "sha256": "652b353a0c89fc0fbcca38396e7623b8449602c3e395d696f29be41bf524b938"
+    }
+  }
+}

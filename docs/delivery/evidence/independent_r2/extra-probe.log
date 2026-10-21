@@ -1,0 +1,19 @@
+PASS B05 orb before/after confirmation; B06 hide, republish stays denied, new accepted invite opens composer
+Traceback (most recent call last):
+  File "/tmp/independent-r2-extra.py", line 94, in <module>
+    expect(form.get_by_label('SQL',exact=True)).to_have_value('required')
+  File "/root/hakaton/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 19729, in to_have_value
+    self._sync(self._impl_obj.to_have_value(value=value, timeout=timeout))
+  File "/root/hakaton/.venv/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/root/hakaton/.venv/lib/python3.12/site-packages/playwright/_impl/_assertions.py", line 443, in to_have_value
+    await self._expect_impl(
+  File "/root/hakaton/.venv/lib/python3.12/site-packages/playwright/_impl/_assertions.py", line 74, in _expect_impl
+    raise AssertionError(
+AssertionError: Locator expected to have Value 'required'
+Actual value: <element(s) not found> 
+Call log:
+  - LocatorAssertions.to_have_value with timeout 5000ms
+  - waiting for locator(".search-form").get_by_label("SQL", exact=True)
+

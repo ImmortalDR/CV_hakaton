@@ -1,0 +1,12 @@
+{"old_weights": [60, 15, 20, 5], "selected_weights": [30, 15, 45, 10], "selection": "max dev P@5; tie: minimum L1 distance to old weights, then tuple order"}
+dev 1.0 -> 1.0
+test 0.8 -> 0.8
+{"oracle_checks": 36000, "oracle_mismatches": [], "simulated_attempts": 42000, "analytic_iid": [{"version": "1.2.0", "probability_correct": 0.8, "pass_probability": 0.6144000000000001}, {"version": "1.2.0", "probability_correct": 0.9, "pass_probability": 0.8019000000000001}, {"version": "2.1.0", "probability_correct": 0.8, "pass_probability": 0.7340032000000002}, {"version": "2.1.0", "probability_correct": 0.9, "pass_probability": 0.9300217499999999}]}
+1.2.0 frequent_guess mean pass 0.025 pair agreement 0.9534
+1.2.0 noise_10 mean pass 0.7997 pair agreement 0.6795
+1.2.0 noise_20 mean pass 0.5933 pair agreement 0.5167
+1.2.0 old_families_only mean pass 1 pair agreement 1.0
+2.1.0 frequent_guess mean pass 0 pair agreement 1.0
+2.1.0 noise_10 mean pass 0.926 pair agreement 0.8628
+2.1.0 noise_20 mean pass 0.714 pair agreement 0.5914
+2.1.0 old_families_only mean pass 0 pair agreement 1.0

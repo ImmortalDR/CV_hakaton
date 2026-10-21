@@ -1,0 +1,1850 @@
+{
+  "kind": "author_scenarios_not_external_validation",
+  "methodology": "matching-1.2.0",
+  "fixture_sha256": "84ad35ca94de84e51e040323db376c21c2733fd6460a859b90ef0a7d9288ec15",
+  "policy": "Total score within category; partial mandatory-skill matches remain labelled. User confirmed 2026-10-21.",
+  "cases": [
+    {
+      "case": "coverage_vs_test",
+      "rationale": "Полное покрытие не является жёстким приоритетом; неизвестный навык виден отдельно.",
+      "old_order": [
+        "full",
+        "strong_partial"
+      ],
+      "current_order": [
+        "strong_partial",
+        "full"
+      ],
+      "changed_pairs": [
+        [
+          "strong_partial",
+          "full"
+        ]
+      ],
+      "eligible": 2,
+      "full_match_count": 1,
+      "partial_top_fraction": 0.5,
+      "scores": [
+        {
+          "id": "strong_partial",
+          "grade": "Junior",
+          "score": 65.0,
+          "facts": [
+            {
+              "skill": "python",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "python",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "http",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "http",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "testing",
+              "kind": "required_skills",
+              "state": "unknown",
+              "source": "none",
+              "evidence": null
+            }
+          ],
+          "breakdown": {
+            "required_skills": 20.0,
+            "desired_skills": 0,
+            "test": 45.0,
+            "fsp": 0
+          },
+          "methodology": "matching-1.2.0",
+          "required_skills_met": false,
+          "missing_skills": [
+            "testing"
+          ],
+          "unmet_skills": []
+        },
+        {
+          "id": "full",
+          "grade": "Junior",
+          "score": 63.75,
+          "facts": [
+            {
+              "skill": "python",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "python",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "http",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "http",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "testing",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "testing",
+                "state": "met"
+              }
+            }
+          ],
+          "breakdown": {
+            "required_skills": 30.0,
+            "desired_skills": 0,
+            "test": 33.75,
+            "fsp": 0
+          },
+          "methodology": "matching-1.2.0",
+          "required_skills_met": true,
+          "missing_skills": [],
+          "unmet_skills": []
+        }
+      ]
+    },
+    {
+      "case": "fsp_vs_test",
+      "rationale": "ФСП может изменить порядок внутри грейда, но бонус ограничен.",
+      "old_order": [
+        "sport",
+        "no_fsp"
+      ],
+      "current_order": [
+        "sport",
+        "no_fsp"
+      ],
+      "changed_pairs": [],
+      "eligible": 2,
+      "full_match_count": 2,
+      "partial_top_fraction": 0.0,
+      "scores": [
+        {
+          "id": "sport",
+          "grade": "Junior",
+          "score": 78.25,
+          "facts": [
+            {
+              "skill": "python",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "python",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "http",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "http",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "testing",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "testing",
+                "state": "met"
+              }
+            }
+          ],
+          "breakdown": {
+            "required_skills": 30.0,
+            "desired_skills": 0,
+            "test": 38.25,
+            "fsp": 10
+          },
+          "methodology": "matching-1.2.0",
+          "required_skills_met": true,
+          "missing_skills": [],
+          "unmet_skills": []
+        },
+        {
+          "id": "no_fsp",
+          "grade": "Junior",
+          "score": 72.75,
+          "facts": [
+            {
+              "skill": "python",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "python",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "http",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "http",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "testing",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "testing",
+                "state": "met"
+              }
+            }
+          ],
+          "breakdown": {
+            "required_skills": 30.0,
+            "desired_skills": 0,
+            "test": 42.75,
+            "fsp": 0
+          },
+          "methodology": "matching-1.2.0",
+          "required_skills_met": true,
+          "missing_skills": [],
+          "unmet_skills": []
+        }
+      ]
+    },
+    {
+      "case": "self_report",
+      "rationale": "Самооценка и стаж не дают проверенных баллов.",
+      "old_order": [
+        "a",
+        "b"
+      ],
+      "current_order": [
+        "a",
+        "b"
+      ],
+      "changed_pairs": [],
+      "eligible": 2,
+      "full_match_count": 2,
+      "partial_top_fraction": 0.0,
+      "scores": [
+        {
+          "id": "a",
+          "grade": "Junior",
+          "score": 63.75,
+          "facts": [
+            {
+              "skill": "python",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "python",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "http",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "http",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "testing",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "testing",
+                "state": "met"
+              }
+            }
+          ],
+          "breakdown": {
+            "required_skills": 30.0,
+            "desired_skills": 0,
+            "test": 33.75,
+            "fsp": 0
+          },
+          "methodology": "matching-1.2.0",
+          "required_skills_met": true,
+          "missing_skills": [],
+          "unmet_skills": []
+        },
+        {
+          "id": "b",
+          "grade": "Junior",
+          "score": 63.75,
+          "facts": [
+            {
+              "skill": "python",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "python",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "http",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "http",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "testing",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "testing",
+                "state": "met"
+              }
+            }
+          ],
+          "breakdown": {
+            "required_skills": 30.0,
+            "desired_skills": 0,
+            "test": 33.75,
+            "fsp": 0
+          },
+          "methodology": "matching-1.2.0",
+          "required_skills_met": true,
+          "missing_skills": [],
+          "unmet_skills": []
+        }
+      ]
+    },
+    {
+      "case": "unknown_vs_unmet",
+      "rationale": "Непроверенный и проваленный навык различаются даже при одинаковом балле.",
+      "old_order": [
+        "failed",
+        "unknown"
+      ],
+      "current_order": [
+        "failed",
+        "unknown"
+      ],
+      "changed_pairs": [],
+      "eligible": 2,
+      "full_match_count": 0,
+      "partial_top_fraction": 1.0,
+      "scores": [
+        {
+          "id": "failed",
+          "grade": "Junior",
+          "score": 58.25,
+          "facts": [
+            {
+              "skill": "python",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "python",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "http",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "http",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "testing",
+              "kind": "required_skills",
+              "state": "unmet",
+              "source": "assessment",
+              "evidence": {
+                "skill": "testing",
+                "state": "unmet"
+              }
+            }
+          ],
+          "breakdown": {
+            "required_skills": 20.0,
+            "desired_skills": 0,
+            "test": 38.25,
+            "fsp": 0
+          },
+          "methodology": "matching-1.2.0",
+          "required_skills_met": false,
+          "missing_skills": [],
+          "unmet_skills": [
+            "testing"
+          ]
+        },
+        {
+          "id": "unknown",
+          "grade": "Junior",
+          "score": 58.25,
+          "facts": [
+            {
+              "skill": "python",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "python",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "http",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "http",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "testing",
+              "kind": "required_skills",
+              "state": "unknown",
+              "source": "none",
+              "evidence": null
+            }
+          ],
+          "breakdown": {
+            "required_skills": 20.0,
+            "desired_skills": 0,
+            "test": 38.25,
+            "fsp": 0
+          },
+          "methodology": "matching-1.2.0",
+          "required_skills_met": false,
+          "missing_skills": [
+            "testing"
+          ],
+          "unmet_skills": []
+        }
+      ]
+    },
+    {
+      "case": "no_full_matches",
+      "rationale": "Весь список частичный: нельзя утверждать полное соответствие.",
+      "old_order": [
+        "two",
+        "one"
+      ],
+      "current_order": [
+        "one",
+        "two"
+      ],
+      "changed_pairs": [
+        [
+          "one",
+          "two"
+        ]
+      ],
+      "eligible": 2,
+      "full_match_count": 0,
+      "partial_top_fraction": 1.0,
+      "scores": [
+        {
+          "id": "one",
+          "grade": "Junior",
+          "score": 55.0,
+          "facts": [
+            {
+              "skill": "python",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "python",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "http",
+              "kind": "required_skills",
+              "state": "unknown",
+              "source": "none",
+              "evidence": null
+            },
+            {
+              "skill": "testing",
+              "kind": "required_skills",
+              "state": "unknown",
+              "source": "none",
+              "evidence": null
+            }
+          ],
+          "breakdown": {
+            "required_skills": 10.0,
+            "desired_skills": 0,
+            "test": 45.0,
+            "fsp": 0
+          },
+          "methodology": "matching-1.2.0",
+          "required_skills_met": false,
+          "missing_skills": [
+            "http",
+            "testing"
+          ],
+          "unmet_skills": []
+        },
+        {
+          "id": "two",
+          "grade": "Junior",
+          "score": 53.75,
+          "facts": [
+            {
+              "skill": "python",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "python",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "http",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "http",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "testing",
+              "kind": "required_skills",
+              "state": "unknown",
+              "source": "none",
+              "evidence": null
+            }
+          ],
+          "breakdown": {
+            "required_skills": 20.0,
+            "desired_skills": 0,
+            "test": 33.75,
+            "fsp": 0
+          },
+          "methodology": "matching-1.2.0",
+          "required_skills_met": false,
+          "missing_skills": [
+            "testing"
+          ],
+          "unmet_skills": []
+        }
+      ]
+    },
+    {
+      "case": "multiple_required",
+      "rationale": "Больше подтверждённых навыков при равном тесте даёт не меньший балл.",
+      "old_order": [
+        "all",
+        "part"
+      ],
+      "current_order": [
+        "all",
+        "part"
+      ],
+      "changed_pairs": [],
+      "eligible": 2,
+      "full_match_count": 1,
+      "partial_top_fraction": 0.5,
+      "scores": [
+        {
+          "id": "all",
+          "grade": "Junior",
+          "score": 68.25,
+          "facts": [
+            {
+              "skill": "python",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "python",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "http",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "http",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "testing",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "testing",
+                "state": "met"
+              }
+            }
+          ],
+          "breakdown": {
+            "required_skills": 30.0,
+            "desired_skills": 0,
+            "test": 38.25,
+            "fsp": 0
+          },
+          "methodology": "matching-1.2.0",
+          "required_skills_met": true,
+          "missing_skills": [],
+          "unmet_skills": []
+        },
+        {
+          "id": "part",
+          "grade": "Junior",
+          "score": 48.25,
+          "facts": [
+            {
+              "skill": "python",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "python",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "http",
+              "kind": "required_skills",
+              "state": "unknown",
+              "source": "none",
+              "evidence": null
+            },
+            {
+              "skill": "testing",
+              "kind": "required_skills",
+              "state": "unknown",
+              "source": "none",
+              "evidence": null
+            }
+          ],
+          "breakdown": {
+            "required_skills": 10.0,
+            "desired_skills": 0,
+            "test": 38.25,
+            "fsp": 0
+          },
+          "methodology": "matching-1.2.0",
+          "required_skills_met": false,
+          "missing_skills": [
+            "http",
+            "testing"
+          ],
+          "unmet_skills": []
+        }
+      ]
+    },
+    {
+      "case": "mixed_grades",
+      "rationale": "Грейд группирует выдачу до сортировки по баллу; ФСП грейд не меняет.",
+      "old_order": [
+        "middle",
+        "junior"
+      ],
+      "current_order": [
+        "middle",
+        "junior"
+      ],
+      "changed_pairs": [],
+      "eligible": 2,
+      "full_match_count": 2,
+      "partial_top_fraction": 0.0,
+      "scores": [
+        {
+          "id": "middle",
+          "grade": "Middle",
+          "score": 63.75,
+          "facts": [
+            {
+              "skill": "python",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "python",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "http",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "http",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "testing",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "testing",
+                "state": "met"
+              }
+            }
+          ],
+          "breakdown": {
+            "required_skills": 30.0,
+            "desired_skills": 0,
+            "test": 33.75,
+            "fsp": 0
+          },
+          "methodology": "matching-1.2.0",
+          "required_skills_met": true,
+          "missing_skills": [],
+          "unmet_skills": []
+        },
+        {
+          "id": "junior",
+          "grade": "Junior",
+          "score": 85.0,
+          "facts": [
+            {
+              "skill": "python",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "python",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "http",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "http",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "testing",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "testing",
+                "state": "met"
+              }
+            }
+          ],
+          "breakdown": {
+            "required_skills": 30.0,
+            "desired_skills": 0,
+            "test": 45.0,
+            "fsp": 10
+          },
+          "methodology": "matching-1.2.0",
+          "required_skills_met": true,
+          "missing_skills": [],
+          "unmet_skills": []
+        }
+      ]
+    },
+    {
+      "case": "stable_ties",
+      "rationale": "Равные баллы имеют устойчивый порядок по ID.",
+      "old_order": [
+        "a",
+        "b",
+        "c"
+      ],
+      "current_order": [
+        "a",
+        "b",
+        "c"
+      ],
+      "changed_pairs": [],
+      "eligible": 3,
+      "full_match_count": 3,
+      "partial_top_fraction": 0.0,
+      "scores": [
+        {
+          "id": "a",
+          "grade": "Junior",
+          "score": 63.75,
+          "facts": [
+            {
+              "skill": "python",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "python",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "http",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "http",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "testing",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "testing",
+                "state": "met"
+              }
+            }
+          ],
+          "breakdown": {
+            "required_skills": 30.0,
+            "desired_skills": 0,
+            "test": 33.75,
+            "fsp": 0
+          },
+          "methodology": "matching-1.2.0",
+          "required_skills_met": true,
+          "missing_skills": [],
+          "unmet_skills": []
+        },
+        {
+          "id": "b",
+          "grade": "Junior",
+          "score": 63.75,
+          "facts": [
+            {
+              "skill": "python",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "python",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "http",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "http",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "testing",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "testing",
+                "state": "met"
+              }
+            }
+          ],
+          "breakdown": {
+            "required_skills": 30.0,
+            "desired_skills": 0,
+            "test": 33.75,
+            "fsp": 0
+          },
+          "methodology": "matching-1.2.0",
+          "required_skills_met": true,
+          "missing_skills": [],
+          "unmet_skills": []
+        },
+        {
+          "id": "c",
+          "grade": "Junior",
+          "score": 63.75,
+          "facts": [
+            {
+              "skill": "python",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "python",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "http",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "http",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "testing",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "testing",
+                "state": "met"
+              }
+            }
+          ],
+          "breakdown": {
+            "required_skills": 30.0,
+            "desired_skills": 0,
+            "test": 33.75,
+            "fsp": 0
+          },
+          "methodology": "matching-1.2.0",
+          "required_skills_met": true,
+          "missing_skills": [],
+          "unmet_skills": []
+        }
+      ]
+    },
+    {
+      "case": "unsupported_achievement",
+      "rationale": "Неподтверждённый источник ФСП не даёт бонус или допуск в ФСП-фильтр.",
+      "old_order": [
+        "demo"
+      ],
+      "current_order": [
+        "demo"
+      ],
+      "changed_pairs": [],
+      "eligible": 1,
+      "full_match_count": 1,
+      "partial_top_fraction": 0.0,
+      "scores": [
+        {
+          "id": "demo",
+          "grade": "Junior",
+          "score": 72.5,
+          "facts": [
+            {
+              "skill": "python",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "python",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "http",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "http",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "testing",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "testing",
+                "state": "met"
+              }
+            }
+          ],
+          "breakdown": {
+            "required_skills": 30.0,
+            "desired_skills": 0,
+            "test": 40.5,
+            "fsp": 2
+          },
+          "methodology": "matching-1.2.0",
+          "required_skills_met": true,
+          "missing_skills": [],
+          "unmet_skills": []
+        }
+      ]
+    },
+    {
+      "case": "eligibility",
+      "rationale": "Нельзя компенсировать несовпадение специализации и неподтверждённый уровень баллами.",
+      "old_order": [
+        "valid"
+      ],
+      "current_order": [
+        "valid"
+      ],
+      "changed_pairs": [],
+      "eligible": 1,
+      "full_match_count": 1,
+      "partial_top_fraction": 0.0,
+      "scores": [
+        {
+          "id": "valid",
+          "grade": "Junior",
+          "score": 63.75,
+          "facts": [
+            {
+              "skill": "python",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "python",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "http",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "http",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "testing",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "testing",
+                "state": "met"
+              }
+            }
+          ],
+          "breakdown": {
+            "required_skills": 30.0,
+            "desired_skills": 0,
+            "test": 33.75,
+            "fsp": 0
+          },
+          "methodology": "matching-1.2.0",
+          "required_skills_met": true,
+          "missing_skills": [],
+          "unmet_skills": []
+        }
+      ]
+    },
+    {
+      "case": "fsp_cap",
+      "rationale": "Большое число достижений не обходит потолок десяти баллов.",
+      "old_order": [
+        "fifty",
+        "five"
+      ],
+      "current_order": [
+        "fifty",
+        "five"
+      ],
+      "changed_pairs": [],
+      "eligible": 2,
+      "full_match_count": 2,
+      "partial_top_fraction": 0.0,
+      "scores": [
+        {
+          "id": "fifty",
+          "grade": "Junior",
+          "score": 80.5,
+          "facts": [
+            {
+              "skill": "python",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "python",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "http",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "http",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "testing",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "testing",
+                "state": "met"
+              }
+            }
+          ],
+          "breakdown": {
+            "required_skills": 30.0,
+            "desired_skills": 0,
+            "test": 40.5,
+            "fsp": 10
+          },
+          "methodology": "matching-1.2.0",
+          "required_skills_met": true,
+          "missing_skills": [],
+          "unmet_skills": []
+        },
+        {
+          "id": "five",
+          "grade": "Junior",
+          "score": 80.5,
+          "facts": [
+            {
+              "skill": "python",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "python",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "http",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "http",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "testing",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "testing",
+                "state": "met"
+              }
+            }
+          ],
+          "breakdown": {
+            "required_skills": 30.0,
+            "desired_skills": 0,
+            "test": 40.5,
+            "fsp": 10
+          },
+          "methodology": "matching-1.2.0",
+          "required_skills_met": true,
+          "missing_skills": [],
+          "unmet_skills": []
+        }
+      ]
+    },
+    {
+      "case": "desired_tradeoff",
+      "rationale": "Желательный навык конкурирует с общим тестом; обязательные остаются явно видимыми.",
+      "old_order": [
+        "desired",
+        "strong"
+      ],
+      "current_order": [
+        "desired",
+        "strong"
+      ],
+      "changed_pairs": [],
+      "eligible": 2,
+      "full_match_count": 2,
+      "partial_top_fraction": 0.0,
+      "scores": [
+        {
+          "id": "desired",
+          "grade": "Junior",
+          "score": 78.75,
+          "facts": [
+            {
+              "skill": "python",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "python",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "testing",
+              "kind": "desired_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "testing",
+                "state": "met"
+              }
+            }
+          ],
+          "breakdown": {
+            "required_skills": 30.0,
+            "desired_skills": 15.0,
+            "test": 33.75,
+            "fsp": 0
+          },
+          "methodology": "matching-1.2.0",
+          "required_skills_met": true,
+          "missing_skills": [],
+          "unmet_skills": []
+        },
+        {
+          "id": "strong",
+          "grade": "Junior",
+          "score": 75.0,
+          "facts": [
+            {
+              "skill": "python",
+              "kind": "required_skills",
+              "state": "met",
+              "source": "assessment",
+              "evidence": {
+                "skill": "python",
+                "state": "met"
+              }
+            },
+            {
+              "skill": "testing",
+              "kind": "desired_skills",
+              "state": "unknown",
+              "source": "none",
+              "evidence": null
+            }
+          ],
+          "breakdown": {
+            "required_skills": 30.0,
+            "desired_skills": 0.0,
+            "test": 45.0,
+            "fsp": 0
+          },
+          "methodology": "matching-1.2.0",
+          "required_skills_met": true,
+          "missing_skills": [],
+          "unmet_skills": []
+        }
+      ]
+    }
+  ],
+  "assertions": [
+    {
+      "case": "coverage_vs_test",
+      "rule": [
+        "missing",
+        "strong_partial",
+        "testing"
+      ],
+      "passed": true
+    },
+    {
+      "case": "fsp_vs_test",
+      "rule": [
+        "zero_fsp",
+        "no_fsp"
+      ],
+      "passed": true
+    },
+    {
+      "case": "self_report",
+      "rule": [
+        "equal",
+        "a",
+        "b"
+      ],
+      "passed": true
+    },
+    {
+      "case": "self_report",
+      "rule": [
+        "before",
+        "a",
+        "b"
+      ],
+      "passed": true
+    },
+    {
+      "case": "unknown_vs_unmet",
+      "rule": [
+        "missing",
+        "unknown",
+        "testing"
+      ],
+      "passed": true
+    },
+    {
+      "case": "unknown_vs_unmet",
+      "rule": [
+        "unmet",
+        "failed",
+        "testing"
+      ],
+      "passed": true
+    },
+    {
+      "case": "unknown_vs_unmet",
+      "rule": [
+        "equal",
+        "unknown",
+        "failed"
+      ],
+      "passed": true
+    },
+    {
+      "case": "no_full_matches",
+      "rule": [
+        "no_full",
+        "all"
+      ],
+      "passed": true
+    },
+    {
+      "case": "multiple_required",
+      "rule": [
+        "before",
+        "all",
+        "part"
+      ],
+      "passed": true
+    },
+    {
+      "case": "mixed_grades",
+      "rule": [
+        "before",
+        "middle",
+        "junior"
+      ],
+      "passed": true
+    },
+    {
+      "case": "stable_ties",
+      "rule": [
+        "before",
+        "a",
+        "b"
+      ],
+      "passed": true
+    },
+    {
+      "case": "stable_ties",
+      "rule": [
+        "before",
+        "b",
+        "c"
+      ],
+      "passed": true
+    },
+    {
+      "case": "unsupported_achievement",
+      "rule": [
+        "excluded",
+        "imported"
+      ],
+      "passed": true
+    },
+    {
+      "case": "eligibility",
+      "rule": [
+        "excluded",
+        "wrong_spec"
+      ],
+      "passed": true
+    },
+    {
+      "case": "eligibility",
+      "rule": [
+        "excluded",
+        "unverified"
+      ],
+      "passed": true
+    },
+    {
+      "case": "fsp_cap",
+      "rule": [
+        "equal",
+        "five",
+        "fifty"
+      ],
+      "passed": true
+    },
+    {
+      "case": "coverage_vs_test",
+      "rule": [
+        "test_monotonicity",
+        "full"
+      ],
+      "passed": true
+    },
+    {
+      "case": "coverage_vs_test",
+      "rule": [
+        "self_report_no_score",
+        "full"
+      ],
+      "passed": true
+    },
+    {
+      "case": "coverage_vs_test",
+      "rule": [
+        "test_monotonicity",
+        "strong_partial"
+      ],
+      "passed": true
+    },
+    {
+      "case": "coverage_vs_test",
+      "rule": [
+        "self_report_no_score",
+        "strong_partial"
+      ],
+      "passed": true
+    },
+    {
+      "case": "fsp_vs_test",
+      "rule": [
+        "test_monotonicity",
+        "no_fsp"
+      ],
+      "passed": true
+    },
+    {
+      "case": "fsp_vs_test",
+      "rule": [
+        "self_report_no_score",
+        "no_fsp"
+      ],
+      "passed": true
+    },
+    {
+      "case": "fsp_vs_test",
+      "rule": [
+        "test_monotonicity",
+        "sport"
+      ],
+      "passed": true
+    },
+    {
+      "case": "fsp_vs_test",
+      "rule": [
+        "self_report_no_score",
+        "sport"
+      ],
+      "passed": true
+    },
+    {
+      "case": "self_report",
+      "rule": [
+        "test_monotonicity",
+        "a"
+      ],
+      "passed": true
+    },
+    {
+      "case": "self_report",
+      "rule": [
+        "self_report_no_score",
+        "a"
+      ],
+      "passed": true
+    },
+    {
+      "case": "self_report",
+      "rule": [
+        "test_monotonicity",
+        "b"
+      ],
+      "passed": true
+    },
+    {
+      "case": "self_report",
+      "rule": [
+        "self_report_no_score",
+        "b"
+      ],
+      "passed": true
+    },
+    {
+      "case": "unknown_vs_unmet",
+      "rule": [
+        "test_monotonicity",
+        "unknown"
+      ],
+      "passed": true
+    },
+    {
+      "case": "unknown_vs_unmet",
+      "rule": [
+        "self_report_no_score",
+        "unknown"
+      ],
+      "passed": true
+    },
+    {
+      "case": "unknown_vs_unmet",
+      "rule": [
+        "test_monotonicity",
+        "failed"
+      ],
+      "passed": true
+    },
+    {
+      "case": "unknown_vs_unmet",
+      "rule": [
+        "self_report_no_score",
+        "failed"
+      ],
+      "passed": true
+    },
+    {
+      "case": "no_full_matches",
+      "rule": [
+        "test_monotonicity",
+        "one"
+      ],
+      "passed": true
+    },
+    {
+      "case": "no_full_matches",
+      "rule": [
+        "self_report_no_score",
+        "one"
+      ],
+      "passed": true
+    },
+    {
+      "case": "no_full_matches",
+      "rule": [
+        "test_monotonicity",
+        "two"
+      ],
+      "passed": true
+    },
+    {
+      "case": "no_full_matches",
+      "rule": [
+        "self_report_no_score",
+        "two"
+      ],
+      "passed": true
+    },
+    {
+      "case": "multiple_required",
+      "rule": [
+        "test_monotonicity",
+        "all"
+      ],
+      "passed": true
+    },
+    {
+      "case": "multiple_required",
+      "rule": [
+        "self_report_no_score",
+        "all"
+      ],
+      "passed": true
+    },
+    {
+      "case": "multiple_required",
+      "rule": [
+        "test_monotonicity",
+        "part"
+      ],
+      "passed": true
+    },
+    {
+      "case": "multiple_required",
+      "rule": [
+        "self_report_no_score",
+        "part"
+      ],
+      "passed": true
+    },
+    {
+      "case": "mixed_grades",
+      "rule": [
+        "test_monotonicity",
+        "junior"
+      ],
+      "passed": true
+    },
+    {
+      "case": "mixed_grades",
+      "rule": [
+        "self_report_no_score",
+        "junior"
+      ],
+      "passed": true
+    },
+    {
+      "case": "mixed_grades",
+      "rule": [
+        "test_monotonicity",
+        "middle"
+      ],
+      "passed": true
+    },
+    {
+      "case": "mixed_grades",
+      "rule": [
+        "self_report_no_score",
+        "middle"
+      ],
+      "passed": true
+    },
+    {
+      "case": "stable_ties",
+      "rule": [
+        "test_monotonicity",
+        "c"
+      ],
+      "passed": true
+    },
+    {
+      "case": "stable_ties",
+      "rule": [
+        "self_report_no_score",
+        "c"
+      ],
+      "passed": true
+    },
+    {
+      "case": "stable_ties",
+      "rule": [
+        "test_monotonicity",
+        "a"
+      ],
+      "passed": true
+    },
+    {
+      "case": "stable_ties",
+      "rule": [
+        "self_report_no_score",
+        "a"
+      ],
+      "passed": true
+    },
+    {
+      "case": "stable_ties",
+      "rule": [
+        "test_monotonicity",
+        "b"
+      ],
+      "passed": true
+    },
+    {
+      "case": "stable_ties",
+      "rule": [
+        "self_report_no_score",
+        "b"
+      ],
+      "passed": true
+    },
+    {
+      "case": "unsupported_achievement",
+      "rule": [
+        "test_monotonicity",
+        "imported"
+      ],
+      "passed": true
+    },
+    {
+      "case": "unsupported_achievement",
+      "rule": [
+        "self_report_no_score",
+        "imported"
+      ],
+      "passed": true
+    },
+    {
+      "case": "unsupported_achievement",
+      "rule": [
+        "test_monotonicity",
+        "demo"
+      ],
+      "passed": true
+    },
+    {
+      "case": "unsupported_achievement",
+      "rule": [
+        "self_report_no_score",
+        "demo"
+      ],
+      "passed": true
+    },
+    {
+      "case": "eligibility",
+      "rule": [
+        "test_monotonicity",
+        "valid"
+      ],
+      "passed": true
+    },
+    {
+      "case": "eligibility",
+      "rule": [
+        "self_report_no_score",
+        "valid"
+      ],
+      "passed": true
+    },
+    {
+      "case": "eligibility",
+      "rule": [
+        "test_monotonicity",
+        "wrong_spec"
+      ],
+      "passed": true
+    },
+    {
+      "case": "eligibility",
+      "rule": [
+        "self_report_no_score",
+        "wrong_spec"
+      ],
+      "passed": true
+    },
+    {
+      "case": "eligibility",
+      "rule": [
+        "test_monotonicity",
+        "unverified"
+      ],
+      "passed": true
+    },
+    {
+      "case": "eligibility",
+      "rule": [
+        "self_report_no_score",
+        "unverified"
+      ],
+      "passed": true
+    },
+    {
+      "case": "fsp_cap",
+      "rule": [
+        "test_monotonicity",
+        "five"
+      ],
+      "passed": true
+    },
+    {
+      "case": "fsp_cap",
+      "rule": [
+        "self_report_no_score",
+        "five"
+      ],
+      "passed": true
+    },
+    {
+      "case": "fsp_cap",
+      "rule": [
+        "test_monotonicity",
+        "fifty"
+      ],
+      "passed": true
+    },
+    {
+      "case": "fsp_cap",
+      "rule": [
+        "self_report_no_score",
+        "fifty"
+      ],
+      "passed": true
+    },
+    {
+      "case": "desired_tradeoff",
+      "rule": [
+        "test_monotonicity",
+        "desired"
+      ],
+      "passed": true
+    },
+    {
+      "case": "desired_tradeoff",
+      "rule": [
+        "self_report_no_score",
+        "desired"
+      ],
+      "passed": true
+    },
+    {
+      "case": "desired_tradeoff",
+      "rule": [
+        "test_monotonicity",
+        "strong"
+      ],
+      "passed": true
+    },
+    {
+      "case": "desired_tradeoff",
+      "rule": [
+        "self_report_no_score",
+        "strong"
+      ],
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "changed_pairs": 2,
+  "precision_at_5": null,
+  "ndcg_at_5": null,
+  "limitations": [
+    "No independent relevance labels; P@5/NDCG are intentionally not computed.",
+    "Small designed scenarios detect tradeoffs, not market quality or statistical uplift.",
+    "No fitting on this set. Original holdout and labels unchanged.",
+    "Grade grouping precedes numeric score; no cross-grade score comparisons."
+  ]
+}

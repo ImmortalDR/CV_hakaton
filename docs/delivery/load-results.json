@@ -1,0 +1,43 @@
+{
+  "concurrency": 30,
+  "distinct_authenticated_users": 30,
+  "profiles": 13,
+  "duration_seconds": 11.16,
+  "throughput_rps": 24.19,
+  "all": {
+    "requests": 270,
+    "errors": 0,
+    "median_ms": 706.28,
+    "p95_ms": 3040.15,
+    "max_ms": 3357.78
+  },
+  "by_operation": {
+    "bank": {
+      "requests": 90,
+      "errors": 0,
+      "median_ms": 2119.86,
+      "p95_ms": 3196.42,
+      "max_ms": 3357.78
+    },
+    "profile": {
+      "requests": 90,
+      "errors": 0,
+      "median_ms": 514.2,
+      "p95_ms": 796.52,
+      "max_ms": 863.2
+    },
+    "pdf": {
+      "requests": 90,
+      "errors": 0,
+      "median_ms": 630.0,
+      "p95_ms": 866.41,
+      "max_ms": 1012.63
+    }
+  },
+  "environment": {
+    "system": "Linux-6.8.0-111-generic-x86_64-with-glibc2.39",
+    "logical_cpus": 2,
+    "memory_total_kib": "4009856"
+  },
+  "limitations": "270 read requests; 30 synthetic sessions; no login/write load, no long soak, small candidate bank; no claim of production capacity"
+}
