@@ -1,427 +1,437 @@
-[
-  {
-    "id": "Q1",
-    "verdict": "PASS",
-    "dod_from_canon": "Ответ → Обзор → назад → reload: ответы и исходная попытка/срок сохранены; состояние сохранения видно.",
-    "audit_refs": [
-      "B01"
-    ],
-    "agent_evidence": [
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-tests",
-        "excerpt": "........................................................................ [ 74%]\n.........................                                                [100%]\n=============================== warnings summary ===============================\n.venv/lib/python3.12/site-packages/fastapi/testclient.py:1\n  /root/hakaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n.venv/lib/python3.12/site-packages/starlette/testclient.py:53\n  /root/hakaton/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n97 passed, 2 warnings in 29.20s"
-      },
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
-        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:06:35.443189+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
-      }
-    ],
-    "gaps": [],
-    "human_checks_required": [
-      "H-Q1"
-    ],
-    "regression_risk": "med",
-    "checked_at": "2026-10-21T09:07:51.003704+00:00",
-    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
+{
+  "session": "independent-stage-a-2026-10-21",
+  "checked_at": "2026-10-21T09:22:32.651398+00:00",
+  "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d",
+  "branch": "codex/fsp-mvp",
+  "submission_allowed": false,
+  "counts": {
+    "PASS": 12,
+    "PARTIAL": 2,
+    "FAIL": 1,
+    "HUMAN_ONLY": 1
   },
-  {
-    "id": "Q2",
-    "verdict": "PASS",
-    "dod_from_canon": "Единое явное half-up; 90,625 → 90,63; версия и политика старых попыток.",
-    "audit_refs": [
-      "B02"
-    ],
-    "agent_evidence": [
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-tests",
-        "excerpt": "........................................................................ [ 74%]\n.........................                                                [100%]\n=============================== warnings summary ===============================\n.venv/lib/python3.12/site-packages/fastapi/testclient.py:1\n  /root/hakaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n.venv/lib/python3.12/site-packages/starlette/testclient.py:53\n  /root/hakaton/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n97 passed, 2 warnings in 29.20s"
-      },
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
-        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:06:35.443189+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
-      },
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-docs",
-        "excerpt": "{\n  \"changelog\": {\n    \"Q1\": true,\n    \"Q2\": true,\n    \"Q3\": true,\n    \"Q4\": true,\n    \"Q5\": true,\n    \"Q6\": true,\n    \"Q7\": true\n  },\n  \"for_jury\": {\n    \"https://85-137-26-131.sslip.io/\": true,\n    \"codex/fsp-mvp\": true,\n    \"review.candidate\": true,\n    \"review.employer\": true,\n    \"0,80\": true,\n    \"36 000\": true,\n    \"not_run\": true,\n    \"findings.json\": true,\n    \"CHANGELOG_STAGE_A.md\": true\n  },\n  \"old_attempt_policy\": \"- Q2: банк 2.1.0 использует явное округление половины вверх: 90,625 → 90,63. Старые попытки сохраняют исходные версии; массового пересчёта не было.\",\n  \"presentation_changed\": \"\"\n}"
-      }
-    ],
-    "gaps": [],
-    "human_checks_required": [
-      "H-Q2"
-    ],
-    "regression_risk": "med",
-    "checked_at": "2026-10-21T09:07:51.003704+00:00",
-    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
-  },
-  {
-    "id": "Q3",
-    "verdict": "PASS",
-    "dod_from_canon": "N пустых из M, отмена сохраняет ответы, без подтверждения попытка не закрывается. Шаг B.2 требует API отказ/no-op без confirm.",
-    "audit_refs": [
-      "B03"
-    ],
-    "agent_evidence": [
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-tests",
-        "excerpt": "........................................................................ [ 74%]\n.........................                                                [100%]\n=============================== warnings summary ===============================\n.venv/lib/python3.12/site-packages/fastapi/testclient.py:1\n  /root/hakaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n.venv/lib/python3.12/site-packages/starlette/testclient.py:53\n  /root/hakaton/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n97 passed, 2 warnings in 29.20s"
-      },
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
-        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:06:35.443189+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
-      }
-    ],
-    "gaps": [],
-    "human_checks_required": [
-      "H-Q3"
-    ],
-    "regression_risk": "high",
-    "checked_at": "2026-10-21T09:07:51.003704+00:00",
-    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
-  },
-  {
-    "id": "Q4",
-    "verdict": "PASS",
-    "dod_from_canon": "Обзор согласован с публикацией; после отзыва нет активного диалога и ложной кнопки.",
-    "audit_refs": [
-      "B05",
-      "B06"
-    ],
-    "agent_evidence": [
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-tests",
-        "excerpt": "........................................................................ [ 74%]\n.........................                                                [100%]\n=============================== warnings summary ===============================\n.venv/lib/python3.12/site-packages/fastapi/testclient.py:1\n  /root/hakaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n.venv/lib/python3.12/site-packages/starlette/testclient.py:53\n  /root/hakaton/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n97 passed, 2 warnings in 29.20s"
-      },
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
-        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:06:35.443189+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
-      }
-    ],
-    "gaps": [],
-    "human_checks_required": [
-      "H-Q4a",
-      "H-Q4b"
-    ],
-    "regression_risk": "med",
-    "checked_at": "2026-10-21T09:07:51.003704+00:00",
-    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
-  },
-  {
-    "id": "Q5",
-    "verdict": "PASS",
-    "dod_from_canon": "U01–U04: различимые анонимы, контекст фильтров, компактная форма, видимые вклады.",
-    "audit_refs": [
-      "U01",
-      "U02",
-      "U03",
-      "U04"
-    ],
-    "agent_evidence": [
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
-        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:06:35.443189+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
-      }
-    ],
-    "gaps": [],
-    "human_checks_required": [
-      "H-Q5a",
-      "H-Q5b",
-      "H-Q5c",
-      "H-REG-OLD"
-    ],
-    "regression_risk": "med",
-    "checked_at": "2026-10-21T09:07:51.003704+00:00",
-    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
-  },
-  {
-    "id": "Q6",
-    "verdict": "PASS",
-    "dod_from_canon": "7 дней: pause/resume не создаёт выдачу до срока, показанная дата соответствует логике.",
-    "audit_refs": [
-      "B04"
-    ],
-    "agent_evidence": [
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-tests",
-        "excerpt": "........................................................................ [ 74%]\n.........................                                                [100%]\n=============================== warnings summary ===============================\n.venv/lib/python3.12/site-packages/fastapi/testclient.py:1\n  /root/hakaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n.venv/lib/python3.12/site-packages/starlette/testclient.py:53\n  /root/hakaton/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n97 passed, 2 warnings in 29.20s"
-      },
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
-        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:06:35.443189+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
-      }
-    ],
-    "gaps": [],
-    "human_checks_required": [
-      "H-Q6-calendar"
-    ],
-    "regression_risk": "med",
-    "checked_at": "2026-10-21T09:07:51.003704+00:00",
-    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
-  },
-  {
-    "id": "Q7",
-    "verdict": "PASS",
-    "dod_from_canon": "Веса выбраны на размеченной выборке; VERSION bump; до/после в VALIDATION; test+ФСП сильнее чекбоксов.",
-    "audit_refs": [
-      "M01",
-      "U04"
-    ],
-    "agent_evidence": [
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-tests",
-        "excerpt": "........................................................................ [ 74%]\n.........................                                                [100%]\n=============================== warnings summary ===============================\n.venv/lib/python3.12/site-packages/fastapi/testclient.py:1\n  /root/hakaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n.venv/lib/python3.12/site-packages/starlette/testclient.py:53\n  /root/hakaton/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n97 passed, 2 warnings in 29.20s"
-      },
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-matching",
-        "excerpt": "{\"old_weights\": [60, 15, 20, 5], \"selected_weights\": [30, 15, 45, 10], \"selection\": \"max dev P@5; tie: minimum L1 distance to old weights, then tuple order\"}\ndev 1.0 -> 1.0\ntest 0.8 -> 0.8"
-      },
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
-        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:06:35.443189+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
-      }
-    ],
-    "gaps": [],
-    "human_checks_required": [
-      "H-Q7"
-    ],
-    "regression_risk": "med",
-    "checked_at": "2026-10-21T09:07:51.003704+00:00",
-    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
-  },
-  {
-    "id": "Pck1",
-    "verdict": "PASS",
-    "dod_from_canon": "Changelog узнаваемо перечисляет Q1–Q7 и ограничения.",
-    "audit_refs": [],
-    "agent_evidence": [
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-docs",
-        "excerpt": "{\n  \"changelog\": {\n    \"Q1\": true,\n    \"Q2\": true,\n    \"Q3\": true,\n    \"Q4\": true,\n    \"Q5\": true,\n    \"Q6\": true,\n    \"Q7\": true\n  },\n  \"for_jury\": {\n    \"https://85-137-26-131.sslip.io/\": true,\n    \"codex/fsp-mvp\": true,\n    \"review.candidate\": true,\n    \"review.employer\": true,\n    \"0,80\": true,\n    \"36 000\": true,\n    \"not_run\": true,\n    \"findings.json\": true,\n    \"CHANGELOG_STAGE_A.md\": true\n  },\n  \"old_attempt_policy\": \"- Q2: банк 2.1.0 использует явное округление половины вверх: 90,625 → 90,63. Старые попытки сохраняют исходные версии; массового пересчёта не было.\",\n  \"presentation_changed\": \"\"\n}"
-      }
-    ],
-    "gaps": [],
-    "human_checks_required": [
-      "H-Pck1"
-    ],
-    "regression_risk": "med",
-    "checked_at": "2026-10-21T09:07:51.003704+00:00",
-    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
-  },
-  {
-    "id": "Pck2",
-    "verdict": "PARTIAL",
-    "dod_from_canon": "For-jury: стенд, ветка, рабочие review-логины, 2 цифры, not_run, аудит, путь 10–15 минут.",
-    "audit_refs": [],
-    "agent_evidence": [
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-docs",
-        "excerpt": "{\n  \"changelog\": {\n    \"Q1\": true,\n    \"Q2\": true,\n    \"Q3\": true,\n    \"Q4\": true,\n    \"Q5\": true,\n    \"Q6\": true,\n    \"Q7\": true\n  },\n  \"for_jury\": {\n    \"https://85-137-26-131.sslip.io/\": true,\n    \"codex/fsp-mvp\": true,\n    \"review.candidate\": true,\n    \"review.employer\": true,\n    \"0,80\": true,\n    \"36 000\": true,\n    \"not_run\": true,\n    \"findings.json\": true,\n    \"CHANGELOG_STAGE_A.md\": true\n  },\n  \"old_attempt_policy\": \"- Q2: банк 2.1.0 использует явное округление половины вверх: 90,625 → 90,63. Старые попытки сохраняют исходные версии; массового пересчёта не было.\",\n  \"presentation_changed\": \"\"\n}"
-      },
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
-        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:06:35.443189+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
-      },
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-push",
-        "excerpt": "fatal: could not read Username for 'https://github.com': terminal prompts disabled\n2e6d6daa5bfb59f6d5a7e7317aa41093c8f05980\trefs/heads/codex/fsp-mvp"
-      }
-    ],
-    "gaps": [
-      "HUMAN_ONLY: push невозможен без GitHub auth: fatal: could not read Username for 'https://github.com': terminal prompts disabled. Remote 2e6d6da; нужен push из авторизованного окружения и проверка ссылок."
-    ],
-    "human_checks_required": [
-      "H-Pck2-walk",
-      "H-PUSH"
-    ],
-    "regression_risk": "high",
-    "checked_at": "2026-10-21T09:07:51.003704+00:00",
-    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
-  },
-  {
-    "id": "Pck3",
-    "verdict": "PASS",
-    "dod_from_canon": "Health ok; api/web/worker соответствуют текущему прикладному HEAD.",
-    "audit_refs": [],
-    "agent_evidence": [
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-build",
-        "excerpt": "85TwcNR.css   19.36 kB │ gzip:  5.15 kB\n#34 12.04 dist/assets/index-B9FXyoib.js   261.54 kB │ gzip: 79.29 kB\n#34 12.04 ✓ built in 3.21s\n#34 12.08 npm notice\n#34 12.08 npm notice New major version of npm available! 10.9.9 -> 12.2.0\n#34 12.08 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0\n#34 12.08 npm notice To update run: npm install -g npm@12.2.0\n#34 12.08 npm notice\n#34 DONE 12.1s\n\n#35 [web stage-1 2/3] COPY nginx.conf /etc/nginx/conf.d/default.conf\n#35 CACHED\n\n#36 [web stage-1 3/3] COPY --from=build /app/dist /usr/share/nginx/html\n#36 DONE 0.0s\n\n#37 [web] exporting to image\n#37 exporting layers 0.1s done\n#37 exporting manifest sha256:dc618cbb2541983754cbdc8ed014743aa522617d2a1ca8e8cc1f46377bf84ff4 done\n#37 exporting config sha256:a0258125d9be4d9c0c40f5dc492c3b9047792847faf748bdd8ca630aa83424d5 done\n#37 exporting attestation manifest sha256:221229026d2c81ba1f0f3972bca6bfb7fdaff6f7900b56103b6b50ee1877be5a 0.0s done\n#37 exporting manifest list sha256:e58da9ae8ec03d7463c9905dadf622f0268d95e410ca23c5dc88f1ea11c1da53 done\n#37 naming to docker.io/library/fsp-mvp-web:latest done\n#37 unpacking to docker.io/library/fsp-mvp-web:latest 0.0s done\n#37 DONE 0.2s\n\n#38 [web] resolving provenance for metadata file\n#38 DONE 0.0s\n api  Built\n task-worker  Built\n web  Built\n\n Container fsp-mvp-api-1  Recreate\n Container fsp-mvp-api-1  Recreated\n Container fsp-mvp-web-1  Recreate\n Container fsp-mvp-task-worker-1  Recreate\n Container fsp-mvp-web-1  Recreated\n Container fsp-mvp-task-worker-1  Recreated\n Container fsp-mvp-api-1  Starting\n Container fsp-mvp-api-1  Started\n Container fsp-mvp-api-1  Waiting\n Container fsp-mvp-api-1  Waiting\n Container fsp-mvp-api-1  Healthy\n Container fsp-mvp-api-1  Healthy\n Container fsp-mvp-web-1  Starting\n Container fsp-mvp-task-worker-1  Starting\n Container fsp-mvp-web-1  Started\n Container fsp-mvp-task-worker-1  Started\n Container fsp-mvp-api-1  Waiting\n Container fsp-mvp-task-worker-1  Waiting\n Container fsp-mvp-web-1  Waiting\n Container fsp-mvp-api-1  Healthy\n Container fsp-mvp-task-worker-1  Healthy\n Container fsp-mvp-web-1  Healthy"
-      },
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-deploy",
-        "excerpt": "{\"checked_at\": \"2026-10-21T09:04:44.697489+00:00\", \"git_sha\": \"8af82c45184c4c5821137ebc02b2b2f7f12e24b4\", \"api\": {\"module_count\": 14, \"workspace_equal\": true, \"head_equal\": true}, \"task-worker\": {\"module_count\": 14, \"workspace_equal\": true, \"head_equal\": true}, \"web\": {\"file_count\": 3, \"all_equal\": true}, \"health\": {\"status\": \"ok\", \"demo\": true, \"version\": \"1.0.0\"}, \"services\": [{\"Service\": \"api\", \"ID\": \"94514e7c9bac\", \"State\": \"running\", \"Health\": \"healthy\", \"Mounts\": \"\", \"CreatedAt\": \"2026-10-21 11:03:54 +0200 CEST\"}, {\"Service\": \"db\", \"ID\": \"59f21df183b7\", \"State\": \"running\", \"Health\": \"healthy\", \"Mounts\": \"fsp-mvp_fsp_db\", \"CreatedAt\": \"2026-10-07 22:42:58 +0200 CEST\"}, {\"Service\": \"edge\", \"ID\": \"8051e4bdd372\", \"State\": \"running\", \"Health\": \"healthy\", \"Mounts\": \"fsp-mvp_fsp_tl…,/root/hakaton-…,fsp-mvp_fsp_tl…\", \"CreatedAt\": \"2026-10-11 21:17:18 +0200 CEST\"}, {\"Service\": \"task-worker\", \"ID\": \"f281e32de7a7\", \"State\": \"running\", \"Health\": \"\", \"Mounts\": \"\", \"CreatedAt\": \"2026-10-21 11:04:04 +0200 CEST\"}, {\"Service\": \"web\", \"ID\": \"8dc983d594a0\", \"State\": \"running\", \"Health\": \"healthy\", \"Mounts\": \"\", \"CreatedAt\": \"2026-10-21 11:04:04 +0200 CEST\"}], \"presentation_unchanged\": true, \"source_diff_from_head\": \"\"}"
-      }
-    ],
-    "gaps": [],
-    "human_checks_required": [
-      "H-Pck3-reach",
-      "H-ACC"
-    ],
-    "regression_risk": "med",
-    "checked_at": "2026-10-21T09:07:51.003704+00:00",
-    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
-  },
-  {
-    "id": "Pck4",
-    "verdict": "PASS",
-    "dod_from_canon": "Свежий smoke плюс Q1–Q3 без FAIL, адресное согласие, ФСП и изоляция.",
-    "audit_refs": [],
-    "agent_evidence": [
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-tests",
-        "excerpt": "........................................................................ [ 74%]\n.........................                                                [100%]\n=============================== warnings summary ===============================\n.venv/lib/python3.12/site-packages/fastapi/testclient.py:1\n  /root/hakaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n.venv/lib/python3.12/site-packages/starlette/testclient.py:53\n  /root/hakaton/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n97 passed, 2 warnings in 29.20s"
-      },
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
-        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:06:35.443189+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
-      }
-    ],
-    "gaps": [],
-    "human_checks_required": [
-      "H-Pck4-spot"
-    ],
-    "regression_risk": "high",
-    "checked_at": "2026-10-21T09:07:51.003704+00:00",
-    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
-  },
-  {
-    "id": "Pck5",
-    "verdict": "HUMAN_ONLY",
-    "dod_from_canon": "Человек отправил ссылки на прежнюю площадку.",
-    "audit_refs": [],
-    "agent_evidence": [
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-push",
-        "excerpt": "fatal: could not read Username for 'https://github.com': terminal prompts disabled\n2e6d6daa5bfb59f6d5a7e7317aa41093c8f05980\trefs/heads/codex/fsp-mvp"
-      }
-    ],
-    "gaps": [
-      "Отправку ссылок выполняет человек после push и проверки; агент ничего на площадку не отправлял."
-    ],
-    "human_checks_required": [
-      "H-Pck5"
-    ],
-    "regression_risk": "high",
-    "checked_at": "2026-10-21T09:07:51.003704+00:00",
-    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
-  },
-  {
-    "id": "REG_FSP",
-    "verdict": "PASS",
-    "dod_from_canon": "Без ФСП категория сохраняется, бонус не меняет грейд.",
-    "audit_refs": [],
-    "agent_evidence": [
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-tests",
-        "excerpt": "........................................................................ [ 74%]\n.........................                                                [100%]\n=============================== warnings summary ===============================\n.venv/lib/python3.12/site-packages/fastapi/testclient.py:1\n  /root/hakaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n.venv/lib/python3.12/site-packages/starlette/testclient.py:53\n  /root/hakaton/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n97 passed, 2 warnings in 29.20s"
-      },
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
-        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:06:35.443189+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
-      }
-    ],
-    "gaps": [],
-    "human_checks_required": [
-      "H-REG-FSP"
-    ],
-    "regression_risk": "med",
-    "checked_at": "2026-10-21T09:07:51.003704+00:00",
-    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
-  },
-  {
-    "id": "REG_ISO",
-    "verdict": "PASS",
-    "dod_from_canon": "Контакты/PDF только конкретной компании после согласия; чужой кандидат denied.",
-    "audit_refs": [],
-    "agent_evidence": [
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-tests",
-        "excerpt": "........................................................................ [ 74%]\n.........................                                                [100%]\n=============================== warnings summary ===============================\n.venv/lib/python3.12/site-packages/fastapi/testclient.py:1\n  /root/hakaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n.venv/lib/python3.12/site-packages/starlette/testclient.py:53\n  /root/hakaton/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n97 passed, 2 warnings in 29.20s"
-      },
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
-        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:06:35.443189+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
-      }
-    ],
-    "gaps": [],
-    "human_checks_required": [
-      "H-REG-ISO"
-    ],
-    "regression_risk": "high",
-    "checked_at": "2026-10-21T09:07:51.003704+00:00",
-    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
-  },
-  {
-    "id": "REG_OLD_SEL",
-    "verdict": "PASS",
-    "dod_from_canon": "После нового запроса старый snapshot существует; текущая приватность соблюдается.",
-    "audit_refs": [],
-    "agent_evidence": [
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-smoke",
-        "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:06:35.443189+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
-      }
-    ],
-    "gaps": [],
-    "human_checks_required": [
-      "H-REG-OLD"
-    ],
-    "regression_risk": "med",
-    "checked_at": "2026-10-21T09:07:51.003704+00:00",
-    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
-  },
-  {
-    "id": "NOTTODO",
-    "verdict": "PASS",
-    "dod_from_canon": "Нет редизайна презентации, нового IRT pipeline или обещаний боевого ФСП/SMTP.",
-    "audit_refs": [],
-    "agent_evidence": [
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-docs",
-        "excerpt": "{\n  \"changelog\": {\n    \"Q1\": true,\n    \"Q2\": true,\n    \"Q3\": true,\n    \"Q4\": true,\n    \"Q5\": true,\n    \"Q6\": true,\n    \"Q7\": true\n  },\n  \"for_jury\": {\n    \"https://85-137-26-131.sslip.io/\": true,\n    \"codex/fsp-mvp\": true,\n    \"review.candidate\": true,\n    \"review.employer\": true,\n    \"0,80\": true,\n    \"36 000\": true,\n    \"not_run\": true,\n    \"findings.json\": true,\n    \"CHANGELOG_STAGE_A.md\": true\n  },\n  \"old_attempt_policy\": \"- Q2: банк 2.1.0 использует явное округление половины вверх: 90,625 → 90,63. Старые попытки сохраняют исходные версии; массового пересчёта не было.\",\n  \"presentation_changed\": \"\"\n}"
-      },
-      {
-        "kind": "command",
-        "ref": "VERIFY_STAGE_A_PROTOCOL.md#e-deploy",
-        "excerpt": "{\"checked_at\": \"2026-10-21T09:04:44.697489+00:00\", \"git_sha\": \"8af82c45184c4c5821137ebc02b2b2f7f12e24b4\", \"api\": {\"module_count\": 14, \"workspace_equal\": true, \"head_equal\": true}, \"task-worker\": {\"module_count\": 14, \"workspace_equal\": true, \"head_equal\": true}, \"web\": {\"file_count\": 3, \"all_equal\": true}, \"health\": {\"status\": \"ok\", \"demo\": true, \"version\": \"1.0.0\"}, \"services\": [{\"Service\": \"api\", \"ID\": \"94514e7c9bac\", \"State\": \"running\", \"Health\": \"healthy\", \"Mounts\": \"\", \"CreatedAt\": \"2026-10-21 11:03:54 +0200 CEST\"}, {\"Service\": \"db\", \"ID\": \"59f21df183b7\", \"State\": \"running\", \"Health\": \"healthy\", \"Mounts\": \"fsp-mvp_fsp_db\", \"CreatedAt\": \"2026-10-07 22:42:58 +0200 CEST\"}, {\"Service\": \"edge\", \"ID\": \"8051e4bdd372\", \"State\": \"running\", \"Health\": \"healthy\", \"Mounts\": \"fsp-mvp_fsp_tl…,/root/hakaton-…,fsp-mvp_fsp_tl…\", \"CreatedAt\": \"2026-10-11 21:17:18 +0200 CEST\"}, {\"Service\": \"task-worker\", \"ID\": \"f281e32de7a7\", \"State\": \"running\", \"Health\": \"\", \"Mounts\": \"\", \"CreatedAt\": \"2026-10-21 11:04:04 +0200 CEST\"}, {\"Service\": \"web\", \"ID\": \"8dc983d594a0\", \"State\": \"running\", \"Health\": \"healthy\", \"Mounts\": \"\", \"CreatedAt\": \"2026-10-21 11:04:04 +0200 CEST\"}], \"presentation_unchanged\": true, \"source_diff_from_head\": \"\"}"
-      }
-    ],
-    "gaps": [],
-    "human_checks_required": [
-      "H-PREZA",
-      "H-SMTP"
-    ],
-    "regression_risk": "low",
-    "checked_at": "2026-10-21T09:07:51.003704+00:00",
-    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4"
-  }
-]
+  "summary": "Отправка заблокирована: Pck1 FAIL; Pck2 PARTIAL (нет push); Q4 PARTIAL должен быть отражён в упаковке. Прежние Q3 и B05 empty-state блокеры не воспроизвелись.",
+  "tasks": [
+    {
+      "id": "Q1",
+      "verdict": "PASS",
+      "dod_from_canon": "Ответы сохраняются при Обзор → тест → reload, срок и попытка прежние.",
+      "audit_refs": [
+        "B01"
+      ],
+      "agent_evidence": [
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
+          "excerpt": "Q1_navigation_reload_server_draft_owner_expiry"
+        },
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#pytest",
+          "excerpt": "97 passed; test_draft_answers_owner_lifecycle, test_draft_expired; UI status Ответы сохранены, outsider draft 404"
+        }
+      ],
+      "gaps": [],
+      "human_checks_required": [
+        "H-Q1"
+      ],
+      "regression_risk": "low",
+      "checked_at": "2026-10-21T09:22:32.651398+00:00",
+      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+    },
+    {
+      "id": "Q2",
+      "verdict": "PASS",
+      "dod_from_canon": "Единое округление и явное правило 90,625 → 90,63 в новых выдачах.",
+      "audit_refs": [
+        "B02"
+      ],
+      "agent_evidence": [
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
+          "excerpt": "Q2_live_bank_2_1_rounding_hint"
+        },
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#pytest",
+          "excerpt": "test_half_up_exact_boundaries; test_conditional_rounding_new_and_historical_versions: 90.63 и 90,63 принимаются, 90.62 отвергается"
+        },
+        {
+          "kind": "file",
+          "ref": "CHANGELOG_STAGE_A.md",
+          "excerpt": "Старые попытки сохраняют исходные версии; массового пересчёта не было."
+        }
+      ],
+      "gaps": [],
+      "human_checks_required": [
+        "H-Q2"
+      ],
+      "regression_risk": "low",
+      "checked_at": "2026-10-21T09:22:32.651398+00:00",
+      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+    },
+    {
+      "id": "Q3",
+      "verdict": "PASS",
+      "dod_from_canon": "Диалог считает пропуски; без подтверждения не завершает; отмена сохраняет ответы.",
+      "audit_refs": [
+        "B03"
+      ],
+      "agent_evidence": [
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
+          "excerpt": "Q3_direct_API_without_confirm_409_active_draft_unchanged; Q3_cancel_keeps_active_accept_completes"
+        },
+        {
+          "kind": "api",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#blockers",
+          "excerpt": "POST submit: 409; detail=Не заполнено 7 из 8 заданий. Подтвердите завершение теста с пропусками.; status=active, answers={1:42}, same_expiry=true"
+        }
+      ],
+      "gaps": [],
+      "human_checks_required": [
+        "H-Q3"
+      ],
+      "regression_risk": "low",
+      "checked_at": "2026-10-21T09:22:32.651398+00:00",
+      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+    },
+    {
+      "id": "Q4",
+      "verdict": "PARTIAL",
+      "dod_from_canon": "Обзор/приглашения/диалог соответствуют текущему состоянию профиля и согласия.",
+      "audit_refs": [
+        "B05",
+        "B06"
+      ],
+      "agent_evidence": [
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
+          "excerpt": "Q4_verified_published_hidden_empty_invitations_and_overview_CTA; Q4_hidden_overview_revoked_chat_snapshot_PDF"
+        },
+        {
+          "kind": "api",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#blockers",
+          "excerpt": "published+verified: Ваш профиль опубликован, уровень подтверждён.; hidden+verified: профиль скрыт; contacts_after_republish=null, old_chat_available=false, new_accepted_chat_available=true"
+        },
+        {
+          "kind": "file",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#blockers",
+          "excerpt": "verified=false: основной текст предлагает тест, но декоративная надпись в feature-banner остаётся «навыки подтверждены»."
+        }
+      ],
+      "gaps": [
+        "Статичная надпись «навыки подтверждены» показана и при verified=false: полная согласованность всех текстов не достигнута. Прежние два сценария B05 исправлены.",
+        "Требуется человеческая оценка этой надписи; PARTIAL пока не отражён в актуальном changelog."
+      ],
+      "human_checks_required": [
+        "H-Q4a",
+        "H-Q4b"
+      ],
+      "regression_risk": "med",
+      "checked_at": "2026-10-21T09:22:32.651398+00:00",
+      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+    },
+    {
+      "id": "Q5",
+      "verdict": "PASS",
+      "dod_from_canon": "Различимые анонимы, сохранение контекста, компактная форма и видимые слагаемые.",
+      "audit_refs": [
+        "U01",
+        "U02",
+        "U03",
+        "U04"
+      ],
+      "agent_evidence": [
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
+          "excerpt": "Q5_anonymous_label_selection_invitation_PDF_UI; Q5_two_visible_score_sums_unique_labels_changed_banner_scroll; Q5_filters_snapshot_and_score_UI"
+        }
+      ],
+      "gaps": [],
+      "human_checks_required": [
+        "H-Q5a",
+        "H-Q5b",
+        "H-Q5c"
+      ],
+      "regression_risk": "low",
+      "checked_at": "2026-10-21T09:22:32.651398+00:00",
+      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+    },
+    {
+      "id": "Q6",
+      "verdict": "PASS",
+      "dod_from_canon": "Период 7 дней, resume без раннего дубля, UI дата соответствует API.",
+      "audit_refs": [
+        "B04"
+      ],
+      "agent_evidence": [
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
+          "excerpt": "Q6_live_7day_resume_no_duplicate_UI_date_equals_API"
+        },
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#pytest",
+          "excerpt": "97 passed включает 6 tests/test_employer_tasks.py: управляемое время до границы/на границе, 4 concurrent ticks, closed не выдаёт."
+        }
+      ],
+      "gaps": [],
+      "human_checks_required": [
+        "H-Q6-calendar"
+      ],
+      "regression_risk": "low",
+      "checked_at": "2026-10-21T09:22:32.651398+00:00",
+      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+    },
+    {
+      "id": "Q7",
+      "verdict": "PASS",
+      "dod_from_canon": "Версия формулы; выбор весов на размеченном dev; честное до/после на holdout.",
+      "audit_refs": [
+        "M01",
+        "M02"
+      ],
+      "agent_evidence": [
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#matching",
+          "excerpt": "selected_weights=[30,15,45,10]; dev 1.0 -> 1.0; test 0.8 -> 0.8; 36000 oracle checks, mismatches=[]; 42000 simulated attempts"
+        },
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
+          "excerpt": "matching-1.2.0 в live API; test_stage_a_test_and_sport_change_within_category_order и test_production_matches_selected_weights_on_frozen_sample прошли"
+        }
+      ],
+      "gaps": [],
+      "human_checks_required": [
+        "H-Q7"
+      ],
+      "regression_risk": "low",
+      "checked_at": "2026-10-21T09:22:32.651398+00:00",
+      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+    },
+    {
+      "id": "Pck1",
+      "verdict": "FAIL",
+      "dod_from_canon": "Эксперт за 2 минуты видит однозначное текущее состояние Q1–Q7. ",
+      "audit_refs": [],
+      "agent_evidence": [
+        {
+          "kind": "file",
+          "ref": "CHANGELOG_STAGE_A.md",
+          "excerpt": "Начало: сервер отклоняет submit без confirm; конец: STOP, submit возвращает HTTP 200, Q3 FAIL и Q4 FAIL. Раздел не помечен как отменённый/исторический."
+        }
+      ],
+      "gaps": [
+        "Упаковка противоречит свежим проверкам и собственному описанию исправлений. Старый STOP выглядит действующим.",
+        "Нужно явно отделить историю от текущего результата и указать оставшийся PARTIAL Q4; в этой сессии файл changelog не менялся."
+      ],
+      "human_checks_required": [
+        "H-Pck1"
+      ],
+      "regression_risk": "high",
+      "checked_at": "2026-10-21T09:22:32.651398+00:00",
+      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+    },
+    {
+      "id": "Pck2",
+      "verdict": "PARTIAL",
+      "dod_from_canon": "Стенд, ветка, рабочие review-логины, две метрики, not_run, аудит и маршрут 10–15 минут.",
+      "audit_refs": [],
+      "agent_evidence": [
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
+          "excerpt": "three_review_logins_ok; все 3 login HTTP 200"
+        },
+        {
+          "kind": "file",
+          "ref": "FOR_JURY.md",
+          "excerpt": "Стенд, branch URL, 3 review-логина, P@5=0.80→0.80, 36000 сверок; not_run SMTP/пилот/нагрузка/реальные интервалы; ссылка на findings.json."
+        },
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#environment",
+          "excerpt": "git ls-remote: 2e6d6daa5bfb59f6d5a7e7317aa41093c8f05980; локальный HEAD 6b965aca; push dry-run: could not read Username"
+        }
+      ],
+      "gaps": [
+        "Изменения этапа A и актуальные документы не опубликованы в ветке GitHub.",
+        "Человеческий маршрут общих аккаунтов может упереться в cooldown; это не разрешение сбрасывать попытки или БД."
+      ],
+      "human_checks_required": [
+        "H-Pck2-walk",
+        "H-PUSH"
+      ],
+      "regression_risk": "high",
+      "checked_at": "2026-10-21T09:22:32.651398+00:00",
+      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+    },
+    {
+      "id": "Pck3",
+      "verdict": "PASS",
+      "dod_from_canon": "Health ok, локальная ветка соответствует приложению контейнеров, том сохранён.",
+      "audit_refs": [],
+      "agent_evidence": [
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#hashes",
+          "excerpt": "14/14 Python файлов api и 14/14 worker совпали; index.html, JS, CSS совпали после npm run build. Только дополнительный штатный nginx 50x.html."
+        },
+        {
+          "kind": "api",
+          "ref": "https://85-137-26-131.sslip.io/api/health",
+          "excerpt": "{\"status\":\"ok\",\"demo\":true,\"version\":\"1.0.0\"}"
+        },
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#environment",
+          "excerpt": "Том fsp-mvp_fsp_db создан 2026-10-07T22:42:58+02:00; деплой/миграции/удаление БД в этой сессии не выполнялись."
+        }
+      ],
+      "gaps": [],
+      "human_checks_required": [
+        "H-ACC",
+        "H-Pck3-reach"
+      ],
+      "regression_risk": "low",
+      "checked_at": "2026-10-21T09:22:32.651398+00:00",
+      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+    },
+    {
+      "id": "Pck4",
+      "verdict": "PASS",
+      "dod_from_canon": "Свежий smoke Q1–Q3, invite→accept→contacts, ФСП и изоляция.",
+      "audit_refs": [],
+      "agent_evidence": [
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
+          "excerpt": "{\"status\": \"pass\", \"checked_at\": \"2026-10-21T09:18:21.766998+00:00\", \"base_url\": \"https://85-137-26-131.sslip.io\", \"checks\": [\"https_health_ok\", \"openapi_exact\", \"three_review_logins_ok\", \"Q1_navigation_reload_server_draft_owner_expiry\", \"Q2_live_bank_2_1_rounding_hint\", \"Q3_direct_API_without_confirm_409_active_draft_unchanged\", \"Q3_cancel_keeps_active_accept_completes\", \"Q4_verified_published_hidden_empty_invitations_and_overview_CTA\", \"Q5_anonymous_label_selection_invitation_PDF_UI\", \"invite_accept_addressed_contacts_PDF_isolation\", \"FSP_does_not_change_grade_zero_without_FSP\", \"old_snapshot_preserved\", \"Q5_two_visible_score_sums_unique_labels_changed_banner_scroll\", \"Q5_filters_snapshot_and_score_UI\", \"Q6_live_7day_resume_no_duplicate_UI_date_equals_API\", \"Q4_hidden_overview_revoked_chat_snapshot_PDF\", \"mobile_no_horizontal_overflow\"], \"page_errors\": [], \"scope\": \"Live HTTPS API and Chromium; 4 newly bootstrapped fictional accounts, review logins read-only; no SMTP or real-person testing; own smoke candidate hidden, own plan closed.\"}"
+        }
+      ],
+      "gaps": [],
+      "human_checks_required": [
+        "H-Pck4-spot"
+      ],
+      "regression_risk": "low",
+      "checked_at": "2026-10-21T09:22:32.651398+00:00",
+      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+    },
+    {
+      "id": "Pck5",
+      "verdict": "HUMAN_ONLY",
+      "dod_from_canon": "Человек отправил ссылки на прежнюю площадку.",
+      "audit_refs": [],
+      "agent_evidence": [
+        {
+          "kind": "file",
+          "ref": "SUBMISSION_LINKS.md",
+          "excerpt": "Текст подготовлен, отправка не выполнялась. Нынешнее «Закрыты Q1–Q7» требует согласования с PARTIAL Q4 перед копированием."
+        }
+      ],
+      "gaps": [
+        "Нужны исправление упаковки, push, human PASS и подтверждение отправки."
+      ],
+      "human_checks_required": [
+        "H-Pck5"
+      ],
+      "regression_risk": "high",
+      "checked_at": "2026-10-21T09:22:32.651398+00:00",
+      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+    },
+    {
+      "id": "REG_FSP",
+      "verdict": "PASS",
+      "dod_from_canon": "Без ФСП категория сохраняется; достижение не меняет грейд.",
+      "audit_refs": [],
+      "agent_evidence": [
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
+          "excerpt": "FSP_does_not_change_grade_zero_without_FSP"
+        }
+      ],
+      "gaps": [],
+      "human_checks_required": [
+        "H-REG-FSP"
+      ],
+      "regression_risk": "low",
+      "checked_at": "2026-10-21T09:22:32.651398+00:00",
+      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+    },
+    {
+      "id": "REG_ISO",
+      "verdict": "PASS",
+      "dod_from_canon": "Другая компания не видит адрес/контакты в API/PDF; чужой кандидат PDF 403.",
+      "audit_refs": [],
+      "agent_evidence": [
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
+          "excerpt": "invite_accept_addressed_contacts_PDF_isolation"
+        }
+      ],
+      "gaps": [],
+      "human_checks_required": [
+        "H-REG-ISO"
+      ],
+      "regression_risk": "low",
+      "checked_at": "2026-10-21T09:22:32.651398+00:00",
+      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+    },
+    {
+      "id": "REG_OLD_SEL",
+      "verdict": "PASS",
+      "dod_from_canon": "Новый поиск не уничтожает старую подборку; текущая приватность соблюдается.",
+      "audit_refs": [],
+      "agent_evidence": [
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#fresh-smoke",
+          "excerpt": "old_snapshot_preserved; Q4_hidden_overview_revoked_chat_snapshot_PDF"
+        }
+      ],
+      "gaps": [],
+      "human_checks_required": [
+        "H-REG-OLD"
+      ],
+      "regression_risk": "low",
+      "checked_at": "2026-10-21T09:22:32.651398+00:00",
+      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+    },
+    {
+      "id": "NOTTODO",
+      "verdict": "PASS",
+      "dod_from_canon": "Нет редизайна презентации, нового IRT pipeline, обещаний боевого ФСП/SMTP.",
+      "audit_refs": [],
+      "agent_evidence": [
+        {
+          "kind": "command",
+          "ref": "VERIFY_STAGE_A_PROTOCOL.md#environment",
+          "excerpt": "git diff 2e6d6da..HEAD -- demo docs/presentation: пусто; тематический diff evaluation/matching не содержит нового IRT pipeline."
+        },
+        {
+          "kind": "file",
+          "ref": "FOR_JURY.md",
+          "excerpt": "ФСП — DemoProvider; реальный SMTP, пилот, независимая разметка not_run."
+        }
+      ],
+      "gaps": [],
+      "human_checks_required": [
+        "H-PREZA",
+        "H-SMTP"
+      ],
+      "regression_risk": "low",
+      "checked_at": "2026-10-21T09:22:32.651398+00:00",
+      "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d"
+    }
+  ]
+}

@@ -99,10 +99,10 @@
         "B06"
       ],
       "owner": "nikita",
-      "status": "done",
+      "status": "partial",
       "priority": "P2",
       "title": "Hints match profile/dialog state after hide/revoke",
-      "verification": "PASS: Fresh 97 pytest + 17 live smoke groups; see VERIFY_STAGE_A_PROTOCOL.md, 8af82c45184c4c5821137ebc02b2b2f7f12e24b4",
+      "verification": "PARTIAL: Статичная надпись «навыки подтверждены» показана и при verified=false: полная согласованность всех текстов не достигнута. Прежние два сценария B05 исправлены. Требуется человеческая оценка этой надписи; PARTIAL пока не отражён в актуальном changelog.",
       "verification_history": [
         {
           "recorded_at": "2026-10-21T08:50:21.295611+00:00",
@@ -115,6 +115,12 @@
           "previous_status": "failed_verification",
           "previous_verification": "FAIL: B05 воспроизведён: опубликованному подтверждённому Junior при 0 приглашений показывается «Подтвердите навыки и опубликуйте профиль».",
           "reason": "Fix/deploy/verify loop; historical verdict retained"
+        },
+        {
+          "recorded_at": "2026-10-21T09:22:32.651398+00:00",
+          "previous_status": "done",
+          "previous_verification": "PASS: Fresh 97 pytest + 17 live smoke groups; see VERIFY_STAGE_A_PROTOCOL.md, 8af82c45184c4c5821137ebc02b2b2f7f12e24b4",
+          "reason": "Independent re-audit; retained historical verdict, fresh evidence in VERIFY_STAGE_A_PROTOCOL.md"
         }
       ]
     },
@@ -202,15 +208,21 @@
     {
       "id": "Pck1",
       "owner": "nikita",
-      "status": "done",
+      "status": "failed_verification",
       "title": "Changelog after interim + audit 20.10",
-      "verification": "PASS: Fresh 97 pytest + 17 live smoke groups; see VERIFY_STAGE_A_PROTOCOL.md, 8af82c45184c4c5821137ebc02b2b2f7f12e24b4",
+      "verification": "FAIL: Упаковка противоречит свежим проверкам и собственному описанию исправлений. Старый STOP выглядит действующим. Нужно явно отделить историю от текущего результата и указать оставшийся PARTIAL Q4; в этой сессии файл changelog не менялся.",
       "verification_history": [
         {
           "recorded_at": "2026-10-21T09:07:51.003704+00:00",
           "previous_status": "done",
           "previous_verification": "CHANGELOG_STAGE_A, FOR_JURY, OpenAPI, Stage A PDF/DOCX prepared; deployment smoke pending",
           "reason": "Fix/deploy/verify loop; historical verdict retained"
+        },
+        {
+          "recorded_at": "2026-10-21T09:22:32.651398+00:00",
+          "previous_status": "done",
+          "previous_verification": "PASS: Fresh 97 pytest + 17 live smoke groups; see VERIFY_STAGE_A_PROTOCOL.md, 8af82c45184c4c5821137ebc02b2b2f7f12e24b4",
+          "reason": "Independent re-audit; retained historical verdict, fresh evidence in VERIFY_STAGE_A_PROTOCOL.md"
         }
       ]
     },
@@ -309,16 +321,32 @@
     "external_form": "not_sent"
   },
   "adversarial_verification": {
-    "checked_at": "2026-10-21T09:07:51.003704+00:00",
-    "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4",
+    "checked_at": "2026-10-21T09:22:32.651398+00:00",
+    "git_sha": "6b965aca20f70efe4e6430c30aaabc102c52581d",
     "matrix": "../delivery/VERIFY_STAGE_A_MATRIX.json",
     "submission_allowed": false,
-    "loop_stop_condition_met": true,
+    "loop_stop_condition_met": false,
     "counts": {
-      "PASS": 14,
-      "PARTIAL": 1,
-      "HUMAN_ONLY": 1,
-      "FAIL": 0
+      "PASS": 12,
+      "PARTIAL": 2,
+      "FAIL": 1,
+      "HUMAN_ONLY": 1
+    },
+    "reason": "Отправка заблокирована: Pck1 FAIL; Pck2 PARTIAL (нет push); Q4 PARTIAL должен быть отражён в упаковке. Прежние Q3 и B05 empty-state блокеры не воспроизвелись."
+  },
+  "adversarial_verification_history": [
+    {
+      "checked_at": "2026-10-21T09:07:51.003704+00:00",
+      "git_sha": "8af82c45184c4c5821137ebc02b2b2f7f12e24b4",
+      "matrix": "../delivery/VERIFY_STAGE_A_MATRIX.json",
+      "submission_allowed": false,
+      "loop_stop_condition_met": true,
+      "counts": {
+        "PASS": 14,
+        "PARTIAL": 1,
+        "HUMAN_ONLY": 1,
+        "FAIL": 0
+      }
     }
-  }
+  ]
 }
