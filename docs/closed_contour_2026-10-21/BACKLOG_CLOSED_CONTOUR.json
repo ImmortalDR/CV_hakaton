@@ -126,7 +126,7 @@
     {
       "id": "CC10",
       "priority": "P2",
-      "status": "todo",
+      "status": "PASS",
       "owner": "astra",
       "title": "Labor-law boundary: not HRIS / not full employment dossier",
       "artifact": "docs/delivery/closed_contour/09_LABOR_BOUNDARY.md"
